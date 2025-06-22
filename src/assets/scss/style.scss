@@ -24,7 +24,42 @@ body {
     --van-tabbar-item-active-color: #e4b857;
     --van-tabbar-item-inactive-color: #a3a3a3;
 
+    bottom: -1px;
+    height: 138px;
+
     .van-tabbar-item__icon img {
-        height: 24px;
+        width: 59px;
+        height: 54px;
+    }
+
+    .van-tabbar-item {
+        padding: 25px 0 30px;
+        color: #e4b857;
+    }
+
+    .van-tabbar-item--active {
+        background-color: transparent;
+
+        .van-tabbar-item__text {
+            font-weight: 700;
+        }
+    }
+
+    &::after {
+        display: none;
+    }
+
+    &::before {
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        z-index: 9;
+        display: block;
+        width: 720px;
+        height: 16px;
+        background: url('/images/casino/line_gold.png') no-repeat;
+        content: '';
+        transform: translateX(-50%);
+        background-size: 720px 16px;
     }
 }

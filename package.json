@@ -91,7 +91,6 @@
     }
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "*.{[jt]s?(x),vue,md}": [

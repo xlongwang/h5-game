@@ -51,6 +51,7 @@ body {
     .bonus-banner {
         width: 707px;
         padding: 0;
+        padding-top: 6px;
         margin: 0 auto;
     }
 
@@ -59,6 +60,22 @@ body {
         --van-tab-active-text-color: #e4b857;
         --van-tabs-bottom-bar-color: #e4b857;
         --van-tabs-nav-background: transparent;
+
+        // height: 114px;
+        padding-top: 10px;
+
+        .van-tabs__wrap {
+            height: 124px;
+        }
+
+        .van-tabs__line {
+            display: block;
+            width: 78px;
+            height: 9px;
+            background: url('/images/casino/line.jpg') no-repeat;
+            background-size: 78px auto;
+            background-color: transparent;
+        }
     }
 
     .game-grid {
@@ -92,4 +109,33 @@ body {
             }
         }
     }
+
+    .pg {
+        width: 73px;
+        height: 66px;
+    }
+
+    .jili {
+        width: 80px;
+        height: 63px;
+    }
+
+    .pp {
+        width: 66px;
+        height: 63px;
+    }
+
+    .job,
+    .mg {
+        width: 69px;
+        height: 66px;
+    }
+}
+
+.i-carbon-volume {
+    width: 39px;
+    height: 29px;
+    flex-shrink: 0;
+    background: url('/images/casino/notice.png') no-repeat;
+    background-size: 39px 29px;
 }
