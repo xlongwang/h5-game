@@ -2,3 +2,29 @@
 @use 'global/vant';
 @use './pages/home';
 @use './pages/about';
+@use 'sass:math';
+
+@import './global/vant';
+@import './global/reset';
+@import './global/global';
+
+@font-face {
+    font-family: Alibaba;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/alibaba.TTF') format('truetype');
+}
+
+body {
+    font-family: Alibaba, sans-serif !important;
+}
+
+.bottom-nav {
+    --van-tabbar-background: #000;
+    --van-tabbar-item-active-color: #e4b857;
+    --van-tabbar-item-inactive-color: #a3a3a3;
+
+    .van-tabbar-item__icon img {
+        height: 24px;
+    }
+}

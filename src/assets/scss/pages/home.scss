@@ -5,25 +5,22 @@ body {
 
 .main {
     // width: 1024px;
-    padding: 20px;
     margin: 0 auto;
-    background: #fff;
-    box-shadow: 0 0 5px #999;
 
-    .header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 60px;
+    // .header {
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     height: 60px;
 
-        a {
-            font-size: 16px;
+    //     a {
+    //         font-size: 16px;
 
-            & + a {
-                margin-left: 20px;
-            }
-        }
-    }
+    //         & + a {
+    //             margin-left: 20px;
+    //         }
+    //     }
+    // }
 
     ul {
         li {
@@ -78,4 +75,14 @@ pre {
 
 .el-loading-mask {
     background-color: rgba(255, 255, 255, 0.4);
+}
+
+.bottom-nav {
+    --van-tabbar-background: #000;
+    --van-tabbar-item-active-color: #e4b857;
+    --van-tabbar-item-inactive-color: #a3a3a3;
+
+    .van-tabbar-item__icon img {
+        height: 24px;
+    }
 }

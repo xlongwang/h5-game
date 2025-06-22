@@ -1,39 +1,35 @@
 <!--
  * @Author: along longwang6@163.com
- * @Date: 2025-06-22 10:53:10
+ * @Date: 2025-06-22 11:29:02
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-22 11:50:31
- * @FilePath: /vue3_app/src/views/Home.vue
+ * @LastEditTime: 2025-06-22 13:13:34
+ * @FilePath: /vue3_app/src/views/Casino.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
     <div class="casino-page pb-20">
         <!-- Header -->
-        <div class="header flex items-center justify-between p-4">
-            <div class="user-info flex items-center gap-2">
-                <!-- <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar"> -->
-                <div>
-                    <div class="font-bold text-white">usuario378716</div>
-                    <div class="text-xs">ID:9339417</div>
+        <div class="header flex items-center justify-between p-[20px]">
+            <div class="user-info flex items-center gap-[4px] text-[20px]">
+                <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
+                <div class="pl-[10px]">
+                    <div class="font-bold text-white pb-[5px]">usuario378716</div>
+                    <div>ID:9339417</div>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <div class="i-carbon-badge text-gold text-2xl"></div>
-                <div class="balance flex items-center gap-2">
-                    <span class="text-gold font-bold">$ 0.00</span>
-                    <button class="plus-btn flex items-center justify-center font-bold">+</button>
+            <div class="flex items-center">
+                <div class="text-icon-18 mr-[15px]">
+                    <img src="/images/casino/18.png" alt="18">
+                </div>
+                <div class="balance text-gold text-[30px] font-bold">
+                    0.00
                 </div>
             </div>
         </div>
 
         <!-- Bonus Banner -->
         <div class="bonus-banner flex items-center justify-between">
-            <div>
-                <h1 class="bonus-title">BONUS</h1>
-                <h1 class="bonus-title">DIARIO</h1>
-                <p class="text-xs mt-2">INICIE SESION TODOS LOS<br>OBTENGA BONIFICACIONES</p>
-            </div>
-            <!-- <img src="/images/casino/chip.png" alt="Chip" class="w-24 h-24"> -->
+            <img src="/images/casino/a1.png" width="100%" height="100%" alt="Chip">
         </div>
 
         <!-- Ticker -->
@@ -49,10 +45,7 @@
             <van-tab v-for="tab in gameTabs" :key="tab.key" :title="tab.title">
                 <template #title>
                     <div class="flex flex-col items-center">
-                        <div
-                            v-if="tab.icon" class="text-2xl"
-                            :class="[tab.icon, { 'text-gold': activeTab === tab.key }]"
-                        ></div>
+                        <div v-if="tab.icon" class="text-2xl" :class="[tab.icon, { 'text-gold': activeTab === tab.key }]"></div>
                         <span class="mt-1">{{ tab.title }}</span>
                     </div>
                 </template>
@@ -80,7 +73,6 @@ defineOptions({
 })
 
 const activeTab = ref(0)
-const activeNav = ref('Casino')
 
 const gameTabs = ref([
     { key: 'pg', title: 'PG', icon: 'i-carbon-logo-digg' },

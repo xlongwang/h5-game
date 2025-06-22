@@ -15,5 +15,12 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanGrid: typeof import('vant/es')['Grid']
+    VanGridItem: typeof import('vant/es')['GridItem']
+    VanImage: typeof import('vant/es')['Image']
+    VanTab: typeof import('vant/es')['Tab']
+    VanTabbar: typeof import('vant/es')['Tabbar']
+    VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanTabs: typeof import('vant/es')['Tabs']
   }
 }
