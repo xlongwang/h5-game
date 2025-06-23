@@ -6,8 +6,8 @@
  * @FilePath: /vue3_app/src/design.config.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-const vmDesignWidth = 720 // 设计稿宽度
-const vmDesignHeight = 1280 // 设计稿宽度
+const vmDesignWidth = 1080 // 设计稿宽度
+const vmDesignHeight = 1920 // 设计稿宽度
 const vmMinWidth = 320 // 兼容最小宽度
 const vmMaxWidth = 1080 // 兼容最大宽度
 const vmFontSize = 72 // 为什么设置 100? 设置成便于计算, 计算rem时只需要将 设计稿的宽度 / 100 即可

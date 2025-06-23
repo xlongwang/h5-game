@@ -52,22 +52,20 @@ router.isReady().then(() => {
     })
 
     router.afterEach((to, from) => {
-        // 只在开发环境下进行强制重新渲染检查
-        if (import.meta.env.DEV) {
-            setTimeout(() => {
-                const appContainer = document.getElementById('app')
-                if (appContainer) {
-                    const routerView = appContainer.querySelector('.body')
-                    if (routerView) {
-                        const elements = routerView.querySelectorAll('*')
-                        if (elements.length === 0) {
-                            console.log('No elements found in router view, forcing router refresh...')
-                            router.go(0)
-                        }
+        // 强制重新渲染检查 - 适用于所有环境
+        setTimeout(() => {
+            const appContainer = document.getElementById('app')
+            if (appContainer) {
+                const routerView = appContainer.querySelector('.body')
+                if (routerView) {
+                    const elements = routerView.querySelectorAll('*')
+                    if (elements.length === 0) {
+                        console.log('No elements found in router view, forcing router refresh...')
+                        router.go(0)
                     }
                 }
-            }, 100)
-        }
+            }
+        }, 100)
     })
 
     app.use(head)
@@ -89,7 +87,7 @@ router.isReady().then(() => {
         }
     }
 
-    // 监听水合完成事件
+    // 监听水合完成事件 - 适用于所有环境
     const originalConsoleWarn = console.warn
     console.warn = (...args) => {
         const message = args.join(' ')
@@ -105,18 +103,22 @@ router.isReady().then(() => {
     try {
         app.mount('#app')
 
-        // 检查水合是否成功 - 只在开发环境
-        if (import.meta.env.DEV) {
-            setTimeout(() => {
-                const bodyContainer = document.querySelector('.body')
-                if (bodyContainer) {
-                    const elements = bodyContainer.querySelectorAll('*')
-                    if (elements.length === 0) {
-                        console.log('No elements found in body container - potential hydration issue')
+        // 检查水合是否成功 - 适用于所有环境
+        setTimeout(() => {
+            const bodyContainer = document.querySelector('.body')
+            if (bodyContainer) {
+                const elements = bodyContainer.querySelectorAll('*')
+                if (elements.length === 0) {
+                    console.log('No elements found in body container - potential hydration issue')
+                    // 生产环境下的强制修复
+                    if (!import.meta.env.DEV) {
+                        console.log('Production environment: forcing app remount...')
+                        app.unmount()
+                        app.mount('#app')
                     }
                 }
-            }, 200)
-        }
+            }
+        }, 200)
     }
     catch (error) {
         console.error('Failed to mount app:', error)

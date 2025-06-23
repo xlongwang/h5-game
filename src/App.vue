@@ -12,13 +12,13 @@
             <router-link to="/">HOME</router-link>
             <router-link to="/about">ABOUT</router-link>
         </div> -->
-        <div class="body" style="width: 100% !important; max-width: none !important; min-width: none !important; left: 0 !important; right: 0 !important; position: relative !important; overflow: visible !important; height: auto !important; padding-bottom: 80px !important; min-height: calc(100vh - 80px) !important;">
+        <div class="body">
             <router-view v-slot="{ Component }" :key="$route.path">
                 <component :is="Component" v-if="Component" />
             </router-view>
         </div>
         <!-- Bottom Navigation -->
-        <div class="bottom-nav text-[20px] text-gold">
+        <div class="bottom-nav text-[30px] text-gold">
             <template v-for="item in navItems" :key="item.name">
                 <!-- 内部路由使用 router-link -->
                 <router-link
@@ -28,7 +28,7 @@
                     :class="{ active: activeNav === item.name }"
                 >
                     <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
-                    <span class="text-[20px]">{{ item.name }}</span>
+                    <span class="text-[30px]">{{ item.name }}</span>
                 </router-link>
                 <!-- 外部链接使用 a 标签 -->
                 <a
@@ -39,7 +39,7 @@
                     :class="{ active: activeNav === item.name }"
                 >
                     <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
-                    <span class="text-[20px]">{{ item.name }}</span>
+                    <span class="text-[30px]">{{ item.name }}</span>
                 </a>
             </template>
         </div>
@@ -98,8 +98,8 @@ onMounted(async () => {
 .body {
     padding-bottom: 80px; /* 为底部导航留出空间 */
     min-height: calc(100vh - 80px);
-    height: auto !important; /* 覆盖全局 CSS */
-    overflow: visible !important; /* 覆盖全局 CSS */
+    height: 100vh !important; /* 覆盖全局 CSS */
+    overflow-y:scroll !important; /* 覆盖全局 CSS */
     max-width: none !important; /* 覆盖全局 CSS */
     min-width: none !important; /* 覆盖全局 CSS */
     position: relative !important; /* 确保定位正确 */
@@ -142,15 +142,9 @@ onMounted(async () => {
     background: rgba(255, 215, 0, 0.2);
 }
 
-.nav-item img {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 4px;
-}
-
 .nav-item span {
     color: #ffd700;
-    font-size: 12px;
+    font-size: 30px;
 }
 
 .text-gold {
@@ -165,17 +159,5 @@ onMounted(async () => {
     --body-width: 100% !important;
     --max-window: none !important;
     --min-window: none !important;
-}
-
-/* 确保 body 类不受全局 CSS 影响 */
-.body {
-    width: 100% !important;
-    max-width: none !important;
-    min-width: none !important;
-    left: 0 !important;
-    right: 0 !important;
-    position: relative !important;
-    overflow: visible !important;
-    height: auto !important;
 }
 </style>

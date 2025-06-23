@@ -7,10 +7,9 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-    <div class="p-4 retirar-page">
+    <div id="retirar-debug" class="retirar-page p-4">
         <h1 class="text-2xl font-bold">Retirar Page</h1>
-        <p>Content for the retirar page goes here.</p>
-        <p>当前时间: {{ currentTime }}</p>
+        <p>Content for the Retirar page goes here.</p>
     </div>
 </template>
 
@@ -30,13 +29,9 @@ onMounted(async () => {
 <style scoped>
 .retirar-page {
     min-height: 100vh;
-    background: red;
     display: block;
     visibility: visible;
     opacity: 1;
-    padding: 50px;
-    text-align: center;
-    font-size: 24px;
     position: relative;
     z-index: 999;
     width: 100%;

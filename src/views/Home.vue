@@ -2,15 +2,15 @@
     <div class="casino-page pb-[160px]">
         <!-- Header -->
         <div class="header flex items-center justify-between p-[20px]">
-            <div class="user-info flex items-center gap-[4px] text-[20px]">
+            <div class="user-info flex items-center gap-[4px] text-[30px]">
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
                     <div class="font-bold text-white pb-[5px]">usuario378716</div>
-                    <div>ID:9339417</div>
+                    <div>ID:9339417222</div>
                 </div>
             </div>
             <div class="flex items-center">
-                <div class="text-icon-18 mr-[15px]">
+                <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
                     <img src="/images/casino/18.png" alt="18">
                 </div>
                 <div class="balance text-gold text-[30px] font-bold">
@@ -38,7 +38,7 @@
                 <template #title>
                     <div class="flex flex-col items-center">
                         <!-- { 'text-gold': activeTabIndex === index } -->
-                        <div v-if="tab.icon" class="text-2xl text-gold" :class="[tab.icon]">
+                        <div v-if="tab.icon" class="text-2xl text-gold tab-icon" :class="[tab.key]">
                             <img :class="tab.key" :src="tab.icon" :alt="tab.title">
                         </div>
                         <span class="text-gold">{{ tab.title }}</span>
@@ -72,10 +72,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import '@/assets/scss/pages/casino.scss'
+import '@/assets/scss/pages/home.scss'
 
 defineOptions({
-    name: 'Casino',
+    name: 'Home',
 })
 
 const activeTabIndex = ref(0)

@@ -1,56 +1,135 @@
 body {
-    height: auto !important;
-    background: #eee !important;
+    // Default to a dark theme
+    --van-background: #0f0f0f;
+    --van-text-color: #fff;
 }
 
-.main {
-    // width: 1024px;
-    margin: 0 auto;
-}
+.casino-page {
+    min-height: 100vh;
+    font-family: Roboto, sans-serif;
+    font-size: 30px;
+    color: #a3a3a3;
+    background-color: #0c0a09;
 
-.article-content img,
-.reply-item-content img {
-    max-width: 100%;
-}
+    .text-gold {
+        color: #e4b857;
+    }
 
-.reply-item {
-    padding-top: 8px;
-    border-bottom: 1px dashed #ccc;
+    .text-icon-18 {
+        width: 68px;
+        height: 68px;
+        flex-shrink: 0;
 
-    h5 {
-        span {
-            font-size: 12px;
-            font-weight: 400;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .header {
+        .user-info {
+            .avatar {
+                width: 125px;
+                height: 125px;
+            }
+        }
+
+        .balance {
+            display: inline-block;
+            height: 115px;
+            line-height: 115px;
+            text-align: center;
+            box-sizing: border-box;
+            border-style: solid;
+            border-color: transparent;
+            border-width: 0 93px 0 110px;
+            border-image-source: url('/images/casino/crash_bg.png');
+            border-image-slice: 1 93 1 110 fill;
+            border-image-repeat: stretch;
+        }
+    }
+
+    .bonus-banner {
+        width: 1060px;
+        padding: 0;
+        padding-top: 6px;
+        margin: 0 auto;
+    }
+
+    .game-tabs {
+        --van-tab-text-color: #a3a3a3;
+        --van-tab-active-text-color: #e4b857;
+        --van-tabs-bottom-bar-color: #e4b857;
+        --van-tabs-nav-background: transparent;
+
+        // height: 114px;
+        padding-top: 15px;
+
+        .van-tabs__wrap {
+            height: 186px;
+        }
+
+        .van-tabs__line {
+            display: block;
+            width: 118px;
+            height: 14px;
+            background: url('/images/casino/line.png') no-repeat;
+            background-size: 118px auto;
+            background-color: transparent;
+        }
+
+        .tab-icon {
+            width: 110px;
+            height: 99px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .game-grid {
+        .van-grid-item__content {
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .game-card {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #e4b857;
+            border-radius: 8px;
+
+            .hot-badge {
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                padding: 2px 8px;
+                font-size: 12px;
+                font-weight: bold;
+                color: white;
+                background-color: #d9534f;
+                border-radius: 4px;
+            }
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
         }
     }
 }
 
-h3 {
-    text-align: center;
+.i-carbon-volume {
+    width: 59px;
+    height: 44px;
+    flex-shrink: 0;
+    background: url('/images/casino/notice.png') no-repeat;
+    background-size: 59px 44px;
 }
 
-.article-content {
-    word-wrap: break-word;
-}
-
-.reply {
-    border-top: 1px solid #ccc;
-}
-
-pre {
-    overflow: auto;
-}
-
-.el-loading-mask {
-    background-color: rgba(255, 255, 255, 0.4);
-}
-
-.bottom-nav {
-    --van-tabbar-background: #000;
-    --van-tabbar-item-active-color: #e4b857;
-    --van-tabbar-item-inactive-color: #a3a3a3;
-
-    .van-tabbar-item__icon img {
-        height: 24px;
-    }
+.ticker {
+    line-height: 1.7;
 }

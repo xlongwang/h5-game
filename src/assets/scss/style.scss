@@ -25,15 +25,16 @@ body {
     --van-tabbar-item-inactive-color: #a3a3a3;
 
     bottom: -1px;
-    height: 138px;
+    height: 209px;
 
     .nav-icon {
-        width: 59px;
-        height: 54px;
+        width: 85px;
+        height: 85px;
+        margin-bottom: 8px;
     }
 
     .van-tabbar-item {
-        padding: 25px 0 30px;
+        padding: 35px 0 40px;
         color: #e4b857;
     }
 
@@ -47,11 +48,11 @@ body {
         left: 50%;
         z-index: 9;
         display: block;
-        width: 720px;
-        height: 16px;
+        width: 1080px;
+        height: 24px;
         background: url('/images/casino/line_gold.png') no-repeat;
         content: '';
         transform: translateX(-50%);
-        background-size: 720px 16px;
+        background-size: 1080px 24px;
     }
 }
