@@ -19,40 +19,6 @@ body {
     font-family: Alibaba, sans-serif !important;
 }
 
-.bottom-nav {
-    --van-tabbar-background: #000;
-    --van-tabbar-item-active-color: #e4b857;
-    --van-tabbar-item-inactive-color: #a3a3a3;
-
-    bottom: -1px;
-    height: 209px;
-
-    .nav-icon {
-        width: 85px;
-        height: 85px;
-        margin-bottom: 8px;
-    }
-
-    .van-tabbar-item {
-        padding: 35px 0 40px;
-        color: #e4b857;
-    }
-
-    &::after {
-        display: none;
-    }
-
-    &::before {
-        position: absolute;
-        top: -8px;
-        left: 50%;
-        z-index: 9;
-        display: block;
-        width: 1080px;
-        height: 24px;
-        background: url('/images/casino/line_gold.png') no-repeat;
-        content: '';
-        transform: translateX(-50%);
-        background-size: 1080px 24px;
-    }
+.main {
+    margin: 0 auto;
 }

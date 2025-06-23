@@ -37,7 +37,6 @@
             <van-tab v-for="(tab) in gameTabs" :key="tab.key" :title="tab.title">
                 <template #title>
                     <div class="flex flex-col items-center">
-                        <!-- { 'text-gold': activeTabIndex === index } -->
                         <div v-if="tab.icon" class="text-2xl text-gold tab-icon" :class="[tab.key]">
                             <img :class="tab.key" :src="tab.icon" :alt="tab.title">
                         </div>
@@ -60,7 +59,6 @@
                     <van-grid-item v-for="game in getGamesByProvider(tab.key)" :key="game.id">
                         <div class="game-card">
                             <van-image :src="game.image" />
-                            <!-- <div v-if="game.hot" class="hot-badge">HOT</div> -->
                         </div>
                     </van-grid-item>
                 </van-grid>

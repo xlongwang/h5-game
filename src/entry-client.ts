@@ -7,30 +7,6 @@ import './assets/scss/global/global.scss'
 import './assets/scss/style.scss'
 
 // 强制重置 CSS 变量
-const style = document.createElement('style')
-style.textContent = `
-:root {
-    --body-width: 100% !important;
-    --max-window: none !important;
-    --min-window: none !important;
-}
-
-.body {
-    width: 100% !important;
-    max-width: none !important;
-    min-width: none !important;
-    left: 0 !important;
-    right: 0 !important;
-    position: relative !important;
-    overflow: visible !important;
-    height: auto !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-`
-document.head.appendChild(style)
 
 const { app, router, store } = createApp()
 const head = createHead()
