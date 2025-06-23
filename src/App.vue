@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-22 18:49:54
+ * @LastEditTime: 2025-06-22 20:51:04
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -12,37 +12,50 @@
             <router-link to="/">HOME</router-link>
             <router-link to="/about">ABOUT</router-link>
         </div> -->
-        <div class="body">
-            <router-view v-slot="{ Component }">
-                <component :is="Component" />
+        <div class="body" style="width: 100% !important; max-width: none !important; min-width: none !important; left: 0 !important; right: 0 !important; position: relative !important; overflow: visible !important; height: auto !important; padding-bottom: 80px !important; min-height: calc(100vh - 80px) !important;">
+            <router-view v-slot="{ Component }" :key="$route.path">
+                <component :is="Component" v-if="Component" />
             </router-view>
         </div>
         <!-- Bottom Navigation -->
-        <van-tabbar v-model="activeNav" class="bottom-nav" route>
-            <van-tabbar-item
-                v-for="item in navItems"
-                :key="item.name"
-                :to="item.isExternal ? undefined : item.to"
-                :name="item.name"
-                @click="handleNavClick(item)"
-            >
-                <span class="text-gold">{{ item.name }}</span>
-                <template #icon="props">
-                    <img class="nav-icon" :src="props.active ? item.activeIcon : item.inactiveIcon">
-                </template>
-            </van-tabbar-item>
-        </van-tabbar>
+        <div class="bottom-nav text-[20px] text-gold">
+            <template v-for="item in navItems" :key="item.name">
+                <!-- 内部路由使用 router-link -->
+                <router-link
+                    v-if="!item.isExternal"
+                    :to="item.to"
+                    class="nav-item"
+                    :class="{ active: activeNav === item.name }"
+                >
+                    <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
+                    <span class="text-[20px]">{{ item.name }}</span>
+                </router-link>
+                <!-- 外部链接使用 a 标签 -->
+                <a
+                    v-else
+                    :href="item.to"
+                    target="_blank"
+                    class="nav-item"
+                    :class="{ active: activeNav === item.name }"
+                >
+                    <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
+                    <span class="text-[20px]">{{ item.name }}</span>
+                </a>
+            </template>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 defineOptions({
     name: 'AppRoot',
 })
 
 const activeNav = ref('Casino')
+const route = useRoute()
 
 const navItems = ref([
     { name: 'Casino', to: '/', activeIcon: '/images/casino/home.png', inactiveIcon: '/images/casino/home.png', isExternal: false },
@@ -54,10 +67,13 @@ const navItems = ref([
 
 const { globalStore } = useGlobal()
 
-// pinia 状态管理 ===>
-// const { globalLoading } = storeToRefs(globalStore)
-// const tmpCount = computed(() => globalStore.counter)
-// pinia 状态管理 <===
+// 监听路由变化，同步 activeNav
+watch(() => route.path, (newPath) => {
+    const currentItem = navItems.value.find(item => item.to === newPath)
+    if (currentItem && activeNav.value !== currentItem.name) {
+        activeNav.value = currentItem.name
+    }
+}, { immediate: true })
 
 async function init() {
     setTimeout(() => {
@@ -68,10 +84,98 @@ async function init() {
 onMounted(async () => {
     init()
 })
-
-function handleNavClick(item: { name: string, to: string, activeIcon: string, inactiveIcon: string, isExternal: boolean }) {
-    if (item.isExternal) {
-        window.open(item.to, '_blank')
-    }
-}
 </script>
+
+<style scoped>
+.main {
+    min-height: 100vh;
+    position: relative;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: none !important;
+}
+
+.body {
+    padding-bottom: 80px; /* 为底部导航留出空间 */
+    min-height: calc(100vh - 80px);
+    height: auto !important; /* 覆盖全局 CSS */
+    overflow: visible !important; /* 覆盖全局 CSS */
+    max-width: none !important; /* 覆盖全局 CSS */
+    min-width: none !important; /* 覆盖全局 CSS */
+    position: relative !important; /* 确保定位正确 */
+    z-index: 1 !important; /* 确保层级正确 */
+    width: 100% !important; /* 确保宽度正确 */
+    left: 0 !important; /* 覆盖可能的定位 */
+    right: 0 !important; /* 确保右边界 */
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #333;
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: inherit;
+}
+
+.nav-item:hover {
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.nav-item.active {
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.nav-item img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+}
+
+.nav-item span {
+    color: #ffd700;
+    font-size: 12px;
+}
+
+.text-gold {
+    color: #ffd700;
+    font-size: 12px;
+}
+</style>
+
+<style>
+/* 全局 CSS 重置，禁用可能影响布局的变量 */
+:root {
+    --body-width: 100% !important;
+    --max-window: none !important;
+    --min-window: none !important;
+}
+
+/* 确保 body 类不受全局 CSS 影响 */
+.body {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: none !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    height: auto !important;
+}
+</style>

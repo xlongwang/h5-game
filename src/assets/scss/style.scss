@@ -27,7 +27,7 @@ body {
     bottom: -1px;
     height: 138px;
 
-    .van-tabbar-item__icon img {
+    .nav-icon {
         width: 59px;
         height: 54px;
     }
@@ -35,14 +35,6 @@ body {
     .van-tabbar-item {
         padding: 25px 0 30px;
         color: #e4b857;
-    }
-
-    .van-tabbar-item--active {
-        background-color: transparent;
-
-        .van-tabbar-item__text {
-            font-weight: 700;
-        }
     }
 
     &::after {
