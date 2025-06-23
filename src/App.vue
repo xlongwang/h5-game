@@ -62,7 +62,7 @@ const navItems = ref([
     { name: 'Promoción', to: '/promotion', activeIcon: '/images/casino/gift.png', inactiveIcon: '/images/casino/gift.png', isExternal: false },
     { name: 'Retirar', to: '/retirar', activeIcon: '/images/casino/coin_b.png', inactiveIcon: '/images/casino/coin_b.png', isExternal: false },
     { name: 'Apoyo', to: 'https://www.baidu.com', activeIcon: '/images/casino/serve.png', inactiveIcon: '/images/casino/serve.png', isExternal: true },
-    { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/person.jpg', inactiveIcon: '/images/casino/person.png', isExternal: false },
+    { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/person.png', inactiveIcon: '/images/casino/person.png', isExternal: false },
 ])
 
 const { globalStore } = useGlobal()
@@ -128,7 +128,7 @@ onMounted(async () => {
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    padding: 8px;
+    padding: 15px 20px;
     border-radius: 8px;
     transition: all 0.3s ease;
     color: inherit;
