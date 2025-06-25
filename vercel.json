@@ -1,6 +1,22 @@
 {
   "version": 2,
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist",
+  "builds": [
+    {
+      "src": "dist/server.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "dist/server.js"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot))",
+      "dest": "/dist/client/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "dist/server.js"
