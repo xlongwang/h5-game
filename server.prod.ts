@@ -111,7 +111,7 @@ export async function createServer() {
 // 为 Vercel 导出 app 实例
 let appInstance: express.Application | null = null
 
-export default async function handler(req: any, res: any) {
+async function handler(req: any, res: any) {
     if (!appInstance) {
         const { app } = await createServer()
         appInstance = app
@@ -126,3 +126,5 @@ if (!process.env.VERCEL) {
         console.log(`监听: http://localhost:${port}`)
     }))
 }
+
+export default handler
