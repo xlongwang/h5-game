@@ -17,24 +17,51 @@ export async function createServer() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const resolve = (p: string) => path.resolve(__dirname, p)
 
+    // 添加调试信息
+    console.log('Vercel environment:', !!process.env.VERCEL)
+    console.log('Current directory:', __dirname)
+    console.log('Process cwd:', process.cwd())
+
     // 适配 Vercel 环境的路径
-    let clientPath: string
+    let clientPath: string | undefined
     let template: string
     let manifest: any
 
     if (process.env.VERCEL) {
-        // Vercel 环境：文件在 /var/task 目录下
-        clientPath = '/var/task/dist/client'
-        try {
-            template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
-            manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
+        // Vercel 环境：尝试多个可能的路径
+        const possiblePaths = [
+            '/var/task/dist/client',
+            '/var/task/client',
+            resolve('../client'),
+            resolve('client'),
+        ]
+
+        console.log('Trying possible client paths:', possiblePaths)
+
+        for (const testPath of possiblePaths) {
+            try {
+                console.log('Testing path:', testPath)
+                const indexPath = path.join(testPath, 'index.html')
+                const manifestPath = path.join(testPath, '.vite/ssr-manifest.json')
+
+                console.log('Checking files:', { indexPath, manifestPath })
+
+                template = fs.readFileSync(indexPath, 'utf-8')
+                manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
+
+                clientPath = testPath
+                console.log('Successfully found files at:', clientPath)
+                break
+            }
+            catch (error: unknown) {
+                const err = error as Error
+                console.log('Failed to read from:', testPath, err.message)
+                continue
+            }
         }
-        catch (error) {
-            console.error('Vercel environment file read error:', error)
-            // 如果读取失败，尝试其他路径
-            clientPath = resolve('../client')
-            template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
-            manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
+
+        if (!clientPath) {
+            throw new Error('Could not find client files in any of the expected locations')
         }
     }
     else {
@@ -109,8 +136,30 @@ export async function createServer() {
             const url = req.originalUrl
 
             // 适配 Vercel 环境的路径
-            const serverEntryPath = process.env.VERCEL ? '/var/task/dist/server/entry-server.js' : './server/entry-server.js'
-            const render = (await import(serverEntryPath)).render
+            const possibleServerPaths = process.env.VERCEL ? [
+                '/var/task/dist/server/entry-server.js',
+                '/var/task/server/entry-server.js',
+                './server/entry-server.js',
+            ] : ['./server/entry-server.js']
+
+            let render: any
+            for (const serverPath of possibleServerPaths) {
+                try {
+                    console.log('Trying server entry path:', serverPath)
+                    render = (await import(serverPath)).render
+                    console.log('Successfully loaded server entry from:', serverPath)
+                    break
+                }
+                catch (error: unknown) {
+                    const err = error as Error
+                    console.log('Failed to load from:', serverPath, err.message)
+                    continue
+                }
+            }
+
+            if (!render) {
+                throw new Error('Could not load server entry file')
+            }
 
             const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req) as RenderType
 
@@ -123,7 +172,7 @@ export async function createServer() {
         }
         catch (e: unknown) {
             const err = e as Error
-            console.log(err.stack)
+            console.log('SSR render error:', err.stack)
             res.status(500).end(err.stack)
         }
     })
