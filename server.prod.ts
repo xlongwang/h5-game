@@ -16,8 +16,11 @@ import serveStatic from 'serve-static'
 export async function createServer() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const resolve = (p: string) => path.resolve(__dirname, p)
-    const template = fs.readFileSync(resolve('client/index.html'), 'utf-8')
-    const manifest = JSON.parse(fs.readFileSync(resolve('client/.vite/ssr-manifest.json'), 'utf-8'))
+
+    // 适配 Vercel 环境的路径
+    const clientPath = process.env.VERCEL ? resolve('../client') : resolve('client')
+    const template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
+    const manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
     const app = express()
 
     logger.token('remote-addr', (req) => {
@@ -42,25 +45,30 @@ export async function createServer() {
 
     // Node.js 压缩中间件
     app.use(compression())
-    // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
-    app.use(
-        createProxyMiddleware({
-            target: 'http://php.mmxiaowu.com',
-            changeOrigin: true,
-            pathFilter: ['/api/**'],
-            pathRewrite: {
-                '^/api': '/api',
-            },
-            on: {
-                proxyReq(proxyReq, req) {
-                    proxyReq.setHeader('X-Real-IP', requestIp.getClientIp(req) || 'unknown')
+
+    // 在 Vercel 环境下跳过代理，因为 Vercel 不支持代理到外部服务
+    if (!process.env.VERCEL) {
+        // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
+        app.use(
+            createProxyMiddleware({
+                target: 'http://php.mmxiaowu.com',
+                changeOrigin: true,
+                pathFilter: ['/api/**'],
+                pathRewrite: {
+                    '^/api': '/api',
                 },
-            },
-        }),
-    )
+                on: {
+                    proxyReq(proxyReq, req) {
+                        proxyReq.setHeader('X-Real-IP', requestIp.getClientIp(req) || 'unknown')
+                    },
+                },
+            }),
+        )
+    }
+
     // Node.js 静态资源中间件
     app.use(
-        serveStatic(resolve('client'), {
+        serveStatic(clientPath, {
             index: false,
         }),
     )
@@ -77,8 +85,9 @@ export async function createServer() {
             // const url = req.originalUrl.replace('/test/', '/')
             const url = req.originalUrl
 
-            // @ts-expect-error 未编译, 目录不对, 该文件不存在
-            const render = (await import('./server/entry-server.js')).render
+            // 适配 Vercel 环境的路径
+            const serverEntryPath = process.env.VERCEL ? './server/entry-server.js' : './server/entry-server.js'
+            const render = (await import(serverEntryPath)).render
 
             const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req) as RenderType
 
@@ -99,8 +108,21 @@ export async function createServer() {
     return { app }
 }
 
-const port = process.env.PORT || 7775
+// 为 Vercel 导出 app 实例
+let appInstance: express.Application | null = null
 
-createServer().then(({ app }) => app.listen(port, () => {
-    console.log(`监听: http://localhost:${port}`)
-}))
+export default async function handler(req: any, res: any) {
+    if (!appInstance) {
+        const { app } = await createServer()
+        appInstance = app
+    }
+    return appInstance(req, res)
+}
+
+// 本地开发时使用
+if (!process.env.VERCEL) {
+    const port = process.env.PORT || 7775
+    createServer().then(({ app }) => app.listen(port, () => {
+        console.log(`监听: http://localhost:${port}`)
+    }))
+}

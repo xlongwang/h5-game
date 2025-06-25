@@ -11,5 +11,13 @@
       "src": "/(.*)",
       "dest": "dist/server.js"
     }
-  ]
+  ],
+  "functions": {
+    "dist/server.js": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "VERCEL": "true"
+  }
 }
