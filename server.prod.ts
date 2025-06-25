@@ -18,9 +18,32 @@ export async function createServer() {
     const resolve = (p: string) => path.resolve(__dirname, p)
 
     // 适配 Vercel 环境的路径
-    const clientPath = process.env.VERCEL ? resolve('../client') : resolve('client')
-    const template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
-    const manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
+    let clientPath: string
+    let template: string
+    let manifest: any
+
+    if (process.env.VERCEL) {
+        // Vercel 环境：文件在 /var/task 目录下
+        clientPath = '/var/task/dist/client'
+        try {
+            template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
+            manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
+        }
+        catch (error) {
+            console.error('Vercel environment file read error:', error)
+            // 如果读取失败，尝试其他路径
+            clientPath = resolve('../client')
+            template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
+            manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
+        }
+    }
+    else {
+        // 本地环境
+        clientPath = resolve('client')
+        template = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf-8')
+        manifest = JSON.parse(fs.readFileSync(path.join(clientPath, '.vite/ssr-manifest.json'), 'utf-8'))
+    }
+
     const app = express()
 
     logger.token('remote-addr', (req) => {
@@ -86,7 +109,7 @@ export async function createServer() {
             const url = req.originalUrl
 
             // 适配 Vercel 环境的路径
-            const serverEntryPath = process.env.VERCEL ? './server/entry-server.js' : './server/entry-server.js'
+            const serverEntryPath = process.env.VERCEL ? '/var/task/dist/server/entry-server.js' : './server/entry-server.js'
             const render = (await import(serverEntryPath)).render
 
             const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req) as RenderType
