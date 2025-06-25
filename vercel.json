@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "installCommand": "curl -fsSL https://get.pnpm.io/install.sh | sh - && source ~/.bashrc && pnpm install",
+        "buildCommand": "pnpm build",
+        "startCommand": "pnpm start"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
