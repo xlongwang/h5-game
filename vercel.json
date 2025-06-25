@@ -2,19 +2,21 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "dist/server.js",
       "use": "@vercel/node",
       "config": {
-        "installCommand": "curl -fsSL https://get.pnpm.io/install.sh | sh - && source ~/.bashrc && pnpm install",
-        "buildCommand": "pnpm build",
-        "startCommand": "pnpm start"
+        "nodeVersion": "18",
+        "includeFiles": [
+          "dist/**",
+          "node_modules/**"
+        ]
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "dist/server.js"
     }
   ]
 }

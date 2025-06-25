@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 import type { RenderType } from '@/types'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -98,7 +99,7 @@ export async function createServer() {
     return { app }
 }
 
-const port = 7775
+const port = process.env.PORT || 7775
 
 createServer().then(({ app }) => app.listen(port, () => {
     console.log(`监听: http://localhost:${port}`)
