@@ -1,0 +1,52 @@
+.retirar_header_back {
+    background: url('./images/retirar/left_arrow.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.retirar_header_article {
+    background: url('./images/retirar/text_icon.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.retirar_section01 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 28px;
+}
+
+.retirar_info_container {
+    box-sizing: border-box;
+    padding: 40px 40px 30px;
+}
+
+.countItem {
+    width: 316px;
+    height: 122px;
+    line-height: 122px;
+    text-align: center;
+    background: url('./images/retirar/btn_bg.png') no-repeat;
+    background-size: 100% 100%;
+
+    &.active {
+        background: url('./images/retirar/btn_bg_active.png') no-repeat;
+        background-size: 100% 100%;
+    }
+}
+
+/* stylelint-disable-next-line no-duplicate-selectors */
+.retirar_info_container {
+    background: url('./images/retirar/bg_big.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.retirar_info_top_right {
+    background: url('./images/retirar/refresh.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.select_value_container {
+    margin: 0 auto;
+    text-indent: 50px;
+    background: url('./images/retirar/bg_31.png') no-repeat;
+    background-size: 100% 100%;
+}

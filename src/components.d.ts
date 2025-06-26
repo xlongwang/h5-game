@@ -11,6 +11,7 @@ declare module 'vue' {
     Bar: typeof import('./components/Bar.tsx')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
+    HeaderInfo: typeof import('./components/HeaderInfo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
