@@ -1,0 +1,14 @@
+.promotion-page {
+    padding-bottom: 200px;
+}
+
+.promotion-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    gap: 10px;
+
+    img {
+        width: 100%;
+    }
+}

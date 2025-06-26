@@ -3,7 +3,7 @@
   "type": "module",
   "version": "3.0.0",
   "packageManager": "pnpm@10.10.0",
-  "author": "lincenying <lincenying@qq.com>",
+  "author": "along <275959691@qq.com>",
   "scripts": {
     "prepare": "npx simple-git-hooks",
     "serve": "nodemon --watch ./server.dev.ts --exec tsx ./server.dev.ts",
