@@ -13,7 +13,7 @@
                 <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
                     <img src="/images/casino/18.png" alt="18">
                 </div>
-                <div class="balance text-gold text-[30px] font-bold">
+                <div class="balance text-gold text-[50px] font-bold">
                     0.00
                 </div>
             </div>
