@@ -18,7 +18,15 @@ import Macros from './vite.config.macros'
 export default defineConfig(({ mode, command }: ConfigEnv) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+    // 确保环境变量正确设置
+    if (!process.env.VITE_APP_ENV) {
+        process.env.VITE_APP_ENV = process.env.NODE_ENV || 'development'
+    }
+
     console.log(`当前编译环境: ${process.env.VITE_APP_ENV}`)
+    console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
+    console.log(`VERCEL: ${process.env.VERCEL}`)
 
     return {
         base: './',

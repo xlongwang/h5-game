@@ -22,6 +22,15 @@ export async function createServer() {
     console.log('Current directory:', __dirname)
     console.log('Process cwd:', process.cwd())
 
+    // 列出当前目录内容
+    try {
+        const currentDirFiles = fs.readdirSync(__dirname)
+        console.log('Current directory files:', currentDirFiles)
+    }
+    catch (e) {
+        console.log('Cannot read current directory:', e)
+    }
+
     // 适配 Vercel 环境的路径
     let clientPath: string | undefined
     let template: string
@@ -30,10 +39,12 @@ export async function createServer() {
     if (process.env.VERCEL) {
         // Vercel 环境：尝试多个可能的路径
         const possiblePaths = [
-            '/var/task/dist/client',
             '/var/task/client',
+            '/var/task/dist/client',
             resolve('../client'),
             resolve('client'),
+            resolve('../../client'),
+            resolve('../../../client'),
         ]
 
         console.log('Trying possible client paths:', possiblePaths)
@@ -41,10 +52,31 @@ export async function createServer() {
         for (const testPath of possiblePaths) {
             try {
                 console.log('Testing path:', testPath)
+
+                // 检查目录是否存在
+                if (!fs.existsSync(testPath)) {
+                    console.log('Directory does not exist:', testPath)
+                    continue
+                }
+
+                // 列出目录内容
+                const dirContents = fs.readdirSync(testPath)
+                console.log('Directory contents:', dirContents)
+
                 const indexPath = path.join(testPath, 'index.html')
                 const manifestPath = path.join(testPath, '.vite/ssr-manifest.json')
 
                 console.log('Checking files:', { indexPath, manifestPath })
+
+                if (!fs.existsSync(indexPath)) {
+                    console.log('index.html not found at:', indexPath)
+                    continue
+                }
+
+                if (!fs.existsSync(manifestPath)) {
+                    console.log('ssr-manifest.json not found at:', manifestPath)
+                    continue
+                }
 
                 template = fs.readFileSync(indexPath, 'utf-8')
                 manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
@@ -61,6 +93,16 @@ export async function createServer() {
         }
 
         if (!clientPath) {
+            // 尝试列出更多目录来调试
+            console.log('Trying to list /var/task directory:')
+            try {
+                const taskDir = fs.readdirSync('/var/task')
+                console.log('/var/task contents:', taskDir)
+            }
+            catch (e) {
+                console.log('Cannot read /var/task:', e)
+            }
+
             throw new Error('Could not find client files in any of the expected locations')
         }
     }
@@ -137,9 +179,10 @@ export async function createServer() {
 
             // 适配 Vercel 环境的路径
             const possibleServerPaths = process.env.VERCEL ? [
-                '/var/task/dist/server/entry-server.js',
                 '/var/task/server/entry-server.js',
+                '/var/task/dist/server/entry-server.js',
                 './server/entry-server.js',
+                resolve('../server/entry-server.js'),
             ] : ['./server/entry-server.js']
 
             let render: any

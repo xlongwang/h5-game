@@ -6,6 +6,17 @@ import process from 'node:process'
 
 console.log('Starting Vercel build...')
 
+// 设置 Vercel 环境变量
+process.env.NODE_ENV = 'production'
+process.env.VITE_APP_ENV = 'production'
+process.env.VERCEL = 'true'
+
+console.log('Environment variables set:', {
+    NODE_ENV: process.env.NODE_ENV,
+    VITE_APP_ENV: process.env.VITE_APP_ENV,
+    VERCEL: process.env.VERCEL,
+})
+
 try {
     // 确保 dist 目录存在
     if (!fs.existsSync('dist')) {
