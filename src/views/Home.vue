@@ -5,8 +5,8 @@
             <div class="user-info flex items-center gap-[4px] text-[50px]">
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
-                    <div class="font-bold text-white pb-[5px]">usuario378716</div>
-                    <div>ID:9339417222</div>
+                    <div class="font-bold pb-[5px]">usuario378716</div>
+                    <div class="text-[40px]">ID:9339417222</div>
                 </div>
             </div>
             <div class="flex items-center">
