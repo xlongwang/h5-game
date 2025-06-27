@@ -40,6 +40,24 @@ try {
             console.log(`❌ ${file} missing`)
         }
     })
+
+    // 列出 dist 目录内容
+    console.log('Dist directory contents:')
+    const listDir = (dir, prefix = '') => {
+        const items = fs.readdirSync(dir)
+        items.forEach((item) => {
+            const path = `${dir}/${item}`
+            const stat = fs.statSync(path)
+            if (stat.isDirectory()) {
+                console.log(`${prefix}📁 ${item}/`)
+                listDir(path, `${prefix}  `)
+            }
+            else {
+                console.log(`${prefix}📄 ${item}`)
+            }
+        })
+    }
+    listDir('dist')
 }
 catch (error) {
     console.error('Build failed:', error)

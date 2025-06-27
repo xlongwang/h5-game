@@ -199,4 +199,5 @@ if (!process.env.VERCEL) {
     }))
 }
 
+// 导出 handler 函数供 Vercel 使用
 export default handler
