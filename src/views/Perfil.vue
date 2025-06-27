@@ -5,12 +5,13 @@
 
         <div class="section01">
             <div class="section01_left">
-                <div class="section01_left_top w-[294px] h-[290px]">
+                <div class="section01_left_top w-[294px] h-[290px] flex items-center justify-center">
+                    <img :src="retirarImg" alt="retirar" class="w-[232px] h-[245px]">
                 </div>
                 <div class="section01_left_bottom font-bold text-[50px]">Retirar</div>
             </div>
             <div class="section01_right text-center">
-                <div class="section01_right_top w-[294px] h-[290px]">
+                <div class="section01_right_top w-[294px] h-[290px] flex items-center justify-center">
                     <img :src="depositoImg" alt="deposito" class="w-[294px] h-[268px]">
                 </div>
                 <div class="section01_right_bottom font-bold text-[40px]">Depositio</div>
@@ -56,4 +57,5 @@ defineOptions({
 })
 
 const depositoImg = '/images/perfil/deposito_icon.png'
+const retirarImg = '/images/perfil/retirar.png'
 </script>
