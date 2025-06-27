@@ -103,4 +103,20 @@ function goBack() {
 :deep(.van-collapse-item--border:after){
     border: none;
 }
+
+:deep(.van-cell__right-icon){
+   &::before{
+    content: '';
+    display: block;
+    width: 66px;
+    height: 66px;
+    background: url('./images/apoyo/right_arrow.png') no-repeat;
+    background-size: 100% 100%;
+    transform: rotate(0);
+   }
+}
+
+:deep(.van-collapse-item__title--expanded .van-cell__right-icon:before){
+    transform: rotate(180deg);
+}
 </style>
