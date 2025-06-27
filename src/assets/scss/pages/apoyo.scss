@@ -1,0 +1,11 @@
+.apoyo_back {
+    &::before {
+        display: block;
+        width: 66px;
+        height: 66px;
+        background: url('./images/apoyo/arrow.png') no-repeat;
+        content: '';
+        background-size: 100% 100%;
+        transform: rotate(270deg);
+    }
+}

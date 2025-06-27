@@ -1,0 +1,77 @@
+.perfil-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 0 20px;
+    padding-top: 108px;
+    font-size: 40px;
+    color: #f3d558;
+}
+
+.apoyo_icon {
+    position: absolute;
+    top: 48px;
+    right: 52px;
+    width: 80px;
+    height: 82px;
+    background: url('./images/perfil/apoyo.png') no-repeat center center;
+    background-size: contain;
+}
+
+.section01 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1023px;
+    height: 495px;
+    padding: 0 40px;
+    margin: 24px auto 20px;
+    text-align: center;
+    background: url('./images/perfil/bg01.png') no-repeat;
+    gap: 180px;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+}
+
+.section02 {
+    width: 1023px;
+    height: 421px;
+    padding: 40px 52px;
+    background: url('./images/perfil/bg02.png') no-repeat;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+}
+
+.section02_item {
+    border-bottom: 3px solid #edcc69;
+    height: 116px;
+    line-height: 116px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.section01_right_top {
+    margin: 0 auto;
+}
+
+.section02_item_left {
+    background: url('./images/perfil/speaker.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.section02_item_left2 {
+    background: url('./images/perfil/earth.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.section02_item_left3 {
+    background: url('./images/perfil/sobre_icon.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.section02_item_right_arr {
+    background: url('./images/perfil/arrow_rigth.png') no-repeat;
+    background-size: 100% 100%;
+}

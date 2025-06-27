@@ -2,7 +2,7 @@
     <div class="casino-page pb-[160px]">
         <!-- Header -->
         <div class="header flex items-center justify-between p-[20px]">
-            <div class="user-info flex items-center gap-[4px] text-[30px]">
+            <div class="user-info flex items-center gap-[4px] text-[50px]">
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
                     <div class="font-bold text-white pb-[5px]">usuario378716</div>
@@ -13,7 +13,7 @@
                 <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
                     <img src="/images/casino/18.png" alt="18">
                 </div>
-                <div class="balance text-gold text-[30px] font-bold">
+                <div class="balance text-gold text-[50px] font-bold">
                     0.00
                 </div>
             </div>
@@ -27,7 +27,7 @@
         <!-- Ticker -->
         <div class="ticker flex items-center bg-black/20 px-[20px] py-[20px] text-xs">
             <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
-            <marquee class="flex-1 text-[20px] text-gold" behavior="scroll" direction="left">
+            <marquee class="flex-1 text-[40px] text-gold" behavior="scroll" direction="left" scrollamount="4">
                 15 Retirar $3,000.00 Felicidades 9332437 Retirar $3,000.00
             </marquee>
         </div>
