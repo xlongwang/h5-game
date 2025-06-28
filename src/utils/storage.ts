@@ -7,6 +7,11 @@ const STORAGE_KEYS = {
     DEVICE_ID: 'device_id',
 } as const
 
+// 判断是否在客户端
+function isClient() {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined'
+}
+
 /**
  * 本地存储工具类
  */
@@ -15,6 +20,7 @@ export class StorageUtil {
      * 设置认证信息到localStorage
      */
     static setAuthInfo(authInfo: AuthInfo): void {
+        if (!isClient()) return
         try {
             localStorage.setItem(STORAGE_KEYS.AUTH_INFO, JSON.stringify(authInfo))
         } catch (error) {
@@ -26,6 +32,7 @@ export class StorageUtil {
      * 从localStorage获取认证信息
      */
     static getAuthInfo(): AuthInfo | null {
+        if (!isClient()) return null
         try {
             const authInfoStr = localStorage.getItem(STORAGE_KEYS.AUTH_INFO)
             if (!authInfoStr) return null
@@ -49,6 +56,7 @@ export class StorageUtil {
      * 从localStorage移除认证信息
      */
     static removeAuthInfo(): void {
+        if (!isClient()) return
         try {
             localStorage.removeItem(STORAGE_KEYS.AUTH_INFO)
         } catch (error) {
@@ -60,6 +68,7 @@ export class StorageUtil {
      * 设置用户信息到localStorage
      */
     static setUserInfo(userInfo: any): void {
+        if (!isClient()) return
         try {
             localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo))
         } catch (error) {
@@ -71,6 +80,7 @@ export class StorageUtil {
      * 从localStorage获取用户信息
      */
     static getUserInfo(): any {
+        if (!isClient()) return null
         try {
             const userInfoStr = localStorage.getItem(STORAGE_KEYS.USER_INFO)
             return userInfoStr ? JSON.parse(userInfoStr) : null
@@ -84,6 +94,7 @@ export class StorageUtil {
      * 从localStorage移除用户信息
      */
     static removeUserInfo(): void {
+        if (!isClient()) return
         try {
             localStorage.removeItem(STORAGE_KEYS.USER_INFO)
         } catch (error) {
@@ -95,6 +106,7 @@ export class StorageUtil {
      * 设置设备ID
      */
     static setDeviceId(deviceId: string): void {
+        if (!isClient()) return
         try {
             localStorage.setItem(STORAGE_KEYS.DEVICE_ID, deviceId)
         } catch (error) {
@@ -106,6 +118,7 @@ export class StorageUtil {
      * 获取设备ID
      */
     static getDeviceId(): string | null {
+        if (!isClient()) return null
         try {
             return localStorage.getItem(STORAGE_KEYS.DEVICE_ID)
         } catch (error) {

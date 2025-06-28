@@ -16,22 +16,15 @@ import Macros from './vite.config.macros'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }: ConfigEnv) => {
+    console.log('Vite mode:', mode)
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-    // 确保环境变量正确设置
-    if (!process.env.VITE_APP_ENV) {
-        process.env.VITE_APP_ENV = process.env.NODE_ENV || 'development'
-    }
-
     console.log(`当前编译环境: ${process.env.VITE_APP_ENV}`)
-    console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
-    console.log(`VERCEL: ${process.env.VERCEL}`)
 
     return {
         base: './',
-        server: Build.server,
-        build: Build.build,
+        server: (Build as any).server,
+        build: (Build as any).build,
         css: Css,
         resolve: {
             alias: {
@@ -49,7 +42,7 @@ export default defineConfig(({ mode, command }: ConfigEnv) => {
              */
             viteMockServe({
                 mockPath: 'mock',
-                enable: false,
+                enable: command === 'serve',
                 logger: true,
             }),
             /**
