@@ -3,7 +3,7 @@
         display: block;
         width: 66px;
         height: 66px;
-        background: url('./images/apoyo/arrow.png') no-repeat;
+        background: url('/images/apoyo/arrow.png') no-repeat;
         background-size: contain;
         content: '';
         transform: rotate(270deg);
@@ -11,7 +11,7 @@
 }
 
 .retirar_header_article {
-    background: url('./images/retirar/text_icon.png') no-repeat;
+    background: url('/images/retirar/text_icon.png') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -31,23 +31,23 @@
     height: 122px;
     line-height: 122px;
     text-align: center;
-    background: url('./images/retirar/btn_bg.png') no-repeat;
+    background: url('/images/retirar/btn_bg.png') no-repeat;
     background-size: 100% 100%;
 
     &.active {
-        background: url('./images/retirar/btn_bg_active.png') no-repeat;
+        background: url('/images/retirar/btn_bg_active.png') no-repeat;
         background-size: 100% 100%;
     }
 }
 
 /* stylelint-disable-next-line no-duplicate-selectors */
 .retirar_info_container {
-    background: url('./images/retirar/bg_big.png') no-repeat;
+    background: url('/images/retirar/bg_big.png') no-repeat;
     background-size: 100% 100%;
 }
 
 .retirar_info_top_right {
-    background: url('./images/retirar/refresh.png') no-repeat;
+    background: url('/images/retirar/refresh.png') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -56,7 +56,7 @@
     font-size: 80px;
     line-height: 152px;
     color: #2f1a00;
-    background: url('./images/retirar/retirar_btn.png') no-repeat;
+    background: url('/images/retirar/retirar_btn.png') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -64,7 +64,7 @@
     margin: 0 auto;
     text-align: center;
     text-indent: 50px;
-    background: url('./images/retirar/bg_31.png') no-repeat;
+    background: url('/images/retirar/bg_31.png') no-repeat;
     background-size: 100% 100%;
 }
 
