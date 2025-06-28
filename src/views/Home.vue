@@ -27,7 +27,7 @@
         <!-- Ticker -->
         <div class="ticker flex items-center bg-black/20 px-[20px] py-[20px] text-xs">
             <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
-            <marquee class="flex-1 text-[40px] text-gold" behavior="scroll" direction="left" scrollamount="4">
+            <marquee class="flex-1 text-[40px] text-gold h-[80px]" behavior="scroll" direction="left" scrollamount="4">
                 15 Retirar $3,000.00 Felicidades 9332437 Retirar $3,000.00
             </marquee>
         </div>
