@@ -18,7 +18,7 @@
             </router-view>
         </div>
         <!-- Bottom Navigation -->
-        <div class="bottom-nav text-[30px] text-gold">
+        <div class="bottom-nav text-[50px] text-gold">
             <template v-for="item in navItems" :key="item.name">
                 <!-- 内部路由使用 router-link -->
                 <router-link
@@ -27,7 +27,7 @@
                     :class="{ active: activeNav === item.name }"
                 >
                     <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
-                    <span class="text-[30px]">{{ item.name }}</span>
+                    <span class="text-[40px]">{{ item.name }}</span>
                 </router-link>
                 <!-- 外部链接使用 a 标签 -->
             </template>
@@ -162,7 +162,6 @@ onMounted(async () => {
 
 .nav-item span {
     color: #ffd700;
-    font-size: 30px;
 }
 
 .text-gold {
