@@ -66,14 +66,25 @@ router.isReady().then(() => {
     // 监听水合完成事件 - 适用于所有环境
     const originalConsoleWarn = console.warn
     console.warn = (...args) => {
-        const message = args.join(' ')
-        if (message.includes('Hydration completed but contains mismatches')
-            || message.includes('Hydration node mismatch')
-            || message.includes('Hydration text content mismatch')) {
-            console.log('Hydration mismatch detected but app is working - this is normal for SSR apps with dynamic content')
-            return
+        try {
+            const message = args.map(arg => {
+                if (typeof arg === 'symbol') {
+                    return arg.toString()
+                }
+                return String(arg)
+            }).join(' ')
+            
+            if (message.includes('Hydration completed but contains mismatches')
+                || message.includes('Hydration node mismatch')
+                || message.includes('Hydration text content mismatch')) {
+                console.log('Hydration mismatch detected but app is working - this is normal for SSR apps with dynamic content')
+                return
+            }
+            originalConsoleWarn.apply(console, args)
+        } catch (error) {
+            // 如果转换失败，直接调用原始方法
+            originalConsoleWarn.apply(console, args)
         }
-        originalConsoleWarn.apply(console, args)
     }
 
     try {

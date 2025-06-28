@@ -10,15 +10,21 @@ Object.keys(views).forEach((path: string) => {
     const math = path.match(/\.\/views(.*)\.vue$/)
     if (math) {
         const name = math[1].toLowerCase()
-        routes.push({
-            name: name.replace('/', ''),
-            path: name === '/home' ? '/' : name,
-            component: views[path], // () => import('./views/*.vue')
-        })
+        if (name === '/home') {
+            routes.push({
+                name: 'home',
+                path: '/',
+                component: views[path],
+            })
+        } else {
+            routes.push({
+                name: name.replace('/', ''),
+                path: name,
+                component: views[path],
+            })
+        }
     }
-    return {}
 })
-
 routes = routes.concat([{ path: '/:pathMatch(.*)', redirect: '/' }])
 
 export function createRouter() {

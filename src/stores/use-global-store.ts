@@ -6,6 +6,7 @@ const useStore = defineStore('globalStore', () => {
         globalLoading: true,
         routerLoading: false,
         ISDEV: import.meta.env.VITE_APP_ENV === 'development',
+        ISTEST: import.meta.env.VITE_APP_ENV === 'test',
         ISPRE: import.meta.env.VITE_APP_ENV === 'pre-release',
         ISPROD: import.meta.env.VITE_APP_ENV === 'production',
         cookies: {},
@@ -22,7 +23,13 @@ const useStore = defineStore('globalStore', () => {
     }
 
     return {
-        ...toRefs(state),
+        globalLoading: toRef(state, 'globalLoading'),
+        routerLoading: toRef(state, 'routerLoading'),
+        ISDEV: toRef(state, 'ISDEV'),
+        ISTEST: toRef(state, 'ISTEST'),
+        ISPRE: toRef(state, 'ISPRE'),
+        ISPROD: toRef(state, 'ISPROD'),
+        cookies: toRef(state, 'cookies'),
         setGlobalLoading,
         setRouterLoading,
         setCookies,

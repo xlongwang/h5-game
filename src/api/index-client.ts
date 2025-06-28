@@ -3,9 +3,24 @@ import axios from 'axios'
 
 import qs from 'qs'
 import config from './config-client'
+import { StorageUtil } from '@/utils/storage'
 
 axios.interceptors.request.use(
     (config) => {
+        // 自动添加认证头
+        const accessToken = StorageUtil.getAccessToken()
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`
+        }
+        
+        // 添加调试信息
+        console.log('API请求:', {
+            method: config.method,
+            url: config.url,
+            data: config.data,
+            headers: config.headers
+        })
+        
         return config
     },
     (error) => {
@@ -14,8 +29,24 @@ axios.interceptors.request.use(
 )
 
 axios.interceptors.response.use(
-    response => response,
-    error => Promise.resolve(error.response),
+    response => {
+        // 添加调试信息
+        console.log('API响应:', {
+            status: response.status,
+            url: response.config.url,
+            data: response.data
+        })
+        return response
+    },
+    error => {
+        console.error('API错误:', {
+            status: error.response?.status,
+            url: error.config?.url,
+            data: error.response?.data,
+            message: error.message
+        })
+        return Promise.resolve(error.response)
+    },
 )
 
 function checkStatus(response: AxiosResponse) {

@@ -41,8 +41,10 @@ export async function createServer() {
         const possiblePaths = [
             '/var/task/client',
             '/var/task/dist/client',
+            '/var/task/dist-test/client',
             resolve('../client'),
             resolve('client'),
+            resolve('dist-test/client'),
             resolve('../../client'),
             resolve('../../../client'),
         ]
@@ -247,7 +249,7 @@ async function handler(req: any, res: any) {
 
 // 本地开发时使用
 if (!process.env.VERCEL) {
-    const port = process.env.PORT || 7775
+    const port = process.env.PORT || 7776
     createServer().then(({ app }) => app.listen(port, () => {
         console.log(`监听: http://localhost:${port}`)
     }))

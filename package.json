@@ -8,12 +8,14 @@
     "prepare": "npx simple-git-hooks",
     "serve": "nodemon --watch ./server.dev.ts --exec tsx ./server.dev.ts",
     "build": "npm run build:client && npm run build:server && npm run build:server:entry",
+    "build:test": "cross-env NODE_ENV=test VITE_APP_ENV=test npm run build:client && npm run build:server && npm run build:server:entry",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "cross-env VITE_APP_SSR=true vite build --ssr src/entry-server.ts --outDir dist/server",
     "build:server:entry": "tsup server.prod.ts --format esm --target es2020 --outDir dist && mv dist/server.prod.js dist/server.js",
     "build:vercel": "npm run build:client && npm run build:server && npm run build:server:entry",
     "vercel-build": "node vercel-build.js",
     "start": "cross-env NODE_ENV=production node ./dist/server.js",
+    "start:test": "cross-env NODE_ENV=test VITE_APP_ENV=test node ./dist/server.js",
     "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && tsx ./prerender.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -92,8 +94,7 @@
       ]
     }
   },
-  "simple-git-hooks": {
-  },
+  "simple-git-hooks": {},
   "lint-staged": {
     "*.{[jt]s?(x),vue,md}": [
       "eslint --fix"

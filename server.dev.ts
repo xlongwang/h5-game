@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url'
 import { UTC2Date } from '@lincy/utils'
 import cookieParser from 'cookie-parser'
 import express from 'express'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import logger from 'morgan'
 import requestIp from 'request-ip'
 import { createServer as viteCreateServer } from 'vite'
@@ -32,6 +33,34 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
                 return skipExt.some((ext) => {
                     return req.url.includes(ext)
                 })
+            },
+        }),
+    )
+
+    // 添加API代理中间件
+    app.use(
+        createProxyMiddleware({
+            target: 'https://mineadmin.thebbxxzm.top',
+            changeOrigin: true,
+            pathFilter: ['/api/**'],
+            pathRewrite: {
+                '^/api': '/api',
+            },
+            on: {
+                proxyReq(proxyReq, req) {
+                    proxyReq.setHeader('X-Real-IP', requestIp.getClientIp(req) || 'unknown')
+                    // console.log('代理请求:', {
+                    //     method: proxyReq.method,
+                    //     url: proxyReq.path,
+                    //     target: 'https://mineadmin.thebbxxzm.top'
+                    // })
+                },
+                proxyRes(proxyRes, req) {
+                    // console.log('代理响应:', {
+                    //     status: proxyRes.statusCode,
+                    //     url: req.url
+                    // })
+                },
             },
         }),
     )
@@ -101,4 +130,5 @@ const port = 17775
 
 createServer().then(({ app }) => app.listen(port, () => {
     console.log(`监听: http://localhost:${port}`)
+    console.log('API代理已配置: /api -> https://mineadmin.thebbxxzm.top')
 }))

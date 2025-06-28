@@ -323,6 +323,7 @@
     "onElementRemoval": true,
     "useCountdown": true,
     "Slot": true,
-    "Slots": true
+    "Slots": true,
+    "useUserStore": true
   }
 }

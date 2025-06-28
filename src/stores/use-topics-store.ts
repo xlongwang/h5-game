@@ -58,7 +58,8 @@ export const useTopicStore = defineStore('topicStore', () => {
     }
 
     return {
-        ...toRefs(state),
+        lists: toRef(state, 'lists'),
+        item: toRef(state, 'item'),
         getTopics,
         getTopic,
     }

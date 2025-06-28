@@ -49,7 +49,7 @@ export default defineConfig(({ mode, command }: ConfigEnv) => {
              */
             viteMockServe({
                 mockPath: 'mock',
-                enable: command === 'serve' || process.env.VITE_APP_ENV === 'test',
+                enable: false,
                 logger: true,
             }),
             /**

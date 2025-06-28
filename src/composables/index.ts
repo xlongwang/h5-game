@@ -1,3 +1,5 @@
+import useUserStore from '@/stores/use-user-store'
+
 export function useGlobal() {
     const ins = getCurrentInstance()!
 
@@ -6,13 +8,41 @@ export function useGlobal() {
     const route = useRoute()
     const router = useRouter()
     const globalStore = useGlobalStore()
+    const userStore = useUserStore()
 
     return {
         ctx,
         options,
         route,
         router,
-        globalStore,
+        globalStore: {
+            globalLoading: globalStore.globalLoading,
+            routerLoading: globalStore.routerLoading,
+            cookies: globalStore.cookies,
+            setGlobalLoading: globalStore.setGlobalLoading,
+            setRouterLoading: globalStore.setRouterLoading,
+            setCookies: globalStore.setCookies,
+        },
+        userStore: {
+            userInfo: userStore.userInfo,
+            authInfo: userStore.authInfo,
+            loading: userStore.loading,
+            error: userStore.error,
+            login: userStore.login,
+            fetchUserInfo: userStore.fetchUserInfo,
+            autoLogin: userStore.autoLogin,
+            logout: userStore.logout,
+            clearUserInfo: userStore.clearUserInfo,
+            initAuthInfo: userStore.initAuthInfo,
+            initUserInfo: userStore.initUserInfo,
+            getUserBalance: userStore.getUserBalance,
+            getUserBonus: userStore.getUserBonus,
+            getUserTotalBet: userStore.getUserTotalBet,
+            getUserTotalCharge: userStore.getUserTotalCharge,
+            isLoggedIn: userStore.isLoggedIn,
+            getAccessToken: userStore.getAccessToken,
+            getDeviceId: userStore.getDeviceId,
+        },
     }
 }
 
