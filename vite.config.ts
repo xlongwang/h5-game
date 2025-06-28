@@ -44,6 +44,7 @@ export default defineConfig(({ mode, command }: ConfigEnv) => {
                 mockPath: 'mock',
                 enable: command === 'serve',
                 logger: true,
+                watchFiles: true,
             }),
             /**
              * 检查Vite插件的中间状态

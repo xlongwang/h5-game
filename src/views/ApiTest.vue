@@ -108,7 +108,11 @@ const testUserInfo = async () => {
         loading.value = true
         userInfoResult.value = null
         
-        const result = await userApi.getMemberInfo()
+        // 从存储中获取用户ID，如果没有则使用默认值1进行测试
+        const authInfo = StorageUtil.getAuthInfo()
+        const memberId = authInfo?.user?.id || 1
+        
+        const result = await userApi.getMemberInfo({ memberId })
         userInfoResult.value = result
         
         console.log('用户信息测试完成:', result)

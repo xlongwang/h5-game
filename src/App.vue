@@ -8,13 +8,23 @@
 -->
 <template>
     <div class="main">
-        <div class="body">
+        <!-- Loading 状态 -->
+        <div v-if="isLoading" class="loading-overlay">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <div class="loading-text font-[50px]">{{ loadingText }}</div>
+            </div>
+        </div>
+        
+        <!-- 主内容 -->
+        <div v-else class="body">
             <router-view v-slot="{ Component }" :key="$route.path">
                 <component :is="Component" v-if="Component" />
             </router-view>
         </div>
+        
         <!-- Bottom Navigation -->
-        <div class="bottom-nav text-[30px] text-gold">
+        <div v-if="!isLoading" class="bottom-nav text-[30px] text-gold">
             <template v-for="item in navItems" :key="item.name">
                 <!-- 内部路由使用 router-link -->
                 <router-link
@@ -34,6 +44,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useGlobal } from '@/composables'
 
 defineOptions({
     name: 'AppRoot',
@@ -41,6 +52,9 @@ defineOptions({
 
 const activeNav = ref('Casino')
 const route = useRoute()
+
+const isLoading = ref(true)
+const loadingText = ref('正在初始化...')
 
 const navItems = ref([
     { name: 'Casino', to: '/', activeIcon: '/images/casino/home.png', inactiveIcon: '/images/casino/home.png' },
@@ -50,7 +64,7 @@ const navItems = ref([
     { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/person.png', inactiveIcon: '/images/casino/person.png' },
 ])
 
-const { globalStore } = useGlobal()
+const { userStore  } = useGlobal()
 
 // 监听路由变化，同步 activeNav
 watch(() => route.path, (newPath) => {
@@ -60,20 +74,107 @@ watch(() => route.path, (newPath) => {
     }
 }, { immediate: true })
 
+/**
+ * 智能登录流程
+ */
+async function smartLogin() {
+    try {
+        // 1. 检查本地存储的认证信息
+        loadingText.value = '检查登录状态...'
+        const hasAuthInfo = userStore.initAuthInfo()
+        const hasUserInfo = userStore.initUserInfo()
+        
+        // 2. 如果已有完整的登录信息，直接跳过登录
+        if (hasAuthInfo && hasUserInfo && userStore.isLoggedIn) {
+            console.log('用户已登录，跳过登录流程')
+            return true
+        }
+        
+        // 3. 如果有认证信息但没有用户信息，只获取用户信息
+        if (hasAuthInfo && !hasUserInfo) {
+            // loadingText.value = '获取用户信息...'
+            loadingText.value = '获取用户信息...'
+            await userStore.fetchUserInfo()
+            return true
+        }
+        
+        // 4. 如果没有任何登录信息，执行无感登录
+        if (!hasAuthInfo) {
+            // loadingText.value = '正在登录...'
+            loadingText.value = '加载中...'
+            await userStore.login()
+            
+            // 登录成功后获取用户信息
+            loadingText.value = '加载中...'
+            await userStore.fetchUserInfo()
+        }
+        
+        return true
+    } catch (error) {
+        console.error('登录流程失败:', error)
+        // 登录失败时，仍然允许用户访问页面（可能是网络问题）
+        return false
+    }
+}
+
 async function init() {
-    setTimeout(() => {
-        globalStore.setGlobalLoading(false)
-    }, 200)
+    try {
+        await smartLogin()
+    } catch (error) {
+        console.error('初始化失败:', error)
+    } finally {
+        isLoading.value = false
+    }
 }
 
 onMounted(async () => {
-    init()
+    await init()
 })
 </script>
 
 <style scoped lang="scss">
- .main {
+.main {
     min-height: 100vh;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #333;
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: #ffd700;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .bottom-nav {
@@ -122,20 +223,6 @@ onMounted(async () => {
         background-size: 100% 24px;
     }
 }
-
-// .bottom-nav {
-//     position: fixed;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//     background: #1a1a1a;
-//     display: flex;
-//     justify-content: space-around;
-//     align-items: center;
-//     padding: 10px 0;
-//     border-top: 1px solid #333;
-//     z-index: 1000;
-// }
 
 .nav-item {
     display: flex;

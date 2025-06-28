@@ -110,7 +110,7 @@ function goBack() {
     display: block;
     width: 66px;
     height: 66px;
-    background: url('./images/apoyo/right_arrow.png') no-repeat;
+    background: url('/images/apoyo/right_arrow.png') no-repeat;
     background-size: 100% 100%;
     transform: rotate(0);
    }

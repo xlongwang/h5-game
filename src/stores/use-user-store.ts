@@ -61,7 +61,7 @@ const useUserStore = defineStore('userStore', () => {
                 StorageUtil.setAuthInfo(response.data)
                 state.authInfo = response.data
                 
-                console.log('登录成功:', response.data)
+                console.log('登录成功')
                 return response.data
             } else {
                 throw new Error(response.message || '登录失败')
@@ -83,12 +83,20 @@ const useUserStore = defineStore('userStore', () => {
             state.loading = true
             state.error = null
             
-            const response = await userApi.getMemberInfo()
+            // 从认证信息中获取用户ID
+            const userId = state.authInfo?.user?.id
+            if (!userId) {
+                throw new Error('用户ID不存在，请重新登录')
+            }
+            
+            const response = await userApi.getMemberInfo({ memberId: userId })
             
             if (response.code === 200) {
                 // 保存用户信息到localStorage
                 StorageUtil.setUserInfo(response.data)
                 state.userInfo = response.data
+                
+                console.log('获取用户信息成功')
                 return response.data
             } else {
                 throw new Error(response.message || '获取用户信息失败')

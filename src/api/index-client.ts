@@ -4,21 +4,23 @@ import axios from 'axios'
 import qs from 'qs'
 import config from './config-client'
 import { StorageUtil } from '@/utils/storage'
+import { camelToSnake } from '@/utils'
 
 axios.interceptors.request.use(
     (config) => {
         // 自动添加认证头
         const accessToken = StorageUtil.getAccessToken()
+        
         if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`
         }
         
-        // 添加调试信息
-        console.log('API请求:', {
-            method: config.method,
+        // 添加请求调试信息
+        console.log('🌐 发送请求:', {
+            method: config.method?.toUpperCase(),
             url: config.url,
             data: config.data,
-            headers: config.headers
+            baseURL: config.baseURL
         })
         
         return config
@@ -30,21 +32,33 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
-        // 添加调试信息
-        console.log('API响应:', {
+        // 添加响应调试信息
+        console.log('🌐 收到响应:', {
             status: response.status,
             url: response.config.url,
             data: response.data
         })
+        
+        // 将响应数据中的驼峰命名转换为下划线命名
+        if (response.data) {
+            response.data = camelToSnake(response.data)
+        }
+        
         return response
     },
     error => {
-        console.error('API错误:', {
+        console.error('🌐 请求错误:', {
             status: error.response?.status,
             url: error.config?.url,
             data: error.response?.data,
             message: error.message
         })
+        
+        // 将错误响应数据中的驼峰命名转换为下划线命名
+        if (error.response?.data) {
+            error.response.data = camelToSnake(error.response.data)
+        }
+        
         return Promise.resolve(error.response)
     },
 )
@@ -110,9 +124,10 @@ const _api: API = () => ({
         return checkCode(res)
     },
     async post(url, data) {
+        const fullUrl = url.startsWith('/') ? config.api + url : config.api + '/' + url
         const response = await axios({
             method: 'post',
-            url: config.api + url,
+            url: fullUrl,
             data: qs.stringify(data),
             timeout: config.timeout,
             headers: {
@@ -124,9 +139,10 @@ const _api: API = () => ({
         return checkCode(res)
     },
     async get(url, params) {
+        const fullUrl = url.startsWith('/') ? config.api + url : config.api + '/' + url
         const response = await axios({
             method: 'get',
-            url: config.api + url,
+            url: fullUrl,
             params,
             timeout: config.timeout,
             headers: {

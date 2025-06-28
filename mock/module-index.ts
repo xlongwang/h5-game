@@ -1,258 +1,97 @@
 import type { MockMethod } from './_mock.types'
-import { baseApi } from './_api'
 
 export default [
     {
-        // 左上
-        url: `/${baseApi}/index/getLeftTop`,
+        // 测试mock服务
+        url: `/mock-api/test-mock`,
         method: 'get',
         response: () => {
-            /* 请求参数-GET
-             * id: number = id
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: array = [{
-                    title: string = '标题',
-                    date: string = '日期;
-                }, {
-                    title: string = '标题',
-                    date: string = '日期;
-                }, ]
-            }
-             */
+            console.log('✅ Mock测试接口被调用')
             return {
                 code: 200,
-                message: 'ok',
-                data: Array.from({ length: 10 }, () => ({
-                    title: '@csentence',
-                    date: '@date("yyyy-MM-dd")',
-                })),
+                message: 'Mock服务正常工作',
+                data: { timestamp: Date.now() }
             }
         },
     },
+    
     {
-        // 左下
-        url: `/${baseApi}/index/getLeftBottom`,
-        method: 'get',
-        response: () => {
-            /* 请求参数-GET
-             * id: id
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: object = {
-                    x: [string,string, ...] = '横坐标数组',
-                    city: [number,number, ...] = '市级数据',
-                    county: [number,number, ...] = '县级数据',
-                    township: [number,number, ...] = '乡级数据'
-                }
-            }
-             */
+        // 用户无感登录
+        url: `/mock-api/web/loginApi`,
+        method: 'post',
+        response: ({ body }) => {
+            console.log('✅ Mock登录接口被调用，参数:', body)
+            const deviceId = body.device_id || 'device_' + Date.now()
+            
             return {
                 code: 200,
                 message: 'ok',
                 data: {
-                    'x|5': ['@cword(3, 3)'],
-                    'city|5': ['@integer(60, 100)'],
-                    'county|5': ['@integer(60, 100)'],
-                    'township|5': ['@integer(60, 100)'],
-                },
-            }
-        },
-    },
-    {
-        // 右上
-        url: `/${baseApi}/index/getRightTop`,
-        method: 'get',
-        response: () => {
-            /* 请求参数-GET
-             * id: id
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: object = {
-                    usage: number = '使用率'
+                    access_token: 'mock_access_token_' + Date.now(),
+                    refresh_token: 'mock_refresh_token_' + Date.now(),
+                    expire_at: 3600,
+                    user: {
+                        id: 10,
+                        user_name: `player_${Math.random().toString(36).substr(2, 9)}`
+                    }
                 }
             }
-             */
-            return {
-                code: 200,
-                message: 'ok',
-                data: Array.from({ length: 50 }, () => ({
-                    title: '@csentence',
-                    date: '@date("yyyy-MM-dd")',
-                })),
-            }
         },
-    },
+    } as MockMethod<{ device_id: string }>,
+    
     {
-        // 右下
-        url: `/${baseApi}/index/getRightBottom`,
-        method: 'get',
-        response: () => {
-            /* 请求参数-GET
-             * id: id
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: object = {
-                    vcpu_usage_average: number = 'CPU使用率均值'
-                    vcpu_usage_peak: number = 'CPU使用率峰值'
-                    vmemory_usage_average: number = '内存使用率均值'
-                    memory_usage_peak: number = '内存使用率峰值'
-                    storage_usage_s: number = '存储使用率'
-                }
-            }
-             */
+        // 获取用户信息
+        url: `/mock-api/web/memberinfo`,
+        method: 'post',
+        response: ({ body }) => {
+            console.log('✅ Mock用户信息接口被调用，参数:', body)
+            const memberId = body.memberId || 10
+            
             return {
                 code: 200,
                 message: 'ok',
                 data: {
-                    vcpu_usage_average: '@integer(60, 100)',
-                    vcpu_usage_peak: '@integer(60, 100)',
-                    vmemory_usage_average: '@integer(60, 100)',
-                    memory_usage_peak: '@integer(60, 100)',
-                    storage_usage_s: '@integer(60, 100)',
-                },
-            }
-        },
-    },
-    {
-        // 中间
-        url: `/${baseApi}/index/getCenter`,
-        method: 'get',
-        response: () => {
-            /* 请求参数-GET
-             * id: id
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: object = {
-                    cloud_tenants: number = '云租户数'
-                    virtual_machine: number = '虚拟机数'
-                    host_machine: number = '宿主机数'
-                    tier1_tenant: number = '大数据一级租户'
-                    big_data_server: number = '大数据服务器'
-                    big_data_cluster: number = '大数据集群'
+                    id: memberId,
+                    user_name: `player_${Math.random().toString(36).substr(2, 9)}`,
+                    status: 1,
+                    receiving_account: null,
+                    pix_type: null,
+                    created_at: '2025-06-28T12:00:00.000000Z',
+                    updated_at: '2025-06-28T12:00:00.000000Z',
+                    deleted_at: null,
+                    device_id: 'device_' + Date.now(),
+                    wallet: {
+                        id: 1,
+                        member_id: memberId,
+                        balance: '1250.50',
+                        bonus: '150.00',
+                        total_bet: '5000.00',
+                        total_bet_bonus: '300.00',
+                        total_win: '2500.00',
+                        total_charge: '3000.00',
+                        affiliate_credit: '50.00',
+                        created_at: '2025-06-28T12:00:00.000000Z',
+                        updated_at: '2025-06-28T12:00:00.000000Z',
+                        deleted_at: null
+                    },
+                    wallet_logs: [
+                        {
+                            id: 1,
+                            member_id: memberId,
+                            reason: '游戏投注',
+                            game: 'Slot Machine',
+                            change: '-50.00',
+                            cost_balance: '50.00',
+                            cost_bonus: '0.00',
+                            created_at: '2025-06-28T13:30:00.000000Z',
+                            updated_at: '2025-06-28T13:30:00.000000Z',
+                            deleted_at: null
+                        }
+                    ],
+                    referral: null,
+                    referred_by: null
                 }
             }
-             */
-            return {
-                code: 200,
-                message: 'ok',
-                data: {
-                    cloud_tenants: '@integer(60, 100)',
-                    virtual_machine: '@integer(60, 100)',
-                    host_machine: '@integer(60, 100)',
-                    tier1_tenant: '@integer(60, 100)',
-                    big_data_server: '@integer(60, 100)',
-                    big_data_cluster: '@integer(60, 100)',
-                },
-            }
         },
-    },
-    {
-        // 中间
-        url: `/${baseApi}/index/getEcharts`,
-        method: 'get',
-        response: () => {
-            /* 请求参数-GET
-             * id: id
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: object = {
-                    cloud: number = '云租户数'
-                }
-            }
-             */
-            return {
-                code: 200,
-                message: 'ok',
-                data: {
-                    cloud: 80,
-                },
-            }
-        },
-    },
-    {
-        // 租户总览
-        url: `/${baseApi}/index/tenantOverview`,
-        method: 'get',
-        response: ({ query }) => {
-            /* 请求参数-GET
-             * page: number = 分页
-             * pageSize: number = 每页数量
-             */
-            /* 请求参数-POST
-             * Null
-             */
-            /* 返回数据
-            {
-                code: 200, // 状态码, 200正常, 401未登录, 其他为异常
-                message: 'ok', // 异常时抛出的错误信息
-                data: object = {
-                    total: 100, // 总条数
-                    currPage: 1, // 当前页数
-                    pageSize: 10, // 每页数量
-                    data: array = [{
-                        id: string = '主键',
-                        date: string = '日期;
-                        name: string = '姓名;
-                        address: string = '地址;
-                    }]
-                }
-            }
-             */
-            const page = query.page || 1
-            const pageSize = query.pageSize || 10
-            return {
-                code: 200,
-                message: 'ok',
-                data: {
-                    total: 100,
-                    pageSize,
-                    currPage: Number(page),
-                    data: Array.from({ length: pageSize }, (_, index) => ({
-                        id: (page - 1) * pageSize + index + 1,
-                        date: '@date',
-                        name: '@cname()',
-                        address: '@city()',
-                    })),
-                },
-            }
-        },
-    } as MockMethod<{ page: number, pageSize: number }>,
-] as MockMethod[]
+    } as MockMethod<{ memberId: number }>,
+] as MockMethod[] 

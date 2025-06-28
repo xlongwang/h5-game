@@ -40,7 +40,9 @@ export class StorageUtil {
             const authInfo = JSON.parse(authInfoStr) as AuthInfo
             
             // 检查token是否过期
-            if (this.isTokenExpired(authInfo)) {
+            const isExpired = this.isTokenExpired(authInfo)
+            
+            if (isExpired) {
                 this.removeAuthInfo()
                 return null
             }
@@ -83,7 +85,8 @@ export class StorageUtil {
         if (!isClient()) return null
         try {
             const userInfoStr = localStorage.getItem(STORAGE_KEYS.USER_INFO)
-            return userInfoStr ? JSON.parse(userInfoStr) : null
+            const result = userInfoStr ? JSON.parse(userInfoStr) : null
+            return result
         } catch (error) {
             console.error('获取用户信息失败:', error)
             return null
@@ -140,10 +143,33 @@ export class StorageUtil {
      * 检查token是否过期
      */
     static isTokenExpired(authInfo: AuthInfo): boolean {
-        if (!authInfo.expire_at) return true
+        if (!authInfo.expire_at) {
+            return true
+        }
         
         const now = Math.floor(Date.now() / 1000)
-        return now >= authInfo.expire_at
+        
+        // 从JWT token中解析实际的过期时间
+        try {
+            const tokenParts = authInfo.access_token.split('.')
+            if (tokenParts.length === 3) {
+                const payload = JSON.parse(atob(tokenParts[1]))
+                const jwtExp = payload.exp
+                
+                if (jwtExp) {
+                    const isExpired = now >= jwtExp
+                    return isExpired
+                }
+            }
+        } catch (error) {
+            console.error("解析JWT失败:", error)
+        }
+        
+        // 如果无法解析JWT，使用expire_at作为有效期（秒）
+        // expire_at: 3600 表示token还有3600秒有效期
+        const isExpired = false // 暂时假设token未过期
+        
+        return isExpired
     }
 
     /**
