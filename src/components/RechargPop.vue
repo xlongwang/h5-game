@@ -2,7 +2,7 @@
   <div>
     <van-popup v-model:show="showBottom" position="bottom" class="recharge_popup">
       <div class="relative">
-        <div class="pop_close"></div>
+        <div class="pop_close" @click="handleClose"></div>
         <div class="re_pop_content w-[656px] p-[29px]">
           <div class="peposito_title mx-auto mt-[50px]">peposito</div>
           <div class="text-center text-[30px] pt-[35px]">
@@ -85,6 +85,10 @@ const activeVal = ref(100);
 
 const handleRe = (item: any) => {
   activeVal.value = item.val;
+};
+
+const handleClose = () => {
+  showBottom.value = false;
 };
 
 const handleSuccess = () => {
