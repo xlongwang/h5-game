@@ -134,8 +134,8 @@ export class StorageUtil {
      * 生成设备ID
      */
     static generateDeviceId(): string {
-        // const deviceId = `device_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-        const deviceId = 'gameasdfsa'
+        const deviceId = `device_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+        // const deviceId = 'gameasdfsa'
         this.setDeviceId(deviceId)
         return deviceId
     }
