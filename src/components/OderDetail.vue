@@ -34,7 +34,7 @@ const formatVal = (val: number) => {
   return val.toFixed(2);
 };
 
-const showCenter = ref(true);
+const showCenter = ref(false);
 
 const handleCancel = () => {
   showCenter.value = false;
