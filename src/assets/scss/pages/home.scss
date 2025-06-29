@@ -89,6 +89,9 @@ body {
     }
 
     .game-grid {
+        // max-height: 900px;
+        // overflow-y: auto;
+
         .van-grid-item__content {
             padding: 0;
             background-color: transparent;
@@ -133,4 +136,12 @@ body {
 .ticker {
     height: 80px;
     line-height: 1.9;
+}
+
+.recharge_entry {
+    position: absolute;
+    top: 2px;
+    right: -100px;
+    width: 90px;
+    height: 115px;
 }

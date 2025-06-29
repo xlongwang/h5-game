@@ -13,8 +13,9 @@
                 <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
                     <img src="/images/casino/18.png" alt="18">
                 </div>
-                <div class="balance text-gold text-[50px] font-bold">
+                <div class="balance relative text-gold text-[50px] font-bold">
                     0.00
+                    <span class="recharge_entry" @click="handleRecharge"></span>
                 </div>
             </div>
         </div>
@@ -66,6 +67,9 @@
                 </van-grid>
             </van-swipe-item>
         </van-swipe>
+
+       <RechargPop ref="rechargPopRef" />
+
     </div>
 </template>
 
@@ -77,9 +81,10 @@ import '@/assets/scss/pages/home.scss'
 defineOptions({
     name: 'Home',
 })
-
+const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
+const oderDetailRef = ref()
 
 const gameTabs = ref([
     { key: 'pg', title: 'PG', icon: '/images/casino/bg.png' },
@@ -131,6 +136,11 @@ function handleTabChange(index: number) {
         console.log('swipeRef.value', swipeRef.value, index)
         swipeRef.value.swipeTo(index)
     }
+}
+
+const handleRecharge = () => {
+    rechargPopRef.value.open()
+    console.log('handleRecharge')
 }
 
 // 处理滑动切换
