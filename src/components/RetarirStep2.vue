@@ -25,7 +25,7 @@
                   <div class="form-input">
                     <van-field
                       v-model="amount"
-                      placeholder="$2.00"
+                      :placeholder="`$${props.curValue}`"
                       readonly
                       input-align="left"
                       class="custom-field"
@@ -126,6 +126,7 @@
 import { ref } from "vue";
 const props = defineProps<{
   onSuccess?: () => void;
+  curValue: number;
 }>();
 const show = ref(false);
 

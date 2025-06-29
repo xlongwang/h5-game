@@ -79,7 +79,7 @@
             </ul>
         </div>
 
-        <RetarirStep2 ref="retarirStep2Ref" />
+        <RetarirStep2 ref="retarirStep2Ref" :on-success="handleSuccess" :cur-value="curValue" />
     </div>
 </template>
 
@@ -95,18 +95,27 @@ defineOptions({
 })
 const coinImg = '/images/retirar/coin.png'
 const router = useRouter()
-const curValue = ref(0)
+const curValue = ref(2)
 const retarirStep2Ref = ref()
 function refreshCoin() {
     showSuccessToast('Refrescar')
     console.log('refreshCoin')
 }
 
+function handleSuccess() {
+    console.log('handleSuccess')
+    // curValue.value = 1
+    setTimeout(() => {
+        activeCount.value = 1
+        curValue.value = 2
+    }, 500)
+}
+
 function handleRetarir() {
     retarirStep2Ref.value.open()
 }
 
-const activeCount = ref(0)
+const activeCount = ref(1)
 const countList = ref([
     {
         id: 1,

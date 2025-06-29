@@ -21,7 +21,7 @@
         </div>
 
         <!-- Bonus Banner -->
-        <div class="bonus-banner flex items-center justify-between">
+        <div class="bonus-banner flex items-center justify-between" @click="handleClick('/promotion')">
             <img src="/images/casino/a1.png" width="100%" height="100%" alt="Chip">
         </div>
 
@@ -83,6 +83,12 @@ defineOptions({
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
+
+const router = useRouter()
+
+const handleClick = (path: string) => {
+    router.push(path)
+}
 
 const gameTabs = ref([
     { key: 'pg', title: 'PG', icon: '/images/casino/bg.png' },

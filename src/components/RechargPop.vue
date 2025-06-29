@@ -84,6 +84,12 @@ const reItem = [
     },
 ]
 
+watch(showBottom, (newVal) => {
+    if (newVal) {
+        activeVal.value = 100
+    }
+})
+
 const activeVal = ref(100)
 
 function handleRe(item: any) {

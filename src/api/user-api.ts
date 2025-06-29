@@ -35,7 +35,7 @@ export const userApi = {
         console.log('调用用户信息API，memberId:', memberId)
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.post<UserInfo>('/web/memberinfo', {
-            memberId: memberId,
+            player_id: memberId,
         })
         console.log('用户信息API响应:', result)
         return result
