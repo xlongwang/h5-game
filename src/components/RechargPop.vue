@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <Teleport to="body">
         <van-popup v-model:show="showBottom" position="bottom" class="recharge_popup">
             <div class="relative">
                 <div class="pop_close" @click="handleClose"></div>
@@ -39,7 +39,7 @@
         </van-popup>
 
         <OderDetail ref="oderDetailRef" :active-val="activeVal" :on-success="handleSuccess" />
-    </div>
+      </Teleport>
 </template>
 
 <script setup lang="ts">
