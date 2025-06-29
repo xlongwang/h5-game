@@ -14,11 +14,21 @@
     font-weight: normal;
     src: url('/alibaba.TTF') format('truetype');
 }
+@font-face {
+    font-family: cinze;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/cinze.ttf') format('truetype');
+}
 
 body {
     font-family: Alibaba, sans-serif !important;
     color: #f2d458;
     background-color: #000;
+}
+
+.font_cinze {
+    font-family: cinze, sans-serif !important;
 }
 
 .main {

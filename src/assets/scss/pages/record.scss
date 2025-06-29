@@ -1,0 +1,72 @@
+.record_page {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+
+    // overflow-y: auto;
+}
+
+.record_content {
+    position: relative;
+    z-index: 3;
+    width: 980px;
+    height: 1315px;
+    margin: 0 auto;
+    background: url('/images/record/bg.png') no-repeat;
+    background-size: contain;
+    background-position: center;
+    box-sizing: border-box;
+}
+
+.record_list {
+    height: 1170px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.record_content_title {
+    display: flex;
+    align-items: center;
+    height: 107px;
+    padding-left: 4px;
+    text-align: center;
+}
+
+.record_content_title_item {
+    flex: 1;
+
+    &:nth-child(3) {
+        text-indent: 9px;
+    }
+
+    &:nth-child(4) {
+        text-indent: 18px;
+    }
+}
+
+.record_item {
+    display: flex;
+    align-items: center;
+    height: 107px;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.record_emtpy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1170px;
+}
+
+.record_bt {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 980px;
+    height: 453px;
+    background: url('/images/record/bottom_img.png') no-repeat;
+    transform: translateX(-50%);
+    background-size: contain;
+    background-position: center;
+}

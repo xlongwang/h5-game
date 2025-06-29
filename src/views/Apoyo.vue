@@ -8,9 +8,7 @@
 -->
 <template>
     <div class="apoyo_page p-[20px] text-[50px]">
-        <div class="apoyo_page_top">
-            <div class="apoyo_back flex items-center justify-center w-[135px] h-[135px]" @click="goBack"></div>
-        </div>
+        <HeaderBack />
         <div class="mb-[60px] w-[1045px] h-[608px] mx-auto">
             <img :src="bannerImg" alt="" class="w-full">
         </div>

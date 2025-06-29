@@ -3,6 +3,7 @@ import { createApp } from './main'
 
 import 'uno.css'
 import 'vant/es/dialog/style'
+import 'vant/es/toast/style'
 import './assets/scss/global/global.scss'
 import './assets/scss/style.scss'
 
@@ -67,13 +68,13 @@ router.isReady().then(() => {
     const originalConsoleWarn = console.warn
     console.warn = (...args) => {
         try {
-            const message = args.map(arg => {
+            const message = args.map((arg) => {
                 if (typeof arg === 'symbol') {
                     return arg.toString()
                 }
                 return String(arg)
             }).join(' ')
-            
+
             if (message.includes('Hydration completed but contains mismatches')
                 || message.includes('Hydration node mismatch')
                 || message.includes('Hydration text content mismatch')) {
@@ -81,7 +82,8 @@ router.isReady().then(() => {
                 return
             }
             originalConsoleWarn.apply(console, args)
-        } catch (error) {
+        }
+        catch (error) {
             // 如果转换失败，直接调用原始方法
             originalConsoleWarn.apply(console, args)
         }

@@ -1,20 +1,3 @@
-.retirar_header_back {
-    &::before {
-        display: block;
-        width: 66px;
-        height: 66px;
-        background: url('/images/apoyo/arrow.png') no-repeat;
-        background-size: contain;
-        content: '';
-        transform: rotate(270deg);
-    }
-}
-
-.retirar_header_article {
-    background: url('/images/retirar/text_icon.png') no-repeat;
-    background-size: 100% 100%;
-}
-
 .retirar_section01 {
     display: flex;
     flex-wrap: wrap;

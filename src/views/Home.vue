@@ -68,8 +68,7 @@
             </van-swipe-item>
         </van-swipe>
 
-       <RechargPop ref="rechargPopRef" />
-
+        <RechargPop ref="rechargPopRef" />
     </div>
 </template>
 
@@ -84,7 +83,6 @@ defineOptions({
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
-const oderDetailRef = ref()
 
 const gameTabs = ref([
     { key: 'pg', title: 'PG', icon: '/images/casino/bg.png' },
@@ -138,7 +136,7 @@ function handleTabChange(index: number) {
     }
 }
 
-const handleRecharge = () => {
+function handleRecharge() {
     rechargPopRef.value.open()
     console.log('handleRecharge')
 }

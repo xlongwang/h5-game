@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-24 00:05:19
+ * @LastEditTime: 2025-06-29 15:04:18
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,16 +15,16 @@
                 <div class="loading-text font-[50px]">{{ loadingText }}</div>
             </div>
         </div>
-        
+
         <!-- 主内容 -->
         <div v-else class="body">
             <router-view v-slot="{ Component }" :key="$route.path">
                 <component :is="Component" v-if="Component" />
             </router-view>
         </div>
-        
+
         <!-- Bottom Navigation -->
-        <div v-if="!isLoading" class="bottom-nav text-[30px] text-gold">
+        <div v-if="!isLoading && $route.path !== '/record'" class="bottom-nav text-[30px] text-gold">
             <template v-for="item in navItems" :key="item.name">
                 <!-- 内部路由使用 router-link -->
                 <router-link
@@ -64,7 +64,7 @@ const navItems = ref([
     { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/person.png', inactiveIcon: '/images/casino/person.png' },
 ])
 
-const { userStore  } = useGlobal()
+const { userStore } = useGlobal()
 
 // 监听路由变化，同步 activeNav
 watch(() => route.path, (newPath) => {
@@ -83,13 +83,13 @@ async function smartLogin() {
         loadingText.value = '检查登录状态...'
         const hasAuthInfo = userStore.initAuthInfo()
         const hasUserInfo = userStore.initUserInfo()
-        
+
         // 2. 如果已有完整的登录信息，直接跳过登录
         if (hasAuthInfo && hasUserInfo && userStore.isLoggedIn) {
             console.log('用户已登录，跳过登录流程')
             return true
         }
-        
+
         // 3. 如果有认证信息但没有用户信息，只获取用户信息
         if (hasAuthInfo && !hasUserInfo) {
             // loadingText.value = '获取用户信息...'
@@ -97,20 +97,21 @@ async function smartLogin() {
             await userStore.fetchUserInfo()
             return true
         }
-        
+
         // 4. 如果没有任何登录信息，执行无感登录
         if (!hasAuthInfo) {
             // loadingText.value = '正在登录...'
             loadingText.value = '加载中...'
             await userStore.login()
-            
+
             // 登录成功后获取用户信息
             loadingText.value = '加载中...'
             await userStore.fetchUserInfo()
         }
-        
+
         return true
-    } catch (error) {
+    }
+    catch (error) {
         console.error('登录流程失败:', error)
         // 登录失败时，仍然允许用户访问页面（可能是网络问题）
         return false
@@ -120,9 +121,11 @@ async function smartLogin() {
 async function init() {
     try {
         await smartLogin()
-    } catch (error) {
+    }
+    catch (error) {
         console.error('初始化失败:', error)
-    } finally {
+    }
+    finally {
         isLoading.value = false
     }
 }

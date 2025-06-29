@@ -63,7 +63,8 @@ body {
     max-width: 750px;
     max-width: var(--max-window);
     min-width: var(--min-window);
-    padding-bottom: var(--tabbar-height);
+
+    // padding-bottom: var(--tabbar-height);
     overflow-y: scroll;
     background: #000;
     box-sizing: border-box;
