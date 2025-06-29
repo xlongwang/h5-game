@@ -8,9 +8,10 @@
 -->
 <template>
     <div id="promotion-debug" class="promotion-page">
+        <header-back />
         <ul class="promotion-list">
             <li v-for="item in list" :key="item.id">
-                <img :src="item.url" :alt="item.name">
+                <img :src="item.url" :alt="item.name" @click="handleClick(item)">
             </li>
         </ul>
     </div>
@@ -25,36 +26,22 @@ import '@/assets/scss/pages/promotion.scss'
 
 const currentTime = ref('')
 // const route = useRoute()
+const router = useRouter()
 
+const handleClick = (item: any) => {
+    router.push(item.path)
+}
 const list = ref([{
     id: '1',
     name: 'a1',
     url: '/images/promotion/a1.png',
+    path: '/activity01'
 },
 {
     id: '2',
     name: 'a2',
     url: '/images/promotion/a2.png',
-},
-{
-    id: '3',
-    name: 'a3',
-    url: '/images/promotion/a1.png',
-},
-{
-    id: '4',
-    name: 'a4',
-    url: '/images/promotion/a2.png',
-},
-{
-    id: '5',
-    name: 'a5',
-    url: '/images/promotion/a1.png',
-},
-{
-    id: '6',
-    name: 'a6',
-    url: '/images/promotion/a2.png',
+    path: '/activity02'
 }])
 
 onMounted(() => {
@@ -64,7 +51,6 @@ onMounted(() => {
 
 <style scoped>
 #promotion-debug {
-
     text-align: left;
     position: relative;
     z-index: 999;

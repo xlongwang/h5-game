@@ -223,7 +223,7 @@ defineExpose({
   &.phone_item_form {
     ::v-deep(.van-cell) {
       color: #ffd700;
-      background: #190b00;
+      background: #190b00 !important;
       border-radius: 15px !important;
       border: 3px solid #b9851f !important;
       padding: 10px 14px !important;

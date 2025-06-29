@@ -1,7 +1,7 @@
 <template>
     <div class="perfil-page">
-        <div class="apoyo_icon"></div>
-        <HeaderInfo />
+        <div class="apoyo_icon" @click="handleClick('/apoyo')"></div>
+        <!-- <HeaderBack /> -->
 
         <div class="section01">
             <div class="section01_left">
@@ -51,10 +51,15 @@
 // 从 public 目录引用图片
 // import retirarImg from '@/assets/images/perfil/retirar_icon.png'
 import '@/assets/scss/pages/perfil.scss'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 defineOptions({
     name: 'Perfil',
 })
+
+function handleClick(path: string) {
+    router.push(path)
+}
 
 const depositoImg = '/images/perfil/deposito_icon.png'
 const retirarImg = '/images/perfil/retirar.png'
