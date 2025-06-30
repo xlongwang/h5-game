@@ -35,11 +35,13 @@
 
 .section02 {
     width: 1023px;
-    height: 421px;
+    min-height: 200px;
     padding: 40px 52px;
     margin: 0 auto;
-    background: url('/images/perfil/bg02.png') no-repeat;
-    background-size: 100% 100%;
+    overflow: hidden;
+    border: 16px solid transparent; // 16px为四角尺寸，按实际图调整
+    border-radius: 32px;
+    border-image: url('/images/perfil/bg02.png') 16 fill stretch;
     box-sizing: border-box;
 }
 
@@ -74,5 +76,10 @@
 
 .section02_item_right_arr {
     background: url('/images/perfil/arrow_rigth.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.section02_item_lock {
+    background: url('/images/perfil/lock.png') no-repeat;
     background-size: 100% 100%;
 }

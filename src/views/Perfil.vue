@@ -35,6 +35,16 @@
                     <div class="section02_item_right_arr w-[40px] h-[47px] ml-[16px]"></div>
                 </div>
             </div>
+
+            <div class="section02_item flex items-center text-[50px]">
+                <div class="section02_item_lock w-[78px] h-[78px] mr-[16px]"></div>
+                <div class="section02_item_con flex-1">Cuenta</div>
+                <div class="section02_item_right flex items-center">
+                    <!-- <div class="section02_item_right_top">Spanish</div> -->
+                    <div class="section02_item_right_arr w-[40px] h-[47px] ml-[16px]"></div>
+                </div>
+            </div>
+
             <div class="section02_item flex items-center text-[50px]" @click="handleClick('/sobre')">
                 <div class="section02_item_left3 w-[88px] h-[73px] mr-[16px]"></div>
                 <div class="section02_item_con flex-1">Sobre</div>
