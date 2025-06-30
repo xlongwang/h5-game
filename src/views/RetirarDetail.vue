@@ -1,5 +1,4 @@
 <template>
-  
   <div class="retirar-detail-page">
     <header-back />
     <div class="retirar-detail-page-con">
@@ -69,7 +68,7 @@
           </div>
         </div>
 
-        <div class="retirar-btn text-[50px] font-bold">
+        <div class="retirar-btn text-[50px] font-bold" @click="submit">
           Usar canal de retiro VIP
         </div>
         <!-- 使用 VIP 渠道提款 -->
@@ -79,6 +78,11 @@
 </template>
 <script setup lang="ts">
 import { getCoinNum } from "@/utils";
+import { userApi } from "@/api/user-api";
+import { StorageUtil } from '@/utils/storage'
+import { useGlobal } from "@/composables";
+
+const { userStore } = useGlobal();
 
 const percent = ref(0.1);
 
@@ -90,9 +94,30 @@ const timer = setInterval(() => {
   }
 }, 500);
 
+const userInfo = computed(() => {
+    return StorageUtil.getUserInfo()
+})
+
+const submit = async () => {
+  console.log('userInfo', userInfo.value)
+  const result = await userApi.createPayout({
+    amount: "100",
+    phone: userInfo.value?.receiving_account?.phone,
+    pix_type: "PHONE", //PHONE、EMAIL、CPF。
+    player_id: userInfo.value?.id,
+    receiving_account: userInfo.value?.receiving_account?.receiving_account,
+    receiving_name:  userInfo.value?.receiving_account?.receiving_name,
+  });
+  console.log("resule", result);
+};
+
 defineOptions({
   name: "RetirarDetailPage",
 });
+
+onMounted(() => {
+  console.log('userInfo', userInfo.value)
+})
 
 const coin = "/images/retirar/coin.png";
 </script>
@@ -220,7 +245,7 @@ const coin = "/images/retirar/coin.png";
   }
 }
 
-.retirar-detail-log-item{
+.retirar-detail-log-item {
   padding-bottom: 30px;
 }
 

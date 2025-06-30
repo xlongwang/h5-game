@@ -126,6 +126,11 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
+import useUserStore from "@/stores/use-user-store";
+
+const userStore = useUserStore();
+console.log("userStore", userStore);
+
 const router = useRouter();
 const props = defineProps<{
   onSuccess?: () => void;
@@ -148,17 +153,30 @@ function open() {
 }
 
 async function handleSubmit() {
-  show.value = false;
-  console.log(11111, 'submit ');
-  await props.onSuccess?.();
-  router.push('/retirarDetail')
+  // 调用示例
+  try {
+    await userStore.updateUserInfo({
+      phone: "13800138000",
+      pix_type: "CPF",
+      player_id: "31",
+      receiving_account: "12345678901",
+      receiving_name: "张三测试",
+    });
+    console.log("用户信息更新成功");
+  } catch (error) {
+    console.error("更新失败:", error);
+  }
+
+  // show.value = false;
+  // console.log(11111, 'submit ');
+  // await props.onSuccess?.();
+  // router.push('/retirarDetail')
 }
 
 function onConfirmPicker(val: { selectedValues: string }) {
   fieldValue.value = val.selectedValues;
   pickerValue.value = [val.selectedValues as never];
   showPicker.value = false;
-
 }
 
 defineExpose({

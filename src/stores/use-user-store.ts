@@ -1,4 +1,4 @@
-import type { UserInfo, UserStore, AuthInfo, LoginParams } from '@/types'
+import type { UserInfo, UserStore, AuthInfo, LoginParams, UpdateUserInfoParams, OrderListParams, OrderListResponse, OrderItem } from '@/types'
 import { acceptHMRUpdate } from 'pinia'
 import { userApi } from '@/api/user-api'
 import { StorageUtil } from '@/utils/storage'
@@ -9,6 +9,13 @@ const useUserStore = defineStore('userStore', () => {
         authInfo: null,
         loading: false,
         error: null,
+    })
+
+    // 订单列表状态
+    const orderListState = reactive({
+        orders: [] as OrderItem[],
+        loading: false,
+        error: null as string | null,
     })
 
     /**
@@ -207,11 +214,76 @@ const useUserStore = defineStore('userStore', () => {
         return StorageUtil.getDeviceId()
     })
 
+    /**
+     * 更新用户信息
+     */
+    const updateUserInfo = async (params: UpdateUserInfoParams) => {
+        try {
+            state.loading = true
+            state.error = null
+            
+            const response = await userApi.updateUserInfo(params)
+            
+            if (response.code === 200) {
+                console.log('更新用户信息成功')
+                // 更新成功后重新获取用户信息
+                await fetchUserInfo()
+                return response.data
+            } else {
+                throw new Error(response.message || '更新用户信息失败')
+            }
+        } catch (error: any) {
+            state.error = error.message || '网络错误'
+            console.error('更新用户信息失败:', error)
+            throw error
+        } finally {
+            state.loading = false
+        }
+    }
+
+    /**
+     * 获取订单列表
+     */
+    const fetchOrderList = async (params: OrderListParams) => {
+        try {
+            orderListState.loading = true
+            orderListState.error = null
+            
+            const response = await userApi.getOrderList(params)
+            
+            if (response.code === 200) {
+                orderListState.orders = response.data
+                console.log('获取订单列表成功')
+                return response.data
+            } else {
+                throw new Error(response.message || '获取订单列表失败')
+            }
+        } catch (error: any) {
+            orderListState.error = error.message || '网络错误'
+            console.error('获取订单列表失败:', error)
+            throw error
+        } finally {
+            orderListState.loading = false
+        }
+    }
+
+    /**
+     * 清除订单列表
+     */
+    const clearOrderList = () => {
+        orderListState.orders = []
+        orderListState.error = null
+    }
+
     return {
         userInfo: toRef(state, 'userInfo'),
         authInfo: toRef(state, 'authInfo'),
         loading: toRef(state, 'loading'),
         error: toRef(state, 'error'),
+        // 订单列表相关
+        orders: toRef(orderListState, 'orders'),
+        orderListLoading: toRef(orderListState, 'loading'),
+        orderListError: toRef(orderListState, 'error'),
         login,
         fetchUserInfo,
         autoLogin,
@@ -226,6 +298,9 @@ const useUserStore = defineStore('userStore', () => {
         isLoggedIn,
         getAccessToken,
         getDeviceId,
+        updateUserInfo,
+        fetchOrderList,
+        clearOrderList,
     }
 })
 

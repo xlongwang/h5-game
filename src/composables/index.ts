@@ -9,7 +9,6 @@ export function useGlobal() {
     const router = useRouter()
     const globalStore = useGlobalStore()
     const userStore = useUserStore()
-
     return {
         ctx,
         options,

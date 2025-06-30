@@ -95,6 +95,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import { StorageUtil } from '@/utils/storage'
 
 import "@/assets/scss/pages/home.scss";
 
@@ -106,6 +107,14 @@ const activeTabIndex = ref(0);
 const swipeRef = ref();
 
 const router = useRouter();
+
+const userInfo = computed(() => {
+    return StorageUtil.getUserInfo()
+})
+
+onMounted(() => {
+  console.log('userInfo', userInfo.value)
+})
 
 const bannerImgs = [
   "/images/casino/a1.png",

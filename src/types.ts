@@ -149,3 +149,155 @@ export interface ArticleStore {
         [propName: string]: any
     }
 }
+
+// 代收请求参数类型
+export interface PayinParams {
+    /**
+     * 金额
+     */
+    amount: string;
+    /**
+     * 用户id
+     */
+    player_id: string;
+    [property: string]: any;
+}
+
+// 代收响应数据类型
+export interface PayinData {
+    /**
+     * 订单号
+     */
+    order_no: string;
+    /**
+     * 支付地址，需转换为二维码显示不需要显示原地址
+     */
+    payInfo: string;
+    [property: string]: any;
+}
+
+// 代收API响应类型
+export interface PayinResponse {
+    code: number;
+    data: PayinData;
+    message: string;
+    [property: string]: any;
+}
+
+// 代付请求参数类型
+export interface PayoutParams {
+    /**
+     * 金额
+     */
+    amount: string;
+    /**
+     * 手机号
+     */
+    phone: string;
+    /**
+     * 账户类型
+     */
+    pix_type: string;
+    /**
+     * 用户id
+     */
+    player_id: string;
+    /**
+     * 账户号
+     */
+    receiving_account: string;
+    /**
+     * 账户名
+     */
+    receiving_name: string;
+    [property: string]: any;
+}
+
+// 代付API响应类型
+export interface PayoutResponse {
+    code: number;
+    data: string;
+    message: string;
+    [property: string]: any;
+}
+
+// 更新用户信息请求参数类型
+export interface UpdateUserInfoParams {
+    /**
+     * 手机号
+     */
+    phone: string;
+    /**
+     * 可选值PHONE,EMAIL,CPF,CNPJ
+     */
+    pix_type: string;
+    player_id: string;
+    /**
+     * 账户号
+     */
+    receiving_account: string;
+    /**
+     * 账户名
+     */
+    receiving_name: string;
+    [property: string]: any;
+}
+
+// 更新用户信息API响应类型
+export interface UpdateUserInfoResponse {
+    code: number;
+    data: string;
+    message: string;
+    [property: string]: any;
+}
+
+// 订单列表请求参数类型
+export interface OrderListParams {
+    /**
+     * 订单标识1为充值2为提现
+     */
+    genre?: string;
+    /**
+     * 页码(目前固定15条分页)
+     */
+    page?: string;
+    /**
+     * 用户id
+     */
+    player_id: string;
+    [property: string]: any;
+}
+
+// 订单数据项类型
+export interface OrderItem {
+    /**
+     * 金额
+     */
+    amount: number;
+    /**
+     * 创建时间
+     */
+    created_at: number;
+    id: number;
+    /**
+     * 订单号
+     */
+    plantform_no: string;
+    /**
+     * 订单状态
+     */
+    status: string;
+    /**
+     * 更新时间
+     */
+    updated_at: number;
+    [property: string]: any;
+}
+
+// 订单列表API响应类型
+export interface OrderListResponse {
+    code: number;
+    data: OrderItem[];
+    message: string;
+    [property: string]: any;
+}

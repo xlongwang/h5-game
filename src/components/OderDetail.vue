@@ -22,6 +22,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+import { userApi } from '@/api/user-api'
+
 const props = defineProps<{
   activeVal: number;
   onSuccess: () => void;
@@ -36,13 +38,20 @@ const formatVal = (val: number) => {
 
 const showCenter = ref(false);
 
+
+
 const handleCancel = () => {
   showCenter.value = false;
 };
 
-const handleSubmit = () => {
-  showCenter.value = false;
-  props.onSuccess();
+const handleSubmit = async () => {
+  const result = await userApi.createPayin({
+    amount: '100.00',
+    player_id: '31'
+})
+  console.log("🚀 ~ handleSubmit ~ result:", result)
+  // showCenter.value = false;
+  // props.onSuccess();
 };
 
 const open = () => {
