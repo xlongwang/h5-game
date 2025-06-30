@@ -43,7 +43,7 @@
                         <div v-if="tab.icon" class="text-2xl text-gold tab-icon" :class="[tab.key]">
                             <img :class="tab.key" :src="tab.icon" :alt="tab.title">
                         </div>
-                        <span class="text-gold">{{ tab.title }}</span>
+                        <span class="text-gold text-[40px]">{{ tab.title }}</span>
                     </div>
                 </template>
             </van-tab>
@@ -95,7 +95,7 @@ const gameTabs = ref([
     { key: 'jili', title: 'JILI', icon: '/images/casino/pg.png' },
     { key: 'pp', title: 'PP', icon: '/images/casino/star.png' },
     { key: 'job', title: 'JOB', icon: '/images/casino/coin.png' },
-    { key: 'mg', title: 'MG', icon: '/images/casino/coin.png' },
+    { key: 'mg', title: 'MG', icon: '/images/casino/mg.png' },
 ])
 
 const games = ref([

@@ -16,7 +16,6 @@ declare module 'vue' {
     LoginStatus: typeof import('./components/LoginStatus.vue')['default']
     OderDetail: typeof import('./components/OderDetail.vue')['default']
     RechargPop: typeof import('./components/RechargPop.vue')['default']
-    Record: typeof import('./components/Record.vue')['default']
     RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -37,6 +36,5 @@ declare module 'vue' {
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
-    VanUploader: typeof import('vant/es')['Uploader']
   }
 }

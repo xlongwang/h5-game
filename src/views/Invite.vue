@@ -39,7 +39,7 @@
            <span>0</span>
            <span class="text-[#9e6c15]">Disponible</span>
            <span>${{ formatNumber(0) }}</span>
-           <div class="copy-btn">Copiar</div>
+           <div class="copy-btn">Recibir</div>
        </div>
     </div>
 

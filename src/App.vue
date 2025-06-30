@@ -12,7 +12,7 @@
         <div v-if="isLoading" class="loading-overlay">
             <div class="loading-content">
                 <div class="loading-spinner"></div>
-                <div class="loading-text font-[50px]">{{ loadingText }}</div>
+                <div class="loading-text text-[50px] pt-[20px]">{{ loadingText }}</div>
             </div>
         </div>
 
@@ -33,7 +33,7 @@
                     :class="{ active: activeNav === item.name }"
                 >
                     <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
-                    <span class="text-[30px]">{{ item.name }}</span>
+                    <span class="text-[40px]">{{ item.name }}</span>
                 </router-link>
                 <!-- 外部链接使用 a 标签 -->
             </template>
@@ -57,11 +57,11 @@ const isLoading = ref(true)
 const loadingText = ref('正在初始化...')
 
 const navItems = ref([
-    { name: 'Casino', to: '/', activeIcon: '/images/casino/home.png', inactiveIcon: '/images/casino/home.png' },
-    { name: 'Promoción', to: '/promotion', activeIcon: '/images/casino/gift.png', inactiveIcon: '/images/casino/gift.png' },
-    { name: 'Retirar', to: '/retirar', activeIcon: '/images/casino/coin_b.png', inactiveIcon: '/images/casino/coin_b.png' },
-    { name: 'Apoyo', to: '/apoyo', activeIcon: '/images/casino/serve.png', inactiveIcon: '/images/casino/serve.png' },
-    { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/person.png', inactiveIcon: '/images/casino/person.png' },
+    { name: 'Casino', to: '/', activeIcon: '/images/casino/nav/a1_active.png', inactiveIcon: '/images/casino/nav/a1.png' },
+    { name: 'Promoción', to: '/promotion', activeIcon: '/images/casino/nav/a2_active.png', inactiveIcon: '/images/casino/nav/a2.png' },
+    { name: 'Retirar', to: '/retirar', activeIcon: '/images/casino/nav/a3_active.png', inactiveIcon: '/images/casino/nav/a3.png' },
+    { name: 'Apoyo', to: '/apoyo', activeIcon: '/images/casino/nav/a4_active.png', inactiveIcon: '/images/casino/nav/a4.png' },
+    { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/nav/a5_active.png', inactiveIcon: '/images/casino/nav/a5.png' },
 ])
 
 const { userStore } = useGlobal()
@@ -238,17 +238,19 @@ onMounted(async () => {
     color: inherit;
 }
 
-.nav-item:hover {
-    background: rgba(255, 215, 0, 0.1);
-}
-
-.nav-item.active {
-    background: rgba(255, 215, 0, 0.2);
-}
+// .nav-item:hover {
+//     background: rgba(255, 215, 0, 0.1);
+// }
 
 .nav-item span {
     color: #ffd700;
-    font-size: 30px;
+    opacity: 0.6;
+}
+
+.nav-item.active {
+    span{
+        opacity: 1;
+    }
 }
 
 .text-gold {
