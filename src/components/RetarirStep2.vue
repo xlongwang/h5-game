@@ -124,6 +124,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const props = defineProps<{
   onSuccess?: () => void;
   curValue: number;
@@ -144,16 +147,18 @@ function open() {
   show.value = true;
 }
 
-function handleSubmit() {
+async function handleSubmit() {
   show.value = false;
   console.log(11111, 'submit ');
-  props.onSuccess?.();
+  await props.onSuccess?.();
+  router.push('/retirarDetail')
 }
 
 function onConfirmPicker(val: { selectedValues: string }) {
   fieldValue.value = val.selectedValues;
   pickerValue.value = [val.selectedValues as never];
   showPicker.value = false;
+
 }
 
 defineExpose({

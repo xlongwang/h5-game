@@ -80,7 +80,8 @@ watch(() => route.path, (newPath) => {
 async function smartLogin() {
     try {
         // 1. 检查本地存储的认证信息
-        loadingText.value = '检查登录状态...'
+        // loadingText.value = '检查登录状态...'
+        loadingText.value = 'loading...'
         const hasAuthInfo = userStore.initAuthInfo()
         const hasUserInfo = userStore.initUserInfo()
 
@@ -93,7 +94,7 @@ async function smartLogin() {
         // 3. 如果有认证信息但没有用户信息，只获取用户信息
         if (hasAuthInfo && !hasUserInfo) {
             // loadingText.value = '获取用户信息...'
-            loadingText.value = '获取用户信息...'
+            loadingText.value = 'loading...'
             await userStore.fetchUserInfo()
             return true
         }
@@ -101,11 +102,11 @@ async function smartLogin() {
         // 4. 如果没有任何登录信息，执行无感登录
         if (!hasAuthInfo) {
             // loadingText.value = '正在登录...'
-            loadingText.value = '加载中...'
+            loadingText.value = 'loading...'
             await userStore.login()
 
             // 登录成功后获取用户信息
-            loadingText.value = '加载中...'
+            loadingText.value = 'loading...'
             await userStore.fetchUserInfo()
         }
 
@@ -171,7 +172,6 @@ onMounted(async () => {
 
 .loading-text {
     color: #ffd700;
-    font-size: 18px;
     font-weight: 500;
 }
 
