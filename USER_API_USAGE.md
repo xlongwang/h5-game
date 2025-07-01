@@ -39,25 +39,25 @@ src/
 
 ```vue
 <template>
-  <div>
-    <!-- 登录状态组件 -->
-    <LoginStatus />
-    
-    <!-- 用户信息组件 -->
-    <UserInfo v-if="userStore.isLoggedIn" />
-  </div>
+    <div>
+        <!-- 登录状态组件 -->
+        <LoginStatus />
+
+        <!-- 用户信息组件 -->
+        <UserInfo v-if="userStore.isLoggedIn" />
+    </div>
 </template>
 
 <script setup lang="ts">
-import { useGlobal } from '@/composables'
 import LoginStatus from '@/components/LoginStatus.vue'
 import UserInfo from '@/components/UserInfo.vue'
+import { useGlobal } from '@/composables'
 
 const { userStore } = useGlobal()
 
 // 应用启动时自动登录
 onMounted(async () => {
-  await userStore.autoLogin()
+    await userStore.autoLogin()
 })
 </script>
 ```
@@ -70,13 +70,14 @@ import { useGlobal } from '@/composables'
 const { userStore } = useGlobal()
 
 // 手动触发登录
-const handleLogin = async () => {
-  try {
-    await userStore.login()
-    console.log('登录成功')
-  } catch (error) {
-    console.error('登录失败:', error)
-  }
+async function handleLogin() {
+    try {
+        await userStore.login()
+        console.log('登录成功')
+    }
+    catch (error) {
+        console.error('登录失败:', error)
+    }
 }
 ```
 
@@ -114,13 +115,13 @@ import { userApi } from '@/api/user-api'
 // 登录
 const loginResponse = await userApi.login({ device_id: 'device_123' })
 if (loginResponse.code === 200) {
-  console.log('登录成功:', loginResponse.data)
+    console.log('登录成功:', loginResponse.data)
 }
 
 // 获取用户信息
 const userResponse = await userApi.getMemberInfo()
 if (userResponse.code === 200) {
-  console.log('用户信息:', userResponse.data)
+    console.log('用户信息:', userResponse.data)
 }
 ```
 
@@ -158,48 +159,48 @@ StorageUtil.clearAllUserData()
 ### 登录响应结构
 ```typescript
 interface LoginResponse {
-  code: number
-  message: string
-  data: {
-    access_token: string      // 访问令牌
-    refresh_token: string     // 刷新令牌
-    expire_at: number         // 过期时间戳
-    user: {
-      id: number             // 用户ID
-      user_name: string      // 用户名
+    code: number
+    message: string
+    data: {
+        access_token: string // 访问令牌
+        refresh_token: string // 刷新令牌
+        expire_at: number // 过期时间戳
+        user: {
+            id: number // 用户ID
+            user_name: string // 用户名
+        }
     }
-  }
 }
 ```
 
 ### 认证信息结构
 ```typescript
 interface AuthInfo {
-  access_token: string
-  refresh_token: string
-  expire_at: number
-  user: {
-    id: number
-    user_name: string
-  }
+    access_token: string
+    refresh_token: string
+    expire_at: number
+    user: {
+        id: number
+        user_name: string
+    }
 }
 ```
 
 ### 用户信息结构
 ```typescript
 interface UserInfo {
-  id: number                    // 用户ID
-  user_name: string            // 用户名
-  status: number               // 状态 (1: 正常, 0: 禁用)
-  receiving_account: string | null  // 收款账户
-  pix_type: string | null      // PIX类型
-  created_at: string           // 创建时间
-  updated_at: string           // 更新时间
-  device_id: string            // 设备ID
-  wallet: Wallet               // 钱包信息
-  wallet_logs: WalletLog[]     // 钱包记录
-  referral: any | null         // 推荐人
-  referred_by: any | null      // 被推荐人
+    id: number // 用户ID
+    user_name: string // 用户名
+    status: number // 状态 (1: 正常, 0: 禁用)
+    receiving_account: string | null // 收款账户
+    pix_type: string | null // PIX类型
+    created_at: string // 创建时间
+    updated_at: string // 更新时间
+    device_id: string // 设备ID
+    wallet: Wallet // 钱包信息
+    wallet_logs: WalletLog[] // 钱包记录
+    referral: any | null // 推荐人
+    referred_by: any | null // 被推荐人
 }
 ```
 
@@ -207,10 +208,10 @@ interface UserInfo {
 
 ```typescript
 interface UserStore {
-  userInfo: UserInfo | null    // 用户信息
-  authInfo: AuthInfo | null    // 认证信息
-  loading: boolean             // 加载状态
-  error: string | null         // 错误信息
+    userInfo: UserInfo | null // 用户信息
+    authInfo: AuthInfo | null // 认证信息
+    loading: boolean // 加载状态
+    error: string | null // 错误信息
 }
 ```
 
@@ -231,11 +232,11 @@ interface UserStore {
 ```typescript
 // 自动添加 Authorization: Bearer {token}
 axios.interceptors.request.use((config) => {
-  const accessToken = StorageUtil.getAccessToken()
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`
-  }
-  return config
+    const accessToken = StorageUtil.getAccessToken()
+    if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`
+    }
+    return config
 })
 ```
 
@@ -245,10 +246,11 @@ API调用失败时会自动处理错误：
 
 ```typescript
 try {
-  await userStore.autoLogin()
-} catch (error) {
-  // 错误信息存储在 userStore.error 中
-  console.error('错误:', userStore.error)
+    await userStore.autoLogin()
+}
+catch (error) {
+    // 错误信息存储在 userStore.error 中
+    console.error('错误:', userStore.error)
 }
 ```
 
@@ -267,4 +269,4 @@ try {
 2. **检查isLoggedIn状态**: 根据登录状态显示不同内容
 3. **使用计算属性**: 获取用户数据时使用计算属性
 4. **错误处理**: 始终处理可能的错误情况
-5. **登出清理**: 登出时会自动清理所有相关数据 
+5. **登出清理**: 登出时会自动清理所有相关数据

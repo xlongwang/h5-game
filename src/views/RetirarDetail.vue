@@ -1,126 +1,137 @@
 <template>
-  <div class="retirar-detail-page">
-    <header-back />
-    <div class="retirar-detail-page-con">
-      <div class="retirar-detail-page-con-bg">
-        <div class="retirar-detail-page-c1">
-          <div class="retirar-detail-page-c1-item-title">
-            <span>Arvin</span>
-          </div>
-          <div class="retirar-detail-page-c1-item-content flex items-center gap-[12px]">
-            <div class="retirar-detail-page-c1-item-content-item w-[170px] h-[163px]">
-              <img :src="coin" alt="" class="w-full h-full" />
-            </div>
-            <div class="text-[60px] text-gold font-bold">{{ getCoinNum(5000) }}</div>
-          </div>
-        </div>
-
-        <div class="retirar-detail-page-c2">
-          <div class="retirar-detail-page-c2-item-title text-[50px] pt-[30px] pb-[20px]">
-            Retiro en curso
-          </div>
-          <div class="retirar_progress_container">
-            <div class="retirar_pro_box">
-              <div class="retirar_progress_inner" :style="{ width: `${percent * 100}%` }">
-                <div
-                  class="progess_txt"
-                  :style="{
-                    right: percent > 0.9 ? '0.2rem' : '-1.111111rem',
-                    color: percent > 0.9 ? '#190b00' : '#f2d458',
-                  }"
-                >
-                  {{ Math.floor(percent * 100) }}%
+    <div class="retirar-detail-page">
+        <header-back :has-back-icon="true" />
+        <div class="retirar-detail-page-con">
+            <div class="retirar-detail-page-con-bg">
+                <div class="retirar-detail-page-c1">
+                    <div class="retirar-detail-page-c1-item-title">
+                        <span>Arvin</span>
+                    </div>
+                    <div class="retirar-detail-page-c1-item-content flex items-center gap-[12px]">
+                        <div class="retirar-detail-page-c1-item-content-item w-[170px] h-[163px]">
+                            <img :src="coin" alt="" class="w-full h-full">
+                        </div>
+                        <div class="text-[60px] text-gold font-bold">{{ getCoinNum(amount) }}</div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="retirar-detail-log-container">
-          <div class="log_scroll_container text-[50px]">
-            <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
-                línea más reconocidos del mundo, que ofrece una variedad de juegos
-                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
-                aseguramos de que todos los
-              </div>
-              <div class="time">2025-06-30 10:00:00</div>
-            </div>
-            <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
-                línea más reconocidos del mundo, que ofrece una variedad de juegos
-                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
-                aseguramos de que todos los
-              </div>
-              <div class="time">2025-06-30 10:00:00</div>
-            </div>
-            <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
-                línea más reconocidos del mundo, que ofrece una variedad de juegos
-                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
-                aseguramos de que todos los
-              </div>
-              <div class="time">2025-06-30 10:00:00</div>
-            </div>
-          </div>
-        </div>
+                <div class="retirar-detail-page-c2">
+                    <div class="retirar-detail-page-c2-item-title text-[50px] pt-[30px] pb-[20px]">
+                        Retiro en curso
+                    </div>
+                    <div class="retirar_progress_container">
+                        <div class="retirar_pro_box">
+                            <div class="retirar_progress_inner" :style="{ width: `${percent * 100}%` }">
+                                <div
+                                    class="progess_txt"
+                                    :style="{
+                                        right: percent > 0.9 ? '0.2rem' : '-1.111111rem',
+                                        color: percent > 0.9 ? '#190b00' : '#f2d458',
+                                    }"
+                                >
+                                    {{ Math.floor(percent * 100) }}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="retirar-btn text-[50px] font-bold" @click="submit">
-          Usar canal de retiro VIP
+                <div class="retirar-detail-log-container">
+                    <div class="log_scroll_container text-[50px]">
+                        <div class="retirar-detail-log-item">
+                            <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
+                                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
+                                línea más reconocidos del mundo, que ofrece una variedad de juegos
+                                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
+                                aseguramos de que todos los
+                            </div>
+                            <div class="time">2025-06-30 10:00:00</div>
+                        </div>
+                        <div class="retirar-detail-log-item">
+                            <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
+                                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
+                                línea más reconocidos del mundo, que ofrece una variedad de juegos
+                                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
+                                aseguramos de que todos los
+                            </div>
+                            <div class="time">2025-06-30 10:00:00</div>
+                        </div>
+                        <div class="retirar-detail-log-item">
+                            <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
+                                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
+                                línea más reconocidos del mundo, que ofrece una variedad de juegos
+                                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
+                                aseguramos de que todos los
+                            </div>
+                            <div class="time">2025-06-30 10:00:00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="retirar-btn text-[50px] font-bold" @click="submit">
+                    Usar canal de retiro VIP
+                </div>
+                <!-- 使用 VIP 渠道提款 -->
+            </div>
         </div>
-        <!-- 使用 VIP 渠道提款 -->
-      </div>
     </div>
-  </div>
 </template>
+
 <script setup lang="ts">
-import { getCoinNum } from "@/utils";
-import { userApi } from "@/api/user-api";
+import { useRoute } from 'vue-router'
+import { userApi } from '@/api/user-api'
+import { useGlobal } from '@/composables'
+import { getCoinNum } from '@/utils'
 import { StorageUtil } from '@/utils/storage'
-import { useGlobal } from "@/composables";
 
-const { userStore } = useGlobal();
+defineOptions({
+    name: 'RetirarDetailPage',
+})
 
-const percent = ref(0.1);
+const { userStore } = useGlobal()
+const route = useRoute()
 
-const timer = setInterval(() => {
-  percent.value += 0.1;
-  if (percent.value >= 1) {
-    percent.value = 1;
-    clearInterval(timer);
-  }
-}, 500);
+// 获取URL参数中的amount
+const amount = computed(() => {
+    const amountParam = route.query.amount
+    return amountParam ? Number(amountParam) : 5000
+})
+
+const percent = ref(Math.random() * 0.9 + 0.1)
+
+// const timer = setInterval(() => {
+//   percent.value += 0.1;
+//   if (percent.value >= 1) {
+//     percent.value = 1;
+//     clearInterval(timer);
+//   }
+// }, 500);
 
 const userInfo = computed(() => {
     return StorageUtil.getUserInfo()
 })
 
-const submit = async () => {
-  console.log('userInfo', userInfo.value)
-  const result = await userApi.createPayout({
-    amount: "100",
-    phone: userInfo.value?.receiving_account?.phone,
-    pix_type: "PHONE", //PHONE、EMAIL、CPF。
-    player_id: userInfo.value?.id,
-    receiving_account: userInfo.value?.receiving_account?.receiving_account,
-    receiving_name:  userInfo.value?.receiving_account?.receiving_name,
-  });
-  console.log("resule", result);
-};
-
-defineOptions({
-  name: "RetirarDetailPage",
-});
+async function submit() {
+    console.log('userInfo', userInfo.value)
+    console.log('amount', amount.value)
+    const result = await userApi.createPayout({
+        amount: amount.value.toString(),
+        phone: userInfo.value?.receiving_account?.phone,
+        pix_type: 'PHONE', // PHONE、EMAIL、CPF。
+        player_id: userInfo.value?.id,
+        receiving_account: userInfo.value?.receiving_account?.receiving_account,
+        receiving_name: userInfo.value?.receiving_account?.receiving_name,
+    })
+    console.log('result', result)
+}
 
 onMounted(() => {
-  console.log('userInfo', userInfo.value)
+    console.log('userInfo', userInfo.value)
 })
 
-const coin = "/images/retirar/coin.png";
+const coin = '/images/retirar/coin.png'
 </script>
+
 <style scoped lang="scss">
 .retirar-detail-page {
   padding: 0 10px 300px;

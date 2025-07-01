@@ -226,7 +226,9 @@ export interface UpdateUserInfoParams {
     /**
      * 手机号
      */
-    phone: string;
+    phone?: string | undefined;
+    email?: string | undefined;
+    cpf?: string | undefined;
     /**
      * 可选值PHONE,EMAIL,CPF,CNPJ
      */

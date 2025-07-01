@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                    <div class="re_btn_box flex items-center">
+                    <div class="re_btn_box flex items-center text-[40px]">
                         <div class="re_doller">$</div>
                         <div class="re_inner_cur">{{ formatVal(activeVal) }}</div>
                         <div class="re_inner_ext text-[20px]">Extra+0.00</div>
@@ -123,3 +123,8 @@ defineExpose({
     open,
 })
 </script>
+<style scoped>
+.re_btn{
+    font-size: 35px;
+}
+</style>

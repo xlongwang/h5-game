@@ -1,6 +1,6 @@
 <template>
   <div class="activity01_page">
-    <HeaderBack />
+    <HeaderBack :has-back-icon="true" :title="'Bonus diario'"  />
     <div class="activity01_content">
       <div class="act_header w-[1043px] h-[529px] mx-auto">
         <img class="w-[100%] h-[100%]" :src="headerImg" alt="" />

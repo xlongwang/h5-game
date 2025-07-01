@@ -8,7 +8,7 @@
 -->
 <template>
     <div class="apoyo_page p-[20px] text-[50px]">
-        <HeaderBack />
+        <HeaderBack :has-back-icon="true" title="Servicio al Cliente" />
         <div class="mb-[60px] w-[1045px] h-[608px] mx-auto">
             <img :src="bannerImg" alt="" class="w-full">
         </div>

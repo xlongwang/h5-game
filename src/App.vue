@@ -54,7 +54,7 @@ const activeNav = ref('Casino')
 const route = useRoute()
 
 const isLoading = ref(true)
-const loadingText = ref('正在初始化...')
+const loadingText = ref('Está inicializando....')
 
 const navItems = ref([
     { name: 'Casino', to: '/', activeIcon: '/images/casino/nav/a1_active.png', inactiveIcon: '/images/casino/nav/a1.png' },
@@ -124,7 +124,7 @@ async function init() {
         await smartLogin()
     }
     catch (error) {
-        console.error('初始化失败:', error)
+        console.error('Inicialización fallida.:', error)
     }
     finally {
         isLoading.value = false

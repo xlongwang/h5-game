@@ -1,191 +1,206 @@
 <template>
-  <div class="casino-page pb-[280px]">
-    <!-- Header -->
-    <div class="header flex items-center justify-between p-[20px]">
-      <div class="user-info flex items-center gap-[4px] text-[50px]">
-        <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar" />
-        <div class="pl-[10px]">
-          <div class="font-bold pb-[5px]">usuario378716</div>
-          <div class="text-[40px]">ID:9339417222</div>
-        </div>
-      </div>
-      <div class="flex items-center">
-        <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
-          <!-- <img src="/images/casino/18.png" alt="18"> -->
-        </div>
-        <div class="balance relative text-gold text-[50px] font-bold">
-          0.00
-          <span class="recharge_entry" @click="handleRecharge"></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bonus Banner -->
-    <div
-      class="bonus-banner flex items-center justify-between"
-      @click="handleClick('/promotion')"
-    >
-      <van-swipe
-        class="w-full h-full"
-        :autoplay="3000"
-        indicator-color="#fff"
-        :show-indicators="true"
-        :loop="true"
-      >
-        <van-swipe-item v-for="(img, idx) in bannerImgs" :key="idx">
-          <img :src="img" alt="" class="w-full h-full object-cover" />
-        </van-swipe-item>
-      </van-swipe>
-      <!-- <img src="/images/casino/a1.png" width="100%" height="100%" alt="Chip" /> -->
-    </div>
-
-    <!-- Ticker -->
-    <div class="ticker flex items-center bg-black/20 px-[20px] py-[20px] text-xs">
-      <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
-      <div
-        class="marquee-container flex items-center justify-center flex-1 text-[40px] text-gold h-[80px] overflow-hidden"
-      >
-        <div class="marquee-content line-4">
-          15 Retirar $3,000.00 Felicidades 9332437 Retirar $3,000.00
-        </div>
-      </div>
-    </div>
-
-    <!-- Game Tabs -->
-    <van-tabs v-model:active="activeTabIndex" class="game-tabs" @change="handleTabChange">
-      <van-tab v-for="tab in gameTabs" :key="tab.key" :title="tab.title">
-        <template #title>
-          <div class="flex flex-col items-center">
-            <div v-if="tab.icon" class="text-2xl text-gold tab-icon" :class="[tab.key]">
-              <img :class="tab.key" :src="tab.icon" :alt="tab.title" />
+    <div class="casino-page pb-[280px]">
+        <!-- Header -->
+        <div class="header flex items-center justify-between p-[20px]">
+            <div class="user-info flex items-center gap-[4px] text-[50px]">
+                <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
+                <div class="pl-[10px]">
+                    <div class="font-bold pb-[5px]">{{ userInfo.name }}</div>
+                    <div class="text-[40px]">ID: {{ userInfo.id }}</div>
+                </div>
             </div>
-            <span class="text-gold text-[40px]">{{ tab.title }}</span>
-          </div>
-        </template>
-      </van-tab>
-    </van-tabs>
+            <div class="flex items-center">
+                <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
+                    <!-- <img src="/images/casino/18.png" alt="18"> -->
+                </div>
+                <div class="balance relative text-gold text-[50px] font-bold">
+                    <!-- {{ formatNumber(userInfo?.wallet?.balance ?? 0) }} -->
+                    <!-- {{ userInfo?.wallet?.balance }} -->
+                    ${{
+                        (Number(userInfo?.wallet?.balance) + Number(userInfo?.wallet?.bonus)).toFixed(
+                            2,
+                        ) || "0.00"
+                    }}
+                    <span class="recharge_entry" @click="handleRecharge"></span>
+                </div>
+            </div>
+        </div>
 
-    <!-- Game Content with Swipe -->
-    <van-swipe
-      ref="swipeRef"
-      v-model:active="activeTabIndex"
-      class="game-swipe-container"
-      :show-indicators="false"
-      @change="handleSwipeChange"
-    >
-      <van-swipe-item v-for="tab in gameTabs" :key="tab.key">
-        <van-grid
-          :column-num="3"
-          :gutter="16"
-          class="game-grid pt-[10px]"
-          :border="false"
+        <!-- Bonus Banner -->
+        <div
+            class="bonus-banner flex items-center justify-between"
+            @click="handleClick('/promotion')"
         >
-          <van-grid-item v-for="game in getGamesByProvider(tab.key)" :key="game.id">
-            <div class="game-card">
-              <van-image :src="game.image" />
-            </div>
-          </van-grid-item>
-        </van-grid>
-      </van-swipe-item>
-    </van-swipe>
+            <van-swipe
+                class="w-full h-full"
+                :autoplay="3000"
+                indicator-color="#fff"
+                :show-indicators="true"
+                :loop="true"
+            >
+                <van-swipe-item v-for="(img, idx) in bannerImgs" :key="idx">
+                    <img :src="img" alt="" class="w-full h-full object-cover">
+                </van-swipe-item>
+            </van-swipe>
+            <!-- <img src="/images/casino/a1.png" width="100%" height="100%" alt="Chip" /> -->
+        </div>
 
-    <RechargPop ref="rechargPopRef" />
-  </div>
+        <!-- Ticker -->
+        <div class="ticker flex items-center bg-black/20 px-[20px] py-[20px] text-xs">
+            <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
+            <div
+                class="marquee-container flex items-center justify-center flex-1 text-[40px] text-gold h-[80px]"
+            >
+                <div class="marquee-content">
+                    <span v-for="text in marqueeTexts" :key="text" class="mr-[40px]">{{
+                        text
+                    }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Tabs -->
+        <van-tabs v-model:active="activeTabIndex" class="game-tabs" @change="handleTabChange">
+            <van-tab v-for="tab in gameTabs" :key="tab.key" :title="tab.title">
+                <template #title>
+                    <div class="flex flex-col items-center">
+                        <div v-if="tab.icon" class="text-2xl text-gold tab-icon" :class="[tab.key]">
+                            <img :class="tab.key" :src="tab.icon" :alt="tab.title">
+                        </div>
+                        <span class="text-gold text-[40px]">{{ tab.title }}</span>
+                    </div>
+                </template>
+            </van-tab>
+        </van-tabs>
+
+        <!-- Game Content with Swipe -->
+        <van-swipe
+            ref="swipeRef"
+            v-model:active="activeTabIndex"
+            class="game-swipe-container"
+            :show-indicators="false"
+            @change="handleSwipeChange"
+        >
+            <van-swipe-item v-for="tab in gameTabs" :key="tab.key">
+                <van-grid
+                    :column-num="3"
+                    :gutter="16"
+                    class="game-grid pt-[10px]"
+                    :border="false"
+                >
+                    <van-grid-item v-for="game in getGamesByProvider(tab.key)" :key="game.id">
+                        <div class="game-card">
+                            <van-image :src="game.image" />
+                        </div>
+                    </van-grid-item>
+                </van-grid>
+            </van-swipe-item>
+        </van-swipe>
+
+        <RechargPop ref="rechargPopRef" />
+    </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from 'vue'
+import { getMarqueeTexts } from '@/config'
 import { StorageUtil } from '@/utils/storage'
 
-import "@/assets/scss/pages/home.scss";
+// import { formatNumber } from '@/utils/tools'
+
+import '@/assets/scss/pages/home.scss'
 
 defineOptions({
-  name: "Home",
-});
-const rechargPopRef = ref();
-const activeTabIndex = ref(0);
-const swipeRef = ref();
+    name: 'Home',
+})
+const rechargPopRef = ref()
+const activeTabIndex = ref(0)
+const swipeRef = ref()
 
-const router = useRouter();
+const router = useRouter()
 
 const userInfo = computed(() => {
     return StorageUtil.getUserInfo()
 })
 
+// 生成随机跑马灯数据
+const marqueeTexts = ref(getMarqueeTexts())
+
 onMounted(() => {
-  console.log('userInfo', userInfo.value)
+    console.log('userInfo', userInfo.value)
+    // 每次进入页面重新生成随机数据
+    marqueeTexts.value = getMarqueeTexts()
 })
 
 const bannerImgs = [
-  "/images/promotion/a1.png",
-  "/images/promotion/a2.png",
-  "/images/promotion/a3.png",
-];
+    '/images/promotion/a1.png',
+    '/images/promotion/a2.png',
+    '/images/promotion/a3.png',
+]
 
-const handleClick = (path: string) => {
-  router.push(path);
-};
+function handleClick(path: string) {
+    router.push(path)
+}
 
 const gameTabs = ref([
-  { key: "pg", title: "PG", icon: "/images/casino/bg.png" },
-  { key: "jili", title: "JILI", icon: "/images/casino/pg.png" },
-  { key: "pp", title: "PP", icon: "/images/casino/star.png" },
-  { key: "job", title: "JOB", icon: "/images/casino/coin.png" },
-  { key: "mg", title: "MG", icon: "/images/casino/mg.png" },
-]);
+    { key: 'pg', title: 'PG', icon: '/images/casino/bg.png' },
+    { key: 'jili', title: 'JILI', icon: '/images/casino/pg.png' },
+    { key: 'pp', title: 'PP', icon: '/images/casino/star.png' },
+    { key: 'job', title: 'JOB', icon: '/images/casino/coin.png' },
+    { key: 'mg', title: 'MG', icon: '/images/casino/mg.png' },
+])
 
 const games = ref([
-  { id: 1, image: "/images/casino/active1.png", hot: true, provider: "pg" },
-  { id: 2, image: "/images/casino/active2.png", provider: "pg" },
-  { id: 3, image: "/images/casino/active3.png", hot: true, provider: "pg" },
-  { id: 4, image: "/images/casino/active1.png", provider: "pg" },
-  { id: 5, image: "/images/casino/active2.png", hot: true, provider: "pg" },
-  { id: 6, image: "/images/casino/active3.png", provider: "pg" },
-  { id: 7, image: "/images/casino/active1.png", hot: true, provider: "pg" },
-  { id: 8, image: "/images/casino/active2.png", provider: "pg" },
-  { id: 9, image: "/images/casino/active3.png", provider: "pg" },
-  { id: 3, image: "/images/casino/active3.png", provider: "jili" },
-  { id: 4, image: "/images/casino/active1.png", provider: "jili" },
-  { id: 2, image: "/images/casino/active2.png", provider: "jili" },
-  { id: 5, image: "/images/casino/active1.png", provider: "pp" },
-  { id: 6, image: "/images/casino/active2.png", provider: "pp" },
-  { id: 21, image: "/images/casino/active3.png", provider: "pp" },
-  { id: 7, image: "/images/casino/active3.png", provider: "job" },
-  { id: 8, image: "/images/casino/active1.png", provider: "job" },
-  { id: 22, image: "/images/casino/active2.png", provider: "job" },
-  { id: 9, image: "/images/casino/active1.png", provider: "mg" },
-  { id: 10, image: "/images/casino/active2.png", provider: "mg" },
-  { id: 14, image: "/images/casino/active3.png", provider: "mg" },
-]);
+    { id: 1, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
+    { id: 2, image: '/images/casino/active2.png', provider: 'pg' },
+    { id: 3, image: '/images/casino/active3.png', hot: true, provider: 'pg' },
+    { id: 4, image: '/images/casino/active1.png', provider: 'pg' },
+    { id: 5, image: '/images/casino/active2.png', hot: true, provider: 'pg' },
+    { id: 6, image: '/images/casino/active3.png', provider: 'pg' },
+    { id: 7, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
+    { id: 8, image: '/images/casino/active2.png', provider: 'pg' },
+    { id: 9, image: '/images/casino/active3.png', provider: 'pg' },
+    { id: 3, image: '/images/casino/active3.png', provider: 'jili' },
+    { id: 4, image: '/images/casino/active1.png', provider: 'jili' },
+    { id: 2, image: '/images/casino/active2.png', provider: 'jili' },
+    { id: 5, image: '/images/casino/active1.png', provider: 'pp' },
+    { id: 6, image: '/images/casino/active2.png', provider: 'pp' },
+    { id: 21, image: '/images/casino/active3.png', provider: 'pp' },
+    { id: 7, image: '/images/casino/active3.png', provider: 'job' },
+    { id: 8, image: '/images/casino/active1.png', provider: 'job' },
+    { id: 22, image: '/images/casino/active2.png', provider: 'job' },
+    { id: 9, image: '/images/casino/active1.png', provider: 'mg' },
+    { id: 10, image: '/images/casino/active2.png', provider: 'mg' },
+    { id: 14, image: '/images/casino/active3.png', provider: 'mg' },
+])
 
 // 根据游戏提供商筛选游戏
 const getGamesByProvider = computed(() => (provider: string) => {
-  return games.value.filter((game) => game.provider === provider);
-});
+    return games.value.filter(game => game.provider === provider)
+})
 
 // 监听 activeTabIndex 变化
 watch(activeTabIndex, (newIndex) => {
-  console.log("activeTabIndex changed to:", newIndex);
-});
+    console.log('activeTabIndex changed to:', newIndex)
+})
 
 // 处理标签切换
 function handleTabChange(index: number) {
-  activeTabIndex.value = index;
-  // 直接控制 swipe 切换到对应索引
-  if (swipeRef.value) {
-    console.log("swipeRef.value", swipeRef.value, index);
-    swipeRef.value.swipeTo(index);
-  }
+    activeTabIndex.value = index
+    // 直接控制 swipe 切换到对应索引
+    if (swipeRef.value) {
+        console.log('swipeRef.value', swipeRef.value, index)
+        swipeRef.value.swipeTo(index)
+    }
 }
 
 function handleRecharge() {
-  rechargPopRef.value.open();
-  console.log("handleRecharge");
+    rechargPopRef.value.open()
 }
 
 // 处理滑动切换
 function handleSwipeChange(index: number) {
-  activeTabIndex.value = index;
+    activeTabIndex.value = index
 }
 </script>
 
@@ -231,8 +246,8 @@ function handleSwipeChange(index: number) {
   background: transparent;
 }
 
-:deep(.van-swipe__indicators){
-    bottom: 50px !important;
+:deep(.van-swipe__indicators) {
+  bottom: 50px !important;
 }
 
 :deep(.van-tab) {
@@ -267,17 +282,24 @@ function handleSwipeChange(index: number) {
 .marquee-container {
   position: relative;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .marquee-content {
   display: inline-block;
-  animation: marquee 12s linear infinite;
+  animation: marquee 40s linear infinite;
   white-space: nowrap;
+  padding-right: 50px;
+  /* transform: translateX(100%); */
+}
+
+.marquee-content span {
+  margin-right: 40px;
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(100%);
+    transform: translateX(55%);
   }
   100% {
     transform: translateX(-100%);

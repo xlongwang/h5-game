@@ -1,4 +1,4 @@
-import type { UserInfo, UserStore, AuthInfo, LoginParams, UpdateUserInfoParams, OrderListParams, OrderListResponse, OrderItem } from '@/types'
+import type { AuthInfo, LoginParams, OrderItem, OrderListParams, OrderListResponse, UpdateUserInfoParams, UserInfo, UserStore } from '@/types'
 import { acceptHMRUpdate } from 'pinia'
 import { userApi } from '@/api/user-api'
 import { StorageUtil } from '@/utils/storage'
@@ -49,35 +49,38 @@ const useUserStore = defineStore('userStore', () => {
         try {
             state.loading = true
             state.error = null
-            
+
             // 获取或生成设备ID
             let deviceId = StorageUtil.getDeviceId()
             if (!deviceId) {
                 deviceId = StorageUtil.generateDeviceId()
             }
-            
+
             const loginParams = {
                 device_id: deviceId,
-                ...params
+                ...params,
             }
-            
+
             const response = await userApi.login(loginParams)
-            
+
             if (response.code === 200) {
                 // 保存认证信息到localStorage
                 StorageUtil.setAuthInfo(response.data)
                 state.authInfo = response.data
-                
+
                 console.log('登录成功')
                 return response.data
-            } else {
+            }
+            else {
                 throw new Error(response.message || '登录失败')
             }
-        } catch (error: any) {
+        }
+        catch (error: any) {
             state.error = error.message || '网络错误'
             console.error('登录失败:', error)
             throw error
-        } finally {
+        }
+        finally {
             state.loading = false
         }
     }
@@ -89,30 +92,33 @@ const useUserStore = defineStore('userStore', () => {
         try {
             state.loading = true
             state.error = null
-            
+
             // 从认证信息中获取用户ID
             const userId = state.authInfo?.user?.id
             if (!userId) {
                 throw new Error('用户ID不存在，请重新登录')
             }
-            
+
             const response = await userApi.getMemberInfo({ memberId: userId })
-            
+
             if (response.code === 200) {
                 // 保存用户信息到localStorage
                 StorageUtil.setUserInfo(response.data)
                 state.userInfo = response.data
-                
+
                 console.log('获取用户信息成功')
                 return response.data
-            } else {
+            }
+            else {
                 throw new Error(response.message || '获取用户信息失败')
             }
-        } catch (error: any) {
+        }
+        catch (error: any) {
             state.error = error.message || '网络错误'
             console.error('获取用户信息失败:', error)
             throw error
-        } finally {
+        }
+        finally {
             state.loading = false
         }
     }
@@ -127,15 +133,16 @@ const useUserStore = defineStore('userStore', () => {
                 console.log('没有有效的认证信息，开始无感登录')
                 await login()
             }
-            
+
             // 获取用户信息
             if (!initUserInfo()) {
                 console.log('获取用户详细信息')
                 await fetchUserInfo()
             }
-            
+
             return true
-        } catch (error) {
+        }
+        catch (error) {
             console.error('自动登录失败:', error)
             return false
         }
@@ -149,10 +156,10 @@ const useUserStore = defineStore('userStore', () => {
         state.userInfo = null
         state.authInfo = null
         state.error = null
-        
+
         // 清除localStorage
         StorageUtil.clearAllUserData()
-        
+
         console.log('用户已登出')
     }
 
@@ -221,22 +228,25 @@ const useUserStore = defineStore('userStore', () => {
         try {
             state.loading = true
             state.error = null
-            
+
             const response = await userApi.updateUserInfo(params)
-            
+
             if (response.code === 200) {
                 console.log('更新用户信息成功')
                 // 更新成功后重新获取用户信息
                 await fetchUserInfo()
                 return response.data
-            } else {
+            }
+            else {
                 throw new Error(response.message || '更新用户信息失败')
             }
-        } catch (error: any) {
+        }
+        catch (error: any) {
             state.error = error.message || '网络错误'
             console.error('更新用户信息失败:', error)
             throw error
-        } finally {
+        }
+        finally {
             state.loading = false
         }
     }
@@ -248,21 +258,24 @@ const useUserStore = defineStore('userStore', () => {
         try {
             orderListState.loading = true
             orderListState.error = null
-            
+
             const response = await userApi.getOrderList(params)
-            
+
             if (response.code === 200) {
                 orderListState.orders = response.data
                 console.log('获取订单列表成功')
                 return response.data
-            } else {
+            }
+            else {
                 throw new Error(response.message || '获取订单列表失败')
             }
-        } catch (error: any) {
+        }
+        catch (error: any) {
             orderListState.error = error.message || '网络错误'
             console.error('获取订单列表失败:', error)
             throw error
-        } finally {
+        }
+        finally {
             orderListState.loading = false
         }
     }
@@ -308,4 +321,4 @@ export default useUserStore
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useUserStore as any, import.meta.hot))
-} 
+}

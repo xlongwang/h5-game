@@ -43,6 +43,9 @@ function showRecord() {
 
 <style scoped lang="scss">
 .retirar_header_back {
+  position: absolute;
+  left: 0;
+  top: 0;
   &::before {
     display: block;
     width: 66px;

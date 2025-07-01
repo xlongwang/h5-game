@@ -1,67 +1,66 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div class="peposito_de_title mx-auto mt-[50px]"></div>
-      <div class="recharge_input text-[50px]">
-        <div>Tarifa de manejo</div>
-        <div class="text-[#f00]">${{ formatVal(activeVal) }}</div>
-      </div>
-      <div class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt">
-        <span class="dot_icon"></span>
-        Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con
-        el monto del pago real, ¡el depósito no será reembolsado!
-      </div>
-      <div class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold">
-         <div class="detai_re_cancel" @click="handleCancel">CANCELAR</div>
-         <div class="detai_re_submit" @click="handleSubmit">IR A PAGAR</div>
-      </div>
-    </div>
-  </van-popup>
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div class="peposito_de_title mx-auto mt-[50px]"></div>
+            <div class="recharge_input text-[50px]">
+                <div>Tarifa de manejo</div>
+                <div class="text-[#f00]">${{ formatVal(activeVal) }}</div>
+            </div>
+            <div class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt">
+                <span class="dot_icon"></span>
+                Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con
+                el monto del pago real, ¡el depósito no será reembolsado!
+            </div>
+            <div class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold">
+                <div class="detai_re_cancel" @click="handleCancel">CANCELAR</div>
+                <div class="detai_re_submit" @click="handleSubmit">IR A PAGAR</div>
+            </div>
+        </div>
+    </van-popup>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
 import { userApi } from '@/api/user-api'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-}>();
+    activeVal: number
+    onSuccess: () => void
+}>()
 
-const formatVal = (val: number) => {
-  if (val > 20) {
-    return val;
-  }
-  return val.toFixed(2);
-};
+function formatVal(val: number) {
+    if (val > 20) {
+        return val
+    }
+    return val.toFixed(2)
+}
 
-const showCenter = ref(false);
+const showCenter = ref(false)
 
+function handleCancel() {
+    showCenter.value = false
+}
 
+async function handleSubmit() {
+    const result = await userApi.createPayin({
+        amount: '100.00',
+        player_id: '31',
+    })
+    console.log('🚀 ~ handleSubmit ~ result:', result)
+    // showCenter.value = false;
+    // props.onSuccess();
+}
 
-const handleCancel = () => {
-  showCenter.value = false;
-};
-
-const handleSubmit = async () => {
-  const result = await userApi.createPayin({
-    amount: '100.00',
-    player_id: '31'
-})
-  console.log("🚀 ~ handleSubmit ~ result:", result)
-  // showCenter.value = false;
-  // props.onSuccess();
-};
-
-const open = () => {
-  showCenter.value = true;
-};
+function open() {
+    showCenter.value = true
+}
 
 defineExpose({
-  open,
-});
+    open,
+})
 </script>
+
 <style lang="scss" scoped>
 .recharge_detail_popup {
   width: 1000px;
