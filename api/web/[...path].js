@@ -30,8 +30,6 @@ export default async function handler(req, res) {
         // 创建自定义的 HTTPS agent 来处理 SSL 问题
         const httpsAgent = new https.Agent({
             rejectUnauthorized: false, // 忽略 SSL 证书验证
-            secureProtocol: 'TLSv1_2_method', // 强制使用 TLS 1.2
-            ciphers: 'ALL', // 允许所有加密套件
             minVersion: 'TLSv1.2',
             maxVersion: 'TLSv1.3',
         })
