@@ -1,4 +1,3 @@
-import https from 'node:https'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -27,13 +26,6 @@ export default async function handler(req, res) {
         console.log('🌐 请求数据:', req.body)
         console.log('🌐 请求头:', req.headers)
 
-        // 创建自定义的 HTTPS agent 来处理 SSL 问题
-        const httpsAgent = new https.Agent({
-            rejectUnauthorized: false, // 忽略 SSL 证书验证
-            minVersion: 'TLSv1.2',
-            maxVersion: 'TLSv1.3',
-        })
-
         const response = await axios({
             method: req.method,
             url: targetUrl,
@@ -42,19 +34,24 @@ export default async function handler(req, res) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
-                'User-Agent': req.headers['user-agent'],
-                'Accept': req.headers.accept,
-                'Accept-Language': req.headers['accept-language'],
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
+                'Accept': 'application/json, text/plain, */*',
+                'Accept-Language': 'zh-CN,zh;q=0.9',
+                'Accept-Encoding': 'gzip, deflate, br',
                 'Connection': 'keep-alive',
                 'Upgrade-Insecure-Requests': '1',
-                ...req.headers,
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
             },
             timeout: 30000,
-            httpsAgent,
             maxRedirects: 5,
             validateStatus(status) {
                 return status >= 200 && status < 600 // 接受所有状态码
             },
+            // 使用更宽松的 SSL 配置
+            httpsAgent: false, // 禁用默认 agent
+            httpAgent: false, // 禁用默认 agent
         })
 
         console.log('🌐 代理响应:', {
