@@ -52,16 +52,10 @@ export default async function handler(req, res) {
             }
         }
 
-        // 创建自定义 HTTPS agent，使用最宽松的 SSL 配置
+        // 创建自定义 HTTPS agent，兼容 TLS 1.2
         const httpsAgent = new https.Agent({
-            rejectUnauthorized: false, // 忽略证书验证
-            secureProtocol: 'TLSv1_2_method', // 强制使用 TLS 1.2
-            ciphers: 'ALL', // 允许所有加密套件
-            minVersion: 'TLSv1', // 最低 TLS 版本
-            maxVersion: 'TLSv1.3', // 最高 TLS 版本
-            honorCipherOrder: false, // 不强制加密套件顺序
-            requestCert: false, // 不请求客户端证书
-            agent: false, // 禁用连接池
+            rejectUnauthorized: false,
+            minVersion: 'TLSv1.2',
         })
 
         const response = await fetch(url, {
