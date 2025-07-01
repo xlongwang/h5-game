@@ -8,7 +8,7 @@
 -->
 <template>
     <div class="retirar_header flex items-center">
-        <div 
+        <div
             v-if="hasBackIcon"
             class="retirar_header_back w-[135px] h-[135px] flex items-center justify-center"
             @click="goBack"
@@ -26,7 +26,7 @@ defineOptions({
 })
 
 defineProps<{
-    hasArticle?: boolean,
+    hasArticle?: boolean
     hasBackIcon?: boolean
     title?: string
 }>()
@@ -70,7 +70,7 @@ function showRecord() {
   color: #f3d658;
   width: 100%;
   padding-top: 10px;
-  
+
 }
 
 .retirar_header_article {

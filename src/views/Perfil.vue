@@ -2,7 +2,7 @@
     <div class="perfil-page">
         <div class="apoyo_icon" @click="handleClick('/apoyo')"></div>
         <!-- <HeaderBack /> -->
-
+        <HeaderInfo />
         <div class="section01">
             <div class="section01_left">
                 <div class="section01_left_top w-[294px] h-[290px] flex items-center justify-center">
