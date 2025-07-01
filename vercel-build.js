@@ -33,6 +33,16 @@ try {
     console.log('Building server entry...')
     execSync('npm run build:server:entry', { stdio: 'inherit' })
 
+    // 复制 API 目录到 dist
+    console.log('Copying API directory...')
+    if (fs.existsSync('api')) {
+        execSync('cp -r api dist/', { stdio: 'inherit' })
+        console.log('✅ API directory copied')
+    }
+    else {
+        console.log('❌ API directory not found')
+    }
+
     console.log('Build completed successfully!')
 
     // 验证构建输出
@@ -41,6 +51,8 @@ try {
         'dist/client/.vite/ssr-manifest.json',
         'dist/server/entry-server.js',
         'dist/server.js',
+        'dist/api/index.js',
+        'dist/api/web/[...path].js',
     ]
 
     files.forEach((file) => {
