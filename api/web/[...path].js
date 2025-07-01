@@ -19,6 +19,11 @@ export default async function handler(req, res) {
         const { path } = req.query
         const apiPath = Array.isArray(path) ? path.join('/') : path || ''
 
+        // 调试信息
+        console.log('🌐 原始请求 URL:', req.url)
+        console.log('🌐 请求路径参数:', req.query.path)
+        console.log('🌐 解析后的 API 路径:', apiPath)
+
         // 尝试使用 HTTP 而不是 HTTPS
         const targetUrl = `http://mineadmin.thebbxxzm.top/api/${apiPath}`
 
