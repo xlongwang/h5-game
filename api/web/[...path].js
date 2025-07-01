@@ -73,6 +73,7 @@ export default async function handler(req, res) {
                 'Sec-Fetch-Dest': 'empty',
                 'Sec-Fetch-Mode': 'cors',
                 'Sec-Fetch-Site': 'cross-site',
+                ...(req.headers.authorization ? { authorization: req.headers.authorization } : {}),
             },
             timeout: 30000,
             agent: httpsAgent,
