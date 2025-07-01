@@ -99,7 +99,8 @@
 import { showSuccessToast } from 'vant'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { userApi } from '@/api/user-api'
+
+// import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import { getMarqueeData } from '@/config'
 import { getCoinNum } from '@/utils'

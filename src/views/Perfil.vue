@@ -2,7 +2,7 @@
     <div class="perfil-page">
         <div class="apoyo_icon" @click="handleClick('/apoyo')"></div>
         <!-- <HeaderBack /> -->
-        <HeaderInfo />
+        <HeaderInfo :user-info="userInfo" />
         <div class="section01">
             <div class="section01_left">
                 <div class="section01_left_top w-[294px] h-[290px] flex items-center justify-center">
@@ -60,6 +60,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { StorageUtil } from '@/utils/storage'
 
 // 从 public 目录引用图片
 // import retirarImg from '@/assets/images/perfil/retirar_icon.png'
@@ -68,6 +69,11 @@ import '@/assets/scss/pages/perfil.scss'
 defineOptions({
     name: 'Perfil',
 })
+
+const userInfo = computed(() => {
+    return StorageUtil.getUserInfo()
+})
+
 const router = useRouter()
 const rechargPopRef = ref()
 function handleDeposito() {
@@ -79,6 +85,10 @@ function handleRetirar() {
 function handleClick(path: string) {
     router.push(path)
 }
+
+onMounted(() => {
+    console.log('userInfo', userInfo.value)
+})
 
 const depositoImg = '/images/perfil/deposito_icon.png'
 const retirarImg = '/images/perfil/retirar.png'
