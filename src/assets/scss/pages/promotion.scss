@@ -5,7 +5,9 @@
 .promotion-list {
     display: flex;
     flex-direction: column;
+    width: 1038px;
     padding-top: 20px;
+    margin: 0 auto;
     gap: 10px;
 
     img {

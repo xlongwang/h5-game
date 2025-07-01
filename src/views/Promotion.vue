@@ -8,7 +8,7 @@
 -->
 <template>
     <div id="promotion-debug" class="promotion-page">
-        <header-back />
+        <header-back title="Promoción" />
         <ul class="promotion-list">
             <li v-for="item in list" :key="item.id">
                 <img :src="item.url" :alt="item.name" @click="handleClick(item)">
@@ -42,7 +42,14 @@ const list = ref([{
     name: 'a2',
     url: '/images/promotion/a2.png',
     path: '/activity02'
-}])
+},
+{
+    id: '3',
+    name: 'a3',
+    url: '/images/promotion/a3.png',
+    path: '/activity03'
+},
+])
 
 onMounted(() => {
     currentTime.value = new Date().toLocaleString()

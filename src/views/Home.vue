@@ -117,9 +117,9 @@ onMounted(() => {
 })
 
 const bannerImgs = [
-  "/images/casino/a1.png",
-  "/images/casino/a1.png",
-  "/images/casino/a1.png",
+  "/images/promotion/a1.png",
+  "/images/promotion/a2.png",
+  "/images/promotion/a3.png",
 ];
 
 const handleClick = (path: string) => {
@@ -193,6 +193,7 @@ function handleSwipeChange(index: number) {
 .game-swipe-container {
   min-height: calc(100vh - 1400px);
   overflow: hidden;
+  margin-top: 15px;
 }
 
 .game-card {
