@@ -12,8 +12,8 @@ axios.interceptors.request.use(
         const accessToken = StorageUtil.getAccessToken()
 
         if (accessToken) {
-            // config.headers.Authorization = `Bearer ${accessToken}`
-            config.headers.Authorization = `${accessToken}`
+            config.headers.Authorization = `Bearer ${accessToken}`
+            // config.headers.Authorization = `${accessToken}`
         }
 
         // 添加请求调试信息
