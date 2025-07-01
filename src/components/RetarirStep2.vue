@@ -7,292 +7,292 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <teleport to="body">
-    <van-popup v-model:show="show" position="center" @close="resetForm" class="step2_popup">
-      <div class="step2_popup_inner">
-        <div class="setp2_pop_content pt-[120px] pb-[100px]">
-          <div
-            class="step2_t font_cinze text-[50px] font-bold text-center"
-            style="text-transform: lowercase; font-variant: normal"
-          >
-            Vincular cuenta de retirada
-          </div>
-          <div class="step2_content">
-            <van-form @submit="onSubmit">
-              <van-cell-group inset>
-                <div class="form-item">
-                  <div class="form-label">Monto del retiro:</div>
-                  <div class="form-input">
-                    <van-field
-                      v-model="amount"
-                      :placeholder="`$${props.curValue}`"
-                      readonly
-                      input-align="left"
-                      class="custom-field"
-                    />
-                  </div>
-                </div>
-                <div class="form-item">
-                  <div class="form-label">Nombre</div>
-                  <div class="form-input">
-                    <van-field
-                      v-model="name"
-                      placeholder="Pro favor ingrese tu nombre"
-                      input-align="left"
-                      class="custom-field"
-                    />
-                  </div>
-                </div>
-                <div class="form-item picker_item_form">
-                  <div class="form-label">Pix clave</div>
-                  <div class="form-input">
-                    <van-field
-                      v-model="fieldValue"
-                      is-link
-                      readonly
-                      placeholder="PHONE/EMAIL/CPF/CNJP"
-                      @click="showPicker = true"
-                    />
-                    <teleport to="body">
-                      <van-popup
-                        v-model:show="showPicker"
-                        destroy-on-close
-                        round
-                        position="bottom"
-                      >
-                        <van-picker
-                          :model-value="pickerValue"
-                          :columns="columns"
-                          @cancel="showPicker = false"
-                          @confirm="onConfirmPicker"
-                          @change="onChangePicker"
-                        />
-                      </van-popup>
-                    </teleport>
-                  </div>
-                </div>
-
-                <div v-if="fieldValue === 'EMAIL'" class="form-item phone_item_form">
-                  <div class="form-label">Correo electrónico</div>
-                  <div class="form-input">
-                    <van-field
-                      v-model="email"
-                      placeholder="Por favor introduce tu correo electrónico"
-                      input-align="left"
-                      class="custom-field"
-                      @blur="validateEmail"
+    <teleport to="body">
+        <van-popup v-model:show="show" position="center" class="step2_popup" @close="resetForm">
+            <div class="step2_popup_inner">
+                <div class="setp2_pop_content pt-[120px] pb-[100px]">
+                    <div
+                        class="step2_t font_cinze text-[50px] font-bold text-center"
+                        style="text-transform: lowercase; font-variant: normal"
                     >
-                    </van-field>
-                  </div>
-                  <div v-if="emailError" class="form-tip">
-                    <span class="form-tip-icon">!</span>
-                    {{ emailError }}
-                  </div>
-                </div>
+                        Vincular cuenta de retirada
+                    </div>
+                    <div class="step2_content">
+                        <van-form @submit="onSubmit">
+                            <van-cell-group inset>
+                                <div class="form-item">
+                                    <div class="form-label">Monto del retiro:</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="amount"
+                                            :placeholder="`$${props.curValue}`"
+                                            readonly
+                                            input-align="left"
+                                            class="custom-field"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-label">Nombre</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="name"
+                                            placeholder="Pro favor ingrese tu nombre"
+                                            input-align="left"
+                                            class="custom-field"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-item picker_item_form">
+                                    <div class="form-label">Pix clave</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="fieldValue"
+                                            is-link
+                                            readonly
+                                            placeholder="PHONE/EMAIL/CPF/CNJP"
+                                            @click="showPicker = true"
+                                        />
+                                        <teleport to="body">
+                                            <van-popup
+                                                v-model:show="showPicker"
+                                                destroy-on-close
+                                                round
+                                                position="bottom"
+                                            >
+                                                <van-picker
+                                                    :model-value="pickerValue"
+                                                    :columns="columns"
+                                                    @cancel="showPicker = false"
+                                                    @confirm="onConfirmPicker"
+                                                    @change="onChangePicker"
+                                                />
+                                            </van-popup>
+                                        </teleport>
+                                    </div>
+                                </div>
 
-                <div v-if="fieldValue === 'CPF'" class="form-item phone_item_form">
-                  <div class="form-label">Número de identificación fiscal</div>
-                  <div class="form-input">
-                    <van-field
-                      v-model="cpf"
-                      placeholder="Por favor introduzca el número de identificación fiscal."
-                      input-align="left"
-                      class="custom-field"
-                    >
-                    </van-field>
-                  </div>
-                </div>
+                                <div v-if="fieldValue === 'EMAIL'" class="form-item phone_item_form">
+                                    <div class="form-label">Correo electrónico</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="email"
+                                            placeholder="Por favor introduce tu correo electrónico"
+                                            input-align="left"
+                                            class="custom-field"
+                                            @blur="validateEmail"
+                                        >
+                                        </van-field>
+                                    </div>
+                                    <div v-if="emailError" class="form-tip">
+                                        <span class="form-tip-icon">!</span>
+                                        {{ emailError }}
+                                    </div>
+                                </div>
 
-                <div class="form-item phone_item_form">
-                  <div class="form-label">Numere telefonico</div>
-                  <div class="form-input">
-                    <van-field
-                      v-model="phone"
-                      placeholder="Pro favor ingrese su numero de telefono"
-                      input-align="left"
-                      class="custom-field"
-                    >
-                      <template #left-icon>
-                        <span class="form-prefix text-[50px]">+52</span>
-                      </template>
-                    </van-field>
-                  </div>
-                </div>
-              </van-cell-group>
+                                <div v-if="fieldValue === 'CPF'" class="form-item phone_item_form">
+                                    <div class="form-label">Número de identificación fiscal</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="cpf"
+                                            placeholder="Por favor introduzca el número de identificación fiscal."
+                                            input-align="left"
+                                            class="custom-field"
+                                        >
+                                        </van-field>
+                                    </div>
+                                </div>
 
-              <div class="form-btn-wrap">
-                <van-button
-                  round
-                  block
-                  type="primary"
-                  native-type="submit"
-                  @click="handleSubmit"
-                  class="form-btn text-[#0e0701] text-[40px]"
-                >
-                  Confirmar
-                </van-button>
-              </div>
-            </van-form>
-          </div>
-        </div>
-      </div>
-    </van-popup>
-  </teleport>
+                                <div class="form-item phone_item_form">
+                                    <div class="form-label">Numere telefonico</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="phone"
+                                            placeholder="Pro favor ingrese su numero de telefono"
+                                            input-align="left"
+                                            class="custom-field"
+                                        >
+                                            <template #left-icon>
+                                                <span class="form-prefix text-[50px]">+52</span>
+                                            </template>
+                                        </van-field>
+                                    </div>
+                                </div>
+                            </van-cell-group>
+
+                            <div class="form-btn-wrap">
+                                <van-button
+                                    round
+                                    block
+                                    type="primary"
+                                    native-type="submit"
+                                    class="form-btn text-[#0e0701] text-[40px]"
+                                    @click="handleSubmit"
+                                >
+                                    Confirmar
+                                </van-button>
+                            </div>
+                        </van-form>
+                    </div>
+                </div>
+            </div>
+        </van-popup>
+    </teleport>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { StorageUtil } from "@/utils/storage";
-import useUserStore from "@/stores/use-user-store";
-import { _ } from "dist/server/entry-server";
+import { _ } from 'dist/server/entry-server'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import useUserStore from '@/stores/use-user-store'
+import { StorageUtil } from '@/utils/storage'
 
-const userStore = useUserStore();
+const props = defineProps<{
+    onSuccess?: () => void
+    curValue: number
+}>()
+const userStore = useUserStore()
 // console.log("userStore", userStore);
 
 const userInfo = computed(() => {
-  return StorageUtil.getUserInfo();
-});
+    return StorageUtil.getUserInfo()
+})
 
-const router = useRouter();
-const props = defineProps<{
-  onSuccess?: () => void;
-  curValue: number;
-}>();
-const show = ref(false);
+const router = useRouter()
+const show = ref(false)
 
 const columns = [
-  { text: "PHONE", value: "PHONE" },
-  { text: "EMAIL", value: "EMAIL" },
-  { text: "CPF/CNJP", value: "CPF" },
-  // { text: "CNJP", value: "CNJP" },
-];
-const fieldValue = ref("");
-const pickerValue = ref([]);
-const showPicker = ref(false);
+    { text: 'PHONE', value: 'PHONE' },
+    { text: 'EMAIL', value: 'EMAIL' },
+    { text: 'CPF/CNJP', value: 'CPF' },
+    // { text: "CNJP", value: "CNJP" },
+]
+const fieldValue = ref('')
+const pickerValue = ref([])
+const showPicker = ref(false)
 
 // 表单数据
-const amount = ref(props.curValue.toString());
-const name = ref("");
-const phone = ref("");
-const email = ref("");
-const cpf = ref("");
-const emailError = ref("");
-
+const amount = ref(props.curValue.toString())
+const name = ref('')
+const phone = ref('')
+const email = ref('')
+const cpf = ref('')
+const emailError = ref('')
 
 function open() {
-  show.value = true;
+    show.value = true
 }
 
 watch(() => props.curValue, (newVal) => {
-  amount.value = newVal ? `$${newVal.toFixed(2)}` : "$0.00";
-}, { immediate: true });
+    amount.value = newVal ? `$${newVal.toFixed(2)}` : '$0.00'
+}, { immediate: true })
 
 function resetForm() {
-  amount.value = props.curValue.toString();
-  name.value = "";
-  phone.value = "";
-  email.value = "";
-  cpf.value = "";
+    amount.value = props.curValue.toString()
+    name.value = ''
+    phone.value = ''
+    email.value = ''
+    cpf.value = ''
 }
 
 async function handleSubmit() {
-  try {
+    try {
     // 根据选择的PIX类型获取对应的账户信息
-    let receivingAccount = "";
-    let pixType = "";
+        let receivingAccount = ''
+        let pixType = ''
 
-    switch (fieldValue.value) {
-      case "PHONE":
-        receivingAccount = phone.value;
-        pixType = "PHONE";
-        break;
-      case "EMAIL":
-        receivingAccount = email.value;
-        pixType = "EMAIL";
-        break;
-      case "CPF":
-        receivingAccount = cpf.value;
-        pixType = "CPF";
-        break;
-      default:
-        throw new Error("Por favor seleccione el tipo de PIX");
-    }
+        switch (fieldValue.value) {
+            case 'PHONE':
+                receivingAccount = phone.value
+                pixType = 'PHONE'
+                break
+            case 'EMAIL':
+                receivingAccount = email.value
+                pixType = 'EMAIL'
+                break
+            case 'CPF':
+                receivingAccount = cpf.value
+                pixType = 'CPF'
+                break
+            default:
+                throw new Error('Por favor seleccione el tipo de PIX')
+        }
 
-    // 验证必填字段
-    if (!name.value) {
-      throw new Error("Por favor ingrese su nombre");
-    }
+        // 验证必填字段
+        if (!name.value) {
+            throw new Error('Por favor ingrese su nombre')
+        }
 
-    if (!phone.value) {
-      throw new Error("Por favor, ingrese el número de teléfono móvil.");
-    }
+        if (!phone.value) {
+            throw new Error('Por favor, ingrese el número de teléfono móvil.')
+        }
 
-    if (!receivingAccount) {
-      throw new Error("Por favor ingrese la información de la cuenta");
-    }
+        if (!receivingAccount) {
+            throw new Error('Por favor ingrese la información de la cuenta')
+        }
 
-    // 如果是邮箱类型，验证邮箱格式
-    if (fieldValue.value === "EMAIL" && !validateEmail()) {
-      throw new Error("Formato de correo electrónico incorrecto");
-    }
+        // 如果是邮箱类型，验证邮箱格式
+        if (fieldValue.value === 'EMAIL' && !validateEmail()) {
+            throw new Error('Formato de correo electrónico incorrecto')
+        }
 
-    // 调用更新用户信息接口
-    await userStore.updateUserInfo({
-      phone: phone.value || "",
-      email: email.value || "",
-      cpf: cpf.value || "",
-      pix_type: pixType,
-      player_id: userStore.userInfo?.id?.toString() || "",
-      receiving_account: receivingAccount,
-      receiving_name: name.value,
-    });
+        // 调用更新用户信息接口
+        await userStore.updateUserInfo({
+            phone: phone.value || '',
+            email: email.value || '',
+            cpf: cpf.value || '',
+            pix_type: pixType,
+            player_id: userStore.userInfo?.id?.toString() || '',
+            receiving_account: receivingAccount,
+            receiving_name: name.value,
+        })
 
-    console.log("Información del usuario actualizada exitosamente");
-    show.value = false;
-    resetForm();
-    await props.onSuccess?.();
+        console.log('Información del usuario actualizada exitosamente')
+        show.value = false
+        resetForm()
+        await props.onSuccess?.()
     // router.push("/retirarDetail");
-  } catch (error: any) {
-    console.error("Error al actualizar:", error);
-    // 这里可以添加错误提示，比如使用Toast
-    alert(error.message || "Error al actualizar");
-  }
+    }
+    catch (error: any) {
+        console.error('Error al actualizar:', error)
+        // 这里可以添加错误提示，比如使用Toast
+        alert(error.message || 'Error al actualizar')
+    }
 }
 
 function onConfirmPicker(val: { selectedValues: string }) {
-  fieldValue.value = val.selectedValues[0];
-  pickerValue.value = [val.selectedValues as never];
-  showPicker.value = false;
-  // 清空之前的错误信息
-  emailError.value = "";
+    fieldValue.value = val.selectedValues[0]
+    pickerValue.value = [val.selectedValues as never]
+    showPicker.value = false
+    // 清空之前的错误信息
+    emailError.value = ''
 }
 
 // 邮箱验证函数
 function validateEmail() {
-  if (!email.value) {
-    emailError.value = "Por favor ingrese su correo electrónico";
-    return false;
-  }
+    if (!email.value) {
+        emailError.value = 'Por favor ingrese su correo electrónico'
+        return false
+    }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email.value)) {
-    emailError.value = "Por favor ingrese un correo electrónico válido";
-    return false;
-  }
+    const emailRegex = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
+    if (!emailRegex.test(email.value)) {
+        emailError.value = 'Por favor ingrese un correo electrónico válido'
+        return false
+    }
 
-  emailError.value = "";
-  return true;
+    emailError.value = ''
+    return true
 }
 
 onMounted(() => {
-  console.log("userInfo", userInfo.value);
-  amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : "$0.00";
-});
+    console.log('userInfo', userInfo.value)
+    amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
+})
 
 defineExpose({
-  open,
-});
+    open,
+})
 </script>
 
 <style lang="scss" scoped>

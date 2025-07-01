@@ -2,27 +2,28 @@ import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 
 import qs from 'qs'
-import config from './config-client'
-import { StorageUtil } from '@/utils/storage'
 import { camelToSnake } from '@/utils'
+import { StorageUtil } from '@/utils/storage'
+import config from './config-client'
 
 axios.interceptors.request.use(
     (config) => {
         // 自动添加认证头
         const accessToken = StorageUtil.getAccessToken()
-        
+
         if (accessToken) {
-            config.headers.Authorization = `Bearer ${accessToken}`
+            // config.headers.Authorization = `Bearer ${accessToken}`
+            config.headers.Authorization = `${accessToken}`
         }
-        
+
         // 添加请求调试信息
         console.log('🌐 发送请求:', {
             method: config.method?.toUpperCase(),
             url: config.url,
             data: config.data,
-            baseURL: config.baseURL
+            baseURL: config.baseURL,
         })
-        
+
         return config
     },
     (error) => {
@@ -31,34 +32,34 @@ axios.interceptors.request.use(
 )
 
 axios.interceptors.response.use(
-    response => {
+    (response) => {
         // 添加响应调试信息
         console.log('🌐 收到响应:', {
             status: response.status,
             url: response.config.url,
-            data: response.data
+            data: response.data,
         })
-        
+
         // 将响应数据中的驼峰命名转换为下划线命名
         if (response.data) {
             response.data = camelToSnake(response.data)
         }
-        
+
         return response
     },
-    error => {
+    (error) => {
         console.error('🌐 请求错误:', {
             status: error.response?.status,
             url: error.config?.url,
             data: error.response?.data,
-            message: error.message
+            message: error.message,
         })
-        
+
         // 将错误响应数据中的驼峰命名转换为下划线命名
         if (error.response?.data) {
             error.response.data = camelToSnake(error.response.data)
         }
-        
+
         return Promise.resolve(error.response)
     },
 )
@@ -124,7 +125,7 @@ const _api: API = () => ({
         return checkCode(res)
     },
     async post(url, data) {
-        const fullUrl = url.startsWith('/') ? config.api + url : config.api + '/' + url
+        const fullUrl = url.startsWith('/') ? config.api + url : `${config.api}/${url}`
         const response = await axios({
             method: 'post',
             url: fullUrl,
@@ -139,7 +140,7 @@ const _api: API = () => ({
         return checkCode(res)
     },
     async get(url, params) {
-        const fullUrl = url.startsWith('/') ? config.api + url : config.api + '/' + url
+        const fullUrl = url.startsWith('/') ? config.api + url : `${config.api}/${url}`
         const response = await axios({
             method: 'get',
             url: fullUrl,
