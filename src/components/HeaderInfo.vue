@@ -1,3 +1,11 @@
+<!--
+ * @Author: along longwang6@163.com
+ * @Date: 2025-06-27 22:18:32
+ * @LastEditors: along longwang6@163.com
+ * @LastEditTime: 2025-07-02 16:30:45
+ * @FilePath: /vue3_app/src/components/HeaderInfo.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
     <div class="header-info flex items-center">
         <div class="header-avatar mr-[18px]">
@@ -5,25 +13,23 @@
         </div>
         <div class="header-info-right text-[50px]">
             <div class="header-info-right-name pb-[30px]">
-                <span>
-                    Apodo: {{ userInfo.name }}
-                </span>
+                <span> Apodo: {{ userInfo.name }} </span>
             </div>
             <div class="header-info-right-bt flex items-center">
-                <div class="header-info-right-bt-id">
-                    ID: {{ userInfo.id }}
-                </div>
+                <div class="header-info-right-bt-id">ID: {{ userInfo.id }}</div>
                 <div class="header-info-right-bt-dollor flex items-center ml-[40px]">
                     <div class="dollor-icon"></div>
                     <div class="dollor-count font-bold ml-[16px]">{{ count }}</div>
                 </div>
-                <div class="header-refresh ml-[30px]"></div>
+                <div class="header-refresh ml-[30px]" @click="refreshCoin"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { showSuccessToast } from 'vant'
+import { useGlobal } from '@/composables'
 import '@/assets/scss/header.scss'
 
 defineOptions({
@@ -34,8 +40,11 @@ const props = defineProps<{
     userInfo: any
 }>()
 
+const { userStore } = useGlobal()
+
 const count = computed(() => {
-    const banance = Number(props.userInfo.wallet.balance) + Number(props.userInfo.wallet.bonus)
+    const banance
+    = Number(props.userInfo.wallet.balance) + Number(props.userInfo.wallet.bonus)
     return banance.toFixed(2)
 })
 
@@ -45,8 +54,23 @@ const userInfoLocal = ref({
     id: 9781653,
     dollor: 29,
 })
+
+async function refreshCoin() {
+    try {
+        showSuccessToast('Refrescar')
+        console.log('refreshCoin')
+
+        // 刷新用户信息
+        await userStore.fetchUserInfo()
+
+        showSuccessToast('Información actualizada')
+        console.log('用户信息刷新成功')
+    }
+    catch (error) {
+        console.error('刷新用户信息失败:', error)
+        showSuccessToast('Error al actualizar')
+    }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
