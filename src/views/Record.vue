@@ -1,6 +1,6 @@
 <template>
     <div class="record_page text-[50px]">
-        <header-back />
+        <header-back title="Historial de retiros" :has-back-icon="true" />
         <div class="record_content">
             <div class="record_content_title">
                 <div v-for="item in titleList" :key="item" class="record_content_title_item">
@@ -11,8 +11,8 @@
                 <div v-for="item in list" :key="item.id" class="record_item">
                     <div class="pr-[20px]">imya</div>
                     <div class="record_item_title_right flex items-center gap-[10px]">
-                        <div class="record_item_title_right_top">{{ item.title }}</div>
-                        <div class="record_item_title_right_bottom">{{ item.time }}</div>
+                        <div class="record_item_title_right_top">{{ item?.title }}</div>
+                        <div class="record_item_title_right_bottom">{{ item?.time }}</div>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@ onMounted(() => {
     getList()
 })
 
-const list = ref([
+const list = ref<any[]>([
     // {
     //     title: 'Depósito',
     //     time: '2025-06-29 10:00:00',

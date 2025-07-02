@@ -1,24 +1,37 @@
+<!--
+ * @Author: along longwang6@163.com
+ * @Date: 2025-06-29 18:44:30
+ * @LastEditors: along longwang6@163.com
+ * @LastEditTime: 2025-07-02 16:07:58
+ * @FilePath: /vue3_app/src/views/Activity02.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
-  <div class="activity01_page">
-    <HeaderBack :has-back-icon="true" :title="'Nuevas tareas de usuario'"  />
-    <div class="activity01_content">
-      <div class="act_header w-[1043px] h-[529px] mx-auto">
-        <img class="w-[100%] h-[100%]" :src="headerImg" alt="" />
-      </div>
-     <div class="act_btn w-[1046px] h-[143px] mx-auto mt-[53px]">
-       Recibir ${{ formatNumber(90) }}
-     </div>
+    <div class="activity01_page">
+        <HeaderBack :has-back-icon="true" title="Nuevas tareas de usuario" />
+        <div class="activity01_content">
+            <div class="act_header w-[1043px] h-[529px] mx-auto">
+                <img class="w-[100%] h-[100%]" :src="headerImg" alt="">
+            </div>
+            <div class="act_btn w-[1046px] h-[143px] mx-auto mt-[53px]">
+                Recibir ${{ formatNumber(90) }}
+            </div>
+            <div class="text-center w-[1046px] h-[143px] mx-auto mt-[33px] text-[40px]">
+                Completa tareas para obtener recompensas.
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-const headerImg = "/images/activity/a1.png";
-import { formatNumber } from "@/utils/tools";
+import { formatNumber } from '@/utils/tools'
+
 defineOptions({
-  name: "Activity02",
-});
+    name: 'Activity02',
+})
+const headerImg = '/images/activity/a1.png'
 </script>
+
 <style lang="scss" scoped>
 .activity01_page {
   padding-bottom: 300px;

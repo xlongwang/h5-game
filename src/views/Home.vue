@@ -11,7 +11,7 @@
             </div>
             <div class="flex items-center">
                 <div class="text-icon-18 w-[68px] h-[68px] mr-[20px]">
-                    <!-- <img src="/images/casino/18.png" alt="18"> -->
+                    <img src="/images/casino/18.png" alt="18">
                 </div>
                 <div class="balance relative text-gold text-[50px] font-bold">
                     <!-- {{ formatNumber(userInfo?.wallet?.balance ?? 0) }} -->
@@ -29,7 +29,6 @@
         <!-- Bonus Banner -->
         <div
             class="bonus-banner flex items-center justify-between"
-            @click="handleClick('/promotion')"
         >
             <van-swipe
                 class="w-full h-full"
@@ -38,8 +37,8 @@
                 :show-indicators="true"
                 :loop="true"
             >
-                <van-swipe-item v-for="(img, idx) in bannerImgs" :key="idx">
-                    <img :src="img" alt="" class="w-full h-full object-cover">
+                <van-swipe-item v-for="(item, idx) in bannerImgs" :key="idx" @click="handleClick(item.path)">
+                    <img :src="item.img" alt="" class="w-full h-full object-cover">
                 </van-swipe-item>
             </van-swipe>
             <!-- <img src="/images/casino/a1.png" width="100%" height="100%" alt="Chip" /> -->
@@ -133,9 +132,18 @@ onMounted(() => {
 })
 
 const bannerImgs = [
-    '/images/promotion/a1.png',
-    '/images/promotion/a2.png',
-    '/images/promotion/a3.png',
+    {
+        path: '/activity01',
+        img: '/images/promotion/a1.png',
+    },
+    {
+        path: '/activity02',
+        img: '/images/promotion/a2.png',
+    },
+    {
+        path: '/invite',
+        img: '/images/promotion/a3.png',
+    },
 ]
 
 function handleClick(path: string) {
