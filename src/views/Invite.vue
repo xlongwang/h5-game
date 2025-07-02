@@ -1,6 +1,6 @@
 <template>
     <div class="invite-page">
-        <HeaderBack :has-back-icon="true" title="Invitación" />
+        <HeaderBack :has-back-icon="true" title="Invitar" />
         <div class="invite-header w-[1051px] h-[389px] mx-auto mb-[17px]">
             <img :src="inviteImg" class="w-[100%] h-[100%]">
         </div>
@@ -43,10 +43,16 @@
             </div>
         </div>
 
-        <div class="mt-[22px] h-[457px] recom-section w-[1051px] mx-auto">
-            <div class="invite-mi-title font-bold text-[50px] pb-[30px]">Comparte en tus redes sociales</div>
-            <div class="recom-section-con flex justify-center gap-[20px] text-[28px]">
-                <div v-for="item in shareList" :key="item.title" class="share_item flex flex-col items-center gap-[10px]">
+        <div class="mt-[22px] recom-section w-[1051px] mx-auto">
+            <div class="invite-mi-title font-bold text-[50px] pb-[30px]">
+                Comparte en tus redes sociales
+            </div>
+            <div class="recom-section-con flex justify-center gap-[20px] text-[28px] pb-[10px]">
+                <div
+                    v-for="item in shareList"
+                    :key="item.title"
+                    class="share_item flex flex-col items-center gap-[10px]"
+                >
                     <div class="share_item_img">
                         <img :src="item.img" alt="">
                     </div>
@@ -56,22 +62,69 @@
                 </div>
             </div>
             <div class="invite_bt flex items-center justify-between pt-[40px]">
-                <div class="invite_bt_item text-[32px] text-[#bc7302]">
-                    Comparte enlace con tus  amigos.
+                <div class="recom-con">
+                    <van-field
+                        v-model="value"
+                        class="local_input"
+                        readonly
+                        placeholder=""
+                    />
+                    <div class="copy-btn" @click="copy">Copiar</div>
                 </div>
-                <div class="copy-btn">Copiar</div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { showFailToast, showSuccessToast } from 'vant'
 import { formatNumber } from '@/utils/tools'
 
 defineOptions({
     name: 'InvitePage',
 })
 const inviteImg = '/images/invite/banner.png'
+
+const value = ref('')
+
+async function copy() {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            // 现代浏览器 + HTTPS
+            await navigator.clipboard.writeText(value.value)
+            showSuccessToast('Copiado exitosamente')
+        }
+        else {
+            // 降级方案
+            const textArea = document.createElement('textarea')
+            textArea.value = value.value
+            textArea.style.position = 'fixed'
+            textArea.style.left = '-999999px'
+            textArea.style.top = '-999999px'
+            document.body.appendChild(textArea)
+            textArea.focus()
+            textArea.select()
+
+            try {
+                document.execCommand('copy')
+                showSuccessToast('Copiado exitosamente')
+            }
+            catch (err) {
+                showFailToast('Error al copiar')
+            }
+            finally {
+                document.body.removeChild(textArea)
+            }
+        }
+    }
+    catch (err) {
+        showFailToast('Error al copiar')
+    }
+}
+
+onMounted(() => {
+    value.value = window.location.origin
+})
 
 const shareList = [
     {
@@ -104,6 +157,32 @@ const shareList = [
 <style lang="scss" scoped>
 .invite-page {
   padding: 0 10px 300px;
+}
+
+.local_input {
+  background-color: transparent;
+  border: none;
+  font-size: 40px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  padding-top: 13px;
+  color: #9e6c15;
+}
+
+:deep(.van-cell:after) {
+  display: none;
+  padding: 0;
+}
+
+:deep(.van-field__control) {
+  color: #9e6c15;
+}
+
+.invite_bt {
+  position: relative;
+  top: 29px;
 }
 
 .invite-mi {
@@ -142,7 +221,7 @@ const shareList = [
   padding: 34px 40px 0;
 }
 
-.recom-con{
+.recom-con {
   width: 972px;
   background-color: #1b0a00;
   border: 3px solid #351b00;
@@ -157,7 +236,7 @@ const shareList = [
   font-size: 40px;
 }
 
-.copy-btn{
+.copy-btn {
   width: 233px;
   height: 78px;
   background: url("/images/invite/share_bg.png") no-repeat center center;
@@ -170,17 +249,19 @@ const shareList = [
   font-weight: bold;
 }
 
-.recom-section{
-  background: url("/images/invite/big.png") no-repeat center center;
-  background-size: 100% 100%;
+.recom-section {
+  border: 20px solid transparent;
+  border-radius: 20px;
+  border-image: url("/images/invite/big.png") 20 fill stretch;
   box-sizing: border-box;
-  padding: 34px 40px 0;
+  padding: 34px 40px 50px;
+  min-height: 457px;
 }
 
-.share_item_img{
+.share_item_img {
   width: 147px;
   height: 141px;
-  img{
+  img {
     width: 100%;
     height: 100%;
   }
