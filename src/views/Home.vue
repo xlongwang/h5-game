@@ -1,12 +1,12 @@
 <template>
     <div class="casino-page pb-[280px]">
         <!-- Header -->
-        <div class="header flex items-center justify-between p-[20px]">
+        <div class="header flex items-center justify-between pt-[20px] pb-[20px]">
             <div class="user-info flex items-center gap-[4px] text-[50px]">
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
-                    <div class="font-bold pb-[5px]">{{ userInfo.name }}</div>
-                    <div class="text-[40px]">ID: {{ userInfo.id }}</div>
+                    <div class="font-bold pb-[5px] max-w-[300px] truncate text-[40]">{{ userInfo.name }}</div>
+                    <div class="text-[40px] font-bold pt-[8px]">ID: {{ userInfo.id }}</div>
                 </div>
             </div>
             <div class="flex items-center">
@@ -45,7 +45,7 @@
         </div>
 
         <!-- Ticker -->
-        <div class="ticker flex items-center bg-black/20 px-[20px] py-[20px] text-xs">
+        <div class="ticker flex items-center bg-black/20 w-[1000px] mx-auto py-[20px] text-xs">
             <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
             <div
                 class="marquee-container flex items-center justify-center flex-1 text-[40px] text-gold h-[80px]"
