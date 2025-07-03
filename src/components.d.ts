@@ -9,12 +9,15 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
+    copy: typeof import('./components/OderDetail copy.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
     HeaderInfo: typeof import('./components/HeaderInfo.vue')['default']
     LoginStatus: typeof import('./components/LoginStatus.vue')['default']
     OderDetail: typeof import('./components/OderDetail.vue')['default']
+    OderDetailRechare: typeof import('./components/OderDetailRechare.vue')['default']
+    OderDetailRecharge: typeof import('./components/OderDetailRecharge.vue')['default']
     RechargPop: typeof import('./components/RechargPop.vue')['default']
     RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

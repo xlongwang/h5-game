@@ -51,7 +51,7 @@
 
         <!-- Ticker -->
         <div
-            class="ticker flex items-center bg-black/20 w-[1000px] mx-auto py-[20px] text-xs"
+            class="ticker flex items-center w-[1000px] mx-auto py-[20px] text-xs"
         >
             <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
             <div
@@ -134,7 +134,7 @@ const userInfo = computed(() => {
 const marqueeTexts = ref(getMarqueeData())
 
 onMounted(() => {
-    // console.log('userInfo', userInfo.value)
+    console.log('userInfo', userInfo.value)
     // 每次进入页面重新生成随机数据
     marqueeTexts.value = getMarqueeData()
 })

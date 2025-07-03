@@ -2,13 +2,18 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 15:40:36
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-29 16:00:45
+ * @LastEditTime: 2025-07-03 22:34:25
  * @FilePath: /vue3_app/src/components/RetarirStep2.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
     <teleport to="body">
-        <van-popup v-model:show="show" position="center" class="step2_popup" @close="resetForm">
+        <van-popup
+            v-model:show="show"
+            position="center"
+            class="step2_popup"
+            @close="resetForm"
+        >
             <div class="step2_popup_inner">
                 <div class="setp2_pop_content pt-[120px] pb-[100px]">
                     <div
@@ -18,7 +23,7 @@
                         Vincular cuenta de retirada
                     </div>
                     <div class="step2_content">
-                        <van-form @submit="onSubmit">
+                        <van-form>
                             <van-cell-group inset>
                                 <div class="form-item">
                                     <div class="form-label">Monto del retiro:</div>
@@ -65,7 +70,6 @@
                                                     :columns="columns"
                                                     @cancel="showPicker = false"
                                                     @confirm="onConfirmPicker"
-                                                    @change="onChangePicker"
                                                 />
                                             </van-popup>
                                         </teleport>
@@ -76,7 +80,7 @@
                                     <div class="form-label">Correo electrónico</div>
                                     <div class="form-input">
                                         <van-field
-                                            v-model="email"
+                                            v-model="cpf"
                                             placeholder="Por favor introduce tu correo electrónico"
                                             input-align="left"
                                             class="custom-field"
@@ -91,6 +95,19 @@
                                 </div>
 
                                 <div v-if="fieldValue === 'CPF'" class="form-item phone_item_form">
+                                    <div class="form-label">Número de identificación fiscal</div>
+                                    <div class="form-input">
+                                        <van-field
+                                            v-model="cpf"
+                                            placeholder="Por favor introduzca el número de identificación fiscal."
+                                            input-align="left"
+                                            class="custom-field"
+                                        >
+                                        </van-field>
+                                    </div>
+                                </div>
+
+                                <div v-if="fieldValue === 'CNJP'" class="form-item phone_item_form">
                                     <div class="form-label">Número de identificación fiscal</div>
                                     <div class="form-input">
                                         <van-field
@@ -164,8 +181,8 @@ const show = ref(false)
 const columns = [
     { text: 'PHONE', value: 'PHONE' },
     { text: 'EMAIL', value: 'EMAIL' },
-    { text: 'CPF/CNJP', value: 'CPF' },
-    // { text: "CNJP", value: "CNJP" },
+    { text: 'CPF', value: 'CPF' },
+    { text: 'CNJP', value: 'CNJP' },
 ]
 const fieldValue = ref('')
 const pickerValue = ref([])
@@ -183,9 +200,13 @@ function open() {
     show.value = true
 }
 
-watch(() => props.curValue, (newVal) => {
-    amount.value = newVal ? `$${newVal.toFixed(2)}` : '$0.00'
-}, { immediate: true })
+watch(
+    () => props.curValue,
+    (newVal) => {
+        amount.value = newVal ? `$${newVal.toFixed(2)}` : '$0.00'
+    },
+    { immediate: true },
+)
 
 function resetForm() {
     amount.value = props.curValue.toString()
@@ -214,6 +235,10 @@ async function handleSubmit() {
                 receivingAccount = cpf.value
                 pixType = 'CPF'
                 break
+            case 'CNJP':
+                receivingAccount = cpf.value
+                pixType = 'CNJP'
+                break
             default:
                 throw new Error('Por favor seleccione el tipo de PIX')
         }
@@ -238,13 +263,11 @@ async function handleSubmit() {
 
         // 调用更新用户信息接口
         await userStore.updateUserInfo({
-            phone: phone.value || '',
-            email: email.value || '',
-            cpf: cpf.value || '',
-            pix_type: pixType,
             player_id: userStore.userInfo?.id?.toString() || '',
-            receiving_account: receivingAccount,
+            pix_type: pixType,
             receiving_name: name.value,
+            phone: phone.value || '',
+            receiving_account: receivingAccount,
         })
 
         console.log('Información del usuario actualizada exitosamente')
@@ -256,7 +279,7 @@ async function handleSubmit() {
     catch (error: any) {
         console.error('Error al actualizar:', error)
         // 这里可以添加错误提示，比如使用Toast
-        alert(error.message || 'Error al actualizar')
+        // alert(error.message || 'Error al actualizar')
     }
 }
 

@@ -38,8 +38,12 @@
             </div>
         </van-popup>
 
-        <OderDetail ref="oderDetailRef" :active-val="activeVal" :on-success="handleSuccess" />
-      </Teleport>
+        <OderDetailRecharge
+            ref="OderDetailRecargelRef"
+            :active-val="activeVal"
+            :on-success="handleSuccess"
+        />
+    </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -47,8 +51,8 @@ import { ref } from 'vue'
 import '@/assets/scss/rechargePop.scss'
 
 const showBottom = ref(false)
-
-const oderDetailRef = ref()
+const activeVal = ref(100)
+const OderDetailRecargelRef = ref()
 const reItem = [
     {
         id: 1,
@@ -90,8 +94,6 @@ watch(showBottom, (newVal) => {
     }
 })
 
-const activeVal = ref(100)
-
 function handleRe(item: any) {
     activeVal.value = item.val
 }
@@ -105,7 +107,7 @@ function handleSuccess() {
 }
 
 function handleSubmit() {
-    oderDetailRef.value.open()
+    OderDetailRecargelRef.value.open()
 }
 
 function formatVal(val: number) {
@@ -123,8 +125,9 @@ defineExpose({
     open,
 })
 </script>
+
 <style scoped>
-.re_btn{
-    font-size: 35px;
+.re_btn {
+  font-size: 35px;
 }
 </style>

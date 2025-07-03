@@ -2,13 +2,13 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 12:13:49
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-01 19:35:48
+ * @LastEditTime: 2025-07-03 22:39:06
  * @FilePath: /vue3_app/src/views/Promoc.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
     <div id="retirar-debug" class="retirar-page p-[20px] text-[50px]">
-        <HeaderBack :has-article="true" />
+        <HeaderBack title="Retirar" :has-article="true" />
         <div class="retirar_info_container w-[1022px] h-[387px] mb-[20px]">
             <div class="retirar_info_top flex justify-between">
                 <div class="retirar_info_top_left">
@@ -148,8 +148,9 @@ async function refreshCoin() {
     }
 }
 
-function handleSuccess() {
-    // curValue.value = 1
+async function handleSuccess() {
+    await userStore.fetchUserInfo()
+    curValue.value = 1
     setTimeout(() => {
         activeCount.value = 1
         curValue.value = 2
