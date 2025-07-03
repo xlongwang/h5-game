@@ -5,7 +5,10 @@
             <div class="user-info flex items-center gap-[4px] text-[50px]">
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
-                    <div class="font-bold pb-[5px] max-w-[300px] truncate text-[40]">{{ userInfo.name }}</div>
+                    <div class="font-bold pb-[5px] max-w-[230px] truncate text-[40]">
+                        {{ userInfo.name }}
+                        <!-- p_x7g9m -->
+                    </div>
                     <div class="text-[40px] font-bold pt-[8px]">ID: {{ userInfo.id }}</div>
                 </div>
             </div>
@@ -27,9 +30,7 @@
         </div>
 
         <!-- Bonus Banner -->
-        <div
-            class="bonus-banner flex items-center justify-between"
-        >
+        <div class="bonus-banner flex items-center justify-between">
             <van-swipe
                 class="w-full h-full"
                 :autoplay="3000"
@@ -37,7 +38,11 @@
                 :show-indicators="true"
                 :loop="true"
             >
-                <van-swipe-item v-for="(item, idx) in bannerImgs" :key="idx" @click="handleClick(item.path)">
+                <van-swipe-item
+                    v-for="(item, idx) in bannerImgs"
+                    :key="idx"
+                    @click="handleClick(item.path)"
+                >
                     <img :src="item.img" alt="" class="w-full h-full object-cover">
                 </van-swipe-item>
             </van-swipe>
@@ -45,15 +50,18 @@
         </div>
 
         <!-- Ticker -->
-        <div class="ticker flex items-center bg-black/20 w-[1000px] mx-auto py-[20px] text-xs">
+        <div
+            class="ticker flex items-center bg-black/20 w-[1000px] mx-auto py-[20px] text-xs"
+        >
             <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
             <div
                 class="marquee-container flex items-center justify-center flex-1 text-[40px] text-gold h-[80px]"
             >
                 <div class="marquee-content">
-                    <span v-for="text in marqueeTexts" :key="text" class="mr-[40px]">{{
-                        text
-                    }}</span>
+                    <span v-for="item in marqueeTexts" :key="item.id" class="mr-[20px]">
+                        Felicidades<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>Retirar<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
+                    <span v-for="item in marqueeTexts" :key="`${item.id}-copy`" class="mr-[20px]">
+                        Felicidades<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>Retirar<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
                 </div>
             </div>
         </div>
@@ -102,7 +110,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { getMarqueeTexts } from '@/config'
+import { getMarqueeData } from '@/config'
 import { StorageUtil } from '@/utils/storage'
 
 // import { formatNumber } from '@/utils/tools'
@@ -123,17 +131,17 @@ const userInfo = computed(() => {
 })
 
 // 生成随机跑马灯数据
-const marqueeTexts = ref(getMarqueeTexts())
+const marqueeTexts = ref(getMarqueeData())
 
 onMounted(() => {
-    console.log('userInfo', userInfo.value)
+    // console.log('userInfo', userInfo.value)
     // 每次进入页面重新生成随机数据
-    marqueeTexts.value = getMarqueeTexts()
+    marqueeTexts.value = getMarqueeData()
 })
 
 const bannerImgs = [
     {
-        path: '/activity01',
+        path: '/invite',
         img: '/images/promotion/a1.png',
     },
     {
@@ -141,7 +149,7 @@ const bannerImgs = [
         img: '/images/promotion/a2.png',
     },
     {
-        path: '/invite',
+        path: '/activity01',
         img: '/images/promotion/a3.png',
     },
 ]
@@ -298,19 +306,14 @@ function handleSwipeChange(index: number) {
   animation: marquee 40s linear infinite;
   white-space: nowrap;
   padding-right: 50px;
-  /* transform: translateX(100%); */
-}
-
-.marquee-content span {
-  margin-right: 40px;
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(55%);
+    transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
