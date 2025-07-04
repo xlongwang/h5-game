@@ -98,6 +98,8 @@
       :on-success="handleSuccess"
       :cur-value="curValue"
     />
+
+  
   </div>
 </template>
 

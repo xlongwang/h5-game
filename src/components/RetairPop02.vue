@@ -4,13 +4,10 @@
       <div
         class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        Detalles
+        {{ t("components.details") }}
       </div>
       <div class="text-[50px] detait_re_txt pt-[80px]">
-        Estimado usuario, tiene la oportunidad de disfrutar del canal de retiro rápido VIP
-        de forma gratuita una vez,Deposite $200.00 ahora,el sistema le proporcionará
-        canales VIP de retiro rápido de forma gratuita,utilice el canal de retiro rápido
-        VIP,los retiros llegan dentro de 5 minutos
+        {{ t("components.vipChannelDescription") }}
       </div>
       <div
         class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
@@ -19,7 +16,7 @@
           {{ t("components.cancel") }}
         </div>
         <div class="detai_re_submit" @click="handleSubmit">
-           Deposito
+           {{ t("components.depositButton") }}
         </div>
       </div>
     </div>

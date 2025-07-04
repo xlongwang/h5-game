@@ -339,6 +339,23 @@ export default {
         recentRecords: 'Recent Records',
         noUserInfo: 'No user information',
         loading: 'Loading...',
+
+        // RetairPop components
+        details: 'Details',
+        peopleInLine: 'Number of people in line',
+        expectedTime: 'Expected time',
+        useVIPWithdrawalChannel: 'Use VIP withdrawal channel',
+        vipChannelDescription: 'Dear user, you have the opportunity to enjoy the VIP fast withdrawal channel for free once. Deposit $200.00 now, the system will provide you with VIP fast withdrawal channels for free. Use the VIP fast withdrawal channel, withdrawals arrive within 5 minutes',
+        depositButton: 'Deposit',
+        withdrawalFee: 'Withdrawal Fee',
+        payWithdrawalFee: 'Pay withdrawal fee',
+        vipFeeDescription: 'Dear users: We are committed to providing users with a better withdrawal experience. If the single withdrawal amount using the VIP payment channel exceeds $3,000.00, the VIP channel will charge 5% of the withdrawal amount as a management fee. This withdrawal fee is used to maintain the payment system.',
+        orderDetails: 'Order Details',
+        handlingFeeText: 'Handling Fee',
+        personalTaxDescription: 'Dear user: This withdrawal belongs to your personal additional income. According to federal regulations, the bank must collect 10% personal income tax. Your current withdrawal progress is 99.9% and only the last step remains before the withdrawal arrives. Once the tax is paid, the bank will process the transfer immediately.',
+        personalIncomeTax: 'Personal Income Tax',
+        payPersonalTax: 'Pay personal tax',
+        success: 'Success',
     },
 
     // Error messages

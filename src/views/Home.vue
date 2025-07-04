@@ -6,7 +6,7 @@
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
                     <div class="font-bold pb-[5px] max-w-[230px] truncate text-[40]">
-                        {{ userInfo?.user_name || 'User' }}
+                        {{ userInfo?.name || 'User' }}
                         <!-- p_x7g9m -->
                     </div>
                     <div class="text-[40px] font-bold pt-[8px]">{{ t('user.id') }}: {{ userInfo?.id || 'N/A' }}</div>
@@ -107,9 +107,9 @@
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
 
         <!-- 添加测试按钮 -->
-        <div class="test-section">
+        <!-- <div class="test-section">
             <van-button type="primary" @click="showOrderDetail">测试订单详情弹窗</van-button>
-        </div>
+        </div> -->
 
         <!-- 订单详情弹窗 -->
         <OderDetail
@@ -147,7 +147,6 @@ const orderDetailRef = ref()
 const router = useRouter()
 
 const userInfo = computed(() => {
-    console.log("🚀 ~ userInfo ~ userInfo999:", userInfo)
     return userStore.userInfo
 })
 

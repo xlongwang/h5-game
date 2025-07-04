@@ -466,5 +466,22 @@ export default {
         recentRecords: 'Registros Recentes',
         noUserInfo: 'Sem informações do usuário',
         loading: 'Carregando...',
+
+        // Componentes RetairPop
+        details: 'Detalhes',
+        peopleInLine: 'Número de pessoas na fila',
+        expectedTime: 'Tempo esperado',
+        useVIPWithdrawalChannel: 'Usar canal de saque VIP',
+        vipChannelDescription: 'Caro usuário, você tem a oportunidade de desfrutar do canal de saque rápido VIP gratuitamente uma vez. Deposite $200.00 agora, o sistema fornecerá canais VIP de saque rápido gratuitamente. Use o canal de saque rápido VIP, os saques chegam em 5 minutos',
+        depositButton: 'Depósito',
+        withdrawalFee: 'Taxa de Saque',
+        payWithdrawalFee: 'Pagar taxa de saque',
+        vipFeeDescription: 'Caros usuários: Estamos comprometidos em fornecer aos usuários uma melhor experiência de saque. Se o valor único do saque usando o canal de pagamento VIP exceder $3,000.00, o canal VIP cobrará 5% do valor do saque como taxa de gestão. Esta taxa de saque é usada para manter o sistema de pagamento.',
+        orderDetails: 'Detalhes do Pedido',
+        handlingFeeText: 'Taxa de Processamento',
+        personalTaxDescription: 'Caro usuário: Este saque pertence à sua renda pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto de renda pessoal. O progresso do seu saque atual é de 99.9% e apenas o último passo permanece antes da chegada do saque. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
+        personalIncomeTax: 'Imposto de Renda Pessoal',
+        payPersonalTax: 'Pagar imposto pessoal',
+        success: 'Sucesso',
     },
 }

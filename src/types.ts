@@ -73,7 +73,7 @@ export interface ReceivingAccount {
 
 export interface UserInfo {
     id: number
-    user_name: string
+    name: string
     status: number
     receiving_account: ReceivingAccount | null
     pix_type: string | null

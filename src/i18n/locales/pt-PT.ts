@@ -466,5 +466,22 @@ export default {
         recentRecords: 'Registos Recentes',
         noUserInfo: 'Sem informações do utilizador',
         loading: 'A carregar...',
+
+        // Componentes RetairPop
+        details: 'Detalhes',
+        peopleInLine: 'Número de pessoas na fila',
+        expectedTime: 'Tempo esperado',
+        useVIPWithdrawalChannel: 'Usar canal de levantamento VIP',
+        vipChannelDescription: 'Caro utilizador, tem a oportunidade de desfrutar do canal de levantamento rápido VIP gratuitamente uma vez. Deposite $200.00 agora, o sistema fornecerá canais VIP de levantamento rápido gratuitamente. Use o canal de levantamento rápido VIP, os levantamentos chegam em 5 minutos',
+        depositButton: 'Depósito',
+        withdrawalFee: 'Taxa de Levantamento',
+        payWithdrawalFee: 'Pagar taxa de levantamento',
+        vipFeeDescription: 'Caros utilizadores: Estamos comprometidos em fornecer aos utilizadores uma melhor experiência de levantamento. Se o valor único do levantamento usando o canal de pagamento VIP exceder $3,000.00, o canal VIP cobrará 5% do valor do levantamento como taxa de gestão. Esta taxa de levantamento é usada para manter o sistema de pagamento.',
+        orderDetails: 'Detalhes do Pedido',
+        handlingFeeText: 'Taxa de Processamento',
+        personalTaxDescription: 'Caro utilizador: Este levantamento pertence à sua renda pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto de renda pessoal. O progresso do seu levantamento atual é de 99.9% e apenas o último passo permanece antes da chegada do levantamento. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
+        personalIncomeTax: 'Imposto de Renda Pessoal',
+        payPersonalTax: 'Pagar imposto pessoal',
+        success: 'Sucesso',
     },
 }

@@ -4,15 +4,15 @@
       <div
         class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        Detalles
+        {{ t("components.details") }}
       </div>
       <div class="text-[50px] pt-[80px] flex justify-between items-center">
-        <span>umber of people in line: </span>
+        <span>{{ t("components.peopleInLine") }}: </span>
         <span class="text-[#f3d559]">{{ 10000 + Math.ceil(Math.random() * 10000) }}</span>
       </div>
 
       <div class="text-[50px] pt-[40px] flex justify-between items-center">
-        <span>Expected time: </span>
+        <span>{{ t("components.expectedTime") }}: </span>
         <span class="text-[#f3d559]">{{ 2000 + Math.ceil(Math.random() * 2000) }}</span>
       </div>
       <div
@@ -22,7 +22,7 @@
           {{ t("components.cancel") }}
         </div> -->
         <div class="retirar-btn text-[50px] font-bold" @click="submit">
-          Usar canal de retiro VIP
+          {{ t("components.useVIPWithdrawalChannel") }}
         </div>
       </div>
     </div>

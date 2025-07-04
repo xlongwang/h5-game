@@ -4,27 +4,20 @@
       <div
         class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        Detalles
+        {{ t("components.details") }}
       </div>
       <!-- <div class="text-[50px] detait_re_txt pt-[80px] text-center">
         Tarifa de manejo
         <span class="text-[#f3d559]">${{ confirmInfo.coast.toFixed(2) }}</span>
       </div> -->
-      <div class="text-[40px] detait_re_txt pt-[80px]">Estimado usuario:</div>
-      <div class="text-[40px] detait_re_txt pt-[50px]">
-        Este retiro pertenece a sus ingresos personales adicionales. Según las
-        regulaciones federales, el banco debe recaudar el 10% del impuesto sobre la renta
-        personal. El progreso de su retiro actual es del 99.9% y solo queda el último paso
-        antes de que llegue el retiro. Una vez pagado el impuesto, el banco procesará la
-        transferencia de inmediato
-      </div>
+      <div class="text-[40px] detait_re_txt pt-[80px]">{{ t("components.personalTaxDescription") }}</div>
       <div class="text-[50px] detait_re_txt pt-[40px] flex justify-between">
-        <div>Monto del retiro</div>
+        <div>{{ t("components.withdrawalAmount") }}</div>
 
         <div>${{ amount ? Number(amount).toFixed(2) : "0.00" }}</div>
       </div>
       <div class="text-[50px] detait_re_txt pt-[40px] flex justify-between">
-        <div>Impuestos a pagar</div>
+        <div>{{ t("components.personalIncomeTax") }}</div>
 
         <div>${{ coastNum }}</div>
       </div>
@@ -32,7 +25,7 @@
         class="detai_re_btns px-[35px] pt-[40px] justify-between flex text-[40px] font-bold"
       >
         <div class="retirar-btn text-[50px] font-bold" @click="handleSubmit">
-          Pagar impuestos personal
+          {{ t("components.payPersonalTax") }}
         </div>
       </div>
     </div>
@@ -47,7 +40,7 @@ import useUserStore from "@/stores/use-user-store";
 const props = defineProps<{
   pop4Submit: () => void;
   amount: number;
-  setPrsonalTax: () => void;
+  setPrsonalTax: (tax: number) => void;
 }>();
 const showCenter = ref(false);
 const { i18n } = useGlobal();
@@ -73,7 +66,7 @@ const handleCancel = () => {
 const handleSubmit = () => {
   // console.log("handleSubmit");
   props.pop4Submit();
-  props.setPrsonalTax(coastNum.value)
+  props.setPrsonalTax(Number(coastNum.value))
   hide();
 };
 

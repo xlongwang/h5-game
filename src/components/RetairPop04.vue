@@ -4,16 +4,15 @@
       <div
         class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        Detalles del pedido
+        {{ t("components.orderDetails") }}
       </div>
       <div class="text-[50px] detait_re_txt pt-[80px] text-center">
-        Tarifa de manejo
+        {{ t("components.handlingFeeText") }}
         <span class="text-[#f3d559]">${{ confirmInfo.coast.toFixed(2) }}</span>
       </div>
 
       <div class="text-[40px] detait_re_txt pt-[80px]">
-        Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con
-        el monto del pago real, ¡el depósito no será reembolsado!
+        {{ t("components.payAccordingToOrder") }}
       </div>
 
       <div
@@ -22,7 +21,7 @@
         <div class="detai_re_cancel" @click="handleCancel">
           {{ t("components.cancel") }}
         </div>
-        <div class="detai_re_submit" @click="handleSubmit">Ir a pagar</div>
+        <div class="detai_re_submit" @click="handleSubmit">{{ t("components.goToPay") }}</div>
       </div>
     </div>
   </van-popup>

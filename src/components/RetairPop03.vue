@@ -4,22 +4,19 @@
       <div
         class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        Detalles
+        {{ t("components.details") }}
       </div>
       <div class="text-[50px] detait_re_txt pt-[80px]">
-        Estimados usuarios: Estamos comprometidos a brindarles a los usuarios una mejor
-        experiencia de retiro. Si el monto del retiro único utilizando el canal de pago
-        VIP excede $3,000.00, el canal VIP cobrará el 5% del monto del retiro como tarifa
-        de gestión. Esta tarifa de retiro se utiliza para mantener el sistema de pago.
+        {{ t("components.vipFeeDescription") }}
       </div>
 
       <div class="text-[50px] pt-[80px] flex justify-between items-center">
-        <span>uMonto del retiro: </span>
+        <span>{{ t("components.withdrawalAmount") }}: </span>
         <span class="text-[#f3d559]">${{ activeVal ? activeVal.toFixed(2) : '0.00' }}</span>
       </div>
 
       <div class="text-[50px] pt-[80px] flex justify-between items-center">
-        <span>Comisiones de retiro </span>
+        <span>{{ t("components.withdrawalFee") }} </span>
         <span class="text-[#f3d559]">${{ coastNum ? coastNum.toFixed(2) : '0.00' }}</span>
       </div>
 
@@ -27,7 +24,7 @@
         class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
       >
         <div class="retirar-btn text-[50px] font-bold" @click="handleSubmit">
-          Pagar tarifas de retiro
+          {{ t("components.payWithdrawalFee") }}
         </div>
       </div>
     </div>
@@ -50,7 +47,7 @@ const props = defineProps<{
 const showCenter = ref(false);
 const { i18n } = useGlobal();
 const { t } = i18n;
-``
+
 const userInfo = computed(() => {
   return userStore.userInfo;
 });

@@ -4,11 +4,11 @@
       <div
         class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        ‌Detalles del pedido
+        {{ t("components.orderDetails") }}
       </div>
 
       <div class="text-[50px] detait_re_txt pt-[80px] flex flex-col justify-between">
-        <div>Impuesto sobre la renta personal</div>
+        <div>{{ t("components.personalIncomeTax") }}</div>
 
         <div class="text-[#f3d559] pt-[20px]">
           ${{ amount ? (Number(amount)*0.1).toFixed(2) : "0.00" }}
@@ -16,8 +16,7 @@
       </div>
 
       <div class="text-[40px] detait_re_txt pt-[50px]">
-        Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con
-        el monto del pago real, ¡el depósito no será reembolsado!
+        {{ t("components.payAccordingToOrder") }}
       </div>
 
       <div
@@ -26,7 +25,7 @@
         <div class="detai_re_cancel" @click="handleCancel">
           {{ t("components.cancel") }}
         </div>
-        <div class="detai_re_submit" @click="handleSubmit">Ir a pagar</div>
+        <div class="detai_re_submit" @click="handleSubmit">{{ t("components.goToPay") }}</div>
       </div>
     </div>
   </van-popup>

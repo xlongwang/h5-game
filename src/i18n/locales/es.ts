@@ -354,6 +354,23 @@ export default {
         recentRecords: 'Registros recientes',
         noUserInfo: 'Sin información de usuario',
         loading: 'Cargando...',
+
+        // Componentes RetairPop
+        details: 'Detalles',
+        peopleInLine: 'Número de personas en línea',
+        expectedTime: 'Tiempo esperado',
+        useVIPWithdrawalChannel: 'Usar canal de retiro VIP',
+        vipChannelDescription: 'Estimado usuario, tiene la oportunidad de disfrutar del canal de retiro rápido VIP de forma gratuita una vez. Deposite $200.00 ahora, el sistema le proporcionará canales VIP de retiro rápido de forma gratuita. Use el canal de retiro rápido VIP, los retiros llegan dentro de 5 minutos',
+        depositButton: 'Depósito',
+        withdrawalFee: 'Comisión de Retiro',
+        payWithdrawalFee: 'Pagar comisión de retiro',
+        vipFeeDescription: 'Estimados usuarios: Estamos comprometidos a brindarles a los usuarios una mejor experiencia de retiro. Si el monto del retiro único utilizando el canal de pago VIP excede $3,000.00, el canal VIP cobrará el 5% del monto del retiro como tarifa de gestión. Esta tarifa de retiro se utiliza para mantener el sistema de pago.',
+        orderDetails: 'Detalles del Pedido',
+        handlingFeeText: 'Tarifa de Manejo',
+        personalTaxDescription: 'Estimado usuario: Este retiro pertenece a sus ingresos personales adicionales. Según las regulaciones federales, el banco debe recaudar el 10% del impuesto sobre la renta personal. El progreso de su retiro actual es del 99.9% y solo queda el último paso antes de que llegue el retiro. Una vez pagado el impuesto, el banco procesará la transferencia de inmediato.',
+        personalIncomeTax: 'Impuesto sobre la Renta Personal',
+        payPersonalTax: 'Pagar impuesto personal',
+        success: 'Éxito',
     },
 
 }
