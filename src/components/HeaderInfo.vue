@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-27 22:18:32
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 15:08:16
+ * @LastEditTime: 2025-07-04 20:19:44
  * @FilePath: /vue3_app/src/components/HeaderInfo.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,7 +13,7 @@
         </div>
         <div class="header-info-right text-[50px]">
             <div class="header-info-right-name pb-[30px]">
-                <span> Apodo: {{ userInfo.name }} </span>
+                <span> {{ t('components.nickname') }}: {{ userInfo.name }} </span>
             </div>
             <div class="header-info-right-bt flex items-center">
                 <div class="header-info-right-bt-id">ID: {{ userInfo.id }}</div>
@@ -44,7 +44,8 @@ const props = defineProps<{
     userInfo: any
 }>()
 
-const { userStore } = useGlobal()
+const { userStore, i18n } = useGlobal()
+const { t } = i18n
 
 const isRotating = ref(false)
 
@@ -64,18 +65,18 @@ const userInfoLocal = ref({
 async function refreshCoin() {
     try {
         isRotating.value = true
-        showSuccessToast('Refrescar')
+        showSuccessToast(t('components.refresh'))
         console.log('refreshCoin')
 
         // 刷新用户信息
         await userStore.fetchUserInfo()
 
-        showSuccessToast('Información actualizada')
+        showSuccessToast(t('components.refreshSuccess'))
         console.log('用户信息刷新成功')
     }
     catch (error) {
         console.error('刷新用户信息失败:', error)
-        showSuccessToast('Error al actualizar')
+        showSuccessToast(t('components.refreshFailed'))
     }
     finally {
         // 延迟重置旋转状态，确保动画完成
@@ -93,7 +94,7 @@ async function refreshCoin() {
 }
 
 .header-refresh.rotating {
-    animation: rotate360 .5s linear;
+    animation: rotate360 1s linear;
 }
 
 @keyframes rotate360 {

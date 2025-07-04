@@ -9,7 +9,7 @@
                         {{ userInfo.name }}
                         <!-- p_x7g9m -->
                     </div>
-                    <div class="text-[40px] font-bold pt-[8px]">ID: {{ userInfo.id }}</div>
+                    <div class="text-[40px] font-bold pt-[8px]">{{ t('user.id') }}: {{ userInfo.id }}</div>
                 </div>
             </div>
             <div class="flex items-center">
@@ -59,9 +59,9 @@
             >
                 <div class="marquee-content">
                     <span v-for="item in marqueeTexts" :key="item.id" class="mr-[20px]">
-                        Felicidades<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>Retirar<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
+                        {{ t('withdraw.congratulations') }}<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>{{ t('finance.withdraw') }}<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
                     <span v-for="item in marqueeTexts" :key="`${item.id}-copy`" class="mr-[20px]">
-                        Felicidades<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>Retirar<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
+                        {{ t('withdraw.congratulations') }}<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>{{ t('finance.withdraw') }}<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
                 </div>
             </div>
         </div>
@@ -110,6 +110,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useGlobal } from '@/composables'
 import { getMarqueeData } from '@/config'
 import { StorageUtil } from '@/utils/storage'
 
@@ -120,6 +121,10 @@ import '@/assets/scss/pages/home.scss'
 defineOptions({
     name: 'Home',
 })
+
+const { i18n } = useGlobal()
+const { t } = i18n
+
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()

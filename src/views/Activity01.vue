@@ -1,74 +1,80 @@
 <template>
-  <div class="activity01_page">
-    <HeaderBack :has-back-icon="true" :title="'Bonus diario'"  />
-    <div class="activity01_content">
-      <div class="act_header w-[1043px] h-[529px] mx-auto">
-        <img class="w-[100%] h-[100%]" :src="headerImg" alt="" />
-      </div>
-      <div class="act_day_list">
-        <div
-          class="act_day_item"
-          v-for="item in dayList"
-          :key="item.day"
-          :class="{ active: currentDay === item.day }"
-        >
-          <div class="act_day_item_title_top">{{ item.title }}</div>
-          <div class="act_day_item_content pt-[36px]">
-            <div class="day_icon w-[174px] h-[168px] mx-[auto]">
-              <img :src="dayIconImg" class="w-[100%] h-[100%]" />
+    <div class="activity01_page">
+        <HeaderBack :has-back-icon="true" :title="t('activity.dailyBonus')" />
+        <div class="activity01_content">
+            <div class="act_header w-[1043px] h-[529px] mx-auto">
+                <img class="w-[100%] h-[100%]" :src="headerImg" alt="">
             </div>
-            <div class="act_day_item_num pt-[20px] pb-[20px]">
-              ${{ formatNumber(item.num) }}
+            <div class="act_day_list">
+                <div
+                    v-for="item in dayList"
+                    :key="item.day"
+                    class="act_day_item"
+                    :class="{ active: currentDay === item.day }"
+                >
+                    <div class="act_day_item_title_top">{{ item.title }}</div>
+                    <div class="act_day_item_content pt-[36px]">
+                        <div class="day_icon w-[174px] h-[168px] mx-[auto]">
+                            <img :src="dayIconImg" class="w-[100%] h-[100%]">
+                        </div>
+                        <div class="act_day_item_num pt-[20px] pb-[20px]">
+                            ${{ formatNumber(item.num) }}
+                        </div>
+                        <div class="day_checkin">{{ t('activity.checkIn') }}</div>
+                    </div>
+                </div>
             </div>
-            <div class="day_checkin">CHECK IN</div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-const headerImg = "/images/activity/a1.png";
-const dayIconImg = "/images/activity/coin.png";
-import { formatNumber } from "@/utils/tools";
-const currentDay = ref(1);
-const dayList = ref([
-  {
-    day: 1,
-    title: "DAY1",
-    num: 1,
-  },
-  {
-    day: 2,
-    title: "DAY2",
-    num: 1,
-  },
-  {
-    day: 3,
-    title: "DAY3",
-    num: 1,
-  },
-  {
-    day: 4,
-    title: "DAY4",
-    num: 1,
-  },
-  {
-    day: 5,
-    title: "DAY5",
-    num: 1,
-  },
-  {
-    day: 6,
-    title: "DAY6",
-    num: 1,
-  },
-]);
+import { useGlobal } from '@/composables'
+import { formatNumber } from '@/utils/tools'
+
 defineOptions({
-  name: "Activity01",
-});
+    name: 'Activity01',
+})
+const { i18n } = useGlobal()
+const { t } = i18n
+
+const headerImg = '/images/activity/a1.png'
+const dayIconImg = '/images/activity/coin.png'
+const currentDay = ref(1)
+const dayList = ref([
+    {
+        day: 1,
+        title: `${t('activity.day')}1`,
+        num: 1,
+    },
+    {
+        day: 2,
+        title: `${t('activity.day')}2`,
+        num: 1,
+    },
+    {
+        day: 3,
+        title: `${t('activity.day')}3`,
+        num: 1,
+    },
+    {
+        day: 4,
+        title: `${t('activity.day')}4`,
+        num: 1,
+    },
+    {
+        day: 5,
+        title: `${t('activity.day')}5`,
+        num: 1,
+    },
+    {
+        day: 6,
+        title: `${t('activity.day')}6`,
+        num: 1,
+    },
+])
 </script>
+
 <style lang="scss" scoped>
 .activity01_page{
   padding-bottom: 300px;

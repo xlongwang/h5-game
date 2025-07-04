@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useGlobal } from '@/composables'
 
 defineOptions({
     name: 'HeaderBack',
@@ -36,6 +37,7 @@ defineProps<{
 }>()
 
 const router = useRouter()
+const { i18n } = useGlobal()
 
 function goBack() {
     router.back()

@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-29 15:04:18
+ * @LastEditTime: 2025-07-04 20:21:05
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,6 +18,11 @@
 
         <!-- 主内容 -->
         <div v-else class="body">
+            <!-- 语言切换器 -->
+            <!-- <div class="language-switcher-container">
+                <LanguageSwitcher />
+            </div> -->
+
             <router-view v-slot="{ Component }" :key="$route.path">
                 <component :is="Component" v-if="Component" />
             </router-view>
@@ -50,21 +55,21 @@ defineOptions({
     name: 'AppRoot',
 })
 
+const { userStore, i18n } = useGlobal()
+
 const activeNav = ref('Casino')
 const route = useRoute()
 
 const isLoading = ref(true)
 const loadingText = ref('Está inicializando....')
 
-const navItems = ref([
-    { name: 'Casino', to: '/', activeIcon: '/images/casino/nav/a1_active.png', inactiveIcon: '/images/casino/nav/a1.png' },
-    { name: 'Promoción', to: '/promotion', activeIcon: '/images/casino/nav/a2_active.png', inactiveIcon: '/images/casino/nav/a2.png' },
-    { name: 'Retirar', to: '/retirar', activeIcon: '/images/casino/nav/a3_active.png', inactiveIcon: '/images/casino/nav/a3.png' },
-    { name: 'Apoyo', to: '/apoyo', activeIcon: '/images/casino/nav/a4_active.png', inactiveIcon: '/images/casino/nav/a4.png' },
-    { name: 'Perfil', to: '/perfil', activeIcon: '/images/casino/nav/a5_active.png', inactiveIcon: '/images/casino/nav/a5.png' },
+const navItems = computed(() => [
+    { name: i18n.t('nav.casino'), to: '/', activeIcon: '/images/casino/nav/a1_active.png', inactiveIcon: '/images/casino/nav/a1.png' },
+    { name: i18n.t('nav.promotion'), to: '/promotion', activeIcon: '/images/casino/nav/a2_active.png', inactiveIcon: '/images/casino/nav/a2.png' },
+    { name: i18n.t('nav.withdraw'), to: '/retirar', activeIcon: '/images/casino/nav/a3_active.png', inactiveIcon: '/images/casino/nav/a3.png' },
+    { name: i18n.t('nav.support'), to: '/apoyo', activeIcon: '/images/casino/nav/a4_active.png', inactiveIcon: '/images/casino/nav/a4.png' },
+    { name: i18n.t('nav.profile'), to: '/perfil', activeIcon: '/images/casino/nav/a5_active.png', inactiveIcon: '/images/casino/nav/a5.png' },
 ])
-
-const { userStore } = useGlobal()
 
 // 监听路由变化，同步 activeNav
 watch(() => route.path, (newPath) => {
@@ -81,7 +86,7 @@ async function smartLogin() {
     try {
         // 1. 检查本地存储的认证信息
         // loadingText.value = '检查登录状态...'
-        loadingText.value = 'loading...'
+        loadingText.value = i18n.t('common.loading')
         const hasAuthInfo = userStore.initAuthInfo()
         const hasUserInfo = userStore.initUserInfo()
 
@@ -94,7 +99,7 @@ async function smartLogin() {
         // 3. 如果有认证信息但没有用户信息，只获取用户信息
         if (hasAuthInfo && !hasUserInfo) {
             // loadingText.value = '获取用户信息...'
-            loadingText.value = 'loading...'
+            loadingText.value = i18n.t('common.loading')
             await userStore.fetchUserInfo()
             return true
         }
@@ -102,11 +107,11 @@ async function smartLogin() {
         // 4. 如果没有任何登录信息，执行无感登录
         if (!hasAuthInfo) {
             // loadingText.value = '正在登录...'
-            loadingText.value = 'loading...'
+            loadingText.value = i18n.t('common.loading')
             await userStore.login()
 
             // 登录成功后获取用户信息
-            loadingText.value = 'loading...'
+            loadingText.value = i18n.t('common.loading')
             await userStore.fetchUserInfo()
         }
 
@@ -124,7 +129,7 @@ async function init() {
         await smartLogin()
     }
     catch (error) {
-        console.error('Inicialización fallida.:', error)
+        console.error(i18n.t('auth.initializationFailed'), error)
     }
     finally {
         isLoading.value = false
@@ -256,5 +261,12 @@ onMounted(async () => {
 .text-gold {
     color: #ffd700;
     font-size: 12px;
+}
+
+.language-switcher-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
 }
 </style>

@@ -324,6 +324,7 @@
     "useCountdown": true,
     "Slot": true,
     "Slots": true,
-    "useUserStore": true
+    "useUserStore": true,
+    "useI18n": true
   }
 }

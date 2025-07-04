@@ -8,26 +8,25 @@
 -->
 <template>
     <div class="sobre-page">
-        <header-back title="Sobre" :has-back-icon="true" />
+        <header-back :title="t('about.title')" :has-back-icon="true" />
         <div class="sobre-page-con">
-            <div class="sobre-page-con-title">Sobre nosotros</div>
+            <div class="sobre-page-con-title">{{ t('about.aboutUs') }}</div>
             <div class="sobre-page-con-text text-[45px] pt-[40px] line-height-[1.5]">
-                Contamos con una extensa colección de tragamonedas estilo Vegas y ofrecemos la
-                gama más amplia de juegos y productos más competitivos del mercado. Todas las
-                plataformas solo acceden y seleccionan plataformas de juegos en línea de renombre
-                internacional para garantizar que cada jugador pueda jugar en un entorno justo y
-                confiable. Al mismo tiempo, el gobierno de Costa Rica también monitoreará los
-                datos de la plataforma de juegos para garantizar la equidad y autenticidad del
-                juego. ¡Disfruta jugando en Slots!
+                {{ t('about.description') }}
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useGlobal } from '@/composables'
+
 defineOptions({
     name: 'SobrePage',
 })
+
+const { i18n } = useGlobal()
+const { t } = i18n
 </script>
 
 <style scoped lang="scss">

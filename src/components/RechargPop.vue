@@ -6,7 +6,7 @@
                 <div class="re_pop_content w-[656px] p-[29px]">
                     <div class="peposito_title mx-auto mt-[50px]">peposito</div>
                     <div class="text-center text-[30px] pt-[35px]">
-                        Seleccionar monto del depósito
+                        {{ t('components.selectDepositAmount') }}
                     </div>
                     <div class="re_list">
                         <div
@@ -23,14 +23,13 @@
                     <div class="re_btn_box flex items-center text-[40px]">
                         <div class="re_doller">$</div>
                         <div class="re_inner_cur">{{ formatVal(activeVal) }}</div>
-                        <div class="re_inner_ext text-[20px]">Extra+0.00</div>
+                        <div class="re_inner_ext text-[20px]">{{ t('components.extra') }}+0.00</div>
                     </div>
 
                     <div class="re_submit_btn" @click="handleSubmit"></div>
                 </div>
                 <p class="text-center re_text text-[28px] text-[#b17924] pt-[20px]">
-                    Después de un pago exitoso, el sistema agregará el monto a su cuenta dentro de 1
-                    a 5 minutos.
+                    {{ t('components.afterSuccessfulPayment') }}
                 </p>
 
                 <div class="re_pop_bg01"></div>
@@ -48,7 +47,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useGlobal } from '@/composables'
 import '@/assets/scss/rechargePop.scss'
+
+const { i18n } = useGlobal()
+const { t } = i18n
 
 const showBottom = ref(false)
 const activeVal = ref(100)

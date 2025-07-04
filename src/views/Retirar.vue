@@ -8,7 +8,7 @@
 -->
 <template>
     <div id="retirar-debug" class="retirar-page p-[20px] text-[50px]">
-        <HeaderBack title="Retirar" :has-article="true" />
+        <HeaderBack :title="t('withdraw.title')" :has-article="true" />
         <div class="retirar_info_container w-[1022px] h-[387px] mb-[20px]">
             <div class="retirar_info_top flex justify-between">
                 <div class="retirar_info_top_left">
@@ -26,7 +26,7 @@
                             }}
                         </div>
                     </div>
-                    <div class="retirar_info_top_left_bottom py-[16px]">Saldo de cuenta</div>
+                    <div class="retirar_info_top_left_bottom py-[16px]">{{ t('withdraw.accountBalance') }}</div>
                 </div>
                 <div
                     class="retirar_info_top_right flex items-center w-[93px] h-[105px] mt-[15px]"
@@ -34,7 +34,7 @@
                 ></div>
             </div>
             <div class="retirar_info_bottom pt-[30px] flex items-center">
-                <span class="text-[40px]">Monto que se puede retirar: </span>
+                <span class="text-[40px]">{{ t('withdraw.withdrawableAmount') }}: </span>
                 <span class="pl-[7px]">
                     <img
                         :src="coinImg"
@@ -67,7 +67,7 @@
             class="retiara_btn_big w-[1022px] h-[152px] text-[50px] font-bold text-white text-center"
             @click="handleRetarir"
         >
-            Retirar
+            {{ t('withdraw.withdrawNow') }}
         </div>
         <div class="retirar_record text-[35px]">
             <div class="record-scroll-container">
@@ -78,14 +78,14 @@
                         class="retirar_record_item flex items-center justify-between"
                     >
                         <div class="flex items-center pl-[15px] pr-[15px]">
-                            <span class="pr-[15px]">Felicidades</span>
+                            <span class="pr-[15px]">{{ t('withdraw.congratulations') }}</span>
                             <span class="color-[#fff] pr-[15px]">{{ item.id }}</span>
-                            <span class="pr-[15px]">Retirar</span>
+                            <span class="pr-[15px]">{{ t('finance.withdraw') }}</span>
                             <span class="color-[#fff] pr-[15px] color-[#fe0000]">{{
                                 item.amount
                             }}</span>
                         </div>
-                        <div>{{ item.time }} minutos</div>
+                        <div>{{ item.time }} {{ t('withdraw.minutes') }}</div>
                     </div>
                 </div>
             </div>
@@ -116,6 +116,9 @@ defineOptions({
     name: 'Retirar',
 })
 
+const { i18n } = useGlobal()
+const { t } = i18n
+
 // 生成循环滚动的记录数据
 function generateScrollData() {
     const data = getMarqueeData()
@@ -137,18 +140,18 @@ const curValue = ref(2)
 const retarirStep2Ref = ref()
 async function refreshCoin() {
     try {
-        showSuccessToast('Refrescar')
+        showSuccessToast(t('finance.refresh'))
         console.log('refreshCoin')
 
         // 刷新用户信息
         await userStore.fetchUserInfo()
 
-        showSuccessToast('Información actualizada')
+        showSuccessToast(t('finance.updated'))
         console.log('用户信息刷新成功')
     }
     catch (error) {
         console.error('刷新用户信息失败:', error)
-        showSuccessToast('Error al actualizar')
+        showSuccessToast(t('finance.updateFailed'))
     }
 }
 

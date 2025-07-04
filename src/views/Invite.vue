@@ -1,14 +1,14 @@
 <template>
     <div class="invite-page">
-        <HeaderBack :has-back-icon="true" title="Invitar" />
+        <HeaderBack :has-back-icon="true" :title="t('invite.title')" />
         <div class="invite-header w-[1051px] h-[389px] mx-auto mb-[17px]">
             <img :src="inviteImg" class="w-[100%] h-[100%]">
         </div>
         <div class="invite-mi w-[1049px] h-[477px] mx-auto">
-            <div class="invite-mi-title font-bold text-[50px] pb-[30px]">Mi invitation</div>
+            <div class="invite-mi-title font-bold text-[50px] pb-[30px]">{{ t('invite.myInvitation') }}</div>
             <div class="invite-mi-con">
                 <div class="'invite-mi-hoy items-center flex h-[147px]">
-                    <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">Hoy</div>
+                    <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.today') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
                         <div class="text-[45px] pb-[8px]">Registro</div>
                         <div class="text-[60px] font-bold">0</div>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="'invite-mi-todo mt-[20px] flex h-[147px]">
-                    <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">Todo</div>
+                    <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.total') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
                         <div class="text-[45px] pb-[8px]">Registro</div>
                         <div class="text-[60px] font-bold">0</div>
@@ -33,19 +33,19 @@
         </div>
 
         <div class="recom-mi w-[1051px] h-[263px] mx-auto mt-[22px]">
-            <div class="invite-mi-title font-bold text-[50px] pb-[30px]">Mi recompensa</div>
+            <div class="invite-mi-title font-bold text-[50px] pb-[30px]">{{ t('invite.myReward') }}</div>
             <div class="recom-con">
-                <span>Recibirás</span>
+                <span>{{ t('invite.youWillReceive') }}</span>
                 <span>0</span>
-                <span class="text-[#9e6c15]">Disponible</span>
+                <span class="text-[#9e6c15]">{{ t('invite.available') }}</span>
                 <span>${{ formatNumber(0) }}</span>
-                <div class="copy-btn">Recibir</div>
+                <div class="copy-btn">{{ t('invite.receive') }}</div>
             </div>
         </div>
 
         <div class="mt-[22px] recom-section w-[1051px] mx-auto">
             <div class="invite-mi-title font-bold text-[50px] pb-[30px]">
-                Comparte en tus redes sociales
+                {{ t('invite.shareSocialMedia') }}
             </div>
             <div class="recom-section-con flex justify-center gap-[20px] text-[28px] pb-[10px]">
                 <div
@@ -65,7 +65,7 @@
             <div class="invite_bt flex items-center justify-between pt-[40px]">
                 <div class="recom-con">
                     <van-field v-model="value" class="local_input" readonly placeholder="" />
-                    <div class="copy-btn" @click="copy">Copiar</div>
+                    <div class="copy-btn" @click="copy">{{ t('invite.copy') }}</div>
                 </div>
             </div>
         </div>
@@ -74,11 +74,15 @@
 
 <script setup lang="ts">
 import { showFailToast, showSuccessToast } from 'vant'
+import { useGlobal } from '@/composables'
 import { formatNumber } from '@/utils/tools'
 
 defineOptions({
     name: 'InvitePage',
 })
+
+const { i18n } = useGlobal()
+const { t } = i18n
 const inviteImg = '/images/invite/banner.png'
 
 const value = ref('')
@@ -115,7 +119,7 @@ async function copy() {
         if (navigator.clipboard && window.isSecureContext) {
             // 现代浏览器 + HTTPS
             await navigator.clipboard.writeText(value.value)
-            showSuccessToast('Copiado exitosamente')
+            showSuccessToast(t('invite.copied'))
         }
         else {
             // 降级方案
@@ -130,11 +134,11 @@ async function copy() {
 
             try {
                 document.execCommand('copy')
-                showSuccessToast('Copiado exitosamente')
+                showSuccessToast(t('invite.copied'))
             }
             catch (err) {
                 console.log('err :>> ', err)
-                showFailToast('Error al copiar')
+                showFailToast(t('invite.copyError'))
             }
             finally {
                 document.body.removeChild(textArea)
@@ -149,7 +153,7 @@ async function copy() {
 
 function handleShare(title: string) {
     const currentUrl = window.location.origin
-    const shareText = `¡Únete a nosotros! ${currentUrl}`
+    const shareText = `${t('invite.shareText')} ${currentUrl}`
 
     switch (title.toLowerCase()) {
         case 'facebook':

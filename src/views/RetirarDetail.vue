@@ -17,7 +17,7 @@
 
                 <div class="retirar-detail-page-c2">
                     <div class="retirar-detail-page-c2-item-title text-[50px] pt-[30px] pb-[20px]">
-                        Retiro en curso
+                        {{ t('withdraw.withdrawalInProgress') }}
                     </div>
                     <div class="retirar_progress_container">
                         <div class="retirar_pro_box">
@@ -40,28 +40,19 @@
                     <div class="log_scroll_container text-[50px]">
                         <div class="retirar-detail-log-item">
                             <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
-                                línea más reconocidos del mundo, que ofrece una variedad de juegos
-                                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
-                                aseguramos de que todos los
+                                {{ t('withdraw.welcomeMessage') }}
                             </div>
                             <div class="time">2025-06-30 10:00:00</div>
                         </div>
                         <div class="retirar-detail-log-item">
                             <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
-                                línea más reconocidos del mundo, que ofrece una variedad de juegos
-                                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
-                                aseguramos de que todos los
+                                {{ t('withdraw.welcomeMessage') }}
                             </div>
                             <div class="time">2025-06-30 10:00:00</div>
                         </div>
                         <div class="retirar-detail-log-item">
                             <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                                Bienvenido a Slots, Group es uno de los operadores de juegos de azar en
-                                línea más reconocidos del mundo, que ofrece una variedad de juegos
-                                emocionantes como máquinas tragamonedas, pesca, loterías y más.Nos
-                                aseguramos de que todos los
+                                {{ t('withdraw.welcomeMessage') }}
                             </div>
                             <div class="time">2025-06-30 10:00:00</div>
                         </div>
@@ -69,7 +60,7 @@
                 </div>
 
                 <div class="retirar-btn text-[50px] font-bold" @click="submit">
-                    Usar canal de retiro VIP
+                    {{ t('withdraw.useVIPChannel') }}
                 </div>
                 <!-- 使用 VIP 渠道提款 -->
             </div>
@@ -88,7 +79,8 @@ defineOptions({
     name: 'RetirarDetailPage',
 })
 
-const { userStore } = useGlobal()
+const { userStore, i18n } = useGlobal()
+const { t } = i18n
 const route = useRoute()
 
 // 获取URL参数中的amount

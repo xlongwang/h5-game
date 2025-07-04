@@ -1,6 +1,6 @@
 <template>
     <div class="record_page text-[50px]">
-        <header-back title="Historial de retiros" :has-back-icon="true" />
+        <header-back :title="t('record.title')" :has-back-icon="true" />
         <div class="record_content">
             <div class="record_content_title">
                 <div v-for="item in titleList" :key="item" class="record_content_title_item">
@@ -17,13 +17,14 @@
                     </div>
                 </div>
             </div>
-            <div v-else class="record_emtpy">Sin datos</div>
+            <div v-else class="record_emtpy">{{ t('record.noData') }}</div>
         </div>
         <div class="record_bt"></div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
 import '@/assets/scss/pages/record.scss'
 
@@ -31,9 +32,12 @@ defineOptions({
     name: 'Record',
 })
 
+const { i18n } = useGlobal()
+const { t } = i18n
+
 const userStore = useUserStore()
 
-const titleList = ref(['Cantidad', 'Tiempo', 'Estado', 'Detalles'])
+const titleList = ref([t('record.amount'), t('record.time'), t('record.status'), t('record.details')])
 const recordList = ref<any[]>([])
 const userInfo = computed(() => {
     return userStore.userInfo

@@ -3,6 +3,7 @@ import { createSSRApp } from 'vue'
 
 import App from './App.vue'
 
+import i18n from './i18n'
 import { createRouter } from './router'
 
 console.log(`当前环境: ${import.meta.env.VITE_APP_ENV}`)
@@ -16,6 +17,6 @@ export function createApp() {
     const app = createSSRApp(App)
     const router = createRouter()
     const store = createPinia()
-    app.use(store).use(router)
+    app.use(store).use(router).use(i18n)
     return { app, router, store }
 }

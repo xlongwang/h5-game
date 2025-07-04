@@ -8,50 +8,35 @@
 -->
 <template>
     <div class="apoyo_page p-[20px] text-[50px]">
-        <HeaderBack :has-back-icon="true" title="Servicio al Cliente" />
+        <HeaderBack :has-back-icon="true" :title="t('support.title')" />
         <div class="apoyo_page_scroll">
             <div class="pb-[350px]">
                 <div class="mb-[60px] w-[1045px] h-[608px] mx-auto">
                     <img :src="bannerImg" alt="" class="w-full">
                 </div>
                 <van-collapse v-model="activeNames" accordion>
-                    <van-collapse-item title="¿Cómo puedo retirar dinero?" name="1">
-                        Primero verifique el registro de pago y la cuentabancaria.<br>
-                        Si la deducción se realizó correctamente pero no se recibió, comuníquese con el
-                        servicio al cliente de la plataforma y proporcione el comprobante de la
-                        transacción para que el servicio al cliente pueda ayudarlo en el procesamiento.
-                    <!-- 这里可以放详细内容 -->
+                    <van-collapse-item :title="t('support.howToWithdraw')" name="1">
+                        {{ t('support.faqAnswer1') }}
                     </van-collapse-item>
-                    <van-collapse-item title="¿Es esta plataforma digna de mi confianza?" name="2">
-                        Primero verifique el registro de pago y la cuentabancaria.<br>
-                        Si la deducción se realizó correctamente pero no se recibió, comuníquese con el
-                        servicio al cliente de la plataforma y proporcione el comprobante de la
-                        transacción para que el servicio al cliente pueda ayudarlo en el procesamiento.
-                    <!-- 这里可以放详细内容 -->
+                    <van-collapse-item :title="t('support.isPlatformTrustworthy')" name="2">
+                        {{ t('support.faqAnswer1') }}
                     </van-collapse-item>
                     <van-collapse-item
-                        title="¿Qué debo hacer si hay un problema con mi depósito?"
+                        :title="t('support.depositProblem')"
                         name="3"
                     >
-                        Primero verifique el registro de pago y la cuentabancaria.<br>
-                        Si la deducción se realizó correctamente pero no se recibió, comuníquese con el
-                        servicio al cliente de la plataforma y proporcione el comprobante de la
-                        transacción para que el servicio al cliente pueda ayudarlo en el procesamiento.
+                        {{ t('support.faqAnswer1') }}
                     </van-collapse-item>
 
                     <van-collapse-item
-                        title="¿Por qué el juego se carga lentamente o no se abre?"
+                        :title="t('support.gameLoadingSlow')"
                         name="4"
                     >
-                        Los problemas de carga del juego pueden deberse a la latencia de la red, el
-                        rendimiento del dispositivo o el mantenimiento de la plataforma. Se recomienda
-                        verificar la conexión de red o informar el problema al servicio de atención al
-                        cliente para obtener ayuda.
+                        {{ t('support.faqAnswer2') }}
                     </van-collapse-item>
 
-                    <van-collapse-item title="¿Qué pasa si el retiro falla?" name="5">
-                        Si el retiro falla, verifique si su cuenta de retiro es correcta o cambie la
-                        cuenta de retiro y retire dinero nuevamente.
+                    <van-collapse-item :title="t('support.withdrawalFailed')" name="5">
+                        {{ t('support.faqAnswer3') }}
                     </van-collapse-item>
                 </van-collapse>
             </div>
@@ -60,13 +45,17 @@
 </template>
 
 <script setup lang="ts">
-// import { Collapse as VanCollapse, CollapseItem as VanCollapseItem } from 'vant'
+import { useGlobal } from '@/composables'
 
 import '@/assets/scss/pages/apoyo.scss'
 
 defineOptions({
     name: 'Apoyo',
 })
+
+const { i18n } = useGlobal()
+const { t } = i18n
+
 const bannerImg = '/images/apoyo/header.png'
 const router = useRouter()
 const activeNames = ref<string | number>('') // 单开模式

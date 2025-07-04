@@ -1,4 +1,5 @@
 import useUserStore from '@/stores/use-user-store'
+import { useI18n } from './useI18n'
 
 export function useGlobal() {
     const ins = getCurrentInstance()!
@@ -9,6 +10,7 @@ export function useGlobal() {
     const router = useRouter()
     const globalStore = useGlobalStore()
     const userStore = useUserStore()
+    const i18n = useI18n()
     return {
         ctx,
         options,
@@ -41,6 +43,22 @@ export function useGlobal() {
             isLoggedIn: userStore.isLoggedIn,
             getAccessToken: userStore.getAccessToken,
             getDeviceId: userStore.getDeviceId,
+        },
+        i18n: {
+            t: i18n.t,
+            currentLocale: i18n.currentLocale,
+            locales: i18n.locales,
+            changeLanguage: i18n.changeLanguage,
+            getCurrentLanguageName: i18n.getCurrentLanguageName,
+            getCurrentLanguageFlag: i18n.getCurrentLanguageFlag,
+            detectUserLanguage: i18n.detectUserLanguage,
+            getLanguageInfo: i18n.getLanguageInfo,
+            isPortugueseVariant: i18n.isPortugueseVariant,
+            getPortugueseVariantName: i18n.getPortugueseVariantName,
+            formatNumber: i18n.formatNumber,
+            formatDate: i18n.formatDate,
+            formatCurrency: i18n.formatCurrency,
+            formatRelativeTime: i18n.formatRelativeTime,
         },
     }
 }

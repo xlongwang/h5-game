@@ -3,21 +3,20 @@
         <div class="recharge_detail_content">
             <div class="peposito_de_title mx-auto mt-[50px]"></div>
             <div class="recharge_input text-[50px]">
-                <div>Tarifa de manejo</div>
+                <div>{{ t('components.handlingFee') }}</div>
                 <div class="text-[#f00]">${{ formatVal(activeVal) }}</div>
             </div>
             <div
                 class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
             >
                 <span class="dot_icon"></span>
-                Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con
-                el monto del pago real, ¡el depósito no será reembolsado!
+                {{ t('components.payAccordingToOrder') }}
             </div>
             <div
                 class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
             >
-                <div class="detai_re_cancel" @click="handleCancel">CANCELAR</div>
-                <div class="detai_re_submit" @click="handleSubmit">IR A PAGAR</div>
+                <div class="detai_re_cancel" @click="handleCancel">{{ t('components.cancel') }}</div>
+                <div class="detai_re_submit" @click="handleSubmit">{{ t('components.goToPay') }}</div>
             </div>
         </div>
     </van-popup>
@@ -25,13 +24,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
 import { userApi } from '@/api/user-api'
+import { useGlobal } from '@/composables'
 
 const props = defineProps<{
     activeVal: number
     onSuccess: () => void
 }>()
+
+const { i18n } = useGlobal()
+const { t } = i18n
 
 function formatVal(val: number) {
     if (val > 20) {

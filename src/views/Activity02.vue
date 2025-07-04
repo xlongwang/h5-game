@@ -8,27 +8,31 @@
 -->
 <template>
     <div class="activity01_page">
-        <HeaderBack :has-back-icon="true" title="Nuevas tareas de usuario" />
+        <HeaderBack :has-back-icon="true" :title="t('activity.newUserTasks')" />
         <div class="activity01_content">
             <div class="act_header w-[1043px] h-[529px] mx-auto">
                 <img class="w-[100%] h-[100%]" :src="headerImg" alt="">
             </div>
             <div class="act_btn w-[1046px] h-[143px] mx-auto mt-[53px]">
-                Recibir ${{ formatNumber(90) }}
+                {{ t('activity.receive') }} ${{ formatNumber(90) }}
             </div>
             <div class="text-center w-[1046px] h-[143px] mx-auto mt-[33px] text-[40px]">
-                Completa tareas para obtener recompensas.
+                {{ t('activity.completeTasks') }}
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useGlobal } from '@/composables'
 import { formatNumber } from '@/utils/tools'
 
 defineOptions({
     name: 'Activity02',
 })
+const { i18n } = useGlobal()
+const { t } = i18n
+
 const headerImg = '/images/activity/a1.png'
 </script>
 

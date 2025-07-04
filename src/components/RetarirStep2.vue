@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 15:40:36
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 11:44:55
+ * @LastEditTime: 2025-07-04 20:22:03
  * @FilePath: /vue3_app/src/components/RetarirStep2.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -20,13 +20,13 @@
                         class="step2_t font_cinze text-[50px] font-bold text-center"
                         style="text-transform: lowercase; font-variant: normal"
                     >
-                        Vincular cuenta de retirada
+                        {{ t('components.linkWithdrawalAccount') }}
                     </div>
                     <div class="step2_content">
                         <van-form>
                             <van-cell-group inset>
                                 <div class="form-item">
-                                    <div class="form-label">Monto del retiro:</div>
+                                    <div class="form-label">{{ t('components.withdrawalAmount') }}:</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="amount"
@@ -38,18 +38,18 @@
                                     </div>
                                 </div>
                                 <div class="form-item">
-                                    <div class="form-label">Nombre</div>
+                                    <div class="form-label">{{ t('components.name') }}</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="name"
-                                            placeholder="Pro favor ingrese tu nombre"
+                                            :placeholder="t('components.pleaseEnterName')"
                                             input-align="left"
                                             class="custom-field"
                                         />
                                     </div>
                                 </div>
                                 <div class="form-item picker_item_form">
-                                    <div class="form-label">Pix clave</div>
+                                    <div class="form-label">{{ t('components.pixKey') }}</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="fieldValue"
@@ -69,8 +69,8 @@
                                                 <van-picker
                                                     :model-value="pickerValue"
                                                     :columns="columns"
-                                                    cancel-button-text="CANCELAR"
-                                                    confirm-button-text="CONFIRMAR"
+                                                    :cancel-button-text="t('components.cancel')"
+                                                    :confirm-button-text="t('components.confirm')"
                                                     @cancel="showPicker = false"
                                                     @confirm="onConfirmPicker"
                                                 />
@@ -80,11 +80,11 @@
                                 </div>
 
                                 <div v-if="fieldValue === 'EMAIL'" class="form-item phone_item_form">
-                                    <div class="form-label">Correo electrónico</div>
+                                    <div class="form-label">{{ t('components.email') }}</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="cpf"
-                                            placeholder="Por favor introduce tu correo electrónico"
+                                            :placeholder="t('components.pleaseEnterEmail')"
                                             input-align="left"
                                             class="custom-field"
                                             @blur="validateEmail"
@@ -98,11 +98,11 @@
                                 </div>
 
                                 <div v-if="fieldValue === 'CPF'" class="form-item phone_item_form">
-                                    <div class="form-label">Número de identificación fiscal</div>
+                                    <div class="form-label">{{ t('components.cpf') }}</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="cpf"
-                                            placeholder="Por favor introduzca el número de identificación fiscal."
+                                            :placeholder="t('components.pleaseEnterCPF')"
                                             input-align="left"
                                             class="custom-field"
                                         >
@@ -111,11 +111,11 @@
                                 </div>
 
                                 <div v-if="fieldValue === 'CNJP'" class="form-item phone_item_form">
-                                    <div class="form-label">Número de identificación fiscal</div>
+                                    <div class="form-label">{{ t('components.cnjp') }}</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="cnjp"
-                                            placeholder="Por favor introduzca el número de identificación fiscal."
+                                            :placeholder="t('components.pleaseEnterCNJP')"
                                             input-align="left"
                                             class="custom-field"
                                         >
@@ -124,11 +124,11 @@
                                 </div>
 
                                 <div class="form-item phone_item_form">
-                                    <div class="form-label">Numere telefonico</div>
+                                    <div class="form-label">{{ t('components.phone') }}</div>
                                     <div class="form-input">
                                         <van-field
                                             v-model="phone"
-                                            placeholder="Pro favor ingrese su numero de telefono"
+                                            :placeholder="t('components.pleaseEnterPhone')"
                                             input-align="left"
                                             class="custom-field"
                                         >
@@ -149,7 +149,7 @@
                                     class="form-btn text-[#0e0701] text-[40px]"
                                     @click="handleSubmit"
                                 >
-                                    Confirmar
+                                    {{ t('components.confirm') }}
                                 </van-button>
                             </div>
                         </van-form>
@@ -164,6 +164,7 @@
 import { _ } from 'dist/server/entry-server'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
 import { StorageUtil } from '@/utils/storage'
 
@@ -171,6 +172,10 @@ const props = defineProps<{
     onSuccess?: () => void
     curValue: number
 }>()
+
+const { i18n } = useGlobal()
+const { t } = i18n
+
 const userStore = useUserStore()
 // console.log("userStore", userStore);
 
@@ -244,25 +249,25 @@ async function handleSubmit() {
                 pixType = 'CNJP'
                 break
             default:
-                throw new Error('Por favor seleccione el tipo de PIX')
+                throw new Error(t('components.pleaseSelectPixType'))
         }
 
         // 验证必填字段
         if (!name.value) {
-            throw new Error('Por favor ingrese su nombre')
+            throw new Error(t('components.pleaseEnterName'))
         }
 
         if (!phone.value) {
-            throw new Error('Por favor, ingrese el número de teléfono móvil.')
+            throw new Error(t('components.pleaseEnterPhone'))
         }
 
         if (!receivingAccount) {
-            throw new Error('Por favor ingrese la información de la cuenta')
+            throw new Error(t('components.pleaseEnterAccountInfo'))
         }
 
         // 如果是邮箱类型，验证邮箱格式
         if (fieldValue.value === 'EMAIL' && !validateEmail()) {
-            throw new Error('Formato de correo electrónico incorrecto')
+            throw new Error(t('components.invalidEmailFormat'))
         }
 
         // 调用更新用户信息接口
@@ -298,13 +303,13 @@ function onConfirmPicker(val: { selectedValues: string }) {
 // 邮箱验证函数
 function validateEmail() {
     if (!email.value) {
-        emailError.value = 'Por favor ingrese su correo electrónico'
+        emailError.value = t('components.pleaseEnterEmail')
         return false
     }
 
     const emailRegex = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
     if (!emailRegex.test(email.value)) {
-        emailError.value = 'Por favor ingrese un correo electrónico válido'
+        emailError.value = t('components.invalidEmailFormat')
         return false
     }
 

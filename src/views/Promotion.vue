@@ -8,7 +8,7 @@
 -->
 <template>
     <div id="promotion-debug" class="promotion-page">
-        <header-back title="Promoción" />
+        <header-back :title="t('nav.promotion')" />
         <ul class="promotion-list">
             <li v-for="item in list" :key="item.id">
                 <img :src="item.url" :alt="item.name" @click="handleClick(item)">
@@ -19,10 +19,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useGlobal } from '@/composables'
 
 import '@/assets/scss/pages/promotion.scss'
 
 // import { useRoute } from 'vue-router'
+
+const { i18n } = useGlobal()
+const { t } = i18n
 
 const currentTime = ref('')
 // const route = useRoute()
