@@ -50,6 +50,10 @@ import { ref } from 'vue'
 import { useGlobal } from '@/composables'
 import '@/assets/scss/rechargePop.scss'
 
+const props = defineProps<{
+    onSuccess: () => void
+}>()
+
 const { i18n } = useGlobal()
 const { t } = i18n
 
@@ -107,6 +111,7 @@ function handleClose() {
 
 function handleSuccess() {
     showBottom.value = false
+    props.onSuccess()
 }
 
 function handleSubmit() {

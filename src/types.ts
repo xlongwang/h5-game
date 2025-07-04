@@ -42,6 +42,7 @@ export interface WalletLog {
     created_at: string
     updated_at: string
     deleted_at: string | null
+    total_withdraw: string
 }
 
 // 钱包类型
@@ -58,14 +59,23 @@ export interface Wallet {
     created_at: string
     updated_at: string
     deleted_at: string | null
+    total_withdraw: string 
 }
 
 // 用户信息类型
+// 收款账户信息类型
+export interface ReceivingAccount {
+    phone: string
+    pix_type: string
+    receiving_name: string
+    receiving_account: string
+}
+
 export interface UserInfo {
     id: number
     user_name: string
     status: number
-    receiving_account: string | null
+    receiving_account: ReceivingAccount | null
     pix_type: string | null
     created_at: string
     updated_at: string
@@ -155,12 +165,12 @@ export interface PayinParams {
     /**
      * 金额
      */
-    amount: string;
+    amount: string
     /**
      * 用户id
      */
-    player_id: string;
-    [property: string]: any;
+    player_id: string
+    [property: string]: any
 }
 
 // 代收响应数据类型
@@ -168,20 +178,20 @@ export interface PayinData {
     /**
      * 订单号
      */
-    order_no: string;
+    order_no: string
     /**
      * 支付地址，需转换为二维码显示不需要显示原地址
      */
-    payInfo: string;
-    [property: string]: any;
+    payInfo: string
+    [property: string]: any
 }
 
 // 代收API响应类型
 export interface PayinResponse {
-    code: number;
-    data: PayinData;
-    message: string;
-    [property: string]: any;
+    code: number
+    data: PayinData
+    message: string
+    [property: string]: any
 }
 
 // 代付请求参数类型
@@ -189,36 +199,36 @@ export interface PayoutParams {
     /**
      * 金额
      */
-    amount: string;
+    amount: string
     /**
      * 手机号
      */
-    phone: string;
+    phone: string
     /**
      * 账户类型
      */
-    pix_type: string;
+    pix_type: string
     /**
      * 用户id
      */
-    player_id: string;
+    player_id: string
     /**
      * 账户号
      */
-    receiving_account: string;
+    receiving_account: string
     /**
      * 账户名
      */
-    receiving_name: string;
-    [property: string]: any;
+    receiving_name: string
+    [property: string]: any
 }
 
 // 代付API响应类型
 export interface PayoutResponse {
-    code: number;
-    data: string;
-    message: string;
-    [property: string]: any;
+    code: number
+    data: string
+    message: string
+    [property: string]: any
 }
 
 // 更新用户信息请求参数类型
@@ -226,31 +236,31 @@ export interface UpdateUserInfoParams {
     /**
      * 手机号
      */
-    phone?: string | undefined;
-    email?: string | undefined;
-    cpf?: string | undefined;
+    phone?: string | undefined
+    email?: string | undefined
+    cpf?: string | undefined
     /**
      * 可选值PHONE,EMAIL,CPF,CNPJ
      */
-    pix_type: string;
-    player_id: string;
+    pix_type: string
+    player_id: string
     /**
      * 账户号
      */
-    receiving_account: string;
+    receiving_account: string
     /**
      * 账户名
      */
-    receiving_name: string;
-    [property: string]: any;
+    receiving_name: string
+    [property: string]: any
 }
 
 // 更新用户信息API响应类型
 export interface UpdateUserInfoResponse {
-    code: number;
-    data: string;
-    message: string;
-    [property: string]: any;
+    code: number
+    data: string
+    message: string
+    [property: string]: any
 }
 
 // 订单列表请求参数类型
@@ -258,16 +268,16 @@ export interface OrderListParams {
     /**
      * 订单标识1为充值2为提现
      */
-    genre?: string;
+    genre?: string
     /**
      * 页码(目前固定15条分页)
      */
-    page?: string;
+    page?: string
     /**
      * 用户id
      */
-    player_id: string;
-    [property: string]: any;
+    player_id: string
+    [property: string]: any
 }
 
 // 订单数据项类型
@@ -275,31 +285,73 @@ export interface OrderItem {
     /**
      * 金额
      */
-    amount: number;
+    amount: number
     /**
      * 创建时间
      */
-    created_at: number;
-    id: number;
+    created_at: number
+    id: number
     /**
      * 订单号
      */
-    plantform_no: string;
+    plantform_no: string
     /**
      * 订单状态
      */
-    status: string;
+    status: string
     /**
      * 更新时间
      */
-    updated_at: number;
-    [property: string]: any;
+    updated_at: number
+    [property: string]: any
 }
 
 // 订单列表API响应类型
 export interface OrderListResponse {
-    code: number;
-    data: OrderItem[];
-    message: string;
-    [property: string]: any;
+    code: number
+    data: OrderItem[]
+    message: string
+    [property: string]: any
+}
+
+// 订单查询请求参数类型
+export interface OrderQueryParams {
+    /**
+     * 订单号
+     */
+    order_no: string
+    [property: string]: any
+}
+
+// 订单查询响应数据类型
+export interface OrderQueryData {
+    /**
+     * 订单号
+     */
+    order_no: string
+    /**
+     * 订单状态，除SUCCESS外均为未成功付款
+     * GENERATED: 已生成
+     * SUCCESS: 成功
+     * FAIL: 失败
+     * RETURN: 退回
+     */
+    status: string
+    [property: string]: any
+}
+
+// 订单查询API响应类型
+export interface OrderQueryResponse {
+    code: number
+    data: OrderQueryData
+    message: string
+    [property: string]: any
+}
+
+// 订单状态枚举
+export enum OrderStatus {
+    GENERATED = 'GENERATED', // 已生成
+    SUCCESS = 'SUCCESS', // 成功
+    FAIL = 'FAIL', // 失败
+    RETURN = 'RETURN', // 退回
 }

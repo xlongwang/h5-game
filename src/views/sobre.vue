@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 20:47:26
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-02 16:26:08
+ * @LastEditTime: 2025-07-04 20:56:18
  * @FilePath: /vue3_app/src/views/sobre.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -50,12 +50,15 @@ const { t } = i18n
 .sobre-page-con-title {
   height: 115px;
   font-size: 50px;
+  width: 426px;
+  text-align: center;
   position: relative;
   &::after {
     content: "";
     position: absolute;
-    top: 80px;
-    left: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 80px;  
     width: 233px;
     height: 11px;
     background: url("/images/sobre/line.png") no-repeat center center;

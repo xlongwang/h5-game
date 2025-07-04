@@ -1,4 +1,12 @@
-import type { UserInfoResponse, LoginResponse, LoginParams, UserInfo, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, OrderListParams, OrderListResponse, OrderItem } from '@/types'
+/*
+ * @Author: along longwang6@163.com
+ * @Date: 2025-06-30 22:01:40
+ * @LastEditors: along longwang6@163.com
+ * @LastEditTime: 2025-07-04 21:29:08
+ * @FilePath: /vue3_app/src/api/user-api.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+import type { LoginParams, LoginResponse, OrderItem, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -31,7 +39,7 @@ export const userApi = {
      * @param params 包含memberId的参数对象
      * @returns Promise<UserInfoResponse>
      */
-    async getMemberInfo({ memberId } : { memberId: number }): Promise<UserInfoResponse> {
+    async getMemberInfo({ memberId }: { memberId: number }): Promise<UserInfoResponse> {
         console.log('调用用户信息API，memberId:', memberId)
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.post<UserInfo>('/web/memberinfo', {
@@ -92,4 +100,17 @@ export const userApi = {
         console.log('订单列表API响应:', result)
         return result
     },
-} 
+
+    /**
+     * 查询订单状态
+     * @param params 订单查询参数
+     * @returns Promise<OrderQueryResponse>
+     */
+    async queryOrder(params: OrderQueryParams): Promise<OrderQueryResponse> {
+        console.log('调用订单查询API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.get<OrderQueryResponse['data']>('/order/query', { order_no: params.order_no })
+        console.log('订单查询API响应:', result)
+        return result
+    },
+}

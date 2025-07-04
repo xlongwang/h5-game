@@ -389,4 +389,82 @@ export default {
         notificationLoadClientError: 'Erro do cliente ao carregar notificações',
         notificationLoadUnknownError: 'Erro desconhecido ao carregar notificações',
     },
+
+    // Componentes
+    components: {
+        // Componente HeaderBack
+        back: 'Voltar',
+        record: 'Registo',
+
+        // Componente HeaderInfo
+        nickname: 'Alcunha',
+        refresh: 'Atualizar',
+        refreshing: 'A atualizar',
+        refreshSuccess: 'Atualização bem-sucedida',
+        refreshFailed: 'Falha na atualização',
+
+        // Componente OderDetail
+        handlingFee: 'Taxa de Processamento',
+        payAccordingToOrder: 'Pague de acordo com o valor do pedido. Se o valor do pedido não corresponder ao valor do pagamento real, o depósito não será reembolsado!',
+        cancel: 'CANCELAR',
+        goToPay: 'IR PAGAR',
+        orderNumber: 'Número do Pedido',
+        orderStatus: 'Estado do Pedido',
+        paymentSuccess: 'Pagamento Bem-sucedido',
+        paymentFailed: 'Pagamento Falhou',
+        paymentReturned: 'Pagamento Devolvido',
+        paymentPending: 'Pagamento Pendente',
+        checkingPayment: 'A verificar estado do pagamento',
+        unknownStatus: 'Estado Desconhecido',
+
+        // Componente OderDetailRecharge
+        deposit: 'Depósito',
+        receive: 'Receber',
+        scanToPay: 'Escanear para Pagar',
+        generatingQRCode: 'A gerar código QR...',
+        scanQRCodeToPay: 'Por favor, escaneie o código QR com a sua aplicação de pagamento para completar o pagamento',
+        copyLink: 'Copiar Ligação',
+        close: 'Fechar',
+
+        // Componente RechargPop
+        selectDepositAmount: 'Selecionar valor do depósito',
+        extra: 'Extra',
+        afterSuccessfulPayment: 'Após um pagamento bem-sucedido, o sistema adicionará o valor à sua conta dentro de 1 a 5 minutos.',
+
+        // Componente RetarirStep2
+        linkWithdrawalAccount: 'Vincular Conta de Levantamento',
+        withdrawalAmount: 'Valor do Levantamento',
+        name: 'Nome',
+        pleaseEnterName: 'Por favor, introduza o seu nome',
+        pixKey: 'Chave PIX',
+        phone: 'Telefone',
+        pleaseEnterPhone: 'Por favor, introduza o seu número de telefone',
+        email: 'E-mail',
+        pleaseEnterEmail: 'Por favor, introduza o seu e-mail',
+        cpf: 'CPF',
+        pleaseEnterCPF: 'Por favor, introduza o número do CPF',
+        cnjp: 'CNJP',
+        pleaseEnterCNJP: 'Por favor, introduza o número do CNJP',
+        pleaseSelectPixType: 'Por favor, selecione o tipo de PIX',
+        pleaseEnterAccountInfo: 'Por favor, introduza as informações da conta',
+        invalidEmailFormat: 'Formato de e-mail inválido',
+        confirm: 'Confirmar',
+
+        // Componente UserInfo
+        userInfo: 'Informações do Utilizador',
+        normal: 'Normal',
+        disabled: 'Desabilitado',
+        username: 'Nome de utilizador',
+        deviceId: 'ID do Dispositivo',
+        registrationTime: 'Tempo de Registo',
+        walletInfo: 'Informações da Carteira',
+        balance: 'Saldo',
+        bonus: 'Bónus',
+        totalBet: 'Aposta Total',
+        totalRecharge: 'Recarga Total',
+        walletRecords: 'Registos da Carteira',
+        recentRecords: 'Registos Recentes',
+        noUserInfo: 'Sem informações do utilizador',
+        loading: 'A carregar...',
+    },
 }

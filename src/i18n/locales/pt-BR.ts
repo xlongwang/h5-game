@@ -389,4 +389,82 @@ export default {
         notificationLoadClientError: 'Erro do cliente ao carregar notificações',
         notificationLoadUnknownError: 'Erro desconhecido ao carregar notificações',
     },
+
+    // Componentes
+    components: {
+        // Componente HeaderBack
+        back: 'Voltar',
+        record: 'Registro',
+
+        // Componente HeaderInfo
+        nickname: 'Apelido',
+        refresh: 'Atualizar',
+        refreshing: 'Atualizando',
+        refreshSuccess: 'Atualização bem-sucedida',
+        refreshFailed: 'Falha na atualização',
+
+        // Componente OderDetail
+        handlingFee: 'Taxa de Processamento',
+        payAccordingToOrder: 'Pague de acordo com o valor do pedido. Se o valor do pedido não corresponder ao valor do pagamento real, o depósito não será reembolsado!',
+        cancel: 'CANCELAR',
+        goToPay: 'IR PAGAR',
+        orderNumber: 'Número do Pedido',
+        orderStatus: 'Status do Pedido',
+        paymentSuccess: 'Pagamento Bem-sucedido',
+        paymentFailed: 'Pagamento Falhou',
+        paymentReturned: 'Pagamento Devolvido',
+        paymentPending: 'Pagamento Pendente',
+        checkingPayment: 'Verificando status do pagamento',
+        unknownStatus: 'Status Desconhecido',
+
+        // Componente OderDetailRecharge
+        deposit: 'Depósito',
+        receive: 'Receber',
+        scanToPay: 'Escanear para Pagar',
+        generatingQRCode: 'Gerando Código QR...',
+        scanQRCodeToPay: 'Por favor, escaneie o código QR com seu aplicativo de pagamento para completar o pagamento',
+        copyLink: 'Copiar Link',
+        close: 'Fechar',
+
+        // Componente RechargPop
+        selectDepositAmount: 'Selecionar valor do depósito',
+        extra: 'Extra',
+        afterSuccessfulPayment: 'Após um pagamento bem-sucedido, o sistema adicionará o valor à sua conta dentro de 1 a 5 minutos.',
+
+        // Componente RetarirStep2
+        linkWithdrawalAccount: 'Vincular Conta de Saque',
+        withdrawalAmount: 'Valor do Saque',
+        name: 'Nome',
+        pleaseEnterName: 'Por favor, digite seu nome',
+        pixKey: 'Chave PIX',
+        phone: 'Telefone',
+        pleaseEnterPhone: 'Por favor, digite seu número de telefone',
+        email: 'E-mail',
+        pleaseEnterEmail: 'Por favor, digite seu e-mail',
+        cpf: 'CPF',
+        pleaseEnterCPF: 'Por favor, digite o número do CPF',
+        cnjp: 'CNJP',
+        pleaseEnterCNJP: 'Por favor, digite o número do CNJP',
+        pleaseSelectPixType: 'Por favor, selecione o tipo de PIX',
+        pleaseEnterAccountInfo: 'Por favor, digite as informações da conta',
+        invalidEmailFormat: 'Formato de e-mail inválido',
+        confirm: 'Confirmar',
+
+        // Componente UserInfo
+        userInfo: 'Informações do Usuário',
+        normal: 'Normal',
+        disabled: 'Desabilitado',
+        username: 'Nome de usuário',
+        deviceId: 'ID do Dispositivo',
+        registrationTime: 'Tempo de Registro',
+        walletInfo: 'Informações da Carteira',
+        balance: 'Saldo',
+        bonus: 'Bônus',
+        totalBet: 'Aposta Total',
+        totalRecharge: 'Recarga Total',
+        walletRecords: 'Registros da Carteira',
+        recentRecords: 'Registros Recentes',
+        noUserInfo: 'Sem informações do usuário',
+        loading: 'Carregando...',
+    },
 }

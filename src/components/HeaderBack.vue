@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 14:13:22
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 10:31:24
+ * @LastEditTime: 2025-07-04 20:59:39
  * @FilePath: /vue3_app/src/components/headerBack.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,8 +54,8 @@ function showRecord() {
   top: 0;
   &::before {
     display: block;
-    width: 66px;
-    height: 66px;
+    width: 58px;
+    height: 42px;
     background: url("/images/apoyo/arrow.png") no-repeat;
     background-size: contain;
     content: "";

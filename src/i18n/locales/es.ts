@@ -296,10 +296,23 @@ export default {
         payAccordingToOrder: 'Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con el monto del pago real, ¡el depósito no será reembolsado!',
         cancel: 'CANCELAR',
         goToPay: 'IR A PAGAR',
+        orderNumber: 'Número de Pedido',
+        orderStatus: 'Estado del Pedido',
+        paymentSuccess: 'Pago Exitoso',
+        paymentFailed: 'Pago Fallido',
+        paymentReturned: 'Pago Devuelto',
+        paymentPending: 'Pago Pendiente',
+        checkingPayment: 'Verificando estado del pago',
+        unknownStatus: 'Estado Desconocido',
 
         // Componente OderDetailRecharge
         deposit: 'Depósito',
         receive: 'Recibir',
+        scanToPay: 'Escanear para Pagar',
+        generatingQRCode: 'Generando Código QR...',
+        scanQRCodeToPay: 'Por favor escanee el código QR con su aplicación de pago para completar el pago',
+        copyLink: 'Copiar Enlace',
+        close: 'Cerrar',
 
         // Componente RechargPop
         selectDepositAmount: 'Seleccionar monto del depósito',
@@ -343,16 +356,4 @@ export default {
         loading: 'Cargando...',
     },
 
-    // Mensajes de error
-    errors: {
-        networkError: 'Error de red',
-        serverError: 'Error del servidor',
-        unknownError: 'Error desconocido',
-        validationError: 'Error de validación',
-        required: 'Requerido',
-        invalidFormat: 'Formato inválido',
-        insufficientBalance: 'Saldo insuficiente',
-        operationFailed: 'Operación fallida',
-        tryAgain: 'Por favor intente de nuevo',
-    },
 }

@@ -281,10 +281,23 @@ export default {
         payAccordingToOrder: 'Pay according to the order amount. If the order amount does not match the actual payment amount, the deposit will not be refunded!',
         cancel: 'CANCEL',
         goToPay: 'GO TO PAY',
+        orderNumber: 'Order Number',
+        orderStatus: 'Order Status',
+        paymentSuccess: 'Payment Success',
+        paymentFailed: 'Payment Failed',
+        paymentReturned: 'Payment Returned',
+        paymentPending: 'Payment Pending',
+        checkingPayment: 'Checking payment status',
+        unknownStatus: 'Unknown Status',
 
         // OderDetailRecharge component
         deposit: 'Deposit',
         receive: 'Receive',
+        scanToPay: 'Scan to Pay',
+        generatingQRCode: 'Generating QR Code...',
+        scanQRCodeToPay: 'Please scan the QR code with your payment app to complete the payment',
+        copyLink: 'Copy Link',
+        close: 'Close',
 
         // RechargPop component
         selectDepositAmount: 'Select deposit amount',

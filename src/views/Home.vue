@@ -6,10 +6,10 @@
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
                     <div class="font-bold pb-[5px] max-w-[230px] truncate text-[40]">
-                        {{ userInfo.name }}
+                        {{ userInfo?.user_name || 'User' }}
                         <!-- p_x7g9m -->
                     </div>
-                    <div class="text-[40px] font-bold pt-[8px]">{{ t('user.id') }}: {{ userInfo.id }}</div>
+                    <div class="text-[40px] font-bold pt-[8px]">{{ t('user.id') }}: {{ userInfo?.id || 'N/A' }}</div>
                 </div>
             </div>
             <div class="flex items-center">
@@ -104,7 +104,19 @@
             </van-swipe-item>
         </van-swipe>
 
-        <RechargPop ref="rechargPopRef" />
+        <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
+
+        <!-- 添加测试按钮 -->
+        <div class="test-section">
+            <van-button type="primary" @click="showOrderDetail">测试订单详情弹窗</van-button>
+        </div>
+
+        <!-- 订单详情弹窗 -->
+        <OderDetail
+            ref="orderDetailRef"
+            :active-val="100"
+            :on-success="handleOrderSuccess"
+        />
     </div>
 </template>
 
@@ -112,7 +124,7 @@
 import { computed, ref, watch } from 'vue'
 import { useGlobal } from '@/composables'
 import { getMarqueeData } from '@/config'
-import { StorageUtil } from '@/utils/storage'
+import useUserStore from '@/stores/use-user-store'
 
 // import { formatNumber } from '@/utils/tools'
 
@@ -122,18 +134,32 @@ defineOptions({
     name: 'Home',
 })
 
+const userStore = useUserStore()
+
 const { i18n } = useGlobal()
 const { t } = i18n
 
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
+const orderDetailRef = ref()
 
 const router = useRouter()
 
 const userInfo = computed(() => {
-    return StorageUtil.getUserInfo()
+    console.log("🚀 ~ userInfo ~ userInfo999:", userInfo)
+    return userStore.userInfo
 })
+
+
+function handleRechargeSuccess() {
+    console.log('handleRechargeSuccess')
+    userStore.fetchUserInfo()
+}
+
+// watch(userInfo, (newVal, oldVal) => {
+//     console.log('userInfo changed to:', newVal)
+// })
 
 // 生成随机跑马灯数据
 const marqueeTexts = ref(getMarqueeData())
@@ -222,6 +248,17 @@ function handleRecharge() {
 // 处理滑动切换
 function handleSwipeChange(index: number) {
     activeTabIndex.value = index
+}
+
+// 显示订单详情弹窗
+function showOrderDetail() {
+    orderDetailRef.value?.open()
+}
+
+// 订单成功回调
+function handleOrderSuccess() {
+    console.log('订单支付成功！')
+    // 这里可以添加成功后的逻辑，比如刷新用户余额等
 }
 </script>
 
@@ -325,5 +362,15 @@ function handleSwipeChange(index: number) {
 /* 鼠标悬停暂停动画 */
 .marquee-container:hover .marquee-content {
   animation-play-state: paused;
+}
+
+.test-section {
+  margin-top: 2rem;
+}
+
+.test-section .van-button {
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border-radius: 8px;
 }
 </style>

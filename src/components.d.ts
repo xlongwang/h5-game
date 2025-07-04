@@ -9,7 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
-    copy: typeof import('./components/OderDetail copy.vue')['default']
+    copy: typeof import('./components/RetairPop05 copy.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
@@ -21,6 +21,13 @@ declare module 'vue' {
     OderDetailRechare: typeof import('./components/OderDetailRechare.vue')['default']
     OderDetailRecharge: typeof import('./components/OderDetailRecharge.vue')['default']
     RechargPop: typeof import('./components/RechargPop.vue')['default']
+    Retair01: typeof import('./components/retair01.vue')['default']
+    RetairPop01: typeof import('./components/RetairPop01.vue')['default']
+    RetairPop02: typeof import('./components/RetairPop02.vue')['default']
+    RetairPop03: typeof import('./components/RetairPop03.vue')['default']
+    RetairPop04: typeof import('./components/RetairPop04.vue')['default']
+    RetairPop05: typeof import('./components/RetairPop05.vue')['default']
+    RetairPop06: typeof import('./components/RetairPop06.vue')['default']
     RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

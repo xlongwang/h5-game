@@ -106,7 +106,21 @@ const useUserStore = defineStore('userStore', () => {
                 StorageUtil.setUserInfo(response.data)
                 state.userInfo = response.data
 
-                console.log('获取用户信息成功')
+                console.log('✅ 获取用户信息成功')
+                console.log('📧 API返回的完整数据:', response.data)
+                console.log('📧 receiving_account 字段:', response.data.receiving_account)
+                console.log('📧 pix_type 字段:', response.data.pix_type)
+                console.log('📧 pix_account_text 字段:', (response.data as any).pix_account_text)
+                console.log('📧 pix_type_text 字段:', (response.data as any).pix_type_text)
+                console.log('📧 所有字段:', Object.keys(response.data))
+                
+                // 强制触发响应式更新
+                state.userInfo = { ...response.data }
+                
+                console.log('📧 存储后的 state.userInfo:', state.userInfo)
+                console.log('📧 存储后的 receiving_account:', state.userInfo?.receiving_account)
+                console.log('📧 存储后的 receiving_account.receiving_account:', state.userInfo?.receiving_account?.receiving_account)
+                
                 return response.data
             }
             else {
@@ -232,9 +246,13 @@ const useUserStore = defineStore('userStore', () => {
             const response = await userApi.updateUserInfo(params)
 
             if (response.code === 200) {
-                console.log('更新用户信息成功')
+                console.log('✅ 更新用户信息API成功')
+                console.log('📧 API响应:', response)
+                // 等待一下，确保服务器端数据更新完成
+                await new Promise(resolve => setTimeout(resolve, 1000))
                 // 更新成功后重新获取用户信息
                 await fetchUserInfo()
+                console.log('✅ fetchUserInfo 完成，当前用户信息:', state.userInfo)
                 return response.data
             }
             else {

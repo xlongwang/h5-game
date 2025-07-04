@@ -5,7 +5,7 @@
             <div class="retirar-detail-page-con-bg">
                 <div class="retirar-detail-page-c1">
                     <div class="retirar-detail-page-c1-item-title">
-                        <span>Arvin</span>
+                        <span v-if="userInfo?.receiving_account?.receiving_name ">{{  userInfo?.receiving_account?.receiving_name }}</span>
                     </div>
                     <div class="retirar-detail-page-c1-item-content flex items-center gap-[12px]">
                         <div class="retirar-detail-page-c1-item-content-item w-[170px] h-[163px]">
@@ -60,16 +60,28 @@
                 </div>
 
                 <div class="retirar-btn text-[50px] font-bold" @click="submit">
-                    {{ t('withdraw.useVIPChannel') }}
+                    <!-- {{ t('withdraw.useVIPChannel') }} -->{{ btnTxt }}
                 </div>
                 <!-- 使用 VIP 渠道提款 -->
             </div>
         </div>
+        <RetairPop01 :retair-pop-02-ref="retairPop02Ref" ref="retairPop01Ref" />
+        <RetairPop02  :recharge-ref="OderDetailRecargelRef" ref="retairPop02Ref" />
+
+        <RetairPop03 ref="retairPop03Ref" :pop3Submit="pop3Submit" :retair-pop-04-ref="retairPop04Ref" submitInfo="submitInfo" :active-val="amount" />
+        <RetairPop04 ref="retairPop04Ref" :pop4Submit="pop3Submit" :confirm-info="confirmInfo" />
+        <RetairPop05 ref="retairPop05Ref" :set-prsonal-tax="setPrsonalTax" :amount="amount" :retair-pop-06-ref="retairPop06Ref" />
+        <RetairPop06 ref="retairPop06Ref" :on-success="handlePaySuccess" :amount="amount" :tax="taxInfo"  :retair-pop-05-ref="retairPop05Ref" />
+        <OderDetailRecharge
+            ref="OderDetailRecargelRef"
+            :active-val="200"
+            :on-success="handleSuccess"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import { getCoinNum } from '@/utils'
@@ -82,6 +94,25 @@ defineOptions({
 const { userStore, i18n } = useGlobal()
 const { t } = i18n
 const route = useRoute()
+const router = useRouter()
+const btnTxt = ref(t('withdraw.useVIPChannel'))
+const taxInfo = ref(0)
+
+const retairPop01Ref = ref()
+const retairPop02Ref = ref()
+const retairPop03Ref = ref()
+const retairPop04Ref = ref()
+const retairPop05Ref = ref()
+const retairPop06Ref = ref()
+const OderDetailRecargelRef = ref()
+const percent = ref(Math.random() * 0.2 + 0.4)
+
+const step = ref(1)
+
+const confirmInfo = ref({
+  total: 0,
+  coast: 0
+})
 
 // 获取URL参数中的amount
 const amount = computed(() => {
@@ -89,33 +120,64 @@ const amount = computed(() => {
     return amountParam ? Number(amountParam) : 5000
 })
 
-const percent = ref(Math.random() * 0.9 + 0.1)
+const handleSuccess = async () => {
+  await userStore.fetchUserInfo()
+  percent.value = 0.9
+  retairPop02Ref.value.hide()
+  step.value = 2
+}
 
-// const timer = setInterval(() => {
-//   percent.value += 0.1;
-//   if (percent.value >= 1) {
-//     percent.value = 1;
-//     clearInterval(timer);
-//   }
-// }, 500);
+const submitInfo = (info: { total: number; coast: number }) => {
+  console.log('submitInfo', info)
+  confirmInfo.value = info
+}
+
+const setPrsonalTax = (tax: number) => {
+  percent.value = 0.99
+  taxInfo.value = tax
+}
+
+const handlePaySuccess = () => {
+  percent.value = 1
+  console.log('handlePaySuccess')
+  router.push('/')
+}
+
+const pop3Submit = () => {
+  console.log('pop3Submit')
+  percent.value = 0.99
+  step.value = 3
+  btnTxt.value = 'Pagar impuestos personal'
+}
+
 
 const userInfo = computed(() => {
     return StorageUtil.getUserInfo()
 })
 
-async function submit() {
-    console.log('userInfo', userInfo.value)
-    console.log('amount', amount.value)
-    const result = await userApi.createPayout({
-        amount: amount.value.toString(),
-        phone: userInfo.value?.receiving_account?.phone,
-        pix_type: 'PHONE', // PHONE、EMAIL、CPF。
-        player_id: userInfo.value?.id,
-        receiving_account: userInfo.value?.receiving_account?.receiving_account,
-        receiving_name: userInfo.value?.receiving_account?.receiving_name,
-    })
-    console.log('result', result)
+const submit = () => {
+  if(step.value === 1) {
+    retairPop01Ref.value.open()
+  } else if(step.value === 2) {
+    retairPop03Ref.value.open()
+  }else if(step.value === 3) {
+    retairPop06Ref.value.open()
+  }
 }
+
+// async function submit() {
+//     console.log('userInfo', userInfo.value)
+//     console.log('amount', amount.value)
+//     const result = await userApi.createPayout({
+//         amount: amount.value.toString(),
+//         phone: userInfo.value?.receiving_account?.phone,
+//         pix_type: 'PHONE', // PHONE、EMAIL、CPF。
+//         player_id: userInfo.value?.id,
+//         receiving_account: userInfo.value?.receiving_account?.receiving_account,
+//         receiving_name: userInfo.value?.receiving_account?.receiving_name,
+//     })
+//     console.log('result', result)
+// }
 
 onMounted(() => {
     console.log('userInfo', userInfo.value)
