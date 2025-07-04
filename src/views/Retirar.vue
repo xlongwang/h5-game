@@ -19,7 +19,11 @@
                         <div
                             class="retirar_info_top_left_top_right text-[80px] font-bold text-gold ml-[27px]"
                         >
-                            ${{ (Number(userInfo?.wallet?.balance) + Number(userInfo?.wallet?.bonus)).toFixed(2) || '0.00' }}
+                            ${{
+                                (
+                                    Number(userInfo?.wallet?.balance) + Number(userInfo?.wallet?.bonus)
+                                ).toFixed(2) || "0.00"
+                            }}
                         </div>
                     </div>
                     <div class="retirar_info_top_left_bottom py-[16px]">Saldo de cuenta</div>
@@ -39,7 +43,7 @@
                     >
                 </span>
                 <span class="text-[40px] ml-[10px]">
-                    ${{ userInfo?.wallet?.balance || '0.00' }}
+                    ${{ userInfo?.wallet?.balance || "0.00" }}
                 </span>
             </div>
         </div>

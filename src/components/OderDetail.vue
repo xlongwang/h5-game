@@ -6,12 +6,16 @@
                 <div>Tarifa de manejo</div>
                 <div class="text-[#f00]">${{ formatVal(activeVal) }}</div>
             </div>
-            <div class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt">
+            <div
+                class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
+            >
                 <span class="dot_icon"></span>
                 Pague de acuerdo con el monto del pedido. Si el monto del pedido no coincide con
                 el monto del pago real, ¡el depósito no será reembolsado!
             </div>
-            <div class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold">
+            <div
+                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
+            >
                 <div class="detai_re_cancel" @click="handleCancel">CANCELAR</div>
                 <div class="detai_re_submit" @click="handleSubmit">IR A PAGAR</div>
             </div>
@@ -115,7 +119,7 @@ defineExpose({
   justify-content: space-between;
 }
 
-.dot_icon{
+.dot_icon {
   width: 33px;
   height: 33px;
   display: inline-block;
@@ -124,11 +128,11 @@ defineExpose({
   background-position: center;
 }
 
-.detait_re_txt{
+.detait_re_txt {
   word-break: break-all;
 }
 
-.detai_re_cancel{
+.detai_re_cancel {
   width: 403px;
   height: 103px;
   background: url("/images/main/cancel.png") no-repeat;
@@ -138,7 +142,7 @@ defineExpose({
   color: #0c0900;
 }
 
-.detai_re_submit{
+.detai_re_submit {
   width: 375px;
   height: 103px;
   background: url("/images/main/ok.png") no-repeat;

@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 14:13:22
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-29 14:51:09
+ * @LastEditTime: 2025-07-04 10:31:24
  * @FilePath: /vue3_app/src/components/headerBack.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,11 @@
             @click="goBack"
         ></div>
         <div v-if="title" class="hasTitle">{{ title }}</div>
-        <div v-if="hasArticle" class="retirar_header_article w-[94px] h-[83px]" @click="showRecord"></div>
+        <div
+            v-if="hasArticle"
+            class="retirar_header_article w-[94px] h-[83px]"
+            @click="showRecord"
+        ></div>
     </div>
 </template>
 
@@ -57,12 +61,12 @@ function showRecord() {
   }
 }
 
-.retirar_header{
+.retirar_header {
   height: 130px;
   position: relative;
 }
 
-.hasTitle{
+.hasTitle {
   line-height: 66px;
   font-size: 50px;
   font-weight: bold;
@@ -70,7 +74,6 @@ function showRecord() {
   color: #f3d658;
   width: 100%;
   padding-top: 10px;
-
 }
 
 .retirar_header_article {

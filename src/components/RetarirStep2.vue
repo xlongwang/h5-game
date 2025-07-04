@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 15:40:36
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-03 22:34:25
+ * @LastEditTime: 2025-07-04 10:44:07
  * @FilePath: /vue3_app/src/components/RetarirStep2.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -61,6 +61,7 @@
                                         <teleport to="body">
                                             <van-popup
                                                 v-model:show="showPicker"
+                                                class="picker_popup_custom"
                                                 destroy-on-close
                                                 round
                                                 position="bottom"
@@ -68,6 +69,8 @@
                                                 <van-picker
                                                     :model-value="pickerValue"
                                                     :columns="columns"
+                                                    cancel-button-text="CANCELAR"
+                                                    confirm-button-text="CONFIRMAR"
                                                     @cancel="showPicker = false"
                                                     @confirm="onConfirmPicker"
                                                 />
@@ -176,7 +179,7 @@ const userInfo = computed(() => {
 })
 
 const router = useRouter()
-const show = ref(false)
+const show = ref(true)
 
 const columns = [
     { text: 'PHONE', value: 'PHONE' },
@@ -278,8 +281,8 @@ async function handleSubmit() {
     }
     catch (error: any) {
         console.error('Error al actualizar:', error)
-        // 这里可以添加错误提示，比如使用Toast
-        // alert(error.message || 'Error al actualizar')
+    // 这里可以添加错误提示，比如使用Toast
+    // alert(error.message || 'Error al actualizar')
     }
 }
 
@@ -367,7 +370,43 @@ defineExpose({
   color: #0e0701;
   font-weight: bold;
 }
-// }
+
+::v-deep(.van-picker__cancel) {
+  color: #6a3006 !important;
+}
+
+::v-deep(.van-picker__confirm) {
+  color: #f3d558 !important;
+}
+
+.picker_popup_custom {
+  color: #f3d558 !important;
+  background: #1a0b00 !important;
+  border: 3px solid #f3d558 !important;
+  border-bottom: none !important;
+  border-radius: 30px 30px 0 0 !important;
+  ::v-deep(.van-picker) {
+    background: transparent !important;
+  }
+  ::v-deep(.van-picker__mask) {
+    background-image: none;
+  }
+  ::v-deep(.van-picker-column__item){
+    color: #f3d558 !important;
+  }
+  ::v-deep(.van-picker-column){
+    position: relative;
+    z-index: 3;
+  }
+  ::v-deep(.van-picker__frame) {
+    background-color: #6c2f03 !important;
+    border-radius: 15px !important;
+    &:after {
+      border: none;
+      display: none !important;
+    }
+  }
+}
 
 .step2_content {
   // background: #181006;
