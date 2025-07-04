@@ -52,6 +52,7 @@
                     v-for="item in shareList"
                     :key="item.title"
                     class="share_item flex flex-col items-center gap-[10px]"
+                    @click="handleShare(item.title)"
                 >
                     <div class="share_item_img">
                         <img :src="item.img" alt="">
@@ -63,12 +64,7 @@
             </div>
             <div class="invite_bt flex items-center justify-between pt-[40px]">
                 <div class="recom-con">
-                    <van-field
-                        v-model="value"
-                        class="local_input"
-                        readonly
-                        placeholder=""
-                    />
+                    <van-field v-model="value" class="local_input" readonly placeholder="" />
                     <div class="copy-btn" @click="copy">Copiar</div>
                 </div>
             </div>
@@ -86,45 +82,6 @@ defineOptions({
 const inviteImg = '/images/invite/banner.png'
 
 const value = ref('')
-
-async function copy() {
-    try {
-        if (navigator.clipboard && window.isSecureContext) {
-            // 现代浏览器 + HTTPS
-            await navigator.clipboard.writeText(value.value)
-            showSuccessToast('Copiado exitosamente')
-        }
-        else {
-            // 降级方案
-            const textArea = document.createElement('textarea')
-            textArea.value = value.value
-            textArea.style.position = 'fixed'
-            textArea.style.left = '-999999px'
-            textArea.style.top = '-999999px'
-            document.body.appendChild(textArea)
-            textArea.focus()
-            textArea.select()
-
-            try {
-                document.execCommand('copy')
-                showSuccessToast('Copiado exitosamente')
-            }
-            catch (err) {
-                showFailToast('Error al copiar')
-            }
-            finally {
-                document.body.removeChild(textArea)
-            }
-        }
-    }
-    catch (err) {
-        showFailToast('Error al copiar')
-    }
-}
-
-onMounted(() => {
-    value.value = window.location.origin
-})
 
 const shareList = [
     {
@@ -152,6 +109,157 @@ const shareList = [
         title: 'Instagram',
     },
 ]
+
+async function copy() {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            // 现代浏览器 + HTTPS
+            await navigator.clipboard.writeText(value.value)
+            showSuccessToast('Copiado exitosamente')
+        }
+        else {
+            // 降级方案
+            const textArea = document.createElement('textarea')
+            textArea.value = value.value
+            textArea.style.position = 'fixed'
+            textArea.style.left = '-999999px'
+            textArea.style.top = '-999999px'
+            document.body.appendChild(textArea)
+            textArea.focus()
+            textArea.select()
+
+            try {
+                document.execCommand('copy')
+                showSuccessToast('Copiado exitosamente')
+            }
+            catch (err) {
+                console.log('err :>> ', err)
+                showFailToast('Error al copiar')
+            }
+            finally {
+                document.body.removeChild(textArea)
+            }
+        }
+    }
+    catch (err) {
+        console.log('err :>> ', err)
+        showFailToast('Error al copiar')
+    }
+}
+
+function handleShare(title: string) {
+    const currentUrl = window.location.origin
+    const shareText = `¡Únete a nosotros! ${currentUrl}`
+
+    switch (title.toLowerCase()) {
+        case 'facebook':
+            shareToFacebook(currentUrl, shareText)
+            break
+        case 'whatapp':
+            shareToWhatsApp(shareText)
+            break
+        case 'telegram':
+            shareToTelegram(shareText)
+            break
+        case 'twitter':
+            shareToTwitter(shareText)
+            break
+        case 'instagram':
+            shareToInstagram(currentUrl)
+            break
+        case 'mas':
+        default:
+            // 通用分享，复制到剪贴板
+            copyToClipboard(currentUrl)
+            break
+    }
+}
+
+function shareToFacebook(url: string, text: string) {
+    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`
+    openShareWindow(shareUrl, 'Facebook')
+}
+
+function shareToWhatsApp(text: string) {
+    const shareUrl = `https://wa.me/?text=${encodeURIComponent(text)}`
+    openShareWindow(shareUrl, 'WhatsApp')
+}
+
+function shareToTelegram(text: string) {
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.origin)}&text=${encodeURIComponent(text)}`
+    openShareWindow(shareUrl, 'Telegram')
+}
+
+function shareToTwitter(text: string) {
+    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+    openShareWindow(shareUrl, 'Twitter')
+}
+
+function shareToInstagram(url: string) {
+    // Instagram不支持直接分享链接，提示用户手动复制
+    copyToClipboard(url)
+    showSuccessToast('Enlace copiado para Instagram')
+}
+
+function openShareWindow(url: string, platform: string) {
+    const width = 600
+    const height = 400
+    const left = (window.screen.width - width) / 2
+    const top = (window.screen.height - height) / 2
+
+    const shareWindow = window.open(
+        url,
+        `${platform}Share`,
+        `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`,
+    )
+
+    if (shareWindow) {
+        showSuccessToast(`Compartiendo en ${platform}`)
+    }
+    else {
+        showFailToast('Error al abrir ventana de compartir')
+    }
+}
+
+async function copyToClipboard(text: string) {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text)
+            showSuccessToast('Enlace copiado al portapapeles')
+        }
+        else {
+            // 降级方案
+            const textArea = document.createElement('textarea')
+            textArea.value = text
+            textArea.style.position = 'fixed'
+            textArea.style.left = '-999999px'
+            textArea.style.top = '-999999px'
+            document.body.appendChild(textArea)
+            textArea.focus()
+            textArea.select()
+
+            try {
+                document.execCommand('copy')
+                showSuccessToast('Enlace copiado al portapapeles')
+            }
+            catch (err) {
+                console.log('err :>> ', err)
+                showFailToast('Error al copiar')
+            }
+            finally {
+                document.body.removeChild(textArea)
+            }
+        }
+    }
+    catch (err) {
+        console.log('err :>> ', err)
+        showFailToast('Error al copiar')
+    }
+}
+
+onMounted(() => {
+    value.value = window.location.origin
+})
 </script>
 
 <style lang="scss" scoped>

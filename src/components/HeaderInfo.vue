@@ -2,74 +2,106 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-27 22:18:32
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 10:09:55
+ * @LastEditTime: 2025-07-04 15:08:16
  * @FilePath: /vue3_app/src/components/HeaderInfo.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <div class="header-info flex items-center">
-    <div class="header-avatar mr-[18px]">
-      <img :src="userInfoLocal.avatar" />
-    </div>
-    <div class="header-info-right text-[50px]">
-      <div class="header-info-right-name pb-[30px]">
-        <span> Apodo: {{ userInfo.name }} </span>
-      </div>
-      <div class="header-info-right-bt flex items-center">
-        <div class="header-info-right-bt-id">ID: {{ userInfo.id }}</div>
-        <div class="header-info-right-bt-dollor flex items-center ml-[40px]">
-          <div class="dollor-icon"></div>
-          <div class="dollor-count font-bold ml-[16px]">{{ count }}</div>
+    <div class="header-info flex items-center">
+        <div class="header-avatar mr-[18px]">
+            <img :src="userInfoLocal.avatar">
         </div>
-        <div class="header-refresh ml-[30px]" @click="refreshCoin"></div>
-      </div>
+        <div class="header-info-right text-[50px]">
+            <div class="header-info-right-name pb-[30px]">
+                <span> Apodo: {{ userInfo.name }} </span>
+            </div>
+            <div class="header-info-right-bt flex items-center">
+                <div class="header-info-right-bt-id">ID: {{ userInfo.id }}</div>
+                <div class="header-info-right-bt-dollor flex items-center ml-[40px]">
+                    <div class="dollor-icon"></div>
+                    <div class="dollor-count font-bold ml-[16px]">{{ count }}</div>
+                </div>
+                <div
+                    class="header-refresh ml-[30px]"
+                    :class="{ rotating: isRotating }"
+                    @click="refreshCoin"
+                ></div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { showSuccessToast } from "vant";
-import { useGlobal } from "@/composables";
-import "@/assets/scss/header.scss";
+import { showSuccessToast } from 'vant'
+import { useGlobal } from '@/composables'
+import '@/assets/scss/header.scss'
 
 defineOptions({
-  name: "HeaderInfo",
-});
+    name: 'HeaderInfo',
+})
 
 const props = defineProps<{
-  userInfo: any;
-}>();
+    userInfo: any
+}>()
 
-const { userStore } = useGlobal();
+const { userStore } = useGlobal()
+
+const isRotating = ref(false)
 
 const count = computed(() => {
-  const banance =
-    Number(props.userInfo.wallet.balance) + Number(props.userInfo.wallet.bonus);
-  return banance.toFixed(2);
-});
+    const banance
+    = Number(props.userInfo.wallet.balance) + Number(props.userInfo.wallet.bonus)
+    return banance.toFixed(2)
+})
 
 const userInfoLocal = ref({
-  name: "usuario1878888",
-  avatar: "/images/perfil/avatar.png",
-  id: 9781653,
-  dollor: 29,
-});
+    name: 'usuario1878888',
+    avatar: '/images/perfil/avatar.png',
+    id: 9781653,
+    dollor: 29,
+})
 
 async function refreshCoin() {
-  try {
-    showSuccessToast("Refrescar");
-    console.log("refreshCoin");
+    try {
+        isRotating.value = true
+        showSuccessToast('Refrescar')
+        console.log('refreshCoin')
 
-    // 刷新用户信息
-    await userStore.fetchUserInfo();
+        // 刷新用户信息
+        await userStore.fetchUserInfo()
 
-    showSuccessToast("Información actualizada");
-    console.log("用户信息刷新成功");
-  } catch (error) {
-    console.error("刷新用户信息失败:", error);
-    showSuccessToast("Error al actualizar");
-  }
+        showSuccessToast('Información actualizada')
+        console.log('用户信息刷新成功')
+    }
+    catch (error) {
+        console.error('刷新用户信息失败:', error)
+        showSuccessToast('Error al actualizar')
+    }
+    finally {
+        // 延迟重置旋转状态，确保动画完成
+        setTimeout(() => {
+            isRotating.value = false
+        }, 1000)
+    }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.header-refresh {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.header-refresh.rotating {
+    animation: rotate360 .5s linear;
+}
+
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
