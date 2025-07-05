@@ -59,7 +59,7 @@ export interface Wallet {
     created_at: string
     updated_at: string
     deleted_at: string | null
-    total_withdraw: string 
+    total_withdraw: string
 }
 
 // 用户信息类型
@@ -283,7 +283,7 @@ export interface OrderListParams {
 // 订单数据项类型
 export interface OrderItem {
     /**
-     * 金额
+     * 订单金额
      */
     amount: number
     /**
@@ -292,9 +292,17 @@ export interface OrderItem {
     created_at: number
     id: number
     /**
+     * 账户类型，充值列表时为null
+     */
+    pix_type?: null | string
+    /**
      * 订单号
      */
     plantform_no: string
+    /**
+     * 提现账户，充值列表时为null
+     */
+    receiving_account?: null | string
     /**
      * 订单状态
      */
@@ -306,10 +314,35 @@ export interface OrderItem {
     [property: string]: any
 }
 
+// 订单列表分页数据类型
+export interface OrderListData {
+    /**
+     * 当前页
+     */
+    current_page: number
+    /**
+     * 最后一页
+     */
+    last_page: number
+    /**
+     * 订单列表
+     */
+    list: OrderItem[]
+    /**
+     * 每页条数
+     */
+    per_page: number
+    /**
+     * 总条数
+     */
+    total: number
+    [property: string]: any
+}
+
 // 订单列表API响应类型
 export interface OrderListResponse {
     code: number
-    data: OrderItem[]
+    data: OrderListData
     message: string
     [property: string]: any
 }

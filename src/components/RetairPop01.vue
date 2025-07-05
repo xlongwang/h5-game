@@ -1,68 +1,68 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div
-        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-      >
-        {{ t("components.details") }}
-      </div>
-      <div class="text-[50px] pt-[80px] flex justify-between items-center">
-        <span>{{ t("components.peopleInLine") }}: </span>
-        <span class="text-[#f3d559]">{{ 10000 + Math.ceil(Math.random() * 10000) }}</span>
-      </div>
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div
+                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
+            >
+                {{ t("components.details") }}
+            </div>
+            <div class="text-[50px] pt-[80px] flex justify-between items-center">
+                <span>{{ t("components.peopleInLine") }}: </span>
+                <span class="text-[#f3d559]">{{ 10000 + Math.ceil(Math.random() * 10000) }}</span>
+            </div>
 
-      <div class="text-[50px] pt-[40px] flex justify-between items-center">
-        <span>{{ t("components.expectedTime") }}: </span>
-        <span class="text-[#f3d559]">{{ 2000 + Math.ceil(Math.random() * 2000) }}</span>
-      </div>
-      <div
-        class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-      >
-        <!-- <div class="detai_re_cancel" @click="handleCancel">
+            <div class="text-[50px] pt-[40px] flex justify-between items-center">
+                <span>{{ t("components.expectedTime") }}: </span>
+                <span class="text-[#f3d559]">{{ 2000 + Math.ceil(Math.random() * 2000) }}</span>
+            </div>
+            <div
+                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
+            >
+                <!-- <div class="detai_re_cancel" @click="handleCancel">
           {{ t("components.cancel") }}
         </div> -->
-        <div class="retirar-btn text-[50px] font-bold" @click="submit">
-          {{ t("components.useVIPWithdrawalChannel") }}
+                <div class="retirar-btn text-[50px] font-bold" @click="submit">
+                    {{ t("components.useVIPWithdrawalChannel") }}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </van-popup>
+    </van-popup>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-  retairPop02Ref: any;
-}>();
+    activeVal: number
+    onSuccess: () => void
+    retairPop02Ref: any
+}>()
 
-const showCenter = ref(false);
+const showCenter = ref(false)
 
-const { i18n } = useGlobal();
-const { t } = i18n;
-const userStore = useUserStore();
+const { i18n } = useGlobal()
+const { t } = i18n
+const userStore = useUserStore()
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
-const submit = () => {
-  console.log("submit");
-  props.retairPop02Ref.open()
-  showCenter.value = false
-};
+function submit() {
+    console.log('submit')
+    props.retairPop02Ref.open()
+    showCenter.value = false
+}
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 defineExpose({
-  open,
-});
+    open,
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,80 +1,77 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div
-        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-      >
-        {{ t("components.details") }}
-      </div>
-      <div class="recharge_detail_content_item">
-        <div class="recharge_detail_content_item_title">
-          {{ t("components.details") }}
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div
+                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
+            >
+                {{ t("components.details") }}
+            </div>
+            <div class="recharge_detail_content_item">
+                <div class="recharge_detail_content_item_title">
+                    {{ t("components.details") }}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </van-popup>
-
+    </van-popup>
 </template>
 
 <script setup lang="ts">
-import type { OrderStatus } from "@/types";
-import { onUnmounted, ref } from "vue";
-import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
-import QRCode from "qrcode";
+import type { OrderStatus } from '@/types'
+import QRCode from 'qrcode'
 import { showSuccessToast } from 'vant'
+import { onUnmounted, ref } from 'vue'
+import { userApi } from '@/api/user-api'
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-}>();
+    activeVal: number
+    onSuccess: () => void
+}>()
 
-const { i18n } = useGlobal();
-const { t } = i18n;
+const { i18n } = useGlobal()
+const { t } = i18n
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
 const amount = computed(() => {
-  return Number(userInfo.value?.wallet.balance) + Number(userInfo.value?.wallet.bonus);
-});
+    return Number(userInfo.value?.wallet.balance) + Number(userInfo.value?.wallet.bonus)
+})
 
 function formatVal(val: number) {
-  if (!val) return "0.00";
-  if (val > 20) {
-    return val;
-  }
-  return val.toFixed(2);
+    if (!val)
+        return '0.00'
+    if (val > 20) {
+        return val
+    }
+    return val.toFixed(2)
 }
 
-const showCenter = ref(false);
-const orderNo = ref<string>("");
-const orderStatus = ref<OrderStatus | "">("");
-const pollingTimer = ref<NodeJS.Timeout | null>(null);
-const pollingInterval = 3000; // 3秒轮询一次
-const maxPollingTime = 5 * 60 * 1000; // 最大轮询5分钟
-const startPollingTime = ref<number>(0);
+const showCenter = ref(false)
+const orderNo = ref<string>('')
+const orderStatus = ref<OrderStatus | ''>('')
+const pollingTimer = ref<NodeJS.Timeout | null>(null)
+const pollingInterval = 3000 // 3秒轮询一次
+const maxPollingTime = 5 * 60 * 1000 // 最大轮询5分钟
+const startPollingTime = ref<number>(0)
 
-const showQRCode = ref(false);
-const qrCodeDataUrl = ref<string>("");
-const payUrl = ref<string>("");
-
-
+const showQRCode = ref(false)
+const qrCodeDataUrl = ref<string>('')
+const payUrl = ref<string>('')
 
 function open() {
-  showCenter.value = true;
-  orderNo.value = "";
-  orderStatus.value = "";
+    showCenter.value = true
+    orderNo.value = ''
+    orderStatus.value = ''
 }
 
-
 defineExpose({
-  open,
-});
+    open,
+})
 </script>
 
 <style lang="scss" scoped>

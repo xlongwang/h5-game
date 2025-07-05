@@ -1,106 +1,108 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div
-        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-      >
-        {{ t("components.details") }}
-      </div>
-      <div class="text-[50px] detait_re_txt pt-[80px]">
-        {{ t("components.vipFeeDescription") }}
-      </div>
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div
+                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
+            >
+                {{ t("components.details") }}
+            </div>
+            <div class="text-[50px] detait_re_txt pt-[80px]">
+                {{ t("components.vipFeeDescription") }}
+            </div>
 
-      <div class="text-[50px] pt-[80px] flex justify-between items-center">
-        <span>{{ t("components.withdrawalAmount") }}: </span>
-        <span class="text-[#f3d559]">${{ activeVal ? activeVal.toFixed(2) : '0.00' }}</span>
-      </div>
+            <div class="text-[50px] pt-[80px] flex justify-between items-center">
+                <span>{{ t("components.withdrawalAmount") }}: </span>
+                <span class="text-[#f3d559]">${{ activeVal ? activeVal.toFixed(2) : '0.00' }}</span>
+            </div>
 
-      <div class="text-[50px] pt-[80px] flex justify-between items-center">
-        <span>{{ t("components.withdrawalFee") }} </span>
-        <span class="text-[#f3d559]">${{ coastNum ? coastNum.toFixed(2) : '0.00' }}</span>
-      </div>
+            <div class="text-[50px] pt-[80px] flex justify-between items-center">
+                <span>{{ t("components.withdrawalFee") }} </span>
+                <span class="text-[#f3d559]">${{ coastNum ? coastNum.toFixed(2) : '0.00' }}</span>
+            </div>
 
-      <div
-        class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-      >
-        <div class="retirar-btn text-[50px] font-bold" @click="handleSubmit">
-          {{ t("components.payWithdrawalFee") }}
+            <div
+                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
+            >
+                <div class="retirar-btn text-[50px] font-bold" @click="handleSubmit">
+                    {{ t("components.payWithdrawalFee") }}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </van-popup>
+    </van-popup>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-  rechargeRef: any;
-  submitInfo: (info: { total: number; coast: number }) => void;
-  retairPop04Ref: any;
-  pop3Submit: () => void;
-}>();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
+    activeVal: number
+    onSuccess: () => void
+    rechargeRef: any
+    submitInfo: (info: { total: number, coast: number }) => void
+    retairPop04Ref: any
+    pop3Submit: () => void
+}>()
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 const coastNum = computed(() => {
-  const total = Number(userInfo.value?.wallet?.total_withdraw) + Number(props.activeVal);
-  if (total > 3000) {
-    return (total - 3000) * 0.05;
-  }
-  return 0;
-});
+    const total = Number(userInfo.value?.wallet?.total_withdraw) + Number(props.activeVal)
+    if (total > 3000) {
+        return (total - 3000) * 0.05
+    }
+    return 0
+})
 
-const handleCancel = () => {
-  console.log("handleCancel");
-  hide();
-};
+function handleCancel() {
+    console.log('handleCancel')
+    hide()
+}
 
-const handleSubmit = () => {
- if(coastNum.value > 0) {
-  props.submitInfo({
-     total: props.activeVal,
-     coast: coastNum.value
-  })
-  props.retairPop04Ref.open()
- } else {
-   props.pop3Submit()
- }
- hide();
+function handleSubmit() {
+    if (coastNum.value > 0) {
+        props.submitInfo({
+            total: props.activeVal,
+            coast: coastNum.value,
+        })
+        props.retairPop04Ref.open()
+    }
+    else {
+        props.pop3Submit()
+    }
+    hide()
 
-  // console.log("handleSubmit");
-};
+    // console.log("handleSubmit");
+}
 
 function formatVal(val: number) {
-  if (!val) return "0.00";
-  if (val > 20) {
-    return val;
-  }
-  return val.toFixed(2);
+    if (!val)
+        return '0.00'
+    if (val > 20) {
+        return val
+    }
+    return val.toFixed(2)
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>

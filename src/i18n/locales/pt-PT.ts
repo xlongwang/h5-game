@@ -390,6 +390,17 @@ export default {
         notificationLoadUnknownError: 'Erro desconhecido ao carregar notificações',
     },
 
+    // 记录
+    record: {
+        title: 'Histórico de Levantamentos',
+        amount: 'Valor',
+        time: 'Tempo',
+        status: 'Estado',
+        details: 'Detalhes',
+        noData: 'Sem Dados',
+        loading: 'A carregar...',
+    },
+
     // Componentes
     components: {
         // Componente HeaderBack

@@ -390,6 +390,17 @@ export default {
         notificationLoadUnknownError: 'Erro desconhecido ao carregar notificações',
     },
 
+    // 记录
+    record: {
+        title: 'Histórico de Saques',
+        amount: 'Valor',
+        time: 'Tempo',
+        status: 'Status',
+        details: 'Detalhes',
+        noData: 'Sem Dados',
+        loading: 'Carregando...',
+    },
+
     // Componentes
     components: {
         // Componente HeaderBack

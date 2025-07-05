@@ -1,4 +1,4 @@
-import type { AuthInfo, LoginParams, OrderItem, OrderListParams, OrderListResponse, UpdateUserInfoParams, UserInfo, UserStore } from '@/types'
+import type { AuthInfo, LoginParams, OrderItem, OrderListData, OrderListParams, OrderListResponse, UpdateUserInfoParams, UserInfo, UserStore } from '@/types'
 import { acceptHMRUpdate } from 'pinia'
 import { userApi } from '@/api/user-api'
 import { StorageUtil } from '@/utils/storage'
@@ -106,10 +106,8 @@ const useUserStore = defineStore('userStore', () => {
                 StorageUtil.setUserInfo(response.data)
                 state.userInfo = response.data
 
-
                 // 强制触发响应式更新
                 state.userInfo = { ...response.data }
-                
 
                 return response.data
             }
@@ -270,9 +268,9 @@ const useUserStore = defineStore('userStore', () => {
             const response = await userApi.getOrderList(params)
 
             if (response.code === 200) {
-                orderListState.orders = response.data
+                orderListState.orders = response.data.list
                 console.log('获取订单列表成功')
-                return response.data
+                return response.data.list
             }
             else {
                 throw new Error(response.message || '获取订单列表失败')

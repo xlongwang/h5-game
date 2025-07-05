@@ -2,11 +2,11 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-30 22:01:40
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 21:29:08
+ * @LastEditTime: 2025-07-05 20:55:25
  * @FilePath: /vue3_app/src/api/user-api.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import type { LoginParams, LoginResponse, OrderItem, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
+import type { LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -96,7 +96,7 @@ export const userApi = {
     async getOrderList(params: OrderListParams): Promise<OrderListResponse> {
         console.log('调用订单列表API，参数:', params)
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
-        const result = await api.post<OrderItem[]>('/order/orderlist', params)
+        const result = await api.post<OrderListData>('/order/orderlist', params)
         console.log('订单列表API响应:', result)
         return result
     },

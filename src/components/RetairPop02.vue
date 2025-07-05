@@ -1,87 +1,89 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div
-        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-      >
-        {{ t("components.details") }}
-      </div>
-      <div class="text-[50px] detait_re_txt pt-[80px]">
-        {{ t("components.vipChannelDescription") }}
-      </div>
-      <div
-        class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-      >
-        <div class="detai_re_cancel" @click="handleCancel">
-          {{ t("components.cancel") }}
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div
+                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
+            >
+                {{ t("components.details") }}
+            </div>
+            <div class="text-[50px] detait_re_txt pt-[80px]">
+                {{ t("components.vipChannelDescription") }}
+            </div>
+            <div
+                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
+            >
+                <div class="detai_re_cancel" @click="handleCancel">
+                    {{ t("components.cancel") }}
+                </div>
+                <div class="detai_re_submit" @click="handleSubmit">
+                    {{ t("components.depositButton") }}
+                </div>
+            </div>
         </div>
-        <div class="detai_re_submit" @click="handleSubmit">
-           {{ t("components.depositButton") }}
-        </div>
-      </div>
-    </div>
-  </van-popup>
+    </van-popup>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-  rechargeRef: any;
-}>();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
+    activeVal: number
+    onSuccess: () => void
+    rechargeRef: any
+}>()
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
-const handleCancel = () => {
-  console.log("handleCancel");
-  hide()
-};
+function handleCancel() {
+    console.log('handleCancel')
+    hide()
+}
 
-const handleSubmit = () => {
-  const isEnough = Number(userInfo.value?.wallet?.total_charge) >= 200;
+function handleSubmit() {
+    const isEnough = Number(userInfo.value?.wallet?.total_charge) >= 200
 
-  if (isEnough) {
-    console.log("handleSubmit");
-  } else {
-    console.log("not enough");
-    props.rechargeRef.open();
-  }
-  hide()
+    if (isEnough) {
+        console.log('handleSubmit')
+    }
+    else {
+        console.log('not enough')
+        props.rechargeRef.open()
+    }
+    hide()
 
-  // console.log("handleSubmit");
-};
+    // console.log("handleSubmit");
+}
 
 function formatVal(val: number) {
-  if (!val) return "0.00";
-  if (val > 20) {
-    return val;
-  }
-  return val.toFixed(2);
+    if (!val)
+        return '0.00'
+    if (val > 20) {
+        return val
+    }
+    return val.toFixed(2)
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>

@@ -230,6 +230,7 @@ export default {
         status: 'Status',
         details: 'Details',
         noData: 'No Data',
+        loading: 'Loading...',
     },
 
     // 关于

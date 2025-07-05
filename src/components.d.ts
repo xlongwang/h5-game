@@ -9,7 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
-    copy: typeof import('./components/RecordDetailPop.vueult']
+    copy: typeof import('./components/retair01.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
@@ -18,16 +18,22 @@ declare module 'vue' {
     LoginStatus: typeof import('./components/LoginStatus.vue')['default']
     MultilingualExample: typeof import('./components/MultilingualExample.vue')['default']
     OderDetail: typeof import('./components/OderDetail.vue')['default']
-    'OderDetail copy': typeof import('./components/retair01.vue')['default']
     OderDetailRechare: typeof import('./components/OderDetailRechare.vue')['default']
     OderDetailRecharge: typeof import('./components/OderDetailRecharge.vue')['default']
-    RechargPop: typeof import./components/retairPop01.vue.vue')['default']
-    RetarirStep2: typeof import(./components/RetairPop01.vueue')['default']
-    RouterLink: typeof import('vue-rout./components/RetairPop02.vue
-    RouterView: typeof import('vue-rout./components/RetairPop03.vue
+    RechargPop: typeof import('./components/RechargPop.vue')['default']
+    RecordDetailPop: typeof import('./components/RecordDetailPop.vue')['default']
+    RetairPop01: typeof import('./components/RetairPop01.vue')['default']
+    RetairPop02: typeof import('./components/RetairPop02.vue')['default']
+    RetairPop03: typeof import('./components/RetairPop03.vue')['default']
+    RetairPop04: typeof import('./components/RetairPop04.vue')['default']
+    RetairPop05: typeof import('./components/RetairPop05.vue')['default']
+    RetairPop06: typeof import('./components/RetairPop06.vue')['default']
+    RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./compone./components/RetairPop04.vue
-    UserInfo: typeof import('./componen./components/RetairPop05.vue
-    VanButton: typeof import('vant/es')./components/RecordDetailPop.vue
+    UserInfo: typeof import('./components/UserInfo.vue')['default']
+    VanButton: typeof import('vant/es')['Button']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanCollapse: typeof import('vant/es')['Collapse']
     VanCollapseItem: typeof import('vant/es')['CollapseItem']
@@ -36,6 +42,7 @@ declare module 'vue' {
     VanGrid: typeof import('vant/es')['Grid']
     VanGridItem: typeof import('vant/es')['GridItem']
     VanImage: typeof import('vant/es')['Image']
+    VanLoading: typeof import('vant/es')['Loading']
     VanPicker: typeof import('vant/es')['Picker']
     VanPopup: typeof import('vant/es')['Popup']
     VanSwipe: typeof import('vant/es')['Swipe']

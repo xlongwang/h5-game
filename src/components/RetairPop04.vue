@@ -1,83 +1,83 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div
-        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-      >
-        {{ t("components.orderDetails") }}
-      </div>
-      <div class="text-[50px] detait_re_txt pt-[80px] text-center">
-        {{ t("components.handlingFeeText") }}
-        <span class="text-[#f3d559]">${{ confirmInfo.coast.toFixed(2) }}</span>
-      </div>
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div
+                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
+            >
+                {{ t("components.orderDetails") }}
+            </div>
+            <div class="text-[50px] detait_re_txt pt-[80px] text-center">
+                {{ t("components.handlingFeeText") }}
+                <span class="text-[#f3d559]">${{ confirmInfo.coast.toFixed(2) }}</span>
+            </div>
 
-      <div class="text-[40px] detait_re_txt pt-[80px]">
-        {{ t("components.payAccordingToOrder") }}
-      </div>
+            <div class="text-[40px] detait_re_txt pt-[80px]">
+                {{ t("components.payAccordingToOrder") }}
+            </div>
 
-      <div
-        class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-      >
-        <div class="detai_re_cancel" @click="handleCancel">
-          {{ t("components.cancel") }}
+            <div
+                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
+            >
+                <div class="detai_re_cancel" @click="handleCancel">
+                    {{ t("components.cancel") }}
+                </div>
+                <div class="detai_re_submit" @click="handleSubmit">{{ t("components.goToPay") }}</div>
+            </div>
         </div>
-        <div class="detai_re_submit" @click="handleSubmit">{{ t("components.goToPay") }}</div>
-      </div>
-    </div>
-  </van-popup>
+    </van-popup>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  pop4Submit: () => void;
-  confirmInfo: { total: number; coast: number };
-}>();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
+    pop4Submit: () => void
+    confirmInfo: { total: number, coast: number }
+}>()
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
+function handleCancel() {
+    console.log('handleCancel')
+    hide()
+}
 
-const handleCancel = () => {
-  console.log("handleCancel");
-  hide();
-};
-
-const handleSubmit = () => {
-  // console.log("handleSubmit");
-  props.pop4Submit();
-  hide();
-};
+function handleSubmit() {
+    // console.log("handleSubmit");
+    props.pop4Submit()
+    hide()
+}
 
 function formatVal(val: number) {
-  if (!val) return "0.00";
-  if (val > 20) {
-    return val;
-  }
-  return val.toFixed(2);
+    if (!val)
+        return '0.00'
+    if (val > 20) {
+        return val
+    }
+    return val.toFixed(2)
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>

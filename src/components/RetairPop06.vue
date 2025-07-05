@@ -1,94 +1,95 @@
 <template>
-  <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-    <div class="recharge_detail_content">
-      <div
-        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-      >
-        {{ t("components.orderDetails") }}
-      </div>
+    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+        <div class="recharge_detail_content">
+            <div
+                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
+            >
+                {{ t("components.orderDetails") }}
+            </div>
 
-      <div class="text-[50px] detait_re_txt pt-[80px] flex flex-col justify-between">
-        <div>{{ t("components.personalIncomeTax") }}</div>
+            <div class="text-[50px] detait_re_txt pt-[80px] flex flex-col justify-between">
+                <div>{{ t("components.personalIncomeTax") }}</div>
 
-        <div class="text-[#f3d559] pt-[20px]">
-          ${{ amount ? (Number(amount)*0.1).toFixed(2) : "0.00" }}
+                <div class="text-[#f3d559] pt-[20px]">
+                    ${{ amount ? (Number(amount) * 0.1).toFixed(2) : "0.00" }}
+                </div>
+            </div>
+
+            <div class="text-[40px] detait_re_txt pt-[50px]">
+                {{ t("components.payAccordingToOrder") }}
+            </div>
+
+            <div
+                class="detai_re_btns px-[35px] pt-[40px] justify-between flex text-[40px] font-bold"
+            >
+                <div class="detai_re_cancel" @click="handleCancel">
+                    {{ t("components.cancel") }}
+                </div>
+                <div class="detai_re_submit" @click="handleSubmit">{{ t("components.goToPay") }}</div>
+            </div>
         </div>
-      </div>
-
-      <div class="text-[40px] detait_re_txt pt-[50px]">
-        {{ t("components.payAccordingToOrder") }}
-      </div>
-
-      <div
-        class="detai_re_btns px-[35px] pt-[40px] justify-between flex text-[40px] font-bold"
-      >
-        <div class="detai_re_cancel" @click="handleCancel">
-          {{ t("components.cancel") }}
-        </div>
-        <div class="detai_re_submit" @click="handleSubmit">{{ t("components.goToPay") }}</div>
-      </div>
-    </div>
-  </van-popup>
+    </van-popup>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { showSuccessToast } from "vant";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
-import { userApi } from "@/api/user-api";
+import { showSuccessToast } from 'vant'
+import { userApi } from '@/api/user-api'
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  pop6Submit: () => void;
-  tax: number;
-  retairPop05Ref: any;
-  amount: number;
-  onSuccess: () => void;
-}>();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
+    pop6Submit: () => void
+    tax: number
+    retairPop05Ref: any
+    amount: number
+    onSuccess: () => void
+}>()
+
+const userStore = useUserStore()
+
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
-const userStore = useUserStore();
+function handleCancel() {
+    console.log('handleCancel')
+    hide()
+}
 
-const handleCancel = () => {
-  console.log("handleCancel");
-  hide();
-};
+async function handleSubmit() {
+    // console.log("handleSubmit");
+    // props.pop6Submit();
+    await userApi.createPayout({
+        amount: props.amount.toString(),
+        phone: userInfo.value?.receiving_account?.phone.toString() || '',
+        pix_type: userInfo.value?.receiving_account?.pix_type || '', // PHONE、EMAIL、CPF。
+        player_id: userInfo.value?.id.toString() || '',
+        receiving_account: userInfo.value?.receiving_account?.receiving_account || '',
+        receiving_name: userInfo.value?.receiving_account?.receiving_name || '',
+    })
 
-const handleSubmit = async () => {
-  // console.log("handleSubmit");
-  // props.pop6Submit();
-  await userApi.createPayout({
-    amount: props.amount.toString(),
-    phone: userInfo.value?.receiving_account?.phone.toString() || "",
-    pix_type: userInfo.value?.receiving_account?.pix_type || "", // PHONE、EMAIL、CPF。
-    player_id: userInfo.value?.id.toString() || "",
-    receiving_account: userInfo.value?.receiving_account?.receiving_account || "",
-    receiving_name: userInfo.value?.receiving_account?.receiving_name || "",
-  });
-
-  showSuccessToast(t("components.success"));
-  props.onSuccess()
-  hide();
-};
+    showSuccessToast(t('components.success'))
+    props.onSuccess()
+    hide()
+}
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>
