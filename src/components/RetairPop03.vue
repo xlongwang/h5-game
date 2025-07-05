@@ -61,11 +61,6 @@ const coastNum = computed(() => {
     return 0
 })
 
-function handleCancel() {
-    console.log('handleCancel')
-    hide()
-}
-
 function handleSubmit() {
     if (coastNum.value > 0) {
         props.submitInfo({
@@ -80,15 +75,6 @@ function handleSubmit() {
     hide()
 
     // console.log("handleSubmit");
-}
-
-function formatVal(val: number) {
-    if (!val)
-        return '0.00'
-    if (val > 20) {
-        return val
-    }
-    return val.toFixed(2)
 }
 
 function open() {

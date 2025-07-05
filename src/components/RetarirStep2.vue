@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-29 15:40:36
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 21:51:35
+ * @LastEditTime: 2025-07-05 22:58:17
  * @FilePath: /vue3_app/src/components/RetarirStep2.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -163,10 +163,12 @@
 <script setup lang="ts">
 import { _ } from 'dist/server/entry-server'
 import { computed, nextTick, ref } from 'vue'
-import { useRouter } from 'vue-router'
+
+// import { useRouter } from 'vue-router'
 import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
-import { StorageUtil } from '@/utils/storage'
+
+// import { StorageUtil } from '@/utils/storage'
 
 const props = defineProps<{
     onSuccess?: () => void
@@ -269,15 +271,6 @@ async function handleSubmit() {
         if (fieldValue.value === 'EMAIL' && !validateEmail()) {
             throw new Error(t('components.invalidEmailFormat'))
         }
-
-        // 调用更新用户信息接口
-        console.log('🚀 开始更新用户信息，参数:', {
-            player_id: userStore.userInfo?.id?.toString() || '',
-            pix_type: pixType,
-            receiving_name: name.value,
-            phone: phone.value || '',
-            receiving_account: receivingAccount,
-        })
 
         await userStore.updateUserInfo({
             player_id: userStore.userInfo?.id?.toString() || '',

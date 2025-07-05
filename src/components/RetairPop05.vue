@@ -42,6 +42,7 @@ const props = defineProps<{
     amount: number
     setPrsonalTax: (tax: number) => void
 }>()
+const userStore = useUserStore()
 const showCenter = ref(false)
 const { i18n } = useGlobal()
 const { t } = i18n
@@ -56,8 +57,6 @@ const coastNum = computed(() => {
     const num = Number(props.amount)
     return (num * 0.1).toFixed(2)
 })
-
-const userStore = useUserStore()
 
 function handleCancel() {
     console.log('handleCancel')

@@ -39,12 +39,10 @@ const props = defineProps<{
 const showCenter = ref(false)
 const { i18n } = useGlobal()
 const { t } = i18n
-
+const userStore = useUserStore()
 const userInfo = computed(() => {
     return userStore.userInfo
 })
-
-const userStore = useUserStore()
 
 function handleCancel() {
     console.log('handleCancel')

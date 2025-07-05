@@ -59,17 +59,6 @@ function handleSubmit() {
         props.rechargeRef.open()
     }
     hide()
-
-    // console.log("handleSubmit");
-}
-
-function formatVal(val: number) {
-    if (!val)
-        return '0.00'
-    if (val > 20) {
-        return val
-    }
-    return val.toFixed(2)
 }
 
 function open() {
