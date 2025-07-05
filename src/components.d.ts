@@ -21,6 +21,7 @@ declare module 'vue' {
     OderDetailRechare: typeof import('./components/OderDetailRechare.vue')['default']
     OderDetailRecharge: typeof import('./components/OderDetailRecharge.vue')['default']
     RechargPop: typeof import('./components/RechargPop.vue')['default']
+    RecordDetailPop: typeof import('./components/RecordDetailPop.vue')['default']
     Retair01: typeof import('./components/retair01.vue')['default']
     RetairPop01: typeof import('./components/RetairPop01.vue')['default']
     RetairPop02: typeof import('./components/RetairPop02.vue')['default']

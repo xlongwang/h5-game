@@ -1,56 +1,19 @@
 <template>
   <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
     <div class="recharge_detail_content">
-      <div class="peposito_de_title mx-auto mt-[50px]"></div>
-      <div class="recharge_input text-[50px]">
-        <!-- <div>Tarifa de manejo</div>
-                <div class="text-[#f00]">${{ formatVal(activeVal) }}</div> -->
-        <div>{{ t("components.deposit") }} ${{ formatVal(amount) }}</div>
-        <div>{{ t("components.receive") }} ${{ formatVal(activeVal) }}</div>
-      </div>
       <div
-        class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
+        class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
       >
-        <span class="dot_icon"></span>
-        {{ t("components.payAccordingToOrder") }}
+        {{ t("components.details") }}
       </div>
-      <div
-        class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-      >
-        <div class="detai_re_cancel" @click="handleCancel">
-          {{ t("components.cancel") }}
-        </div>
-        <div class="detai_re_submit" @click="handleSubmit">
-          {{ t("components.goToPay") }}
+      <div class="recharge_detail_content_item">
+        <div class="recharge_detail_content_item_title">
+          {{ t("components.details") }}
         </div>
       </div>
     </div>
   </van-popup>
 
-  <!-- 二维码弹窗 -->
-  <van-popup v-model:show="showQRCode" round class="qrcode_popup">
-    <div class="qrcode_content">
-      <div class="qrcode_title">{{ t("components.scanToPay") }}</div>
-      <div class="qrcode_container">
-        <img
-          v-if="qrCodeDataUrl"
-          :src="qrCodeDataUrl"
-          alt="支付二维码"
-          class="qrcode_image"
-        />
-        <div v-else class="qrcode_loading">{{ t("components.generatingQRCode") }}</div>
-      </div>
-      <div class="qrcode_tips">{{ t("components.scanQRCodeToPay") }}</div>
-      <div class="qrcode_actions">
-        <div class="qrcode_copy" @click="copyPayUrl">
-          {{ t("components.copyLink") }}
-        </div>
-        <div class="qrcode_close" @click="closeQRCode">
-          {{ t("components.close") }}
-        </div>
-      </div>
-    </div>
-  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -100,173 +63,7 @@ const showQRCode = ref(false);
 const qrCodeDataUrl = ref<string>("");
 const payUrl = ref<string>("");
 
-// 获取状态样式类
-function getStatusClass(status: OrderStatus | ""): string {
-  switch (status) {
-    case "SUCCESS":
-      return "text-[#52c41a]";
-    case "FAIL":
-    case "RETURN":
-      return "text-[#ff4d4f]";
-    case "GENERATED":
-      return "text-[#faad14]";
-    default:
-      return "text-[#999]";
-  }
-}
 
-// 获取状态文本
-function getStatusText(status: OrderStatus | ""): string {
-  switch (status) {
-    case "SUCCESS":
-      return t("components.paymentSuccess");
-    case "FAIL":
-      return t("components.paymentFailed");
-    case "RETURN":
-      return t("components.paymentReturned");
-    case "GENERATED":
-      return t("components.paymentPending");
-    default:
-      return t("components.unknownStatus");
-  }
-}
-
-// 开始轮询订单状态
-function startPollingOrderStatus(orderNumber: string) {
-  orderNo.value = orderNumber;
-  orderStatus.value = "GENERATED" as OrderStatus;
-  startPollingTime.value = Date.now();
-
-  const pollOrderStatus = async () => {
-    try {
-      const result = await userApi.queryOrder({ order_no: orderNumber.toString() });
-      console.log("轮询订单状态结果:", result);
-
-      if (result.code === 200 && result.data) {
-        const status = result.data.status;
-        orderStatus.value = status as OrderStatus;
-
-        // 如果订单成功，停止轮询并关闭弹窗
-        if (status === "SUCCESS") {
-          stopPolling();
-          showSuccessToast(t('components.success'))
-          
-          setTimeout(() => {
-            showQRCode.value = false
-            showCenter.value = false;
-            props.onSuccess();
-          }, 1000); // 2秒后关闭弹窗
-          return;
-        }
-
-        // 如果订单失败或退回，停止轮询
-        if (status === "FAIL" || status === "RETURN") {
-          stopPolling();
-          return;
-        }
-      }
-
-      // 检查是否超过最大轮询时间
-      if (Date.now() - startPollingTime.value > maxPollingTime) {
-        console.log("轮询超时，停止查询");
-        stopPolling();
-        return;
-      }
-
-      // 继续轮询
-      pollingTimer.value = setTimeout(pollOrderStatus, pollingInterval);
-    } catch (error) {
-      console.error("轮询订单状态失败:", error);
-      // 出错时继续轮询
-      pollingTimer.value = setTimeout(pollOrderStatus, pollingInterval);
-    }
-  };
-
-  // 开始第一次轮询
-  pollingTimer.value = setTimeout(pollOrderStatus, pollingInterval);
-}
-
-// 停止轮询
-function stopPolling() {
-  if (pollingTimer.value) {
-    clearTimeout(pollingTimer.value);
-    pollingTimer.value = null;
-  }
-}
-
-// 生成二维码
-async function generateQRCode(url: string) {
-  try {
-    const dataUrl = await QRCode.toDataURL(url, {
-      width: 300,
-      margin: 2,
-      color: {
-        dark: "#000000",
-        light: "#FFFFFF",
-      },
-    });
-    qrCodeDataUrl.value = dataUrl;
-  } catch (error) {
-    console.error("生成二维码失败:", error);
-  }
-}
-
-// 复制支付链接
-async function copyPayUrl() {
-  try {
-    await navigator.clipboard.writeText(payUrl.value);
-    showSuccessToast(t("components.copySuccess"));
-    closeQRCode()
-    // 这里可以添加复制成功的提示
-    console.log("支付链接已复制到剪贴板");
-  } catch (error) {
-    console.error("复制失败:", error);
-  }
-}
-
-// 关闭二维码弹窗
-function closeQRCode() {
-  showQRCode.value = false;
-  qrCodeDataUrl.value = "";
-  payUrl.value = "";
-}
-
-async function handleSubmit() {
-  try {
-    const result = await userApi.createPayin({
-      amount: props.activeVal.toString(),
-      player_id: userInfo.value?.id?.toString() || "",
-    });
-    console.log("🚀 ~ handleSubmit ~ result:", result);
-    const payInfo = result.data?.pay_info;
-    const order_no = result.data?.order_no;
-    if (result.code === 200 && order_no && payInfo) {
-      // 保存支付URL
-      payUrl.value = payInfo;
-
-      // 生成二维码
-      await generateQRCode(payInfo);
-
-      // 显示二维码弹窗
-      showQRCode.value = true;
-
-      // 开始轮询订单状态
-      startPollingOrderStatus(order_no);
-    } else {
-      console.error("创建订单失败:", result);
-    }
-  } catch (error) {
-    console.error("提交订单失败:", error);
-  }
-}
-
-function handleCancel() {
-  stopPolling();
-  showCenter.value = false;
-  closeQRCode();
-  orderNo.value = "";
-  orderStatus.value = "";
-}
 
 function open() {
   showCenter.value = true;
@@ -274,11 +71,6 @@ function open() {
   orderStatus.value = "";
 }
 
-// 组件卸载时清理定时器
-onUnmounted(() => {
-  stopPolling();
-  closeQRCode();
-});
 
 defineExpose({
   open,
