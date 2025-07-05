@@ -100,7 +100,7 @@ const list = ref<OrderItem[]>([
 
 <style scoped lang="scss">
 .record_container{
-  padding-top: 20px;
+  padding-top: 10px;
 }
 .record_loading{
   display: flex;
@@ -124,5 +124,13 @@ const list = ref<OrderItem[]>([
    color: #f3d656;
    font-size: 40px;
    margin-left: 45px;
+}
+.record_item{
+    height: 106px;
+    border-bottom: 3px solid #f3d656;
+    font-size: 40px;
+    &:last-child{
+        border-bottom: none;
+    }
 }
 </style>
