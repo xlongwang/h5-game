@@ -88,14 +88,6 @@ function handleDetail(item: any) {
 onMounted(() => {
     getList()
 })
-
-const list = ref<OrderItem[]>([
-    // {
-    //     title: 'Depósito',
-    //     time: '2025-06-29 10:00:00',
-    //     money: 100,
-    // },
-])
 </script>
 
 <style scoped lang="scss">

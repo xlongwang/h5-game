@@ -100,7 +100,7 @@
                 />
             </van-popup>
         </teleport>
-        <RechargPop ref="rechargPopRef" />
+        <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
     </div>
 </template>
 
@@ -165,6 +165,11 @@ function onConfirmPicker(value: any) {
 
 function handleDeposito() {
     rechargPopRef.value.open()
+}
+
+function handleRechargeSuccess() {
+    // 充值成功后的处理逻辑
+    console.log('充值成功')
 }
 function handleRetirar() {
     router.push('/retirar')
