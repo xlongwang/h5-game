@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 12:13:49
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-05 22:32:44
+ * @LastEditTime: 2025-07-05 23:56:58
  * @FilePath: /vue3_app/src/views/Promoc.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -37,7 +37,7 @@ const list = ref([
         id: '1',
         name: 'a1',
         url: '/images/promotion/a1.png',
-        path: '/activity01',
+        path: '/invite',
     },
     {
         id: '2',
@@ -49,7 +49,7 @@ const list = ref([
         id: '3',
         name: 'a3',
         url: '/images/promotion/a3.png',
-        path: '/invite',
+        path: '/activity01',
     },
 ])
 

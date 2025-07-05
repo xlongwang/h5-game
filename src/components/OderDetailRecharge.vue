@@ -5,8 +5,8 @@
             <div class="recharge_input text-[50px]">
                 <!-- <div>Tarifa de manejo</div>
                 <div class="text-[#f00]">${{ formatVal(activeVal) }}</div> -->
-                <div>{{ t("components.deposit") }} ${{ formatVal(amount) }}</div>
-                <div>{{ t("components.receive") }} ${{ formatVal(activeVal) }}</div>
+                <div>{{ t("components.deposit") }} ${{ formatVal(activeVal) }}</div>
+                <div>{{ t("components.receive") }} ${{ formatVal(receiveVal) }}</div>
             </div>
             <div
                 class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
@@ -65,6 +65,7 @@ import useUserStore from '@/stores/use-user-store'
 const props = defineProps<{
     activeVal: number
     onSuccess: () => void
+    extra: number
 }>()
 
 const { i18n } = useGlobal()
@@ -76,8 +77,8 @@ const userInfo = computed(() => {
     return userStore.userInfo
 })
 
-const amount = computed(() => {
-    return Number(userInfo.value?.wallet.balance) + Number(userInfo.value?.wallet.bonus)
+const receiveVal = computed(() => {
+    return Number(props.activeVal) + Number(props.extra ? props.extra : 0)
 })
 
 function formatVal(val: number) {
