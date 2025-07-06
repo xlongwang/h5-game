@@ -1,72 +1,73 @@
 <template>
-   <CommonPop
-        v-model="showCenter"
-        :title="t('components.details')"
-        :is-single-btn="true"
-        :cancel-text="t('components.cancel')"
-        :confirm-text="t('components.depositButton')"
-        :tips="t('components.tipsBottom')"
-        @cancel="handleCancel"
-        @confirm="handleSubmit"
-    >
-        <div class="recharge_detail_content">
-            <div class="text-[50px] detait_re_txt">
-                {{ t("components.vipChannelDescription") }}
-            </div>
-        </div>
+  <CommonPop
+    v-model="showCenter"
+    :title="t('components.details')"
+    :is-single-btn="true"
+    :cancel-text="t('components.cancel')"
+    :confirm-text="t('components.depositButton')"
+    :tips="t('components.tipsBottom')"
+    @cancel="handleCancel"
+    @confirm="handleSubmit"
+  >
+    <div class="recharge_detail_content">
+      <div class="text-[50px] detait_re_txt">
+        {{ t("components.vipChannelDescription") }}
+      </div>
+    </div>
   </CommonPop>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from '@/composables'
-import useUserStore from '@/stores/use-user-store'
+import { useGlobal } from "@/composables";
+import useUserStore from "@/stores/use-user-store";
 
+const store = useUserStore();
 const props = defineProps<{
-    activeVal: number
-    onSuccess: () => void
-    rechargeRef: any
-}>()
-const showCenter = ref(false)
-const { i18n } = useGlobal()
-const { t } = i18n
-
-const userStore = useUserStore()
+  activeVal: number;
+  onSuccess: () => void;
+  rechargeRef: any;
+}>();
+const showCenter = ref(false);
+const { i18n } = useGlobal();
+const { t } = i18n;
 
 const userInfo = computed(() => {
-    return userStore.userInfo
-})
+  return store.userInfo;
+});
 
 function handleCancel() {
-    console.log('handleCancel')
-    hide()
+  console.log("handleCancel");
+  hide();
 }
 
 function handleSubmit() {
-    const isEnough = Number(userInfo.value?.wallet?.total_charge) >= 200
+  // const isEnough = Number(userInfo.value?.wallet?.total_charge) >= 200
 
-    if (isEnough) {
-        console.log('handleSubmit')
-    }
-    else {
-        console.log('not enough')
-        props.rechargeRef.open()
-    }
-    hide()
+  // if (isEnough) {
+  //     console.log('handleSubmit')
+  // }
+  // else {
+  console.log("not enough");
+  props.rechargeRef.open();
+  // }
+  props.onSuccess();
+  hide();
 }
 
 function open() {
-    showCenter.value = true
+  console.log("open pop2");
+  showCenter.value = true;
 }
 
 function hide() {
-    showCenter.value = false
+  showCenter.value = false;
 }
 
 defineExpose({
-    open,
-    hide,
-})
+  open,
+  hide,
+});
 </script>
 
 <style lang="scss" scoped>
@@ -77,9 +78,7 @@ defineExpose({
   background-color: #0c0401;
   border: 3px solid #b9851f;
   line-height: 1.4;
-
 }
-
 
 .order-status-section {
   width: 861px;
@@ -102,6 +101,4 @@ defineExpose({
 .detait_re_txt {
   word-break: break-all;
 }
-
-
 </style>
