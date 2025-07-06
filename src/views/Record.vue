@@ -27,7 +27,9 @@
                             <div class="record_item_title_right_bottom w-[200px] text-center">
                                 {{ item?.status }}
                             </div>
-                            <div class="record_detail_btn" @click="handleDetail(item)">details</div>
+                            <div class="record_detail_btn" @click="handleDetail(item)">
+                                {{ t('components.details') }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +116,7 @@ onMounted(() => {
    text-align: center;
    line-height: 80px;
    color: #f3d656;
-   font-size: 40px;
+   font-size: 35px;
    margin-left: 45px;
 }
 .record_item{

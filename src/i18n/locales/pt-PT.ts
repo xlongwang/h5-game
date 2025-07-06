@@ -154,8 +154,8 @@ export default {
         depositProblem: 'O que devo fazer se houver um problema com o meu depósito?',
         gameLoadingSlow: 'Por que é que o jogo carrega lentamente ou não abre?',
         withdrawalFailed: 'O que acontece se o levantamento falhar?',
-        faqAnswer1: 'Primeiro verifique o registo de pagamento e a conta bancária. Se a dedução foi feita corretamente mas não foi recebida, contacte o apoio ao cliente da plataforma e forneça o comprovativo da transação para que o apoio possa ajudá-lo no processamento.',
-        faqAnswer2: 'Problemas de carregamento do jogo podem ser devido à latência da rede, desempenho do dispositivo ou manutenção da plataforma. Recomenda-se verificar a ligação de rede ou reportar o problema ao apoio ao cliente para obter ajuda.',
+        faqAnswer1: 'Prezados utilizadores, os levantamentos são um privilégio para membros premium. Pode tornar-se premium recarregando qualquer valor e desbloquear o direito de levantamento.',
+        faqAnswer2: 'Pode ficar descansado, somos uma marca do Grupo Las Vegas e oferecemos serviços de ouro real 1:1. Esforçamo-nos ao máximo para criar a experiência de jogo mais realista, segura e justa para si.',
         faqAnswer3: 'Se o levantamento falhar, verifique se a sua conta de levantamento está correta ou mude a conta de levantamento e levante dinheiro novamente.',
     },
 
@@ -182,7 +182,7 @@ export default {
         myReward: 'A Minha Recompensa',
         shareSocialMedia: 'Partilhe nas suas redes sociais',
         today: 'Hoje',
-        total: 'Total',
+        todo: 'Todo',
         registration: 'Registo',
         reward: 'Prémio',
         youWillReceive: 'Receberá',
@@ -436,6 +436,7 @@ export default {
         scanQRCodeToPay: 'Por favor, escaneie o código QR com a sua aplicação de pagamento para completar o pagamento',
         copyLink: 'Copiar Ligação',
         close: 'Fechar',
+        creatingOrder: 'A criar pedido...',
 
         // Componente RechargPop
         selectDepositAmount: 'Selecionar valor do depósito',
@@ -494,5 +495,22 @@ export default {
         personalIncomeTax: 'Imposto de Renda Pessoal',
         payPersonalTax: 'Pagar imposto pessoal',
         success: 'Sucesso',
+
+        // Componente EmptyWithdrawPop
+        emptyWithdrawPopTitle: 'Dicas',
+        emptyWithdrawPopDesc: 'Caro utilizador, o saldo da sua conta é insuficiente, pode tentar jogar jogos para ganhar mais dinheiro e depois levantar dinheiro.',
+        tipsBottom: 'Ao utilizar o canal de levantamento VIP, pode evitar filas para este levantamento e este será processado imediatamente.',
+
+        retairPop06Title: 'Caro utilizador:',
+        retairPop06Desc: 'Caro utilizador: Este levantamento pertence ao seu rendimento pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto sobre o rendimento pessoal. O progresso do seu levantamento atual é de 99,9% e só falta o último passo antes da chegada do levantamento. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
+        retairPop06TaxTitle: 'Impostos a pagar',
+
+        recordDetailAmount: 'Valor',
+        recordDetailTime: 'Hora',
+        recordDetailStatus: 'Estado',
+        recordDetailPixType: 'Tipo PIX',
+        recordDetailReceivingAccount: 'Conta de Receção',
+        recordDetailPlantformNo: 'Nº da Plataforma',
+        apoyoCommonProblem: 'Problema Comum',
     },
 }

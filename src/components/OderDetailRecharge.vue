@@ -1,7 +1,15 @@
 <template>
-    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.orderDetails')"
+        :is-single-btn="false"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="isSubmitting ? t('components.creatingOrder') : t('components.goToPay')"
+        :loading="isSubmitting"
+        @cancel="handleCancel"
+        @confirm="handleSubmit"
+    >
         <div class="recharge_detail_content">
-            <div class="peposito_de_title mx-auto mt-[50px]"></div>
             <div class="recharge_input text-[50px]">
                 <!-- <div>Tarifa de manejo</div>
                 <div class="text-[#f00]">${{ formatVal(activeVal) }}</div> -->
@@ -9,23 +17,13 @@
                 <div>{{ t("components.receive") }} ${{ formatVal(receiveVal) }}</div>
             </div>
             <div
-                class="text-[37px] text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
+                class="text-[37px] word-break-all text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
             >
                 <span class="dot_icon"></span>
                 {{ t("components.payAccordingToOrder") }}
             </div>
-            <div
-                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-            >
-                <div class="detai_re_cancel" @click="handleCancel">
-                    {{ t("components.cancel") }}
-                </div>
-                <div class="detai_re_submit" @click="handleSubmit">
-                    {{ t("components.goToPay") }}
-                </div>
-            </div>
         </div>
-    </van-popup>
+</CommonPop>
 
     <!-- 二维码弹窗 -->
     <van-popup v-model:show="showQRCode" round class="qrcode_popup">
@@ -101,6 +99,8 @@ const startPollingTime = ref<number>(0)
 const showQRCode = ref(false)
 const qrCodeDataUrl = ref<string>('')
 const payUrl = ref<string>('')
+const isSubmitting = ref(false)
+const submitTimer = ref<NodeJS.Timeout | null>(null)
 
 // 获取状态样式类
 function getStatusClass(status: OrderStatus | ''): string {
@@ -236,13 +236,29 @@ function closeQRCode() {
     payUrl.value = ''
 }
 
-async function handleSubmit() {
+// 防抖函数
+function debounce(func: Function, delay: number) {
+    return function (this: any, ...args: any[]) {
+        if (submitTimer.value) {
+            clearTimeout(submitTimer.value)
+        }
+        submitTimer.value = setTimeout(() => {
+            func.apply(this, args)
+        }, delay)
+    }
+}
+
+// 实际的提交逻辑
+async function submitOrder() {
+    if (isSubmitting.value) return
+    
+    isSubmitting.value = true
+    
     try {
         const result = await userApi.createPayin({
             amount: props.activeVal.toString(),
             player_id: userInfo.value?.id?.toString() || '',
         })
-        console.log('🚀 ~ handleSubmit ~ result:', result)
         const payInfo = result.data?.pay_info
         const order_no = result.data?.order_no
         if (result.code === 200 && order_no && payInfo) {
@@ -260,12 +276,22 @@ async function handleSubmit() {
         }
         else {
             console.error('创建订单失败:', result)
+            // 创建订单失败时关闭弹窗
+            showCenter.value = false
         }
     }
     catch (error) {
         console.error('提交订单失败:', error)
+        // 提交失败时关闭弹窗
+        showCenter.value = false
+    }
+    finally {
+        isSubmitting.value = false
     }
 }
+
+// 防抖处理的提交函数
+const handleSubmit = debounce(submitOrder, 500)
 
 function handleCancel() {
     stopPolling()
@@ -285,6 +311,9 @@ function open() {
 onUnmounted(() => {
     stopPolling()
     closeQRCode()
+    if (submitTimer.value) {
+        clearTimeout(submitTimer.value)
+    }
 })
 
 defineExpose({
@@ -293,34 +322,8 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.recharge_detail_popup {
-  width: 1000px;
-  height: 750px;
-  padding: 22px 14px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  background: transparent;
-  &::after {
-    width: 1000px;
-    height: 750px;
-    background: url("/images/main/border.png") no-repeat;
-    background-size: contain;
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    pointer-events: none;
-  }
-}
 .recharge_detail_content {
-  width: 100%;
-  height: 100%;
-  background-color: #0c0401;
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 50px 30px 0;
+
 }
 .peposito_de_title {
   width: 820px;
@@ -333,7 +336,6 @@ defineExpose({
 }
 
 .recharge_input {
-  width: 861px;
   height: 111px;
   box-sizing: border-box;
   border: 3px solid #b9851f;
@@ -355,29 +357,6 @@ defineExpose({
   background-position: center;
 }
 
-.detait_re_txt {
-  word-break: break-all;
-}
-
-.detai_re_cancel {
-  width: 403px;
-  height: 103px;
-  background: url("/images/main/cancel.png") no-repeat;
-  background-size: contain;
-  line-height: 103px;
-  text-align: center;
-  color: #0c0900;
-}
-
-.detai_re_submit {
-  width: 375px;
-  height: 103px;
-  background: url("/images/main/ok.png") no-repeat;
-  background-size: contain;
-  line-height: 103px;
-  text-align: center;
-  color: #f2d659;
-}
 
 // 二维码弹窗样式
 .qrcode_popup {

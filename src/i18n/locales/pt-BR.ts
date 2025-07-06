@@ -154,8 +154,8 @@ export default {
         depositProblem: 'O que devo fazer se houver um problema com meu depósito?',
         gameLoadingSlow: 'Por que o jogo carrega lentamente ou não abre?',
         withdrawalFailed: 'O que acontece se o saque falhar?',
-        faqAnswer1: 'Primeiro verifique o registro de pagamento e a conta bancária. Se a dedução foi feita corretamente mas não foi recebida, entre em contato com o atendimento ao cliente da plataforma e forneça o comprovante da transação para que o atendimento possa ajudá-lo no processamento.',
-        faqAnswer2: 'Problemas de carregamento do jogo podem ser devido à latência da rede, desempenho do dispositivo ou manutenção da plataforma. Recomenda-se verificar a conexão de rede ou reportar o problema ao atendimento ao cliente para obter ajuda.',
+        faqAnswer1: 'Prezados usuários, os saques são um privilégio para membros premium. Você pode se tornar premium recarregando qualquer valor e desbloquear o direito de saque.',
+        faqAnswer2: 'Fique tranquilo, somos uma marca do Grupo Las Vegas e oferecemos serviços de ouro real 1:1. Nos esforçamos ao máximo para criar a experiência de jogo mais realista, segura e justa para você.',
         faqAnswer3: 'Se o saque falhar, verifique se sua conta de saque está correta ou mude a conta de saque e saque dinheiro novamente.',
     },
 
@@ -182,7 +182,7 @@ export default {
         myReward: 'Minha Recompensa',
         shareSocialMedia: 'Compartilhe em suas redes sociais',
         today: 'Hoje',
-        total: 'Total',
+        todo: 'Todo',
         registration: 'Registro',
         reward: 'Prêmio',
         youWillReceive: 'Você receberá',
@@ -436,6 +436,7 @@ export default {
         scanQRCodeToPay: 'Por favor, escaneie o código QR com seu aplicativo de pagamento para completar o pagamento',
         copyLink: 'Copiar Link',
         close: 'Fechar',
+        creatingOrder: 'Criando Pedido...',
 
         // Componente RechargPop
         selectDepositAmount: 'Selecionar valor do depósito',
@@ -494,5 +495,22 @@ export default {
         personalIncomeTax: 'Imposto de Renda Pessoal',
         payPersonalTax: 'Pagar imposto pessoal',
         success: 'Sucesso',
+
+        // Componente EmptyWithdrawPop
+        emptyWithdrawPopTitle: 'Dicas',
+        emptyWithdrawPopDesc: 'Caro usuário, o saldo da sua conta é insuficiente, você pode tentar jogar jogos para ganhar mais dinheiro e depois sacar dinheiro.',
+        tipsBottom: 'Ao utilizar o canal de saque VIP, você pode evitar filas para este saque e ele será processado imediatamente.',
+
+        retairPop06Title: 'Caro usuário:',
+        retairPop06Desc: 'Caro usuário: Este saque pertence à sua renda pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto de renda pessoal. O progresso do seu saque atual é de 99,9% e só falta o último passo antes da chegada do saque. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
+        retairPop06TaxTitle: 'Impostos a pagar',
+
+        recordDetailAmount: 'Valor',
+        recordDetailTime: 'Hora',
+        recordDetailStatus: 'Status',
+        recordDetailPixType: 'Tipo PIX',
+        recordDetailReceivingAccount: 'Conta de Recebimento',
+        recordDetailPlantformNo: 'Nº da Plataforma',
+        apoyoCommonProblem: 'Problema Comum',
     },
 }

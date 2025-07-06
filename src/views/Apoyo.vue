@@ -11,8 +11,11 @@
         <HeaderBack :has-back-icon="true" :title="t('support.title')" />
         <div class="apoyo_page_scroll">
             <div class="pb-[350px]">
-                <div class="mb-[60px] w-[1045px] h-[608px] mx-auto">
+                <div class="mb-[40px] w-[1045px] h-[608px] mx-auto" @click="handleBannerClick">
                     <img :src="bannerImg" alt="" class="w-full">
+                </div>
+                <div class="mb-[30px] font-bold w-[1045px] mx-auto">
+                  {{ t('components.apoyoCommonProblem') }}
                 </div>
                 <van-collapse v-model="activeNames" accordion>
                     <van-collapse-item :title="t('support.howToWithdraw')" name="1">
@@ -59,6 +62,10 @@ const { t } = i18n
 const bannerImg = '/images/apoyo/header.png'
 const router = useRouter()
 const activeNames = ref<string | number>('') // 单开模式
+
+function handleBannerClick() {
+    window.open('https://www.baidu.com', '_blank')
+}
 </script>
 
 <style scoped lang="scss">

@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="'invite-mi-todo mt-[20px] flex h-[147px]">
-                    <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.total') }}</div>
+                    <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.todo') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
                         <div class="text-[45px] pb-[8px]">Registro</div>
                         <div class="text-[60px] font-bold">0</div>
@@ -39,7 +39,7 @@
                 <span>0</span>
                 <span class="text-[#9e6c15]">{{ t('invite.available') }}</span>
                 <span>${{ formatNumber(0) }}</span>
-                <div class="copy-btn">{{ t('invite.receive') }}</div>
+                <div class="copy-btn">{{ t('activity.receive') }}</div>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             <div class="invite-mi-title font-bold text-[50px] pb-[30px]">
                 {{ t('invite.shareSocialMedia') }}
             </div>
-            <div class="recom-section-con flex justify-center gap-[20px] text-[28px] pb-[10px]">
+            <div class="recom-section-con flex justify-center gap-[20px] text-[28px] pb-[30px]">
                 <div
                     v-for="item in shareList"
                     :key="item.title"
@@ -62,7 +62,9 @@
                     </div>
                 </div>
             </div>
-            <div class="invite_bt flex items-center justify-between pt-[40px]">
+            <div class="line-box"></div>
+            <div class="text-[35px] text-[#bb7400] pt-[20px]">Comparte enlace con tus amigos.</div>
+            <div class="invite_bt flex items-center justify-between">
                 <div class="recom-con">
                     <van-field v-model="value" class="local_input" readonly placeholder="" />
                     <div class="copy-btn" @click="copy">{{ t('invite.copy') }}</div>
@@ -294,7 +296,7 @@ onMounted(() => {
 
 .invite_bt {
   position: relative;
-  top: 29px;
+  top: 15px;
 }
 
 .invite-mi {
@@ -349,7 +351,8 @@ onMounted(() => {
 }
 
 .copy-btn {
-  width: 233px;
+  display: inline-block;
+  padding: 0 20px;
   height: 78px;
   background: url("/images/invite/share_bg.png") no-repeat center center;
   background-size: 100% 100%;
@@ -377,5 +380,12 @@ onMounted(() => {
     width: 100%;
     height: 100%;
   }
+}
+
+.line-box{
+    height: 3px;
+    width: 981px;
+    margin: 0 auto;
+    background-color: #693b00;
 }
 </style>

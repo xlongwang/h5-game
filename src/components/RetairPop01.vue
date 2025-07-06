@@ -1,32 +1,26 @@
 <template>
-    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-        <div class="recharge_detail_content">
-            <div
-                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-            >
-                {{ t("components.details") }}
-            </div>
-            <div class="text-[50px] pt-[80px] flex justify-between items-center">
-                <span>{{ t("components.peopleInLine") }}: </span>
-                <span class="text-[#f3d559]">{{ 10000 + Math.ceil(Math.random() * 10000) }}</span>
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.useVIPWithdrawalChannel')"
+        :tips="t('components.tipsBottom')"
+        @cancel="handleCancel"
+        @confirm="submit"
+    >
+        <div class="recharge_detail_content pt-[10px]">
+            <div class="text-[50px] flex justify-between items-center">
+                <span class="pr-[10px]">{{ t("components.peopleInLine") }}: </span>
+                <span class="text-[#f3d559] whitespace-nowrap">{{ 10000 + Math.ceil(Math.random() * 10000) }}</span>
             </div>
 
-            <div class="text-[50px] pt-[40px] flex justify-between items-center">
-                <span>{{ t("components.expectedTime") }}: </span>
-                <span class="text-[#f3d559]">{{ 2000 + Math.ceil(Math.random() * 2000) }}</span>
-            </div>
-            <div
-                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-            >
-                <!-- <div class="detai_re_cancel" @click="handleCancel">
-          {{ t("components.cancel") }}
-        </div> -->
-                <div class="retirar-btn text-[50px] font-bold" @click="submit">
-                    {{ t("components.useVIPWithdrawalChannel") }}
-                </div>
+            <div class="text-[50px] pt-[30px] flex justify-between items-center">
+                <span class="pr-[10px]">{{ t("components.expectedTime") }}: </span>
+                <span class="text-[#f3d559] whitespace-nowrap">{{ 2000 + Math.ceil(Math.random() * 2000) }}</span>
             </div>
         </div>
-    </van-popup>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
@@ -50,6 +44,10 @@ const userInfo = computed(() => {
     return userStore.userInfo
 })
 
+function handleCancel() {
+    showCenter.value = false
+}
+
 function submit() {
     console.log('submit')
     props.retairPop02Ref.open()
@@ -66,35 +64,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.recharge_detail_popup {
-  width: 1000px;
-  height: 750px;
-  padding: 22px 14px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  background: transparent;
-  &::after {
-    width: 1000px;
-    height: 750px;
-    background: url("/images/main/border.png") no-repeat;
-    background-size: contain;
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    pointer-events: none;
-  }
-}
-.recharge_detail_content {
-  width: 100%;
-  height: 100%;
-  background-color: #0c0401;
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 80px 30px 0;
-}
 .peposito_de_title {
   width: 820px;
   height: 70px;
@@ -139,9 +108,9 @@ defineExpose({
 }
 
 .detai_re_cancel {
-  width: 403px;
+  width: 375px;
   height: 103px;
-  background: url("/images/main/cancel.png") no-repeat;
+  background: url("/images/main/ok.png") no-repeat;
   background-size: contain;
   line-height: 103px;
   text-align: center;
@@ -149,9 +118,9 @@ defineExpose({
 }
 
 .detai_re_submit {
-  width: 375px;
+  width: 403px;
   height: 103px;
-  background: url("/images/main/ok.png") no-repeat;
+  background: url("/images/main/cancel.png") no-repeat;
   background-size: contain;
   line-height: 103px;
   text-align: center;

@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 12:13:49
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-06 10:25:47
+ * @LastEditTime: 2025-07-06 16:30:27
  * @FilePath: /vue3_app/src/views/Promoc.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -99,6 +99,8 @@
             :on-success="handleSuccess"
             :cur-value="curValue"
         />
+
+        <EmptyWithdrawPop ref="emptyWithdrawPopRef" />
     </div>
 </template>
 
@@ -119,6 +121,8 @@ import '@/assets/scss/pages/retirar.scss'
 defineOptions({
     name: 'Retirar',
 })
+
+const emptyWithdrawPopRef = ref()
 
 const store = useUserStore()
 
@@ -148,12 +152,8 @@ const recieviAccount = computed(() => {
     return store.recieviAccount
 })
 
-watch(recieviAccount, (newVal) => {
-    console.log('recieviAccount', newVal)
-})
-
-watch(userInfo, (newVal) => {
-    console.log('userInfo', newVal)
+const balance = computed(() => {
+    return userInfo.value?.wallet?.balance || 0
 })
 
 const coinImg = '/images/retirar/coin.png'
@@ -190,32 +190,29 @@ async function refreshCoin() {
 
 async function handleSuccess() {
     console.log('commit success')
+    router.push(`/retirarDetail?amount=${curValue.value}`)
 }
 
 async function handleRetarir() {
-    //   console.log("StorageUtil", StorageUtil.getUserInfo());
-
-    // const userInfo = StorageUtil.getUserInfo()
-
-    // 调试信息
-    console.log('🔍 handleRetarir 调试信息:')
-    console.log('📧 recieviAccount.value:', recieviAccount.value)
-
-    // 直接使用 store 实例
-    const store = useUserStore()
-    console.log('📧 store.recieviAccount:', store.recieviAccount)
-    console.log('📧 store.userInfo:', store.userInfo)
-    console.log('📧 store.userInfo?.receiving_account:', store.userInfo?.receiving_account)
-
-    // 使用 computed 的 userInfo
     if (!recieviAccount.value) {
         console.log('⚠️ 没有收款账户，打开设置弹窗')
         retarirStep2Ref.value.open()
+        return
     }
-    else {
-        console.log('✅ 有收款账户，跳转到提现详情页')
-        router.push(`/retirarDetail?amount=${curValue.value}`)
+
+    if (Number(balance.value) === 0) {
+        emptyWithdrawPopRef.value.open()
+        return
     }
+
+    if (Number(balance.value) < Number(curValue.value)) {
+        showSuccessToast(t('finance.insufficientBalance'))
+        return
+    }
+
+    router.push(`/retirarDetail?amount=${curValue.value}`)
+
+    // 使用 computed 的 userInfo
 }
 
 const countList = ref([

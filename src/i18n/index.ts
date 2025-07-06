@@ -8,14 +8,14 @@
  */
 import { createI18n } from 'vue-i18n'
 import en from './locales/en'
-import es from './locales/es'
 import ptBR from './locales/pt-BR'
 import ptPT from './locales/pt-PT'
+import sp from './locales/sp'
 
 // 支持的语言列表
 export const supportedLocales = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'sp', name: 'Spanish', flag: '🇪🇸' },
     { code: 'pt-BR', name: 'Português (Brasil)', flag: '🇧🇷' },
     { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' },
 ]
@@ -42,6 +42,11 @@ function getDefaultLocale(): string {
         const baseMatch = supportedLocales.find(locale => locale.code === baseLocale)
         if (baseMatch) {
             return baseLocale
+        }
+
+        // 对于西班牙语的特殊处理
+        if (baseLocale === 'es') {
+            return 'sp'
         }
 
         // 对于葡萄牙语的特殊处理
@@ -71,7 +76,7 @@ const i18n = createI18n({
     fallbackLocale: 'en',
     messages: {
         en,
-        es,
+        sp,
         'pt-BR': ptBR,
         'pt-PT': ptPT,
     },

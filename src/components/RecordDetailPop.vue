@@ -1,72 +1,62 @@
 <template>
-    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
-        <div class="recharge_detail_content">
-            <div
-                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-            >
-                {{ t("components.details") }}
-            </div>
+  <CommonPop
+    v-model="showCenter"
+    :title="t('components.details')"
+    :is-single-btn="true"
+    :cancel-text="t('components.cancel')"
+    :confirm-text="t('components.confirm')"
+    @confirm="handleSubmit"
+  >
+    <div class="recharge_detail_content">
 
-            <div class="text-[40px] gap-[15px] px-[30px] flex flex-col pt-[60px] text-left">
-                <div class="record__pop_item">
-                    Amount: {{ currentRecord?.amount.toFixed(2) }}
-                </div>
-                <div class="record__pop_item">Time: {{ currentRecord?.updated_at }}</div>
-                <div class="record__pop_item">status: {{ currentRecord?.status }}</div>
-                <div class="record__pop_item">pix_type: {{ currentRecord?.pix_type }}</div>
-                <div class="record__pop_item">plantform_no: {{ currentRecord?.plantform_no }}</div>
-            </div>
+      <div class="text-[40px] gap-[15px] px-[30px] flex flex-col pt-[60px] text-left">
+        <div class="record__pop_item">{{ t('components.recordDetailAmount') }}: {{ currentRecord?.amount.toFixed(2) }}</div>
+        <div class="record__pop_item">{{ t('components.recordDetailTime') }}: {{ currentRecord?.updated_at }}</div>
+        <div class="record__pop_item">{{ t('components.recordDetailStatus') }}: {{ currentRecord?.status }}</div>
+        <div class="record__pop_item">{{ t('components.recordDetailPixType') }}: {{ currentRecord?.pix_type }}</div>
+        <div class="record__pop_item">{{ t('components.recordDetailReceivingAccount') }}: {{ currentRecord?.receiving_account }}</div>
+        <div class="record__pop_item">{{ t('components.recordDetailPlantformNo') }}: {{ currentRecord?.plantform_no }}</div>
+      </div>
 
-            <div
-                class="detai_re_btns px-[35px] pt-[20px] justify-between flex text-[40px] font-bold"
-            >
-                <div class="retirar-btn text-[50px] font-bold" @click="handleSubmit">
-                    {{ t("components.confirm") }}
-                </div>
-            </div>
-        </div>
-    </van-popup>
+    </div>
+  </CommonPop>
 </template>
 
 <script setup lang="ts">
-import type { OrderItem } from '~/types'
+import type { OrderItem } from "~/types";
 
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from '@/composables'
-import useUserStore from '@/stores/use-user-store'
+import { useGlobal } from "@/composables";
+// import useUserStore from "@/stores/use-user-store";
 
 const props = defineProps<{
-    currentRecord: OrderItem
-}>()
-const userStore = useUserStore()
-const showCenter = ref(false)
-const { i18n } = useGlobal()
-const { t } = i18n
-
-const userInfo = computed(() => {
-    return userStore.userInfo
-})
+  currentRecord: OrderItem;
+}>();
+// const userStore = useUserStore();
+const showCenter = ref(false);
+const { i18n } = useGlobal();
+const { t } = i18n;
 
 function handleSubmit() {
-    hide()
+  hide();
 }
 
 function open() {
-    showCenter.value = true
+  showCenter.value = true;
 }
 
 function hide() {
-    showCenter.value = false
+  showCenter.value = false;
 }
 
 defineExpose({
-    open,
-    hide,
-})
+  open,
+  hide,
+});
 
 onMounted(() => {
-    console.log('currentRecord', props.currentRecord)
-})
+  console.log("currentRecord", props.currentRecord);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -81,11 +71,6 @@ onMounted(() => {
 .recharge_detail_content {
   width: 100%;
   height: 100%;
-
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 40px 30px 0;
 }
 .peposito_de_title {
   width: 820px;
@@ -95,7 +80,7 @@ onMounted(() => {
   ground-position: center;
 }
 
-.record__pop_item{
+.record__pop_item {
   padding-bottom: 14px;
 }
 

@@ -9,7 +9,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
+    CommonPop: typeof import('./components/CommonPop.vue')['default']
+    copy: typeof import('./components/RetairPop06 copy.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
+    EmptyWithdrawPop: typeof import('./components/EmptyWithdrawPop.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
     HeaderInfo: typeof import('./components/HeaderInfo.vue')['default']
@@ -26,6 +29,7 @@ declare module 'vue' {
     RetairPop04: typeof import('./components/RetairPop04.vue')['default']
     RetairPop05: typeof import('./components/RetairPop05.vue')['default']
     RetairPop06: typeof import('./components/RetairPop06.vue')['default']
+    RetairPop07: typeof import('./components/RetairPop07.vue')['default']
     RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -39,6 +43,7 @@ declare module 'vue' {
     VanGrid: typeof import('vant/es')['Grid']
     VanGridItem: typeof import('vant/es')['GridItem']
     VanImage: typeof import('vant/es')['Image']
+    VanLoading: typeof import('vant/es')['Loading']
     VanPicker: typeof import('vant/es')['Picker']
     VanPopup: typeof import('vant/es')['Popup']
     VanSwipe: typeof import('vant/es')['Swipe']

@@ -7,7 +7,7 @@ export const rechargAmountList = [
     {
         id: 2,
         val: 200,
-        extra: 0,
+        extra: 8,
     },
     {
         id: 3,

@@ -1,35 +1,32 @@
 <template>
-    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.payPersonalTax')"
+        @cancel="handleCancel"
+        @confirm="handleSubmit"
+    >
         <div class="recharge_detail_content">
-            <div
-                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-            >
-                {{ t("components.details") }}
-            </div>
             <!-- <div class="text-[50px] detait_re_txt pt-[80px] text-center">
         Tarifa de manejo
         <span class="text-[#f3d559]">${{ confirmInfo.coast.toFixed(2) }}</span>
       </div> -->
-            <div class="text-[40px] detait_re_txt pt-[80px]">{{ t("components.personalTaxDescription") }}</div>
-            <div class="text-[50px] detait_re_txt pt-[40px] flex justify-between">
+            <div class="text-[40px] detait_re_txt pt-[40px]">{{ t("components.personalTaxDescription") }}</div>
+            <div class="text-[35px] detait_re_txt detait_handling_input pt-[40px] flex justify-between">
                 <div>{{ t("components.withdrawalAmount") }}</div>
 
-                <div>${{ amount ? Number(amount).toFixed(2) : "0.00" }}</div>
+                <div class="text-[#fe0000]">${{ amount ? Number(amount).toFixed(2) : "0.00" }}</div>
             </div>
-            <div class="text-[50px] detait_re_txt pt-[40px] flex justify-between">
+            <div class="text-[35px] detait_re_txt detait_handling_input pt-[40px] flex justify-between">
                 <div>{{ t("components.personalIncomeTax") }}</div>
 
-                <div>${{ coastNum }}</div>
+                <div class="text-[#fe0000]">${{ coastNum }}</div>
             </div>
-            <div
-                class="detai_re_btns px-[35px] pt-[40px] justify-between flex text-[40px] font-bold"
-            >
-                <div class="retirar-btn text-[50px] font-bold" @click="handleSubmit">
-                    {{ t("components.payPersonalTax") }}
-                </div>
-            </div>
+
         </div>
-    </van-popup>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
@@ -105,11 +102,6 @@ defineExpose({
 .recharge_detail_content {
   width: 100%;
   height: 100%;
-
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 40px 30px 0;
 }
 .peposito_de_title {
   width: 820px;
@@ -141,6 +133,20 @@ defineExpose({
   background: rgba(185, 133, 31, 0.1);
 }
 
+
+.detait_handling_input{
+  height: 93px;
+  border-radius: 15px;
+  border: 3px solid #b9851f;
+  background-color: #190b00;
+  padding: 0 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+
+
 .dot_icon {
   width: 33px;
   height: 33px;
@@ -154,34 +160,4 @@ defineExpose({
   word-break: break-all;
 }
 
-.detai_re_cancel {
-  width: 403px;
-  height: 103px;
-  background: url("/images/main/cancel.png") no-repeat;
-  background-size: contain;
-  line-height: 103px;
-  text-align: center;
-  color: #0c0900;
-}
-
-.detai_re_submit {
-  width: 375px;
-  height: 103px;
-  background: url("/images/main/ok.png") no-repeat;
-  background-size: contain;
-  line-height: 103px;
-  text-align: center;
-  color: #f2d659;
-}
-
-.retirar-btn {
-  width: 909px;
-  height: 116px;
-  background: url("/images/retirarDetail/btn.png") no-repeat center center;
-  background-size: 100% 100%;
-  margin: 45px auto 0;
-  line-height: 116px;
-  text-align: center;
-  color: #250d00;
-}
 </style>

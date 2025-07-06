@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="section02_item flex items-center text-[50px]">
+            <div class="section02_item flex items-center text-[50px]" @click="handleAccountClick">
                 <div class="section02_item_lock w-[78px] h-[78px] mr-[16px]"></div>
                 <div class="section02_item_con flex-1">{{ t("profile.account") }}</div>
                 <div class="section02_item_right flex items-center">
@@ -101,6 +101,10 @@
             </van-popup>
         </teleport>
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
+        <RetarirStep2
+            ref="retarirStep2Ref"
+            :is-show-amount="false"
+        />
     </div>
 </template>
 
@@ -124,6 +128,8 @@ const userInfo = computed(() => {
     return StorageUtil.getUserInfo()
 })
 
+const retarirStep2Ref = ref()
+
 const pickerValue = ref('')
 const columns = ref([
     {
@@ -132,7 +138,7 @@ const columns = ref([
     },
     {
         text: 'Spanish',
-        value: 'es',
+        value: 'sp',
     },
     {
         text: 'Português (Brasil)',
@@ -152,6 +158,10 @@ function handleLanguageClick() {
     // 设置当前选中的语言
     pickerValue.value = currentLocale.value
     showPicker.value = true
+}
+
+function handleAccountClick() {
+    retarirStep2Ref.value.open()
 }
 
 function onConfirmPicker(value: any) {

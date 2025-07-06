@@ -65,27 +65,43 @@
                 <!-- 使用 VIP 渠道提款 -->
             </div>
         </div>
-        <RetairPop01 ref="retairPop01Ref" :retair-pop-02-ref="retairPop02Ref" />
-        <RetairPop02 ref="retairPop02Ref" :recharge-ref="OderDetailRecargelRef" />
+        <RetairPop01 ref="retairPop01Ref" :retair-pop-02-ref="retairPop02Ref" :on-success="handleSuccess" :active-val="amount" />
+        <RetairPop02
+            ref="retairPop02Ref"
+            :recharge-ref="OderDetailRecargelRef"
+            :active-val="amount"
+            :on-success="handleSuccess"
+        />
 
-        <RetairPop03 ref="retairPop03Ref" :pop3-submit="pop3Submit" :retair-pop-04-ref="retairPop04Ref" submit-info="submitInfo" :active-val="amount" />
+        <RetairPop03
+            ref="retairPop03Ref"
+            :pop3-submit="pop3Submit"
+            :retair-pop-04-ref="retairPop04Ref"
+            :submit-info="submitInfo"
+            :active-val="amount"
+            :on-success="handleSuccess"
+            :recharge-ref="OderDetailRecargelRef"
+        />
         <RetairPop04 ref="retairPop04Ref" :pop4-submit="pop3Submit" :confirm-info="confirmInfo" />
-        <RetairPop05 ref="retairPop05Ref" :set-prsonal-tax="setPrsonalTax" :amount="amount" :retair-pop-06-ref="retairPop06Ref" />
-        <RetairPop06 ref="retairPop06Ref" :on-success="handlePaySuccess" :amount="amount" :tax="taxInfo" :retair-pop-05-ref="retairPop05Ref" />
+        <RetairPop05 ref="retairPop05Ref" :set-prsonal-tax="setPrsonalTax" :amount="amount" :retair-pop-06-ref="retairPop06Ref" :pop4-submit="pop4Submit" />
+        <RetairPop06 ref="retairPop06Ref" :retair-pop-07-ref="retairPop07Ref" :on-success="handlePaySuccess" :amount="amount" :tax="taxInfo" :retair-pop-05-ref="retairPop05Ref" :pop6-submit="pop6Submit" />
+        <RetairPop07 ref="retairPop07Ref" :on-success="handlePaySuccess" :amount="amount" />
         <OderDetailRecharge
             ref="OderDetailRecargelRef"
             :active-val="200"
             :on-success="handleSuccess"
+            :extra="getExtra(200)"
         />
     </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { userApi } from '@/api/user-api'
+// import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import { getCoinNum } from '@/utils'
 import { StorageUtil } from '@/utils/storage'
+import { rechargAmountList } from '@/config/RechargeConfig'
 
 defineOptions({
     name: 'RetirarDetailPage',
@@ -104,8 +120,14 @@ const retairPop03Ref = ref()
 const retairPop04Ref = ref()
 const retairPop05Ref = ref()
 const retairPop06Ref = ref()
+const retairPop07Ref = ref()
 const OderDetailRecargelRef = ref()
 const percent = ref(Math.random() * 0.2 + 0.4)
+
+const getExtra = (val: number) => {
+    const item = rechargAmountList.find(item => item.val === val)
+    return item?.extra || 0
+}
 
 const step = ref(1)
 
@@ -150,6 +172,20 @@ function pop3Submit() {
     btnTxt.value = 'Pagar impuestos personal'
 }
 
+function pop4Submit() {
+    console.log('pop4Submit')
+    percent.value = 0.99
+    step.value = 4
+    btnTxt.value = 'Pagar impuestos personal'
+}
+
+function pop6Submit() {
+    console.log('pop6Submit')
+    percent.value = 0.99
+    step.value = 6
+    btnTxt.value = 'Pagar impuestos personal'
+}
+
 const userInfo = computed(() => {
     return StorageUtil.getUserInfo()
 })
@@ -185,6 +221,8 @@ onMounted(() => {
 })
 
 const coin = '/images/retirar/coin.png'
+
+const extra = ref(0)
 </script>
 
 <style scoped lang="scss">

@@ -1,26 +1,20 @@
 <template>
-    <van-popup v-model:show="showCenter" round class="recharge_detail_popup">
+   <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.depositButton')"
+        :tips="t('components.tipsBottom')"
+        @cancel="handleCancel"
+        @confirm="handleSubmit"
+    >
         <div class="recharge_detail_content">
-            <div
-                class="peposito_de_title font_cinze text-center text-[70px] font-bold mx-auto mt-[50px]"
-            >
-                {{ t("components.details") }}
-            </div>
-            <div class="text-[50px] detait_re_txt pt-[80px]">
+            <div class="text-[50px] detait_re_txt">
                 {{ t("components.vipChannelDescription") }}
             </div>
-            <div
-                class="detai_re_btns px-[35px] pt-[60px] justify-between flex text-[40px] font-bold"
-            >
-                <div class="detai_re_cancel" @click="handleCancel">
-                    {{ t("components.cancel") }}
-                </div>
-                <div class="detai_re_submit" @click="handleSubmit">
-                    {{ t("components.depositButton") }}
-                </div>
-            </div>
         </div>
-    </van-popup>
+  </CommonPop>
 </template>
 
 <script setup lang="ts">
@@ -85,35 +79,7 @@ defineExpose({
   line-height: 1.4;
 
 }
-.recharge_detail_content {
-  width: 100%;
-  height: 100%;
 
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 40px 30px 0;
-}
-.peposito_de_title {
-  width: 820px;
-  height: 70px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.recharge_input {
-  width: 861px;
-  height: 111px;
-  box-sizing: border-box;
-  border: 3px solid #b9851f;
-  margin: 60px auto 0;
-  line-height: 111px;
-  border-radius: 20px;
-  padding: 0 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .order-status-section {
   width: 861px;
@@ -137,34 +103,5 @@ defineExpose({
   word-break: break-all;
 }
 
-.detai_re_cancel {
-  width: 403px;
-  height: 103px;
-  background: url("/images/main/cancel.png") no-repeat;
-  background-size: contain;
-  line-height: 103px;
-  text-align: center;
-  color: #0c0900;
-}
 
-.detai_re_submit {
-  width: 375px;
-  height: 103px;
-  background: url("/images/main/ok.png") no-repeat;
-  background-size: contain;
-  line-height: 103px;
-  text-align: center;
-  color: #f2d659;
-}
-
-.retirar-btn {
-  width: 909px;
-  height: 116px;
-  background: url("/images/retirarDetail/btn.png") no-repeat center center;
-  background-size: 100% 100%;
-  margin: 45px auto 0;
-  line-height: 116px;
-  text-align: center;
-  color: #250d00;
-}
 </style>

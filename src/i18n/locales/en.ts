@@ -154,8 +154,8 @@ export default {
         depositProblem: 'What should I do if there is a problem with my deposit?',
         gameLoadingSlow: 'Why is the game loading slowly or not opening?',
         withdrawalFailed: 'What happens if the withdrawal fails?',
-        faqAnswer1: 'First verify the payment record and bank account. If the deduction was made correctly but not received, contact the platform customer service and provide the transaction receipt so that customer service can help you with processing.',
-        faqAnswer2: 'Game loading issues may be due to network latency, device performance, or platform maintenance. It is recommended to check the network connection or report the problem to customer service for assistance.',
+        faqAnswer1: 'Dear users, withdrawals are a privilege for premium members. You can upgrade to premium by recharging any amount and unlock withdrawal rights.',
+        faqAnswer2: 'You can rest assured that we are a brand of the Las Vegas Group and provide 1:1 real gold services. We spare no effort to create the most realistic, safe, and fair gaming experience for you.',
         faqAnswer3: 'If the withdrawal fails, verify if your withdrawal account is correct or change the withdrawal account and withdraw money again.',
     },
 
@@ -182,7 +182,7 @@ export default {
         myReward: 'My Reward',
         shareSocialMedia: 'Share on your social media',
         today: 'Today',
-        total: 'Total',
+        todo: 'Todo',
         registration: 'Registration',
         reward: 'Reward',
         youWillReceive: 'You will receive',
@@ -299,6 +299,7 @@ export default {
         scanQRCodeToPay: 'Please scan the QR code with your payment app to complete the payment',
         copyLink: 'Copy Link',
         close: 'Close',
+        creatingOrder: 'Creating Order...',
 
         // RechargPop component
         selectDepositAmount: 'Select deposit amount',
@@ -357,6 +358,23 @@ export default {
         personalIncomeTax: 'Personal Income Tax',
         payPersonalTax: 'Pay personal tax',
         success: 'Success',
+
+        // Componente EmptyWithdrawPop
+        emptyWithdrawPopTitle: 'Tips',
+        emptyWithdrawPopDesc: 'Dear user, your account balance is insufficient, you can try playing games to earn more money and then withdraw money.',
+        tipsBottom: 'By using the VIP withdrawal channel, you can avoid queuing for this withdrawal and it will be processed immediately.',
+
+        retairPop06Title: 'Dear user:',
+        retairPop06Desc: 'Dear user: This withdrawal belongs to your personal additional income. According to federal regulations, the bank must collect 10% personal income tax. Your current withdrawal progress is 99.9% and only the last step remains before the withdrawal arrives. Once the tax is paid, the bank will process the transfer immediately.',
+        retairPop06TaxTitle: 'Taxes to pay',
+
+        recordDetailAmount: 'Amount',
+        recordDetailTime: 'Time',
+        recordDetailStatus: 'Status',
+        recordDetailPixType: 'PIX Type',
+        recordDetailReceivingAccount: 'Receiving Account',
+        recordDetailPlantformNo: 'Platform No',
+        apoyoCommonProblem: 'Common Problem',
     },
 
     // Error messages

@@ -8,24 +8,26 @@
 -->
 <template>
     <teleport to="body">
-        <van-popup
+      <CommonPop
+        v-model="show"
+        :title="t('components.linkWithdrawalAccount')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.confirm')"
+        @confirm="handleSubmit"
+      >
+        <!-- <van-popup
             v-model:show="show"
             position="center"
             class="step2_popup"
             @close="resetForm"
-        >
+        > -->
             <div class="step2_popup_inner">
-                <div class="setp2_pop_content pt-[120px] pb-[100px]">
-                    <div
-                        class="step2_t font_cinze text-[50px] font-bold text-center"
-                        style="text-transform: lowercase; font-variant: normal"
-                    >
-                        {{ t("components.linkWithdrawalAccount") }}
-                    </div>
+                <div class="setp2_pop_content pt-[80px] pb-[60px]">
                     <div class="step2_content">
                         <van-form>
                             <van-cell-group inset>
-                                <div class="form-item">
+                                <div v-if="isShowAmount" class="form-item">
                                     <div class="form-label">{{ t("components.withdrawalAmount") }}:</div>
                                     <div class="form-input">
                                         <van-field
@@ -122,7 +124,7 @@
                                         </van-field>
                                     </div>
                                 </div>
-
+                                <!-- Número telefónico -->
                                 <div class="form-item phone_item_form">
                                     <div class="form-label">{{ t("components.phone") }}</div>
                                     <div class="form-input">
@@ -132,15 +134,15 @@
                                             input-align="left"
                                             class="custom-field"
                                         >
-                                            <template #left-icon>
+                                            <!-- <template #left-icon>
                                                 <span class="form-prefix text-[50px]">+52</span>
-                                            </template>
+                                            </template> -->
                                         </van-field>
                                     </div>
                                 </div>
                             </van-cell-group>
 
-                            <div class="form-btn-wrap">
+                            <!-- <div class="form-btn-wrap">
                                 <van-button
                                     round
                                     block
@@ -151,12 +153,12 @@
                                 >
                                     {{ t("components.confirm") }}
                                 </van-button>
-                            </div>
+                            </div> -->
                         </van-form>
                     </div>
                 </div>
             </div>
-        </van-popup>
+        </CommonPop>
     </teleport>
 </template>
 
@@ -170,10 +172,15 @@ import useUserStore from '@/stores/use-user-store'
 
 // import { StorageUtil } from '@/utils/storage'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     onSuccess?: () => void
-    curValue: number
-}>()
+    curValue?: number
+    isShowAmount?: boolean
+}>(), {
+    onSuccess: undefined,
+    curValue: 0,
+    isShowAmount: true,
+})
 
 const { i18n } = useGlobal()
 const { t } = i18n
@@ -220,12 +227,18 @@ watch(
 )
 
 function resetForm() {
-    amount.value = props.curValue.toString()
+    amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
     name.value = ''
     phone.value = ''
     email.value = ''
     cpf.value = ''
 }
+
+watch(show, (newVal) => {
+    if (!newVal) {
+        resetForm()
+    }
+})
 
 async function handleSubmit() {
     try {
@@ -284,9 +297,7 @@ async function handleSubmit() {
         await nextTick()
 
         show.value = false
-        resetForm()
         // 确保 store 更新完成后再调用回调
-        await nextTick()
 
         if (props.onSuccess) {
             await props.onSuccess()
@@ -340,38 +351,13 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.step2_popup {
-  width: 978px;
-  height: 1738px;
-  box-sizing: border-box;
-  overflow: hidden;
-  padding: 10px 15px;
-  background: transparent;
-  &::before {
-    content: "";
-    display: block;
-    background: url("/images/retirarStep2/border.png") no-repeat;
-    background-size: contain;
-    width: 978px;
-    height: 1738px;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    z-index: 4;
-    position: absolute;
-  }
-}
-.step2_popup_inner {
-  background-color: #0c0800;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  z-index: 3;
-}
 
 // .step2_content {
 ::v-deep(.van-cell-group) {
   background: transparent !important;
+}
+::v-deep(.van-cell-group--inset) {
+  margin:0 !important;
 }
 
 ::v-deep(.van-cell) {
@@ -428,7 +414,6 @@ defineExpose({
 
 .step2_content {
   // background: #181006;
-  padding: 60px 31px 0;
   font-size: 50px;
 }
 
