@@ -275,15 +275,7 @@ const reversedProgressList = computed(() => {
 watch(reversedProgressList, (newVal, oldVal) => {
   console.log('reversedProgressList', newVal, oldVal)
 }, {deep: true})
-// function submit() {
-//   if (step.value === 1) {
-//     retairPop01Ref.value.open();
-//   } else if (step.value === 2) {
-//     retairPop03Ref.value.open();
-//   } else if (step.value === 3) {
-//     retairPop06Ref.value.open();
-//   }
-// }
+
 
 function submit() {
     console.log('submit=====', step.value)
