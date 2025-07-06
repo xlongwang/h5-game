@@ -1,22 +1,9 @@
 # vite-vue3-ssr
 vue3 H5端的ssr脚手架, 含asyncData里的xhr请求 (Vue3 + Vant + Pinia + Vite + TS + Unocss + SSR)
 
-## Variations
-
--   [vite-nuxt3](https://github.com/lincenying/vite-nuxt3) - Nuxt3 + Vite 入门模板
--   [vite-uniapp-vue3](https://github.com/lincenying/vite-uniapp-vue3) - Uniapp3 + Vite 入门模板
--   [vite-react-mobx-ssr](https://github.com/lincenying/vite-react-mobx-ssr) - React + Mobx + Vite + SSR 入门模板
--   [vite-react-mobx](https://github.com/lincenying/vite-react-mobx) - React + Mobx + Vite 入门模板
--   [vite-react-redux](https://github.com/lincenying/vite-react-redux) - React + Redux + Vite 入门模板
--   [vite-vue3-h5-ssr](https://github.com/lincenying/vite-vue3-h5-ssr) - Vue3 + Vant + Vite + SSR 入门模板
--   [vite-vue3-h5](https://github.com/lincenying/vite-vue3-h5) - Vue3 + Vant + Vite 入门模板
--   [vite-vue3-admin](https://github.com/lincenying/vite-vue3-admin) - Vue3 + ElementPlus + Vite 管理后台入
-
 ## 使用
 
 ```bash
-npx degit lincenying/vite-vue3-h5-ssr my-h5-ssr-app
-cd my-h5-ssr-app
 pnpm i # 如果你没有安装 pnpm，请运行：npm install -g pnpm
 ```
 
