@@ -131,7 +131,7 @@ const columns = ref([
         value: 'en',
     },
     {
-        text: 'Español',
+        text: 'Spanish',
         value: 'es',
     },
     {

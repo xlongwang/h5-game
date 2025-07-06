@@ -9,7 +9,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
-    copy: typeof import('./components/retair01.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
@@ -18,7 +17,6 @@ declare module 'vue' {
     LoginStatus: typeof import('./components/LoginStatus.vue')['default']
     MultilingualExample: typeof import('./components/MultilingualExample.vue')['default']
     OderDetail: typeof import('./components/OderDetail.vue')['default']
-    OderDetailRechare: typeof import('./components/OderDetailRechare.vue')['default']
     OderDetailRecharge: typeof import('./components/OderDetailRecharge.vue')['default']
     RechargPop: typeof import('./components/RechargPop.vue')['default']
     RecordDetailPop: typeof import('./components/RecordDetailPop.vue')['default']
@@ -31,7 +29,6 @@ declare module 'vue' {
     RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheFooter: typeof import('./compone./components/RetairPop04.vue
     UserInfo: typeof import('./components/UserInfo.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCellGroup: typeof import('vant/es')['CellGroup']
@@ -42,7 +39,6 @@ declare module 'vue' {
     VanGrid: typeof import('vant/es')['Grid']
     VanGridItem: typeof import('vant/es')['GridItem']
     VanImage: typeof import('vant/es')['Image']
-    VanLoading: typeof import('vant/es')['Loading']
     VanPicker: typeof import('vant/es')['Picker']
     VanPopup: typeof import('vant/es')['Popup']
     VanSwipe: typeof import('vant/es')['Swipe']

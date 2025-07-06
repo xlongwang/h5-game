@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 12:13:49
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-05 21:37:49
+ * @LastEditTime: 2025-07-06 10:25:47
  * @FilePath: /vue3_app/src/views/Promoc.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -32,6 +32,7 @@
                 </div>
                 <div
                     class="retirar_info_top_right flex items-center w-[93px] h-[105px] mt-[15px]"
+                    :class="{ 'rotate-animation': isRotating }"
                     @click="refreshCoin"
                 ></div>
             </div>
@@ -103,15 +104,14 @@
 
 <script setup lang="ts">
 import { showSuccessToast } from 'vant'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 // import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
-
-import { getMarqueeData } from '@/config'
+import { getMarqueeData } from '@/config/marqueenConfig'
+import useUserStore from '@/stores/use-user-store'
 import { getCoinNum } from '@/utils'
-import { StorageUtil } from '@/utils/storage'
 
 // import { StorageUtil } from '@/utils/storage'
 import '@/assets/scss/pages/retirar.scss'
@@ -119,6 +119,8 @@ import '@/assets/scss/pages/retirar.scss'
 defineOptions({
     name: 'Retirar',
 })
+
+const store = useUserStore()
 
 const pageKey = ref(0)
 
@@ -138,24 +140,32 @@ const recordList = ref(generateScrollData())
 const activeCount = ref(1)
 // 直接使用 computed 来响应式获取用户信息
 const userInfo = computed(() => {
-    return userStore.userInfo
+    return store.userInfo
 })
 
-watch(
-    userInfo,
-    (newVal) => {
-        console.log('🔄 userInfo 变化监听')
-        console.log('📧 新的 userInfo:', newVal)
-    },
-    { deep: true },
-)
+const recieviAccount = computed(() => {
+    // 直接访问 store 实例
+    return store.recieviAccount
+})
+
+watch(recieviAccount, (newVal) => {
+    console.log('recieviAccount', newVal)
+})
+
+watch(userInfo, (newVal) => {
+    console.log('userInfo', newVal)
+})
 
 const coinImg = '/images/retirar/coin.png'
 const router = useRouter()
 const curValue = ref(2)
 const retarirStep2Ref = ref()
+const isRotating = ref(false)
 async function refreshCoin() {
     try {
+        // 触发旋转动画
+        isRotating.value = true
+
         showSuccessToast(t('finance.refresh'))
         console.log('refreshCoin')
 
@@ -164,28 +174,46 @@ async function refreshCoin() {
 
         showSuccessToast(t('finance.updated'))
         console.log('用户信息刷新成功')
+
+        // 动画结束后重置状态
+        setTimeout(() => {
+            isRotating.value = false
+        }, 1000)
     }
     catch (error) {
         console.error('刷新用户信息失败:', error)
         showSuccessToast(t('finance.updateFailed'))
+        // 出错时也要重置旋转状态
+        isRotating.value = false
     }
 }
 
 async function handleSuccess() {
-    await userStore.fetchUserInfo()
+    console.log('commit success')
 }
 
 async function handleRetarir() {
-//   console.log("StorageUtil", StorageUtil.getUserInfo());
+    //   console.log("StorageUtil", StorageUtil.getUserInfo());
 
-    const userInfo = StorageUtil.getUserInfo()
+    // const userInfo = StorageUtil.getUserInfo()
+
+    // 调试信息
+    console.log('🔍 handleRetarir 调试信息:')
+    console.log('📧 recieviAccount.value:', recieviAccount.value)
+
+    // 直接使用 store 实例
+    const store = useUserStore()
+    console.log('📧 store.recieviAccount:', store.recieviAccount)
+    console.log('📧 store.userInfo:', store.userInfo)
+    console.log('📧 store.userInfo?.receiving_account:', store.userInfo?.receiving_account)
 
     // 使用 computed 的 userInfo
-    if (!userInfo?.receiving_account?.receiving_account) {
+    if (!recieviAccount.value) {
         console.log('⚠️ 没有收款账户，打开设置弹窗')
         retarirStep2Ref.value.open()
     }
     else {
+        console.log('✅ 有收款账户，跳转到提现详情页')
         router.push(`/retirarDetail?amount=${curValue.value}`)
     }
 }
@@ -217,42 +245,10 @@ const countList = ref([
     },
 ])
 
-// const record = ref([
-//     {
-//         felicidades: 9332233,
-//         retirar: 3000,
-//         time: 2,
-//     },
-//     {
-//         felicidades: 9332233,
-//         retirar: 3000,
-//         time: 2,
-//     },
-//     {
-//         felicidades: 9332233,
-//         retirar: 3000,
-//         time: 2,
-//     },
-// ])
-
 function checkCount(item: any) {
     activeCount.value = item.id
     curValue.value = item.value
 }
-
-// 监听用户信息变化
-watch(
-    () => userStore.userInfo?.receiving_account?.receiving_account,
-    (newVal, oldVal) => {
-        console.log('🔍 用户信息变化监听:')
-        console.log('📧 旧的 receiving_account:', oldVal)
-        console.log('📧 新的 receiving_account:', newVal)
-        if (newVal && newVal !== oldVal) {
-            console.log('✅ 检测到用户信息更新，触发界面刷新')
-        }
-    },
-    { deep: true },
-)
 
 onMounted(async () => {
     // 页面加载时自动获取用户信息
@@ -305,5 +301,19 @@ onMounted(async () => {
 
 .retirar_record_item:last-child {
   border-bottom: none;
+}
+
+/* 旋转动画 */
+.rotate-animation {
+  animation: rotate360 1s ease-in-out;
+}
+
+@keyframes rotate360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

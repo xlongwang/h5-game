@@ -134,7 +134,7 @@ export default {
         completeTasks: 'Complete tarefas para ganhar recompensas',
         receive: 'Receber',
         checkIn: 'CHECK IN',
-        day: 'DIA',
+        day: 'DAY',
     },
 
     // 客服支持

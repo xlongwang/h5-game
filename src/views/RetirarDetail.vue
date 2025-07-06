@@ -5,7 +5,7 @@
             <div class="retirar-detail-page-con-bg">
                 <div class="retirar-detail-page-c1">
                     <div class="retirar-detail-page-c1-item-title">
-                        <span v-if="userInfo?.receiving_account?.receiving_name ">{{  userInfo?.receiving_account?.receiving_name }}</span>
+                        <span v-if="userInfo?.receiving_account?.receiving_name ">{{ userInfo?.receiving_account?.receiving_name }}</span>
                     </div>
                     <div class="retirar-detail-page-c1-item-content flex items-center gap-[12px]">
                         <div class="retirar-detail-page-c1-item-content-item w-[170px] h-[163px]">
@@ -65,13 +65,13 @@
                 <!-- 使用 VIP 渠道提款 -->
             </div>
         </div>
-        <RetairPop01 :retair-pop-02-ref="retairPop02Ref" ref="retairPop01Ref" />
-        <RetairPop02  :recharge-ref="OderDetailRecargelRef" ref="retairPop02Ref" />
+        <RetairPop01 ref="retairPop01Ref" :retair-pop-02-ref="retairPop02Ref" />
+        <RetairPop02 ref="retairPop02Ref" :recharge-ref="OderDetailRecargelRef" />
 
-        <RetairPop03 ref="retairPop03Ref" :pop3Submit="pop3Submit" :retair-pop-04-ref="retairPop04Ref" submitInfo="submitInfo" :active-val="amount" />
-        <RetairPop04 ref="retairPop04Ref" :pop4Submit="pop3Submit" :confirm-info="confirmInfo" />
+        <RetairPop03 ref="retairPop03Ref" :pop3-submit="pop3Submit" :retair-pop-04-ref="retairPop04Ref" submit-info="submitInfo" :active-val="amount" />
+        <RetairPop04 ref="retairPop04Ref" :pop4-submit="pop3Submit" :confirm-info="confirmInfo" />
         <RetairPop05 ref="retairPop05Ref" :set-prsonal-tax="setPrsonalTax" :amount="amount" :retair-pop-06-ref="retairPop06Ref" />
-        <RetairPop06 ref="retairPop06Ref" :on-success="handlePaySuccess" :amount="amount" :tax="taxInfo"  :retair-pop-05-ref="retairPop05Ref" />
+        <RetairPop06 ref="retairPop06Ref" :on-success="handlePaySuccess" :amount="amount" :tax="taxInfo" :retair-pop-05-ref="retairPop05Ref" />
         <OderDetailRecharge
             ref="OderDetailRecargelRef"
             :active-val="200"
@@ -110,8 +110,8 @@ const percent = ref(Math.random() * 0.2 + 0.4)
 const step = ref(1)
 
 const confirmInfo = ref({
-  total: 0,
-  coast: 0
+    total: 0,
+    coast: 0,
 })
 
 // 获取URL参数中的amount
@@ -120,49 +120,50 @@ const amount = computed(() => {
     return amountParam ? Number(amountParam) : 5000
 })
 
-const handleSuccess = async () => {
-  await userStore.fetchUserInfo()
-  percent.value = 0.9
-  retairPop02Ref.value.hide()
-  step.value = 2
+async function handleSuccess() {
+    await userStore.fetchUserInfo()
+    percent.value = 0.9
+    retairPop02Ref.value.hide()
+    step.value = 2
 }
 
-const submitInfo = (info: { total: number; coast: number }) => {
-  console.log('submitInfo', info)
-  confirmInfo.value = info
+function submitInfo(info: { total: number, coast: number }) {
+    console.log('submitInfo', info)
+    confirmInfo.value = info
 }
 
-const setPrsonalTax = (tax: number) => {
-  percent.value = 0.99
-  taxInfo.value = tax
+function setPrsonalTax(tax: number) {
+    percent.value = 0.99
+    taxInfo.value = tax
 }
 
-const handlePaySuccess = () => {
-  percent.value = 1
-  console.log('handlePaySuccess')
-  router.push('/')
+function handlePaySuccess() {
+    percent.value = 1
+    console.log('handlePaySuccess')
+    router.push('/')
 }
 
-const pop3Submit = () => {
-  console.log('pop3Submit')
-  percent.value = 0.99
-  step.value = 3
-  btnTxt.value = 'Pagar impuestos personal'
+function pop3Submit() {
+    console.log('pop3Submit')
+    percent.value = 0.99
+    step.value = 3
+    btnTxt.value = 'Pagar impuestos personal'
 }
-
 
 const userInfo = computed(() => {
     return StorageUtil.getUserInfo()
 })
 
-const submit = () => {
-  if(step.value === 1) {
-    retairPop01Ref.value.open()
-  } else if(step.value === 2) {
-    retairPop03Ref.value.open()
-  }else if(step.value === 3) {
-    retairPop06Ref.value.open()
-  }
+function submit() {
+    if (step.value === 1) {
+        retairPop01Ref.value.open()
+    }
+    else if (step.value === 2) {
+        retairPop03Ref.value.open()
+    }
+    else if (step.value === 3) {
+        retairPop06Ref.value.open()
+    }
 }
 
 // async function submit() {

@@ -29,6 +29,7 @@ export function useGlobal() {
             authInfo: userStore.authInfo,
             loading: userStore.loading,
             error: userStore.error,
+            recieviAccount: userStore.recieviAccount,
             login: userStore.login,
             fetchUserInfo: userStore.fetchUserInfo,
             autoLogin: userStore.autoLogin,

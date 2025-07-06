@@ -162,7 +162,7 @@
 
 <script setup lang="ts">
 import { _ } from 'dist/server/entry-server'
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 
 // import { useRouter } from 'vue-router'
 import { useGlobal } from '@/composables'
@@ -280,18 +280,14 @@ async function handleSubmit() {
             receiving_account: receivingAccount,
         })
 
-        console.log('✅ 用户信息更新成功')
-        console.log('📧 更新后的用户信息:', userStore.userInfo)
-        console.log('📧 更新后的 receiving_account:', userStore.userInfo?.receiving_account?.receiving_account)
-        console.log('📧 更新后的 pix_type:', userStore.userInfo?.receiving_account?.pix_type)
-
         // 强制触发响应式更新
         await nextTick()
 
         show.value = false
         resetForm()
+        // 确保 store 更新完成后再调用回调
+        await nextTick()
 
-        console.log('🔄 调用 onSuccess 回调')
         if (props.onSuccess) {
             await props.onSuccess()
             console.log('✅ onSuccess 回调执行完成')

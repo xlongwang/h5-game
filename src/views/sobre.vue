@@ -58,7 +58,7 @@ const { t } = i18n
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 80px;  
+    top: 80px;
     width: 233px;
     height: 11px;
     background: url("/images/sobre/line.png") no-repeat center center;

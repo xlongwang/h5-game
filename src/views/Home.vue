@@ -123,7 +123,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useGlobal } from '@/composables'
-import { getMarqueeData } from '@/config'
+import { getMarqueeData } from '@/config/marqueenConfig'
 import useUserStore from '@/stores/use-user-store'
 
 // import { formatNumber } from '@/utils/tools'
@@ -149,7 +149,6 @@ const router = useRouter()
 const userInfo = computed(() => {
     return userStore.userInfo
 })
-
 
 function handleRechargeSuccess() {
     console.log('handleRechargeSuccess')

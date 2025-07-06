@@ -1,5 +1,8 @@
 import type { AuthInfo, LoginParams, OrderItem, OrderListData, OrderListParams, OrderListResponse, UpdateUserInfoParams, UserInfo, UserStore } from '@/types'
+
+// import { userInfo } from 'node:os'
 import { acceptHMRUpdate } from 'pinia'
+import { nextTick } from 'vue'
 import { userApi } from '@/api/user-api'
 import { StorageUtil } from '@/utils/storage'
 
@@ -104,10 +107,11 @@ const useUserStore = defineStore('userStore', () => {
             if (response.code === 200) {
                 // 保存用户信息到localStorage
                 StorageUtil.setUserInfo(response.data)
-                state.userInfo = response.data
 
-                // 强制触发响应式更新
-                state.userInfo = { ...response.data }
+                // 强制触发响应式更新 - 使用深拷贝确保数据完整性
+                state.userInfo = null
+                await nextTick()
+                state.userInfo = JSON.parse(JSON.stringify(response.data))
 
                 return response.data
             }
@@ -175,6 +179,14 @@ const useUserStore = defineStore('userStore', () => {
     }
 
     /**
+     * 获取用户收款账户
+     */
+    const getRecieviAccount = computed(() => {
+        const result = state.userInfo?.receiving_account?.receiving_account
+        return result
+    })
+
+    /**
      * 获取用户余额
      */
     const getUserBalance = computed(() => {
@@ -236,11 +248,19 @@ const useUserStore = defineStore('userStore', () => {
             if (response.code === 200) {
                 console.log('✅ 更新用户信息API成功')
                 console.log('📧 API响应:', response)
+
                 // 等待一下，确保服务器端数据更新完成
                 await new Promise(resolve => setTimeout(resolve, 1000))
+
                 // 更新成功后重新获取用户信息
                 await fetchUserInfo()
-                console.log('✅ fetchUserInfo 完成，当前用户信息:', state.userInfo)
+
+                // 确保响应式更新完成
+                await nextTick()
+
+                console.log('✅ updateUserInfo 完成，当前用户信息:', state.userInfo)
+                console.log('✅ receiving_account:', state.userInfo?.receiving_account)
+
                 return response.data
             }
             else {
@@ -295,10 +315,8 @@ const useUserStore = defineStore('userStore', () => {
     }
 
     return {
-        userInfo: toRef(state, 'userInfo'),
-        authInfo: toRef(state, 'authInfo'),
-        loading: toRef(state, 'loading'),
-        error: toRef(state, 'error'),
+        ...toRefs(state),
+        recieviAccount: getRecieviAccount,
         // 订单列表相关
         orders: toRef(orderListState, 'orders'),
         orderListLoading: toRef(orderListState, 'loading'),
