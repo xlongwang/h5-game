@@ -513,4 +513,15 @@ export default {
         recordDetailPlantformNo: 'Nº da Plataforma',
         apoyoCommonProblem: 'Problema Comum',
     },
+
+    // 充值提现
+    withdraw: {
+        progressStep1: 'O sistema aceitou o pedido de levantamento e está à espera de ser processado...',
+        progressStep2: 'O sistema processou o pedido de levantamento e está à espera da atribuição do canal de levantamento...',
+        progressStep3: 'Canal de levantamento VIP gratuito usado, canal de levantamento geral atribuído e levantamentos estão na fila.',
+        progressStep4: 'O canal de levantamento normal está na fila para processar o levantamento, o que deve demorar {hours} horas.',
+        progressStep5: 'O valor do levantamento do utilizador excede $3.000,00, excedendo o limite gratuito do canal VIP. Uma taxa de 5% será cobrada pelo levantamento. Uma vez recebido o pagamento no canal VIP, o pedido de remessa será enviado ao banco central para processamento.',
+        progressStep6: 'Processamento bancário anormal: este valor de levantamento é rendimento pessoal adicional. De acordo com as regulamentações federais, é necessário imposto sobre o rendimento pessoal de 10% sobre o valor do levantamento.',
+        progressStep7: 'O pedido de levantamento foi enviado ao Banco Central e o banco está a processá-lo.',
+    },
 }

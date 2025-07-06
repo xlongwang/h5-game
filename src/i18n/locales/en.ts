@@ -220,6 +220,15 @@ export default {
         withdrawalInProgress: 'Withdrawal in Progress',
         useVIPChannel: 'Use VIP Withdrawal Channel',
         welcomeMessage: 'Welcome to Slots, Group is one of the world\'s most recognized online gambling operators, offering a variety of exciting games such as slot machines, fishing, lotteries and more. We ensure that all',
+        
+        // Withdrawal progress messages
+        progressStep1: 'The system accepted the withdrawal request and is waiting to be processed...',
+        progressStep2: 'The system has processed the withdrawal request and is waiting for withdrawal channel assignment...',
+        progressStep3: 'Free VIP withdrawal channel used, general withdrawal channel assigned and withdrawals are queued.',
+        progressStep4: 'Normal withdrawal channel is queued to process the withdrawal, which should take {hours} hours.',
+        progressStep5: 'The user\'s withdrawal amount exceeds $3,000.00, exceeding the free limit of the VIP channel. A 5% fee will be charged for the withdrawal. Once payment is received in the VIP channel, the remittance request will be sent to the central bank for processing.',
+        progressStep6: 'Abnormal bank processing: this withdrawal amount is additional personal income. According to federal regulations, 10% personal income tax is required on the withdrawal amount.',
+        progressStep7: 'The withdrawal request has been sent to the Central Bank and the bank is processing it.',
     },
 
     // 记录

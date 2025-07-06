@@ -220,6 +220,15 @@ export default {
         withdrawalInProgress: 'Retiro en Curso',
         useVIPChannel: 'Usar Canal de Retiro VIP',
         welcomeMessage: 'Bienvenido a Slots, Group es uno de los operadores de juegos de azar en línea más reconocidos del mundo, que ofrece una variedad de juegos emocionantes como máquinas tragamonedas, pesca, loterías y más. Nos aseguramos de que todos los',
+        
+        // Withdrawal progress messages
+        progressStep1: 'El sistema aceptó la solicitud de retiro y está esperando ser procesado...',
+        progressStep2: 'El sistema ha procesado la solicitud de retiro y está esperando la asignación del canal de retiro...',
+        progressStep3: 'Se utilizó el canal de retiro VIP gratuito, se asignó el canal de retiro general y los retiros están en cola.',
+        progressStep4: 'El canal de retiro normal está en cola para procesar el retiro, lo que debería tomar {hours} horas.',
+        progressStep5: 'El monto del retiro del usuario excede los $3,000.00, superando el límite gratuito del canal VIP. Se cobrará una tarifa del 5% por el retiro. Una vez recibido el pago en el canal VIP, se enviará la solicitud de remesa al banco central para su procesamiento.',
+        progressStep6: 'Procesamiento bancario anormal: este monto de retiro es un ingreso personal adicional. Según las regulaciones federales, se requiere un impuesto sobre la renta personal del 10% del monto del retiro.',
+        progressStep7: 'La solicitud de retiro ha sido enviada al Banco Central y el banco la está',
     },
 
     // 记录
@@ -391,5 +400,6 @@ export default {
         recordDetailPlantformNo: 'Nº de Plataforma',
         apoyoCommonProblem: 'Problema común',
     },
+
 
 }

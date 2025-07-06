@@ -513,4 +513,15 @@ export default {
         recordDetailPlantformNo: 'Nº da Plataforma',
         apoyoCommonProblem: 'Problema Comum',
     },
+
+    // 充值提现
+    withdraw: {
+        progressStep1: 'O sistema aceitou a solicitação de saque e está aguardando ser processada...',
+        progressStep2: 'O sistema processou a solicitação de saque e está aguardando a atribuição do canal de saque...',
+        progressStep3: 'Canal de saque VIP gratuito usado, canal de saque geral atribuído e saques estão na fila.',
+        progressStep4: 'O canal de saque normal está na fila para processar o saque, o que deve levar {hours} horas.',
+        progressStep5: 'O valor do saque do usuário excede $3.000,00, excedendo o limite gratuito do canal VIP. Uma taxa de 5% será cobrada pelo saque. Uma vez recebido o pagamento no canal VIP, a solicitação de remessa será enviada ao banco central para processamento.',
+        progressStep6: 'Processamento bancário anormal: este valor de saque é renda pessoal adicional. De acordo com as regulamentações federais, é necessário imposto de renda pessoal de 10% sobre o valor do saque.',
+        progressStep7: 'A solicitação de saque foi enviada ao Banco Central e o banco está processando.',
+    },
 }

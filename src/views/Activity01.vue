@@ -38,7 +38,7 @@ defineOptions({
 const { i18n } = useGlobal()
 const { t } = i18n
 
-const headerImg = '/images/activity/a1.png'
+const headerImg = '/images/activity/a3.png'
 const dayIconImg = '/images/activity/coin.png'
 const currentDay = ref(1)
 const dayList = ref([

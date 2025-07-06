@@ -1,8 +1,8 @@
 <template>
     <div class="invite-page">
         <HeaderBack :has-back-icon="true" :title="t('invite.title')" />
-        <div class="invite-header w-[1051px] h-[389px] mx-auto mb-[17px]">
-            <img :src="inviteImg" class="w-[100%] h-[100%]">
+        <div class="invite-header w-[1049px] mx-auto mb-[17px]">
+            <img :src="inviteImg" class="w-[100%]">
         </div>
         <div class="invite-mi w-[1049px] h-[477px] mx-auto">
             <div class="invite-mi-title font-bold text-[50px] pb-[30px]">{{ t('invite.myInvitation') }}</div>

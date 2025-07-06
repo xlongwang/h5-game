@@ -44,11 +44,17 @@
 }
 
 .select_value_container {
+    // background: url('/images/retirar/bg_31.png') no-repeat;
+    // background-size: 100% 100%;
+    width: 1000px;
+    height: 126px;
     margin: 0 auto;
+    line-height: 126px;
     text-align: center;
     text-indent: 50px;
-    background: url('/images/retirar/bg_31.png') no-repeat;
-    background-size: 100% 100%;
+    background-color: #311c00;
+    border: 4px solid #fac055;
+    border-radius: 20px;
 }
 
 .retirar_record_item {

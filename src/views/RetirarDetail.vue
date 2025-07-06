@@ -40,16 +40,16 @@
 
         <div class="retirar-detail-log-container">
           <div class="log_scroll_container text-[40px]">
-                         <div
+                                      <div
                class="retirar-detail-log-item"
                v-for="item in reversedProgressList"
                :key="item.title"
              >
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                {{ item.description }}
-              </div>
-              <div class="time">{{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}</div>
-            </div>
+               <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
+                 {{ t(item.description, { hours: curHours }) }}
+               </div>
+               <div class="time">{{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}</div>
+             </div>
             <!-- <div class="retirar-detail-log-item">
               <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
                 {{ t("withdraw.welcomeMessage") }}
@@ -306,10 +306,6 @@ watch(step, (newVal, oldVal) => {
     });
     progressTxtList.value.push({
       ...retarirProgress[4],
-      description: retarirProgress[4].description.replace(
-        "&&&",
-        curHours.value.toString()
-      ),
       time: new Date().getTime() + 2000,
     });
   }

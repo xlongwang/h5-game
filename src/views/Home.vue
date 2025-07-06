@@ -17,8 +17,6 @@
                     <img src="/images/casino/18.png" alt="18">
                 </div>
                 <div class="balance relative text-gold text-[50px] font-bold">
-                    <!-- {{ formatNumber(userInfo?.wallet?.balance ?? 0) }} -->
-                    <!-- {{ userInfo?.wallet?.balance }} -->
                     ${{
                         (Number(userInfo?.wallet?.balance) + Number(userInfo?.wallet?.bonus)).toFixed(
                             2,
@@ -46,7 +44,6 @@
                     <img :src="item.img" alt="" class="w-full h-full object-cover">
                 </van-swipe-item>
             </van-swipe>
-            <!-- <img src="/images/casino/a1.png" width="100%" height="100%" alt="Chip" /> -->
         </div>
 
         <!-- Ticker -->
