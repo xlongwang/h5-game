@@ -224,6 +224,17 @@ watch(
     { immediate: true },
 )
 
+watch(show, (newVal) => {
+    if (newVal) {
+        amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
+        name.value = userStore.userInfo?.receiving_account?.receiving_name || ''
+        phone.value = userStore.userInfo?.receiving_account?.phone || ''
+        email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+    }
+})
+
 function resetForm() {
     amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
     name.value = ''
