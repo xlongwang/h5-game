@@ -52,7 +52,7 @@ const userInfo = computed(() => {
 })
 
 // 防抖函数
-function debounce(func: Function, delay: number) {
+function debounce(func: (...args: any[]) => any, delay: number) {
     return function (this: any, ...args: any[]) {
         if (submitTimer.value) {
             clearTimeout(submitTimer.value)

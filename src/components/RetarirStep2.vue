@@ -350,10 +350,8 @@ function validateEmail() {
 }
 
 onMounted(() => {
-    // console.log('userInfo', userInfo.value)
     amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
 
-    // 设置pickerValue的默认值
     pickerValue.value = [fieldValue.value]
 })
 
@@ -370,7 +368,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-// .step2_content {
 ::v-deep(.van-cell-group) {
   background: transparent !important;
 }
