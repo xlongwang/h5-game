@@ -193,7 +193,7 @@ const showPicker = ref(false)
 
 // 表单数据
 const amount = ref(props.curValue.toString())
-const name = ref(userStore.userInfo?.receiving_account?.receiving_name || 'p_x001')
+const name = ref(userStore.userInfo?.receiving_account?.receiving_name || '')
 const phone = ref(userStore.userInfo?.receiving_account?.phone || '')
 const email = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
 const cpf = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
