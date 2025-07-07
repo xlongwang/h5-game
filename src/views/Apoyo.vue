@@ -60,7 +60,7 @@ const { i18n } = useGlobal()
 const { t } = i18n
 
 const bannerImg = '/images/apoyo/header.png'
-const router = useRouter()
+// const router = useRouter()
 const activeNames = ref<string | number>('') // 单开模式
 
 function handleBannerClick() {

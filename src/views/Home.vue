@@ -107,13 +107,8 @@
 
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
 
-        <!-- 添加测试按钮 -->
-        <!-- <div class="test-section">
-            <van-button type="primary" @click="showOrderDetail">测试订单详情弹窗</van-button>
-        </div> -->
-
         <!-- 订单详情弹窗 -->
-        <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" />
+        <!-- <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" /> -->
     </div>
 </template>
 
@@ -250,9 +245,9 @@ function handleSwipeChange(index: number) {
 }
 
 // 显示订单详情弹窗
-function showOrderDetail() {
-    orderDetailRef.value?.open()
-}
+// function showOrderDetail() {
+//     orderDetailRef.value?.open()
+// }
 
 // 订单成功回调
 function handleOrderSuccess() {
