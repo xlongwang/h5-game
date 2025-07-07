@@ -328,6 +328,7 @@ export default {
         pixKey: 'PIX Key',
         phone: 'Phone',
         pleaseEnterPhone: 'Please enter your phone number',
+        phoneMustBe11Digits: 'Phone number must be 11 digits',
         email: 'Email',
         pleaseEnterEmail: 'Please enter your email',
         cpf: 'CPF',

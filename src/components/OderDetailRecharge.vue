@@ -13,8 +13,8 @@
             <div class="recharge_input text-[45px]">
                 <!-- <div>Tarifa de manejo</div>
                 <div class="text-[#f00]">${{ formatVal(activeVal) }}</div> -->
-                <div class="whitespace-nowrap">{{ t("components.qrCodeVal") }} ${{ formatVal(activeVal) }}</div>
-                <div class="whitespace-nowrap">{{ t("components.qrOrderNum") }} ${{ formatVal(receiveVal) }}</div>
+                <div class="whitespace-nowrap">{{ t("components.deposit") }} ${{ formatVal(activeVal) }}</div>
+                <div class="whitespace-nowrap">{{ t("components.receive") }} ${{ formatVal(receiveVal) }}</div>
             </div>
             <div
                 class="text-[37px] word-break-all text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
@@ -27,13 +27,13 @@
 
     <!-- 二维码弹窗 -->
     <van-popup v-model:show="showQRCode" round class="qrcode_popup">
-        <div class="qrcode_content">
+        <div class="qrcode_content text-[45px]">
             <!-- <div class="qrcode_title">{{ t("components.scanToPay") }}</div> -->
             <div class="qrcode_val pb-[20px]">
-                {{ t("components.deposit") }} ${{ formatVal(amount) }}
+                {{ t("components.qrCodeVal") }} ${{ formatVal(amount) }}
             </div>
             <div class="qrcode_order pb-[30px]">
-                {{ t("components.receive") }}: {{ orderNo }}
+                {{ t("components.qrOrderNum") }}: {{ orderNo }}
             </div>
             <div class="qrcode_container">
                 <img
@@ -44,7 +44,7 @@
                 >
                 <div v-else class="qrcode_loading">{{ t("components.generatingQRCode") }}</div>
             </div>
-            <div class="qrcode_tips pt-[30px]">{{ t("components.scanQRCodeToPay") }}</div>
+            <div class="qrcode_tips pt-[30px] text-[45px]">{{ t("components.scanQRCodeToPay") }}</div>
             <div class="qrcode_actions">
                 <div class="qrcode_copy" @click="copyPayUrl">
                     {{ t("components.copyLink") }}

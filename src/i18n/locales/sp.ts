@@ -343,6 +343,7 @@ export default {
         pixKey: 'Clave PIX',
         phone: 'Número telefónico',
         pleaseEnterPhone: 'Por favor ingrese su número de teléfono',
+        phoneMustBe11Digits: 'El número de teléfono debe tener 11 dígitos',
         email: 'Correo electrónico',
         pleaseEnterEmail: 'Por favor introduce tu correo electrónico',
         cpf: 'Número de identificación fiscal',

@@ -456,6 +456,7 @@ export default {
         pixKey: 'Chave PIX',
         phone: 'Telefone',
         pleaseEnterPhone: 'Por favor, introduza o seu número de telefone',
+        phoneMustBe11Digits: 'O número de telefone deve ter 11 dígitos',
         email: 'E-mail',
         pleaseEnterEmail: 'Por favor, introduza o seu e-mail',
         cpf: 'CPF',

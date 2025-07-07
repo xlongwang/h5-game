@@ -128,6 +128,8 @@
                                             :placeholder="t('components.pleaseEnterPhone')"
                                             input-align="left"
                                             class="custom-field"
+                                            :error-message="phoneError"
+                                            @blur="validatePhone"
                                         >
                                         </van-field>
                                     </div>
@@ -167,15 +169,14 @@ const { i18n } = useGlobal()
 const { t } = i18n
 
 const userStore = useUserStore()
-// console.log("userStore", userStore);
 
-const userInfo = computed(() => {
-    return userStore.userInfo
-})
+// const userInfo = computed(() => {
+//     return userStore.userInfo
+// })
 
-const userAccount = computed(() => {
-    return userStore.userInfo?.receiving_account
-})
+// const userAccount = computed(() => {
+//     return userStore.userInfo?.receiving_account
+// })
 // const router = useRouter()
 const show = ref(false)
 const isSubmitting = ref(false)
@@ -200,6 +201,7 @@ const email = ref('')
 const cpf = ref('')
 const cnjp = ref('')
 const emailError = ref('')
+const phoneError = ref('')
 
 // 防抖函数
 function debounce(func: (...args: any[]) => any, delay: number) {
@@ -228,8 +230,8 @@ watch(
 watch(show, (newVal) => {
     if (newVal) {
         amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
-
         fieldValue.value = userStore.userInfo?.receiving_account?.pix_type || ''
+        phone.value = userStore.userInfo?.receiving_account?.phone || ''
         pickerValue.value = [fieldValue.value]
         if (fieldValue.value === 'EMAIL') {
             email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
@@ -240,12 +242,6 @@ watch(show, (newVal) => {
         else if (fieldValue.value === 'CNJP') {
             cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
         }
-
-    // name.value = userStore.userInfo?.receiving_account?.receiving_name || ''
-    // phone.value = userStore.userInfo?.receiving_account?.phone || ''
-    // email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
-    // cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
-    // cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
     }
 })
 
@@ -255,6 +251,8 @@ function resetForm() {
     phone.value = ''
     email.value = ''
     cpf.value = ''
+    emailError.value = ''
+    phoneError.value = ''
 }
 
 watch(show, (newVal) => {
@@ -304,6 +302,12 @@ async function submitForm() {
         if (!phone.value) {
             throw new Error(t('components.pleaseEnterPhone'))
         }
+
+        // 验证手机号格式
+        if (!validatePhone()) {
+            throw new Error(phoneError.value)
+        }
+
         if (!receivingAccount) {
             throw new Error(t('components.pleaseEnterAccountInfo'))
         }
@@ -354,6 +358,23 @@ function onConfirmPicker(val: { selectedValues: string }) {
     showPicker.value = false
     // 清空之前的错误信息
     emailError.value = ''
+    phoneError.value = ''
+}
+
+// 手机号验证函数
+function validatePhone() {
+    if (!phone.value) {
+        phoneError.value = t('components.pleaseEnterPhone')
+        return false
+    }
+
+    if (phone.value.length !== 11) {
+        phoneError.value = t('components.phoneMustBe11Digits')
+        return false
+    }
+
+    phoneError.value = ''
+    return true
 }
 
 // 邮箱验证函数
