@@ -35,7 +35,8 @@
 
 <script setup lang="ts">
 import { useGlobal } from '@/composables'
-import useUserStore from '@/stores/use-user-store'
+
+// import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
     pop6Submit: () => void
@@ -45,7 +46,7 @@ const props = defineProps<{
     onSuccess: () => void
 }>()
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 
 const showCenter = ref(false)
 const { i18n } = useGlobal()
