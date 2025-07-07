@@ -6,10 +6,12 @@
                 <img src="/images/casino/avatar.png" alt="User Avatar" class="avatar">
                 <div class="pl-[10px]">
                     <div class="font-bold pb-[5px] max-w-[230px] truncate text-[40]">
-                        {{ userInfo?.name || 'User' }}
+                        {{ userInfo?.name || "User" }}
                         <!-- p_x7g9m -->
                     </div>
-                    <div class="text-[40px] font-bold pt-[8px]">{{ t('user.id') }}: {{ userInfo?.id || 'N/A' }}</div>
+                    <div class="text-[40px] font-bold pt-[8px]">
+                        {{ t("user.id") }}: {{ userInfo?.id || "N/A" }}
+                    </div>
                 </div>
             </div>
             <div class="flex items-center">
@@ -18,9 +20,7 @@
                 </div>
                 <div class="balance relative text-gold text-[50px] font-bold">
                     ${{
-                        (Number(userInfo?.wallet?.balance) + Number(userInfo?.wallet?.bonus)).toFixed(
-                            2,
-                        ) || "0.00"
+                        amount.toFixed(2) || "0.00"
                     }}
                     <span class="recharge_entry" @click="handleRecharge"></span>
                 </div>
@@ -47,18 +47,22 @@
         </div>
 
         <!-- Ticker -->
-        <div
-            class="ticker flex items-center w-[1000px] mx-auto py-[20px] text-xs"
-        >
+        <div class="ticker flex items-center w-[1000px] mx-auto py-[20px] text-xs">
             <div class="i-carbon-volume text-gold text-lg mr-[6px]"></div>
             <div
                 class="marquee-container flex items-center justify-center flex-1 text-[40px] text-gold h-[80px]"
             >
                 <div class="marquee-content">
                     <span v-for="item in marqueeTexts" :key="item.id" class="mr-[20px]">
-                        {{ t('withdraw.congratulations') }}<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>{{ t('finance.withdraw') }}<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
+                        {{ t("withdraw.congratulations")
+                        }}<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>{{ t("finance.withdraw")
+                        }}<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span>
+                    </span>
                     <span v-for="item in marqueeTexts" :key="`${item.id}-copy`" class="mr-[20px]">
-                        {{ t('withdraw.congratulations') }}<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>{{ t('finance.withdraw') }}<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span> </span>
+                        {{ t("withdraw.congratulations")
+                        }}<span class="text-[#fff] pl-[10px] pr-[20px]">{{ item.id }}</span>{{ t("finance.withdraw")
+                        }}<span class="text-[#f00] pl-[10px] pr-[10px]">{{ item.amount }}</span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -109,11 +113,7 @@
         </div> -->
 
         <!-- 订单详情弹窗 -->
-        <OderDetail
-            ref="orderDetailRef"
-            :active-val="100"
-            :on-success="handleOrderSuccess"
-        />
+        <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" />
     </div>
 </template>
 
@@ -145,6 +145,10 @@ const router = useRouter()
 
 const userInfo = computed(() => {
     return userStore.userInfo
+})
+
+const amount = computed(() => {
+    return Number(userInfo.value?.wallet?.balance) + Number(userInfo.value?.wallet?.bonus)
 })
 
 function handleRechargeSuccess() {

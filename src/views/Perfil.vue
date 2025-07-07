@@ -62,7 +62,7 @@
 
             <div class="section02_item flex items-center text-[50px]" @click="handleAccountClick">
                 <div class="section02_item_lock w-[78px] h-[78px] mr-[16px]"></div>
-                <div class="section02_item_con flex-1">{{ accountName ? accountName : t("profile.account") }}</div>
+                <div class="section02_item_con flex-1">{{ t("profile.account") }}</div>
                 <div class="section02_item_right flex items-center">
                     <!-- <div class="section02_item_right_top">Spanish</div> -->
                     <div class="section02_item_right_arr w-[40px] h-[47px] ml-[16px]"></div>
@@ -128,10 +128,6 @@ const { t, getCurrentLanguageName, changeLanguage, currentLocale } = i18n
 const showPicker = ref(false)
 
 const store = useUserStore()
-
-const accountName = computed(() => {
-    return store.userInfo?.receiving_account?.receiving_name
-})
 
 const userInfo = computed(() => {
     return store.userInfo

@@ -305,6 +305,8 @@ export default {
         // OderDetailRecharge component
         deposit: 'Deposit',
         receive: 'Receive',
+        qrCodeVal: 'Value',
+        qrOrderNum: 'Order ID',
         scanToPay: 'Scan to Pay',
         generatingQRCode: 'Generating QR Code...',
         scanQRCodeToPay: 'Please scan the QR code with your payment app to complete the payment',

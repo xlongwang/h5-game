@@ -84,7 +84,7 @@
                             <span class="pr-[15px]">{{ t("withdraw.congratulations") }}</span>
                             <span class="color-[#fff] pr-[15px]">{{ item.id }}</span>
                             <span class="pr-[15px]">{{ t("finance.withdraw") }}</span>
-                            <span class="color-[#fff] pr-[15px] color-[#fe0000]">{{
+                            <span class="pr-[15px] color-[#fe0000]">{{
                                 item.amount
                             }}</span>
                         </div>
@@ -107,7 +107,7 @@
 
 <script setup lang="ts">
 import { showSuccessToast } from 'vant'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 // import { userApi } from '@/api/user-api'
@@ -193,14 +193,14 @@ async function handleSuccess() {
 }
 
 async function handleRetarir() {
-    if (!recieviAccount.value) {
-        console.log('⚠️ 没有收款账户，打开设置弹窗')
-        retarirStep2Ref.value.open()
+    if (Number(balance.value) < Number(curValue.value)) {
+        emptyWithdrawPopRef.value.open()
         return
     }
 
-    if (Number(balance.value) < Number(curValue.value)) {
-        emptyWithdrawPopRef.value.open()
+    if (!recieviAccount.value) {
+        console.log('⚠️ 没有收款账户，打开设置弹窗')
+        retarirStep2Ref.value.open()
         return
     }
 

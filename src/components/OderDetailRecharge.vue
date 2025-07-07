@@ -13,8 +13,8 @@
             <div class="recharge_input text-[50px]">
                 <!-- <div>Tarifa de manejo</div>
                 <div class="text-[#f00]">${{ formatVal(activeVal) }}</div> -->
-                <div>{{ t("components.deposit") }} ${{ formatVal(activeVal) }}</div>
-                <div>{{ t("components.receive") }} ${{ formatVal(receiveVal) }}</div>
+                <div>{{ t("components.qrCodeVal") }} ${{ formatVal(activeVal) }}</div>
+                <div>{{ t("components.qrOrderNum") }} ${{ formatVal(receiveVal) }}</div>
             </div>
             <div
                 class="text-[37px] word-break-all text-[#f3d559] px-[12px] line-height-[50px] pt-[37px] detait_re_txt"
@@ -23,12 +23,18 @@
                 {{ t("components.payAccordingToOrder") }}
             </div>
         </div>
-</CommonPop>
+    </CommonPop>
 
     <!-- 二维码弹窗 -->
     <van-popup v-model:show="showQRCode" round class="qrcode_popup">
         <div class="qrcode_content">
-            <div class="qrcode_title">{{ t("components.scanToPay") }}</div>
+            <!-- <div class="qrcode_title">{{ t("components.scanToPay") }}</div> -->
+            <div class="qrcode_val pb-[10px]">
+                {{ t("components.deposit") }} ${{ formatVal(amount) }}
+            </div>
+            <div class="qrcode_order pb-[10px]">
+                {{ t("components.receive") }}: {{ orderNo }}
+            </div>
             <div class="qrcode_container">
                 <img
                     v-if="qrCodeDataUrl"
@@ -90,6 +96,7 @@ function formatVal(val: number) {
 
 const showCenter = ref(false)
 const orderNo = ref<string>('')
+const amount = ref<number>(0)
 const orderStatus = ref<OrderStatus | ''>('')
 const pollingTimer = ref<NodeJS.Timeout | null>(null)
 const pollingInterval = 3000 // 3秒轮询一次
@@ -237,7 +244,7 @@ function closeQRCode() {
 }
 
 // 防抖函数
-function debounce(func: Function, delay: number) {
+function debounce(func: (...args: any[]) => any, delay: number) {
     return function (this: any, ...args: any[]) {
         if (submitTimer.value) {
             clearTimeout(submitTimer.value)
@@ -250,10 +257,11 @@ function debounce(func: Function, delay: number) {
 
 // 实际的提交逻辑
 async function submitOrder() {
-    if (isSubmitting.value) return
-    
+    if (isSubmitting.value)
+        return
+
     isSubmitting.value = true
-    
+
     try {
         const result = await userApi.createPayin({
             amount: props.activeVal.toString(),
@@ -264,6 +272,8 @@ async function submitOrder() {
         if (result.code === 200 && order_no && payInfo) {
             // 保存支付URL
             payUrl.value = payInfo
+            orderNo.value = order_no
+            amount.value = result.data?.amount
 
             // 生成二维码
             await generateQRCode(payInfo)
@@ -357,7 +367,6 @@ defineExpose({
   background-position: center;
 }
 
-
 // 二维码弹窗样式
 .qrcode_popup {
   width: 1000px;
@@ -391,7 +400,7 @@ defineExpose({
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  padding: 40px 30px;
+  padding: 30px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

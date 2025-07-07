@@ -433,6 +433,8 @@ export default {
         // Componente OderDetailRecharge
         deposit: 'Depósito',
         receive: 'Receber',
+        qrCodeVal: 'Valor',
+        qrOrderNum: 'ID do Pedido',
         scanToPay: 'Escanear para Pagar',
         generatingQRCode: 'Gerando Código QR...',
         scanQRCodeToPay: 'Por favor, escaneie o código QR com seu aplicativo de pagamento para completar o pagamento',

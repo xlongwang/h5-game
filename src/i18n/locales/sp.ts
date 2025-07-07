@@ -318,6 +318,8 @@ export default {
         unknownStatus: 'Estado Desconocido',
 
         // Componente OderDetailRecharge
+        qrCodeVal: 'Valor',
+        qrOrderNum: 'ID do Pedido',
         deposit: 'Depósito',
         receive: 'Recibir',
         scanToPay: 'Escanear para Pagar',
