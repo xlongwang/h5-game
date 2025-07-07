@@ -231,6 +231,7 @@ watch(show, (newVal) => {
     if (newVal) {
         amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
         fieldValue.value = userStore.userInfo?.receiving_account?.pix_type || ''
+        name.value = userStore.userInfo?.receiving_account?.receiving_name || ''
         phone.value = userStore.userInfo?.receiving_account?.phone || ''
         pickerValue.value = [fieldValue.value]
         if (fieldValue.value === 'EMAIL') {
