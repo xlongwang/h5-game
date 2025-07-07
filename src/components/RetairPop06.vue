@@ -1,81 +1,78 @@
 <template>
-  <CommonPop
-    v-model="showCenter"
-    :title="t('components.details')"
-    :is-single-btn="true"
-    :cancel-text="t('components.cancel')"
-    :confirm-text="t('components.payPersonalTax')"
-    @cancel="handleCancel"
-    @confirm="handleSubmit"
-  >
-    <div class="recharge_detail_content">
-      <div class="text-[40px] detait_re_txt pt-[40px]">
-        <div>{{ t("components.retairPop06Title") }}</div>
-        <div>
-          {{ t("components.retairPop06Desc") }}
-        </div>
-      </div>
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.payPersonalTax')"
+        @cancel="handleCancel"
+        @confirm="handleSubmit"
+    >
+        <div class="recharge_detail_content">
+            <div class="text-[40px] detait_re_txt pt-[40px]">
+                <div>{{ t("components.retairPop06Title") }}</div>
+                <div>
+                    {{ t("components.retairPop06Desc") }}
+                </div>
+            </div>
 
-      <div class="text-[40px] detait_handling_input flex justify-between">
-        <div>{{ t("components.withdrawalAmount") }}</div>
-        <div class="text-[#fe0000]">
-          ${{ amount ? (Number(amount)).toFixed(2) : "0.00" }}
-        </div>
-      </div>
+            <div class="text-[40px] detait_handling_input flex justify-between">
+                <div>{{ t("components.withdrawalAmount") }}</div>
+                <div class="text-[#fe0000]">
+                    ${{ amount ? (Number(amount)).toFixed(2) : "0.00" }}
+                </div>
+            </div>
 
-      <div class="text-[40px] detait_handling_input flex justify-between">
-        <div>Impuestos a pagardiv </div>
-        <div class="text-[#fe0000]">
-          ${{ amount ? (Number(amount) * 0.1).toFixed(2) : "0.00" }}
+            <div class="text-[40px] detait_handling_input flex justify-between">
+                <div>Impuestos a pagardiv </div>
+                <div class="text-[#fe0000]">
+                    ${{ amount ? (Number(amount) * 0.1).toFixed(2) : "0.00" }}
+                </div>
+            </div>
         </div>
-      </div>
-
-    </div>
-  </CommonPop>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
-
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  pop6Submit: () => void;
-  tax: number;
-  retairPop07Ref: any;
-  amount: number;
-  onSuccess: () => void;
-}>();
+    pop6Submit: () => void
+    tax: number
+    retairPop07Ref: any
+    amount: number
+    onSuccess: () => void
+}>()
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
-
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
 
 function handleCancel() {
-  console.log("handleCancel");
-  hide();
+    console.log('handleCancel')
+    hide()
 }
 
 async function handleSubmit() {
-  props.retairPop07Ref.open();
-  hide();
+    props.retairPop07Ref.open()
+    hide()
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>

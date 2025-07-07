@@ -130,7 +130,7 @@
         />
         <RetairPop07
             ref="retairPop07Ref"
-            :on-success="handlePaySuccess"
+            :on-success="handlePop7Success"
             :amount="amount"
             :tax="taxInfo"
             :pop6-submit="pop6Submit"
@@ -241,6 +241,15 @@ function handlePaySuccess() {
     router.push('/')
 }
 
+const pop7Timer = ref<NodeJS.Timeout | null>(null)
+
+async function handlePop7Success() {
+    await userStore.fetchUserInfo()
+    pop7Timer.value = setTimeout(() => {
+        router.push('/retirar')
+    }, 1000)
+}
+
 function pop3Submit() {
     // console.log('pop3Submit')
     // percent.value = 0.99
@@ -337,6 +346,12 @@ onMounted(() => {
             time: ct + 3000,
         },
     ]
+})
+
+onUnmounted(() => {
+    if (pop7Timer.value) {
+        clearTimeout(pop7Timer.value)
+    }
 })
 
 const coin = '/images/retirar/coin.png'

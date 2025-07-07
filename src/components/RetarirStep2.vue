@@ -195,9 +195,10 @@ const showPicker = ref(false)
 const amount = ref(props.curValue.toString())
 const name = ref(userStore.userInfo?.receiving_account?.receiving_name || '')
 const phone = ref(userStore.userInfo?.receiving_account?.phone || '')
-const email = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
-const cpf = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
-const cnjp = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
+
+const email = ref('')
+const cpf = ref('')
+const cnjp = ref('')
 const emailError = ref('')
 
 // 防抖函数
@@ -227,11 +228,24 @@ watch(
 watch(show, (newVal) => {
     if (newVal) {
         amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
-        name.value = userStore.userInfo?.receiving_account?.receiving_name || ''
-        phone.value = userStore.userInfo?.receiving_account?.phone || ''
-        email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
-        cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
-        cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+
+        fieldValue.value = userStore.userInfo?.receiving_account?.pix_type || ''
+        pickerValue.value = [fieldValue.value]
+        if (fieldValue.value === 'EMAIL') {
+            email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        }
+        else if (fieldValue.value === 'CPF') {
+            cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        }
+        else if (fieldValue.value === 'CNJP') {
+            cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        }
+
+    // name.value = userStore.userInfo?.receiving_account?.receiving_name || ''
+    // phone.value = userStore.userInfo?.receiving_account?.phone || ''
+    // email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+    // cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+    // cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
     }
 })
 
@@ -335,7 +349,6 @@ async function submitForm() {
 const handleSubmit = debounce(submitForm, 500)
 
 function onConfirmPicker(val: { selectedValues: string }) {
-    console.log('🚀 ~ onConfirmPicker ~ val:', val.selectedValues)
     fieldValue.value = val.selectedValues[0]
     pickerValue.value = [val.selectedValues as never]
     showPicker.value = false
@@ -364,6 +377,15 @@ onMounted(() => {
     amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
 
     pickerValue.value = [fieldValue.value]
+    if (fieldValue.value === 'EMAIL') {
+        email.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+    }
+    else if (fieldValue.value === 'CPF') {
+        cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+    }
+    else if (fieldValue.value === 'CNJP') {
+        cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+    }
 })
 
 // 组件卸载时清理定时器
