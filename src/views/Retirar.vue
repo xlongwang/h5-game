@@ -167,8 +167,6 @@ async function refreshCoin() {
         isRotating.value = true
 
         showSuccessToast(t('finance.refresh'))
-        console.log('refreshCoin')
-
         // 刷新用户信息
         await userStore.fetchUserInfo()
 
@@ -200,19 +198,12 @@ async function handleRetarir() {
         return
     }
 
-    if (Number(balance.value) === 0) {
+    if (Number(balance.value) < Number(curValue.value)) {
         emptyWithdrawPopRef.value.open()
         return
     }
 
-    if (Number(balance.value) < Number(curValue.value)) {
-        showSuccessToast(t('finance.insufficientBalance'))
-        return
-    }
-
     router.push(`/retirarDetail?amount=${curValue.value}`)
-
-    // 使用 computed 的 userInfo
 }
 
 const countList = ref([

@@ -1,8 +1,8 @@
 <template>
-  <CommonPop
+    <CommonPop
         v-model="showCenter"
         :title="t('components.details')"
-        :is-single-btn="true"
+        :is-single-btn="false"
         :cancel-text="t('components.cancel')"
         :confirm-text="isSubmitting ? t('components.creatingOrder') : t('components.goToPay')"
         :loading="isSubmitting"
@@ -10,7 +10,6 @@
         @confirm="handleSubmit"
     >
         <div class="recharge_detail_content">
-
             <div class="text-[50px] detait_handling_input flex justify-between">
                 <div>{{ t("components.handlingFeeText") }}</div>
 
@@ -22,9 +21,8 @@
             <div class="text-[40px] detait_re_txt pt-[50px]">
                 <span class="dot_icon mr-[10px]"></span>{{ t("components.payAccordingToOrder") }}
             </div>
-
         </div>
-      </CommonPop>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
@@ -72,10 +70,11 @@ function handleCancel() {
 
 // 实际的提交逻辑
 async function submitOrder() {
-    if (isSubmitting.value) return
-    
+    if (isSubmitting.value)
+        return
+
     isSubmitting.value = true
-    
+
     try {
         await userApi.createPayout({
             amount: props.amount.toString(),
@@ -125,8 +124,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-
-
 .recharge_detail_content {
   width: 100%;
   height: 100%;
@@ -188,5 +185,4 @@ defineExpose({
 .detait_re_txt {
   word-break: break-all;
 }
-
 </style>

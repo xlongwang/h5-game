@@ -1,62 +1,93 @@
 <template>
-  <CommonPop
-    v-model="showCenter"
-    :title="t('components.details')"
-    :is-single-btn="true"
-    :cancel-text="t('components.cancel')"
-    :confirm-text="t('components.confirm')"
-    @confirm="handleSubmit"
-  >
-    <div class="recharge_detail_content">
-
-      <div class="text-[40px] gap-[15px] px-[30px] flex flex-col pt-[60px] text-left">
-        <div class="record__pop_item">{{ t('components.recordDetailAmount') }}: {{ currentRecord?.amount.toFixed(2) }}</div>
-        <div class="record__pop_item">{{ t('components.recordDetailTime') }}: {{ currentRecord?.updated_at }}</div>
-        <div class="record__pop_item">{{ t('components.recordDetailStatus') }}: {{ currentRecord?.status }}</div>
-        <div class="record__pop_item">{{ t('components.recordDetailPixType') }}: {{ currentRecord?.pix_type }}</div>
-        <div class="record__pop_item">{{ t('components.recordDetailReceivingAccount') }}: {{ currentRecord?.receiving_account }}</div>
-        <div class="record__pop_item">{{ t('components.recordDetailPlantformNo') }}: {{ currentRecord?.plantform_no }}</div>
-      </div>
-
-    </div>
-  </CommonPop>
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.confirm')"
+        @confirm="handleSubmit"
+    >
+        <div class="recharge_detail_content">
+            <div class="text-[40px] gap-[15px] px-[30px] flex flex-col pt-[60px] text-left">
+                <div class="record__pop_item">
+                    {{ t("components.recordDetailAmount") }}: {{ currentRecord?.amount.toFixed(2) }}
+                </div>
+                <div class="record__pop_item">
+                    {{ t("components.recordDetailTime") }}: {{ currentRecord?.updated_at }}
+                </div>
+                <div class="record__pop_item">
+                    {{ t("components.recordDetailStatus") }}: {{ currentRecord?.status }}
+                </div>
+                <div class="record__pop_item">
+                    {{ t('components.recordDetailPixType') }}: {{ currentRecord?.pix_type }}
+                </div>
+                <div class="record__pop_item">
+                    {{ renderAccountName(currentRecord?.pix_type || '') }}:
+                    {{ currentRecord?.receiving_account }}
+                </div>
+                <div class="record__pop_item">
+                    {{ t("components.recordDetailPlantformNo") }}: {{ currentRecord?.plantform_no }}
+                </div>
+            </div>
+        </div>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
-import type { OrderItem } from "~/types";
+import type { OrderItem } from '~/types'
 
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
+import { useGlobal } from '@/composables'
+
 // import useUserStore from "@/stores/use-user-store";
 
 const props = defineProps<{
-  currentRecord: OrderItem;
-}>();
+    currentRecord: OrderItem
+}>()
 // const userStore = useUserStore();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
 
 function handleSubmit() {
-  hide();
+    hide()
+}
+
+function renderAccountName(fixType: string) {
+    if (!fixType) {
+        return '--'
+    }
+    if (fixType === 'CPF') {
+        return t('components.cpf')
+    }
+    if (fixType === 'CNJP') {
+        return t('components.cnjp')
+    }
+    if (fixType === 'PHONE') {
+        return t('components.phone')
+    }
+    if (fixType === 'EMAIL') {
+        return t('components.email')
+    }
+    return ''
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 
 onMounted(() => {
-  console.log("currentRecord", props.currentRecord);
-});
+    console.log('currentRecord', props.currentRecord)
+})
 </script>
 
 <style lang="scss" scoped>

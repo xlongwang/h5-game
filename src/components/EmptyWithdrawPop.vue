@@ -18,7 +18,7 @@
         @confirm="handleConfirm"
     >
         <div class="empty-withdraw-pop-content">
-            <div class="empty-withdraw-pop-content-desc">
+            <div class="empty-withdraw-pop-content-desc text-[40px]">
                 {{ t("components.emptyWithdrawPopDesc") }}
             </div>
         </div>

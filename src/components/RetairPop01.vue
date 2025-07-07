@@ -1,77 +1,77 @@
 <template>
-  <CommonPop
-    v-model="showCenter"
-    :title="t('components.details')"
-    :is-single-btn="true"
-    :cancel-text="t('components.cancel')"
-    :confirm-text="t('components.useVIPWithdrawalChannel')"
-    :tips="t('components.tipsBottom')"
-    @cancel="handleCancel"
-    @confirm="submit"
-  >
-    <div class="recharge_detail_content pt-[10px]">
-      <div class="text-[50px] flex justify-between items-center">
-        <span class="pr-[10px]">{{ t("components.peopleInLine") }}: </span>
-        <span class="text-[#f3d559] whitespace-nowrap">{{
-          10000 + Math.ceil(Math.random() * 10000)
-        }}</span>
-      </div>
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.useVIPWithdrawalChannel')"
+        :tips="t('components.tipsBottom')"
+        @cancel="handleCancel"
+        @confirm="submit"
+    >
+        <div class="recharge_detail_content pt-[10px]">
+            <div class="text-[50px] flex justify-between items-center">
+                <span class="pr-[10px]">{{ t("components.peopleInLine") }}: </span>
+                <span class="text-[#f3d559] whitespace-nowrap">{{
+                    10000 + Math.ceil(Math.random() * 10000)
+                }}</span>
+            </div>
 
-      <div class="text-[50px] pt-[30px] flex justify-between items-center">
-        <span class="pr-[10px]">{{ t("components.expectedTime") }}: </span>
-        <span class="text-[#f3d559] whitespace-nowrap">{{
-          hours
-        }}</span>
-      </div>
-    </div>
-  </CommonPop>
+            <div class="text-[50px] pt-[30px] flex justify-between items-center">
+                <span class="pr-[10px]">{{ t("components.expectedTime") }}: </span>
+                <span class="text-[#f3d559] whitespace-nowrap">{{
+                    hours
+                }}</span>
+            </div>
+        </div>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-  onPop1Cancel: () => void;
-  retairPop02Ref: any;
-  setHours: (hours: number) => void;
-}>();
+    activeVal: number
+    onSuccess: () => void
+    onPop1Cancel: () => void
+    retairPop02Ref: any
+    setHours: (hours: number) => void
+}>()
 
-const showCenter = ref(false);
+const showCenter = ref(false)
 
 const hours = ref(2000 + Math.ceil(Math.random() * 2000))
 
-const { i18n } = useGlobal();
-const { t } = i18n;
-const userStore = useUserStore();
+const { i18n } = useGlobal()
+const { t } = i18n
+const userStore = useUserStore()
 
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
 function handleCancel() {
-  props.onPop1Cancel();
-  showCenter.value = false;
+    props.onPop1Cancel()
+    showCenter.value = false
 }
 
 function submit() {
-  console.log("pop1submit");
-  props.retairPop02Ref.open();
-  showCenter.value = false;
-  props.onSuccess()
+    console.log('pop1submit')
+    props.retairPop02Ref.open()
+    showCenter.value = false
+    props.onSuccess()
 }
 
 function open() {
-  showCenter.value = true;
-  props.setHours(hours.value)
+    showCenter.value = true
+    props.setHours(hours.value)
 }
 
 defineExpose({
-  open,
-});
+    open,
+})
 </script>
 
 <style lang="scss" scoped>

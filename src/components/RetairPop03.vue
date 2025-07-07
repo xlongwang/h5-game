@@ -1,100 +1,99 @@
 <template>
-  <CommonPop
-    v-model="showCenter"
-    :title="t('components.details')"
-    :is-single-btn="true"
-    :cancel-text="t('components.cancel')"
-    :confirm-text="t('components.payWithdrawalFee')"
-    @cancel="handleCancel"
-    @confirm="handleSubmit"
-  >
-    <div class="recharge_detail_content">
-      <div class="text-[50px] detait_re_txt word-break-all pt-[40px]">
-        {{ t("components.vipFeeDescription") }}
-      </div>
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.details')"
+        :is-single-btn="true"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.payWithdrawalFee')"
+        @cancel="handleCancel"
+        @confirm="handleSubmit"
+    >
+        <div class="recharge_detail_content">
+            <div class="text-[50px] detait_re_txt word-break-all pt-[40px]">
+                {{ t("components.vipFeeDescription") }}
+            </div>
 
-      <div class="text-[50px] pt-[30px] detait_handling_input flex justify-between items-center">
-        <span>{{ t("components.withdrawalAmount") }} </span>
-        <span class="text-[#fe0000]"
-          >${{ activeVal ? activeVal.toFixed(2) : "0.00" }}</span
-        >
-      </div>
+            <div class="text-[50px] pt-[30px] detait_handling_input flex justify-between items-center">
+                <span>{{ t("components.withdrawalAmount") }} </span>
+                <span class="text-[#fe0000]">${{ activeVal ? activeVal.toFixed(2) : "0.00" }}</span>
+            </div>
 
-      <div class="text-[50px] pt-[30px] detait_handling_input flex justify-between items-center">
-        <span>{{ t("components.withdrawalFee") }} </span>
-        <span class="text-[#fe0000]">${{ coastNum ? coastNum.toFixed(2) : "0.00" }}</span>
-      </div>
-    </div>
-  </CommonPop>
+            <div class="text-[50px] pt-[30px] detait_handling_input flex justify-between items-center">
+                <span>{{ t("components.withdrawalFee") }} </span>
+                <span class="text-[#fe0000]">${{ coastNum ? coastNum.toFixed(2) : "0.00" }}</span>
+            </div>
+        </div>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  activeVal: number;
-  onSuccess: () => void;
-  rechargeRef: any;
-  submitInfo: (info: { total: number; coast: number }) => void;
-  retairPop04Ref: any;
-  pop3Submit: () => void;
-}>();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
-
+    activeVal: number
+    onSuccess: () => void
+    rechargeRef: any
+    submitInfo: (info: { total: number, coast: number }) => void
+    retairPop04Ref: any
+    pop3Submit: () => void
+}>()
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
+const userStore = useUserStore()
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
 function handleCancel() {
-  hide();
+    hide()
 }
 
-const userStore = useUserStore();
 const coastNum = computed(() => {
-  const totalWithdraw = Number(userInfo.value?.wallet?.total_withdraw);
-  const cur = Number(props.activeVal)
-  const total = Number(userInfo.value?.wallet?.total_withdraw) + Number(props.activeVal);
+    const totalWithdraw = Number(userInfo.value?.wallet?.total_withdraw)
+    const cur = Number(props.activeVal)
+    const total = Number(userInfo.value?.wallet?.total_withdraw) + Number(props.activeVal)
 
-  if(totalWithdraw > 3000) {
-    return cur * 0.05;
-  }
-  if (total > 3000) {
-    return (total - 3000) * 0.05;
-  }
-  return 0;
-});
+    if (totalWithdraw > 3000) {
+        return cur * 0.05
+    }
+    if (total > 3000) {
+        return (total - 3000) * 0.05
+    }
+    return 0
+})
 
 function handleSubmit() {
-  if (coastNum.value > 0) {
-    props.submitInfo({
-      total: props.activeVal,
-      coast: coastNum.value,
-    });
-    props.retairPop04Ref.open();
-  } else {
-    props.pop3Submit();
-  }
-  hide();
+    if (coastNum.value > 0) {
+        props.submitInfo({
+            total: props.activeVal,
+            coast: coastNum.value,
+        })
+        props.retairPop04Ref.open()
+    }
+    else {
+        props.pop3Submit()
+        // props.retairPop04Ref.open()
+    }
+    hide()
 
-  // console.log("handleSubmit");
+    // console.log("handleSubmit");
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>

@@ -156,7 +156,9 @@ export default {
         withdrawalFailed: 'O que acontece se o saque falhar?',
         faqAnswer1: 'Prezados usuários, os saques são um privilégio para membros premium. Você pode se tornar premium recarregando qualquer valor e desbloquear o direito de saque.',
         faqAnswer2: 'Fique tranquilo, somos uma marca do Grupo Las Vegas e oferecemos serviços de ouro real 1:1. Nos esforçamos ao máximo para criar a experiência de jogo mais realista, segura e justa para você.',
-        faqAnswer3: 'Se o saque falhar, verifique se sua conta de saque está correta ou mude a conta de saque e saque dinheiro novamente.',
+        faqAnswer3: 'Primeiro verifique o registro de pagamento e a conta bancária. Se a dedução foi feita corretamente mas não foi recebida, entre em contato com o serviço ao cliente da plataforma e forneça o comprovante da transação para que o serviço ao cliente possa ajudá-lo no processamento.',
+        faqAnswer4: 'Os problemas de carregamento do jogo podem ser devido à latência da rede, desempenho do dispositivo ou manutenção da plataforma. É recomendado verificar a conexão de rede ou reportar o problema ao serviço ao cliente para obter ajuda.',
+        faqAnswer5: 'Se o saque falhar, verifique se sua conta de saque está correta ou mude a conta de saque e saque dinheiro novamente.',
     },
 
     // 设置

@@ -1,74 +1,75 @@
 <template>
-  <CommonPop
-    v-model="showCenter"
-    :title="t('components.orderDetails')"
-    :is-single-btn="true"
-    :cancel-text="t('components.cancel')"
-    :confirm-text="t('components.goToPay')"
-    @cancel="handleCancel"
-    @confirm="handleSubmit"
-  >
-    <div class="recharge_detail_content">
-      <div class="text-[50px] detait_handling_input detait_re_txt flex justify-between text-center">
-        <div>{{ t("components.handlingFeeText") }}</div>
-        <div class="text-[#fe0000]">${{ confirmInfo.coast.toFixed(2) }}</div>
-      </div>
+    <CommonPop
+        v-model="showCenter"
+        :title="t('components.orderDetails')"
+        :is-single-btn="false"
+        :cancel-text="t('components.cancel')"
+        :confirm-text="t('components.goToPay')"
+        @cancel="handleCancel"
+        @confirm="handleSubmit"
+    >
+        <div class="recharge_detail_content">
+            <div class="text-[50px] detait_handling_input detait_re_txt flex justify-between text-center">
+                <div>{{ t("components.handlingFeeText") }}</div>
+                <div class="text-[#fe0000]">${{ confirmInfo.coast.toFixed(2) }}</div>
+            </div>
 
-      <div class="text-[40px] detait_re_txt pt-[80px]">
-        <span class="dot_icon mr-[10px]"></span>{{ t("components.payAccordingToOrder") }}
-      </div>
-    </div>
-  </CommonPop>
+            <div class="text-[40px] detait_re_txt pt-[80px]">
+                <span class="dot_icon mr-[10px]"></span>{{ t("components.payAccordingToOrder") }}
+            </div>
+        </div>
+    </CommonPop>
 </template>
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { useGlobal } from "@/composables";
-import useUserStore from "@/stores/use-user-store";
+import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-  pop4Submit: () => void;
-  confirmInfo: { total: number; coast: number };
-}>();
-const showCenter = ref(false);
-const { i18n } = useGlobal();
-const { t } = i18n;
-const userStore = useUserStore();
+    pop4Submit: () => void
+    confirmInfo: { total: number, coast: number }
+}>()
+const showCenter = ref(false)
+const { i18n } = useGlobal()
+const { t } = i18n
+const userStore = useUserStore()
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+    return userStore.userInfo
+})
 
 function handleCancel() {
-  console.log("handleCancel");
-  hide();
+    console.log('handleCancel')
+    hide()
 }
 
 function handleSubmit() {
-  // console.log("handleSubmit");
-  props.pop4Submit();
-  hide();
+    // console.log("handleSubmit");
+    props.pop4Submit()
+    hide()
 }
 
 function formatVal(val: number) {
-  if (!val) return "0.00";
-  if (val > 20) {
-    return val;
-  }
-  return val.toFixed(2);
+    if (!val)
+        return '0.00'
+    if (val > 20) {
+        return val
+    }
+    return val.toFixed(2)
 }
 
 function open() {
-  showCenter.value = true;
+    showCenter.value = true
 }
 
 function hide() {
-  showCenter.value = false;
+    showCenter.value = false
 }
 
 defineExpose({
-  open,
-  hide,
-});
+    open,
+    hide,
+})
 </script>
 
 <style lang="scss" scoped>

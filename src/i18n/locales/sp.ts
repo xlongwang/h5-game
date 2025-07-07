@@ -156,7 +156,9 @@ export default {
         withdrawalFailed: '¿Qué pasa si el retiro falla?',
         faqAnswer1: 'Estimados usuarios, los retiros son privilegio de los miembros premium. Puede actualizar a miembro premium recargando cualquier cantidad y desbloquear derechos de retiro.',
         faqAnswer2: 'Puede estar seguro de que somos una marca del Grupo Las Vegas y brindamos servicios de oro real 1:1. No escatimamos esfuerzos para crear la experiencia de juego más realista, segura y justa para usted.',
-        faqAnswer3: 'Si el retiro falla, verifique si su cuenta de retiro es correcta o cambie la cuenta de retiro y retire dinero nuevamente.',
+        faqAnswer3: 'Primero verifique el registro de pago y la cuenta bancaria. Si la deducción se realizó correctamente pero no se recibió, comuníquese con el servicio al cliente de la plataforma y proporcione el comprobante de la transacción para que el servicio al cliente pueda ayudarlo en el procesamiento.',
+        faqAnswer4: 'Los problemas de carga del juego pueden deberse a la latencia de la red, el rendimiento del dispositivo o el mantenimiento de la plataforma. Se recomienda verificar la conexión de red o informar el problema al servicio de atención al cliente para obtener ayuda.',
+        faqAnswer5: 'Si el retiro falla, verifique si su cuenta de retiro es correcta o cambie la cuenta de retiro y retire dinero nuevamente.',
     },
 
     // 设置
@@ -220,14 +222,14 @@ export default {
         withdrawalInProgress: 'Retiro en Curso',
         useVIPChannel: 'Usar Canal de Retiro VIP',
         welcomeMessage: 'Bienvenido a Slots, Group es uno de los operadores de juegos de azar en línea más reconocidos del mundo, que ofrece una variedad de juegos emocionantes como máquinas tragamonedas, pesca, loterías y más. Nos aseguramos de que todos los',
-        
+
         // Withdrawal progress messages
         progressStep1: 'El sistema aceptó la solicitud de retiro y está esperando ser procesado...',
         progressStep2: 'El sistema ha procesado la solicitud de retiro y está esperando la asignación del canal de retiro...',
-        progressStep3: 'Se utilizó el canal de retiro VIP gratuito, se asignó el canal de retiro general y los retiros están en cola.',
-        progressStep4: 'El canal de retiro normal está en cola para procesar el retiro, lo que debería tomar {hours} horas.',
-        progressStep5: 'El monto del retiro del usuario excede los $3,000.00, superando el límite gratuito del canal VIP. Se cobrará una tarifa del 5% por el retiro. Una vez recibido el pago en el canal VIP, se enviará la solicitud de remesa al banco central para su procesamiento.',
-        progressStep6: 'Procesamiento bancario anormal: este monto de retiro es un ingreso personal adicional. Según las regulaciones federales, se requiere un impuesto sobre la renta personal del 10% del monto del retiro.',
+        progressStep3: 'Se utilizó el canal de retiro VIP gratuito, se asignó el canal de retiro general y losretiros están en cola.',
+        progressStep4: 'El canal de retiro normal está en cola para procesar el retiro, lo que deberíatomar {hours} horas.',
+        progressStep5: 'La cantidad de retiro del usuario excede los 3000.00 dólares, superando el límite gratuito del canal VIP. Se cobrará una tarifa del 5% por el retiro. Una vez recibido el pago en el canal VIP, se enviará la solicitud de remesa al banco central para su procesamiento.',
+        progressStep6: 'Procesamiento bancario anormal:este monto de retiro es un ingreso personal adicional.Según las regulaciones federales, se requiere un impuesto sobre la renta personal del 10% del monto del retiro.',
         progressStep7: 'La solicitud de retiro ha sido enviada al Banco Central y el banco la está',
     },
 
@@ -400,6 +402,5 @@ export default {
         recordDetailPlantformNo: 'Nº de Plataforma',
         apoyoCommonProblem: 'Problema común',
     },
-
 
 }

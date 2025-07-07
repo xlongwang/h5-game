@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 12:13:49
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-02 16:26:34
+ * @LastEditTime: 2025-07-07 16:51:51
  * @FilePath: /vue3_app/src/views/Promoc.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,31 +15,31 @@
                     <img :src="bannerImg" alt="" class="w-full">
                 </div>
                 <div class="mb-[30px] font-bold w-[1045px] mx-auto">
-                  {{ t('components.apoyoCommonProblem') }}
+                    {{ t('components.apoyoCommonProblem') }}
                 </div>
                 <van-collapse v-model="activeNames" accordion>
                     <van-collapse-item :title="t('support.howToWithdraw')" name="1">
                         {{ t('support.faqAnswer1') }}
                     </van-collapse-item>
                     <van-collapse-item :title="t('support.isPlatformTrustworthy')" name="2">
-                        {{ t('support.faqAnswer1') }}
+                        {{ t('support.faqAnswer2') }}
                     </van-collapse-item>
                     <van-collapse-item
                         :title="t('support.depositProblem')"
                         name="3"
                     >
-                        {{ t('support.faqAnswer1') }}
+                        {{ t('support.faqAnswer3') }}
                     </van-collapse-item>
 
                     <van-collapse-item
                         :title="t('support.gameLoadingSlow')"
                         name="4"
                     >
-                        {{ t('support.faqAnswer2') }}
+                        {{ t('support.faqAnswer4') }}
                     </van-collapse-item>
 
                     <van-collapse-item :title="t('support.withdrawalFailed')" name="5">
-                        {{ t('support.faqAnswer3') }}
+                        {{ t('support.faqAnswer5') }}
                     </van-collapse-item>
                 </van-collapse>
             </div>

@@ -156,7 +156,9 @@ export default {
         withdrawalFailed: 'What happens if the withdrawal fails?',
         faqAnswer1: 'Dear users, withdrawals are a privilege for premium members. You can upgrade to premium by recharging any amount and unlock withdrawal rights.',
         faqAnswer2: 'You can rest assured that we are a brand of the Las Vegas Group and provide 1:1 real gold services. We spare no effort to create the most realistic, safe, and fair gaming experience for you.',
-        faqAnswer3: 'If the withdrawal fails, verify if your withdrawal account is correct or change the withdrawal account and withdraw money again.',
+        faqAnswer3: 'First check the payment record and bank account. If the deduction was made correctly but not received, contact the platform customer service and provide the transaction receipt so that customer service can help you with processing.',
+        faqAnswer4: 'Game loading issues may be due to network latency, device performance, or platform maintenance. It is recommended to check the network connection or report the issue to customer service for assistance.',
+        faqAnswer5: 'If the withdrawal fails, verify if your withdrawal account is correct or change the withdrawal account and withdraw money again.',
     },
 
     // 设置
@@ -220,7 +222,7 @@ export default {
         withdrawalInProgress: 'Withdrawal in Progress',
         useVIPChannel: 'Use VIP Withdrawal Channel',
         welcomeMessage: 'Welcome to Slots, Group is one of the world\'s most recognized online gambling operators, offering a variety of exciting games such as slot machines, fishing, lotteries and more. We ensure that all',
-        
+
         // Withdrawal progress messages
         progressStep1: 'The system accepted the withdrawal request and is waiting to be processed...',
         progressStep2: 'The system has processed the withdrawal request and is waiting for withdrawal channel assignment...',
