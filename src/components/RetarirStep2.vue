@@ -102,19 +102,23 @@
                                             :placeholder="t('components.pleaseEnterCPF')"
                                             input-align="left"
                                             class="custom-field"
+                                            :error-message="cpfError"
+                                            @blur="validateCPF"
                                         >
                                         </van-field>
                                     </div>
                                 </div>
 
-                                <div v-if="fieldValue === 'CNJP'" class="form-item phone_item_form">
+                                <div v-if="fieldValue === 'CNPJ'" class="form-item phone_item_form">
                                     <div class="form-label">{{ t("components.cnjp") }}</div>
                                     <div class="form-input">
                                         <van-field
-                                            v-model="cnjp"
+                                            v-model="cnpj"
                                             :placeholder="t('components.pleaseEnterCNJP')"
                                             input-align="left"
                                             class="custom-field"
+                                            :error-message="cnpjError"
+                                            @blur="validateCNPJ"
                                         >
                                         </van-field>
                                     </div>
@@ -186,7 +190,7 @@ const columns = [
     { text: 'PHONE', value: 'PHONE' },
     { text: 'EMAIL', value: 'EMAIL' },
     { text: 'CPF', value: 'CPF' },
-    { text: 'CNJP', value: 'CNJP' },
+    { text: 'CNPJ', value: 'CNPJ' },
 ]
 const fieldValue = ref(userStore.userInfo?.receiving_account?.pix_type || '')
 const pickerValue = ref<string[]>([])
@@ -199,9 +203,11 @@ const phone = ref(userStore.userInfo?.receiving_account?.phone || '')
 
 const email = ref('')
 const cpf = ref('')
-const cnjp = ref('')
+const cnpj = ref('')
 const emailError = ref('')
 const phoneError = ref('')
+const cpfError = ref('')
+const cnpjError = ref('')
 
 // 防抖函数
 function debounce(func: (...args: any[]) => any, delay: number) {
@@ -240,8 +246,8 @@ watch(show, (newVal) => {
         else if (fieldValue.value === 'CPF') {
             cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
         }
-        else if (fieldValue.value === 'CNJP') {
-            cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        else if (fieldValue.value === 'CNPJ') {
+            cnpj.value = userStore.userInfo?.receiving_account?.receiving_account || ''
         }
     }
 })
@@ -252,8 +258,11 @@ function resetForm() {
     phone.value = ''
     email.value = ''
     cpf.value = ''
+    cnpj.value = ''
     emailError.value = ''
     phoneError.value = ''
+    cpfError.value = ''
+    cnpjError.value = ''
 }
 
 watch(show, (newVal) => {
@@ -287,9 +296,9 @@ async function submitForm() {
                 receivingAccount = cpf.value
                 pixType = 'CPF'
                 break
-            case 'CNJP':
-                receivingAccount = cnjp.value
-                pixType = 'CNJP'
+            case 'CNPJ':
+                receivingAccount = cnpj.value
+                pixType = 'CNPJ'
                 break
             default:
                 throw new Error(t('components.pleaseSelectPixType'))
@@ -316,6 +325,16 @@ async function submitForm() {
         // 如果是邮箱类型，验证邮箱格式
         if (fieldValue.value === 'EMAIL' && !validateEmail()) {
             throw new Error(t('components.invalidEmailFormat'))
+        }
+
+        // 如果是CPF类型，验证CPF格式
+        if (fieldValue.value === 'CPF' && !validateCPF()) {
+            throw new Error(cpfError.value)
+        }
+
+        // 如果是CNJP类型，验证CNJP格式
+        if (fieldValue.value === 'CNPJ' && !validateCNPJ()) {
+            throw new Error(cnpjError.value)
         }
 
         await userStore.updateUserInfo({
@@ -360,6 +379,8 @@ function onConfirmPicker(val: { selectedValues: string }) {
     // 清空之前的错误信息
     emailError.value = ''
     phoneError.value = ''
+    cpfError.value = ''
+    cnpjError.value = ''
 }
 
 // 手机号验证函数
@@ -375,6 +396,38 @@ function validatePhone() {
     }
 
     phoneError.value = ''
+    return true
+}
+
+// CPF验证函数
+function validateCPF() {
+    if (!cpf.value) {
+        cpfError.value = t('components.pleaseEnterCPF')
+        return false
+    }
+
+    if (cpf.value.length !== 11) {
+        cpfError.value = t('components.cpfMustBe11Digits')
+        return false
+    }
+
+    cpfError.value = ''
+    return true
+}
+
+// CNJP验证函数
+function validateCNPJ() {
+    if (!cnpj.value) {
+        cnpjError.value = t('components.pleaseEnterCNJP')
+        return false
+    }
+
+    if (cnpj.value.length !== 14) {
+        cnpjError.value = t('components.cnjpMustBe14Digits')
+        return false
+    }
+
+    cnpjError.value = ''
     return true
 }
 
@@ -406,7 +459,7 @@ onMounted(() => {
         cpf.value = userStore.userInfo?.receiving_account?.receiving_account || ''
     }
     else if (fieldValue.value === 'CNJP') {
-        cnjp.value = userStore.userInfo?.receiving_account?.receiving_account || ''
+        cnpj.value = userStore.userInfo?.receiving_account?.receiving_account || ''
     }
 })
 

@@ -66,8 +66,8 @@ function getDefaultLocale(): string {
         }
     }
 
-    // 默认返回英语
-    return 'en'
+    // 默认返回西班牙语
+    return 'sp'
 }
 
 const i18n = createI18n({
