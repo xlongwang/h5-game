@@ -52,7 +52,7 @@
                                             v-model="fieldValue"
                                             is-link
                                             readonly
-                                            placeholder="PHONE/EMAIL/CPF/CNJP"
+                                            placeholder="PHONE/EMAIL/CPF/CNPJ"
                                             @click="showPicker = true"
                                         />
                                         <teleport to="body">
