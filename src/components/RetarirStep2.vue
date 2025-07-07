@@ -8,22 +8,17 @@
 -->
 <template>
     <teleport to="body">
-      <CommonPop
-        v-model="show"
-        :title="t('components.linkWithdrawalAccount')"
-        :is-single-btn="true"
-        :cancel-text="t('components.cancel')"
-        :confirm-text="t('components.confirm')"
-        @confirm="handleSubmit"
-      >
-        <!-- <van-popup
-            v-model:show="show"
-            position="center"
-            class="step2_popup"
-            @close="resetForm"
-        > -->
+        <CommonPop
+            v-model="show"
+            :title="title"
+            :is-single-btn="true"
+            :cancel-text="t('components.cancel')"
+            :confirm-text="isSubmitting ? t('components.submitting') : t('components.confirm')"
+            :loading="isSubmitting"
+            @confirm="handleSubmit"
+        >
             <div class="step2_popup_inner">
-                <div class="setp2_pop_content pt-[80px] pb-[60px]">
+                <div class="setp2_pop_content pt-[50px] pb-[60px]">
                     <div class="step2_content">
                         <van-form>
                             <van-cell-group inset>
@@ -134,26 +129,10 @@
                                             input-align="left"
                                             class="custom-field"
                                         >
-                                            <!-- <template #left-icon>
-                                                <span class="form-prefix text-[50px]">+52</span>
-                                            </template> -->
                                         </van-field>
                                     </div>
                                 </div>
                             </van-cell-group>
-
-                            <!-- <div class="form-btn-wrap">
-                                <van-button
-                                    round
-                                    block
-                                    type="primary"
-                                    native-type="submit"
-                                    class="form-btn text-[#0e0701] text-[40px]"
-                                    @click="handleSubmit"
-                                >
-                                    {{ t("components.confirm") }}
-                                </van-button>
-                            </div> -->
                         </van-form>
                     </div>
                 </div>
@@ -170,17 +149,19 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
 
-// import { StorageUtil } from '@/utils/storage'
-
-const props = withDefaults(defineProps<{
-    onSuccess?: () => void
-    curValue?: number
-    isShowAmount?: boolean
-}>(), {
-    onSuccess: undefined,
-    curValue: 0,
-    isShowAmount: true,
-})
+const props = withDefaults(
+    defineProps<{
+        onSuccess?: () => void
+        curValue?: number
+        isShowAmount?: boolean
+        title: string
+    }>(),
+    {
+        onSuccess: undefined,
+        curValue: 0,
+        isShowAmount: true,
+    },
+)
 
 const { i18n } = useGlobal()
 const { t } = i18n
@@ -192,8 +173,13 @@ const userInfo = computed(() => {
     return userStore.userInfo
 })
 
+const userAccount = computed(() => {
+    return userStore.userInfo?.receiving_account
+})
 // const router = useRouter()
 const show = ref(false)
+const isSubmitting = ref(false)
+const submitTimer = ref<NodeJS.Timeout | null>(null)
 
 const columns = [
     { text: 'PHONE', value: 'PHONE' },
@@ -201,18 +187,30 @@ const columns = [
     { text: 'CPF', value: 'CPF' },
     { text: 'CNJP', value: 'CNJP' },
 ]
-const fieldValue = ref('')
-const pickerValue = ref([])
+const fieldValue = ref(userStore.userInfo?.receiving_account?.pix_type || '')
+const pickerValue = ref<string[]>([])
 const showPicker = ref(false)
 
 // 表单数据
 const amount = ref(props.curValue.toString())
-const name = ref('')
-const phone = ref('')
-const email = ref('')
-const cpf = ref('')
-const cnjp = ref('')
+const name = ref(userStore.userInfo?.receiving_account?.receiving_name || 'p_x001')
+const phone = ref(userStore.userInfo?.receiving_account?.phone || '')
+const email = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
+const cpf = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
+const cnjp = ref(userStore.userInfo?.receiving_account?.receiving_account || '')
 const emailError = ref('')
+
+// 防抖函数
+function debounce(func: (...args: any[]) => any, delay: number) {
+    return function (this: any, ...args: any[]) {
+        if (submitTimer.value) {
+            clearTimeout(submitTimer.value)
+        }
+        submitTimer.value = setTimeout(() => {
+            func.apply(this, args)
+        }, delay)
+    }
+}
 
 function open() {
     show.value = true
@@ -240,7 +238,13 @@ watch(show, (newVal) => {
     }
 })
 
-async function handleSubmit() {
+// 实际的提交逻辑
+async function submitForm() {
+    if (isSubmitting.value)
+        return
+
+    isSubmitting.value = true
+
     try {
     // 根据选择的PIX类型获取对应的账户信息
         let receivingAccount = ''
@@ -275,7 +279,6 @@ async function handleSubmit() {
         if (!phone.value) {
             throw new Error(t('components.pleaseEnterPhone'))
         }
-        console.log('🚀 ~ handleSubmit ~ receivingAccount:', receivingAccount)
         if (!receivingAccount) {
             throw new Error(t('components.pleaseEnterAccountInfo'))
         }
@@ -306,16 +309,22 @@ async function handleSubmit() {
         else {
             console.log('⚠️ onSuccess 回调未定义')
         }
-    // router.push("/retirarDetail");
     }
     catch (error: any) {
         console.error('Error al actualizar:', error)
     // 这里可以添加错误提示，比如使用Toast
     // alert(error.message || 'Error al actualizar')
     }
+    finally {
+        isSubmitting.value = false
+    }
 }
 
+// 防抖处理的提交函数
+const handleSubmit = debounce(submitForm, 500)
+
 function onConfirmPicker(val: { selectedValues: string }) {
+    console.log('🚀 ~ onConfirmPicker ~ val:', val.selectedValues)
     fieldValue.value = val.selectedValues[0]
     pickerValue.value = [val.selectedValues as never]
     showPicker.value = false
@@ -341,8 +350,18 @@ function validateEmail() {
 }
 
 onMounted(() => {
-    console.log('userInfo', userInfo.value)
+    // console.log('userInfo', userInfo.value)
     amount.value = props.curValue ? `$${props.curValue.toFixed(2)}` : '$0.00'
+
+    // 设置pickerValue的默认值
+    pickerValue.value = [fieldValue.value]
+})
+
+// 组件卸载时清理定时器
+onUnmounted(() => {
+    if (submitTimer.value) {
+        clearTimeout(submitTimer.value)
+    }
 })
 
 defineExpose({
@@ -351,13 +370,12 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-
 // .step2_content {
 ::v-deep(.van-cell-group) {
   background: transparent !important;
 }
 ::v-deep(.van-cell-group--inset) {
-  margin:0 !important;
+  margin: 0 !important;
 }
 
 ::v-deep(.van-cell) {

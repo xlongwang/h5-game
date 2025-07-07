@@ -446,6 +446,7 @@ export default {
         afterSuccessfulPayment: 'Após um pagamento bem-sucedido, o sistema adicionará o valor à sua conta dentro de 1 a 5 minutos.',
 
         // Componente RetarirStep2
+        linkWithdrawalAccountPopTitle: 'Detalhes da Conta',
         linkWithdrawalAccount: 'Vincular Conta de Saque',
         withdrawalAmount: 'Valor do Saque',
         name: 'Nome',
@@ -463,6 +464,7 @@ export default {
         pleaseEnterAccountInfo: 'Por favor, digite as informações da conta',
         invalidEmailFormat: 'Formato de e-mail inválido',
         confirm: 'Confirmar',
+        submitting: 'Enviando...',
 
         // Componente UserInfo
         userInfo: 'Informações do Usuário',

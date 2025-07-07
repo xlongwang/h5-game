@@ -98,6 +98,7 @@
             ref="retarirStep2Ref"
             :on-success="handleSuccess"
             :cur-value="curValue"
+            :title="t('components.linkWithdrawalAccountPopTitle')"
         />
 
         <EmptyWithdrawPop ref="emptyWithdrawPopRef" />

@@ -13,10 +13,10 @@
         </div>
         <div class="header-info-right text-[50px]">
             <div class="header-info-right-name pb-[30px]">
-                <span> {{ t('components.nickname') }}: {{ userInfo.name }} </span>
+                <span v-if="userInfo.name"> {{ t('components.nickname') }}: {{ userInfo.name }} </span>
             </div>
             <div class="header-info-right-bt flex items-center">
-                <div class="header-info-right-bt-id">ID: {{ userInfo.id }}</div>
+                <div v-if="userInfo.id" class="header-info-right-bt-id">ID: {{ userInfo.id }}</div>
                 <div class="header-info-right-bt-dollor flex items-center ml-[40px]">
                     <div class="dollor-icon"></div>
                     <div class="dollor-count font-bold ml-[16px]">{{ count }}</div>

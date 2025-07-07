@@ -104,6 +104,7 @@
         <RetarirStep2
             ref="retarirStep2Ref"
             :is-show-amount="false"
+            :title="t('components.linkWithdrawalAccountPopTitle')"
         />
     </div>
 </template>
@@ -130,6 +131,10 @@ const store = useUserStore()
 
 const accountName = computed(() => {
     return store.userInfo?.receiving_account?.receiving_name
+})
+
+const userInfo = computed(() => {
+    return store.userInfo
 })
 
 const retarirStep2Ref = ref()
@@ -169,7 +174,6 @@ function handleAccountClick() {
 }
 
 function onConfirmPicker(value: any) {
-    console.log('🚀 ~ onConfirmPicker ~ value:', value)
     const selectedLocale = value.selectedValues[0]
     if (selectedLocale && selectedLocale !== currentLocale.value) {
         changeLanguage(selectedLocale)

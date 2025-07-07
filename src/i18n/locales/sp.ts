@@ -333,6 +333,7 @@ export default {
         afterSuccessfulPayment: 'Después de un pago exitoso, el sistema agregará el monto a su cuenta dentro de 1 a 5 minutos.',
 
         // Componente RetarirStep2
+        linkWithdrawalAccountPopTitle: 'Detalles de cuenta',
         linkWithdrawalAccount: 'Vincular cuenta de retirada',
         withdrawalAmount: 'Monto del retiro',
         name: 'Nombre',
@@ -350,6 +351,7 @@ export default {
         pleaseEnterAccountInfo: 'Por favor ingrese la información de la cuenta',
         invalidEmailFormat: 'Formato de correo electrónico incorrecto',
         confirm: 'Confirmar',
+        submitting: 'Enviando...',
 
         // Componente UserInfo
         userInfo: 'Información del Usuario',

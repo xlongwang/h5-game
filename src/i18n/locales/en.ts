@@ -318,6 +318,7 @@ export default {
         afterSuccessfulPayment: 'After a successful payment, the system will add the amount to your account within 1-5 minutes.',
 
         // RetarirStep2 component
+        linkWithdrawalAccountPopTitle: 'Account Details',
         linkWithdrawalAccount: 'Link Withdrawal Account',
         withdrawalAmount: 'Withdrawal Amount',
         name: 'Name',
@@ -335,6 +336,7 @@ export default {
         pleaseEnterAccountInfo: 'Please enter account information',
         invalidEmailFormat: 'Invalid email format',
         confirm: 'Confirm',
+        submitting: 'Submitting...',
 
         // UserInfo component
         userInfo: 'User Information',
