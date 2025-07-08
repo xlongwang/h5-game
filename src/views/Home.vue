@@ -1,5 +1,5 @@
 <template>
-    <div class="casino-page pb-[280px]">
+    <div class="casino-page pb-[480px]">
         <!-- Header -->
         <div class="header flex items-center justify-between pt-[20px] pb-[20px]">
             <div class="user-info flex items-center gap-[4px] text-[50px]">
