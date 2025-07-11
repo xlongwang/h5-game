@@ -199,6 +199,22 @@ export default {
         linkCopiedForInstagram: 'Link copied for Instagram',
     },
 
+    // 第一次登录
+    firstLogin: {
+        pop1: {
+            welcome: 'Welcome to join us, we have carefully prepared a mysterious surprise for you! You will have the opportunity to receive a random reward worth',
+            rewardRange: 'R$5.00-R$ 200.00',
+            goClaim: 'go and claim, good luck!',
+            btn: 'GO AND CLAIM',
+        },
+        pop2: {
+            congratulations: 'Congratulations on receiving a cash reward of',
+            rewardAmount: 'R$10.00',
+            goClaim: 'go and claim, good luck!',
+            btn: 'GO AND CLAIM',
+        },
+    },
+
     // 个人资料
     profile: {
         withdraw: 'Withdraw',

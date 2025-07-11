@@ -13,6 +13,7 @@ declare module 'vue' {
     copy: typeof import('./components/RetairPop06 copy.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     EmptyWithdrawPop: typeof import('./components/EmptyWithdrawPop.vue')['default']
+    FirstLogin: typeof import('./components/FirstLogin.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
     HeaderInfo: typeof import('./components/HeaderInfo.vue')['default']

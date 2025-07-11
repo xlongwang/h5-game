@@ -88,6 +88,38 @@ export class StorageUtil {
     }
 
     /**
+     * 设置用户是否是第一次登录
+     */
+    static setIsFirst(isFirst: boolean): void {
+        if (!isClient())
+            return
+        try {
+            localStorage.setItem('isFirst', JSON.stringify(isFirst))
+        }
+        catch (error) {
+            console.error('保存用户信息失败:', error)
+        }
+    }
+
+    /**
+     * 从localStorage获取用户是否是第一次登录
+     */
+    static getIsFirst(): boolean {
+        if (!isClient())
+            return true
+        try {
+            const isFirstStr = localStorage.getItem('isFirst')
+            console.log('🚀 ~ StorageUtil ~ getIsFirst ~ isFirstStr:', isFirstStr)
+            const result = isFirstStr ? JSON.parse(isFirstStr) : true
+            return result
+        }
+        catch (error) {
+            console.error('获取用户是否是第一次登录失败:', error)
+            return true
+        }
+    }
+
+    /**
      * 从localStorage获取用户信息
      */
     static getUserInfo(): any {

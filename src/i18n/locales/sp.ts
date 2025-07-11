@@ -410,4 +410,19 @@ export default {
         apoyoCommonProblem: 'Problema común',
     },
 
+    // 第一次登录
+    firstLogin: {
+        pop1: {
+            welcome: 'Bem-vindo a se juntar a nós, preparamos cuidadosamente uma surpresa misteriosa para você! vocé terà a oportunidade de receber uma recompensa aleatória no valor de',
+            rewardRange: 'R$ 5,00-R$ 200,00',
+            goClaim: 'vá e reivindique, boa sorte!',
+            btn: 'Receber',
+        },
+        pop2: {
+            congratulations: 'Parabéns por receber uma recompensa em dinheiro de',
+            rewardAmount: 'R$ 10,00',
+            goClaim: 'vá e reivindique, boa sorte!',
+            btn: 'Receber',
+        },
+    },
 }

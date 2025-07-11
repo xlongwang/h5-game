@@ -199,6 +199,22 @@ export default {
         linkCopiedForInstagram: 'Link copiado para Instagram',
     },
 
+    // 第一次登录
+    firstLogin: {
+        pop1: {
+            welcome: 'Bem-vindo a juntar-se a nós, preparamos cuidadosamente uma surpresa misteriosa para si! Terá a oportunidade de receber uma recompensa aleatória no valor de',
+            rewardRange: 'R$5,00-R$ 200,00',
+            goClaim: 'vá e reivindique, boa sorte!',
+            btn: 'VÁ E RECLAME',
+        },
+        pop2: {
+            congratulations: 'Parabéns por receber uma recompensa em dinheiro de',
+            rewardAmount: 'R$10,00',
+            goClaim: 'vá e reivindique, boa sorte!',
+            btn: 'VÁ E RECLAME',
+        },
+    },
+
     // 个人资料
     profile: {
         title: 'Perfil',

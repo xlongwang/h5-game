@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-04 20:21:05
+ * @LastEditTime: 2025-07-11 19:36:13
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,7 +29,10 @@
         </div>
 
         <!-- Bottom Navigation -->
-        <div v-if="!isLoading && $route.path !== '/record'" class="bottom-nav text-[30px] text-gold">
+        <div
+            v-if="!isLoading && $route.path !== '/record'"
+            class="bottom-nav text-[30px] text-gold"
+        >
             <template v-for="item in navItems" :key="item.name">
                 <!-- 内部路由使用 router-link -->
                 <router-link
@@ -37,12 +40,18 @@
                     class="nav-item"
                     :class="{ active: activeNav === item.name }"
                 >
-                    <img class="nav-icon" :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon">
+                    <img
+                        class="nav-icon"
+                        :src="activeNav === item.name ? item.activeIcon : item.inactiveIcon"
+                    >
                     <span class="text-[40px]">{{ item.name }}</span>
                 </router-link>
                 <!-- 外部链接使用 a 标签 -->
             </template>
         </div>
+
+        <!-- 第一次登录组件 -->
+        <FirstLogin ref="firstLoginRef" />
     </div>
 </template>
 
@@ -51,41 +60,90 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGlobal } from '@/composables'
 
+import { StorageUtil } from '@/utils/storage'
+
 defineOptions({
     name: 'AppRoot',
 })
 
 const { userStore, i18n } = useGlobal()
 
+const firstLoginRef = ref<any>(null)
+
 const activeNav = ref('Casino')
 const route = useRoute()
 
 const isLoading = ref(true)
 const loadingText = ref('Está inicializando....')
+const isFirstLogin = ref(false)
 
 const navItems = computed(() => [
-    { name: i18n.t('nav.casino'), to: '/', activeIcon: '/images/casino/nav/a1_active.png', inactiveIcon: '/images/casino/nav/a1.png' },
-    { name: i18n.t('nav.promotion'), to: '/promotion', activeIcon: '/images/casino/nav/a2_active.png', inactiveIcon: '/images/casino/nav/a2.png' },
-    { name: i18n.t('nav.withdraw'), to: '/retirar', activeIcon: '/images/casino/nav/a3_active.png', inactiveIcon: '/images/casino/nav/a3.png' },
-    { name: i18n.t('nav.support'), to: '/apoyo', activeIcon: '/images/casino/nav/a4_active.png', inactiveIcon: '/images/casino/nav/a4.png' },
-    { name: i18n.t('nav.profile'), to: '/perfil', activeIcon: '/images/casino/nav/a5_active.png', inactiveIcon: '/images/casino/nav/a5.png' },
+    {
+        name: i18n.t('nav.casino'),
+        to: '/',
+        activeIcon: '/images/casino/nav/a1_active.png',
+        inactiveIcon: '/images/casino/nav/a1.png',
+    },
+    {
+        name: i18n.t('nav.promotion'),
+        to: '/promotion',
+        activeIcon: '/images/casino/nav/a2_active.png',
+        inactiveIcon: '/images/casino/nav/a2.png',
+    },
+    {
+        name: i18n.t('nav.withdraw'),
+        to: '/retirar',
+        activeIcon: '/images/casino/nav/a3_active.png',
+        inactiveIcon: '/images/casino/nav/a3.png',
+    },
+    {
+        name: i18n.t('nav.support'),
+        to: '/apoyo',
+        activeIcon: '/images/casino/nav/a4_active.png',
+        inactiveIcon: '/images/casino/nav/a4.png',
+    },
+    {
+        name: i18n.t('nav.profile'),
+        to: '/perfil',
+        activeIcon: '/images/casino/nav/a5_active.png',
+        inactiveIcon: '/images/casino/nav/a5.png',
+    },
 ])
 
 // 监听路由变化，同步 activeNav
-watch(() => route.path, (newPath) => {
-    const currentItem = navItems.value.find(item => item.to === newPath)
-    if (currentItem && activeNav.value !== currentItem.name) {
-        activeNav.value = currentItem.name
-    }
-}, { immediate: true })
+watch(
+    () => route.path,
+    (newPath) => {
+        const currentItem = navItems.value.find(item => item.to === newPath)
+        if (currentItem && activeNav.value !== currentItem.name) {
+            activeNav.value = currentItem.name
+        }
+    },
+    { immediate: true },
+)
+
+/**
+ * 检查是否是第一次登录
+ */
+function checkIsFirstLogin(): boolean {
+    return StorageUtil.getIsFirst()
+}
+
+/**
+ * 设置非第一次登录状态
+ */
+function setNotFirstLogin(): void {
+    StorageUtil.setIsFirst(false)
+    isFirstLogin.value = false
+}
 
 /**
  * 智能登录流程
  */
 async function smartLogin() {
     try {
-        // 1. 检查本地存储的认证信息
-        // loadingText.value = '检查登录状态...'
+    // 1. 检查本地存储的认证信息
+    // loadingText.value = '检查登录状态...'
         loadingText.value = i18n.t('common.loading')
         const hasAuthInfo = userStore.initAuthInfo()
         const hasUserInfo = userStore.initUserInfo()
@@ -109,7 +167,6 @@ async function smartLogin() {
             // loadingText.value = '正在登录...'
             loadingText.value = i18n.t('common.loading')
             await userStore.login()
-
             // 登录成功后获取用户信息
             loadingText.value = i18n.t('common.loading')
             await userStore.fetchUserInfo()
@@ -126,6 +183,16 @@ async function smartLogin() {
 
 async function init() {
     try {
+    // 先检查是否是第一次登录
+        const isFirst = checkIsFirstLogin()
+        console.log('🚀 ~ init ~ isFirst:', isFirst)
+
+        if (isFirst) {
+            // 如果是第一次登录，显示 FirstLogin 组件
+            firstLoginRef.value.open()
+        }
+
+        // 如果不是第一次登录，执行自动登录
         await smartLogin()
     }
     catch (error) {
@@ -139,108 +206,118 @@ async function init() {
 onMounted(async () => {
     await init()
 })
+
+// 暴露方法给其他组件使用
+defineExpose({
+    checkIsFirstLogin,
+    setNotFirstLogin,
+})
 </script>
 
 <style scoped lang="scss">
 .main {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
 .loading-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid #333;
-    border-top: 4px solid #ffd700;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  width: 60px;
+  height: 60px;
+  border: 4px solid #333;
+  border-top: 4px solid #ffd700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 .loading-text {
-    color: #ffd700;
-    font-weight: 500;
+  color: #ffd700;
+  font-weight: 500;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .bottom-nav {
-    --van-tabbar-background: #000;
-    --van-tabbar-item-active-color: #e4b857;
-    --van-tabbar-item-inactive-color: #a3a3a3;
-    position: fixed;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    bottom: 0;
-    z-index: 1000;
+  --van-tabbar-background: #000;
+  --van-tabbar-item-active-color: #e4b857;
+  --van-tabbar-item-inactive-color: #a3a3a3;
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 0;
+  z-index: 1000;
+  left: 50%;
+  height: 209px;
+  background: #1a1a1a;
+  width: 100%;
+  max-width: 1080px;
+  transform: translateX(-50%);
+
+  .nav-icon {
+    width: 85px;
+    height: 85px;
+    margin-bottom: 8px;
+  }
+
+  .van-tabbar-item {
+    padding: 35px 0 40px;
+    color: #e4b857;
+  }
+
+  &::after {
+    display: none;
+  }
+
+  &::before {
+    position: absolute;
+    top: -8px;
     left: 50%;
-    height: 209px;
-    background: #1a1a1a;
+    z-index: 9;
+    display: block;
     width: 100%;
-    max-width: 1080px;
+    height: 24px;
+    background: url("/images/casino/line_gold.png") no-repeat;
+    content: "";
     transform: translateX(-50%);
-
-    .nav-icon {
-        width: 85px;
-        height: 85px;
-        margin-bottom: 8px;
-    }
-
-    .van-tabbar-item {
-        padding: 35px 0 40px;
-        color: #e4b857;
-    }
-
-    &::after {
-        display: none;
-    }
-
-    &::before {
-        position: absolute;
-        top: -8px;
-        left: 50%;
-        z-index: 9;
-        display: block;
-        width: 100%;
-        height: 24px;
-        background: url('/images/casino/line_gold.png') no-repeat;
-        content: '';
-        transform: translateX(-50%);
-        background-size: 100% 24px;
-    }
+    background-size: 100% 24px;
+  }
 }
 
 .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    padding: 15px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  padding: 15px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: inherit;
 }
 
 // .nav-item:hover {
@@ -248,25 +325,25 @@ onMounted(async () => {
 // }
 
 .nav-item span {
-    color: #ffd700;
-    opacity: 0.6;
+  color: #ffd700;
+  opacity: 0.6;
 }
 
 .nav-item.active {
-    span{
-        opacity: 1;
-    }
+  span {
+    opacity: 1;
+  }
 }
 
 .text-gold {
-    color: #ffd700;
-    font-size: 12px;
+  color: #ffd700;
+  font-size: 12px;
 }
 
 .language-switcher-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1001;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
 }
 </style>
