@@ -78,7 +78,7 @@ defineExpose({
 .first-pop1-txt {
   width: 806px;
   height: 214px;
-  background: url(./images/guide/pop1/slogan.png) no-repeat;
+  background: url(/images/guide/pop1/slogan.png) no-repeat;
   background-size: contain;
   margin: 0 auto;
   // 样式内容
@@ -87,7 +87,7 @@ defineExpose({
 .first-pop1-image {
   width: 806px;
   height: 518px;
-  background: url(./images/guide/pop1/gift.png) no-repeat;
+  background: url(/images/guide/pop1/gift.png) no-repeat;
   background-size: contain;
 }
 
@@ -121,7 +121,7 @@ defineExpose({
 .first-pop1-btn {
   width: 360px;
   height: 95px;
-  background: url(./images/guide/pop1/btn.png) no-repeat;
+  background: url(/images/guide/pop1/btn.png) no-repeat;
   background-size: contain;
   margin: 40px auto 0;
   text-align: center;
@@ -135,7 +135,7 @@ defineExpose({
 .first-pop2-txt {
   width: 806px;
   height: 214px;
-  background: url(./images/guide/pop2/slogan.png) no-repeat;
+  background: url(/images/guide/pop2/slogan.png) no-repeat;
   background-size: contain;
   margin: 0 auto;
 }
@@ -143,7 +143,7 @@ defineExpose({
 .first-pop2-image {
   width: 756px;
   height: 636px;
-  background: url(./images/guide/pop2/rich.png) no-repeat;
+  background: url(/images/guide/pop2/rich.png) no-repeat;
   background-size: contain;
   margin: -30px auto 0;
 }
@@ -151,7 +151,7 @@ defineExpose({
 .first-pop2-btn {
   width: 360px;
   height: 95px;
-  background: url(./images/guide/pop2/btn.png) no-repeat;
+  background: url(/images/guide/pop2/btn.png) no-repeat;
   background-size: contain;
   margin: 30px auto 0;
 }
