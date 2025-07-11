@@ -2,7 +2,7 @@
     <van-popup
         v-model:show="showCenter"
         :close-on-click-overlay="false"
-        :style="{ padding: '64px', background: 'transparent' }"
+        :style="{ background: 'transparent' }"
         class="first-login-popup"
     >
         <div v-show="showPop1" class="first-login-container pop1">
