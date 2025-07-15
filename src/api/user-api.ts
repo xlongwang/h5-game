@@ -2,11 +2,11 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-30 22:01:40
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-05 20:55:25
+ * @LastEditTime: 2025-07-15 09:59:44
  * @FilePath: /vue3_app/src/api/user-api.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import type { LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
+import type { GameListParams, GameListResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -111,6 +111,32 @@ export const userApi = {
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.get<OrderQueryResponse['data']>('/order/query', { order_no: params.order_no })
         console.log('订单查询API响应:', result)
+        return result
+    },
+
+    /**
+     * 邀请新用户注册
+     * @param params 邀请参数
+     * @returns Promise<InviteUserResponse>
+     */
+    async inviteUser(params: InviteUserParams): Promise<InviteUserResponse> {
+        console.log('调用邀请新用户API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<InviteUserResponse['data']>('/web/register', params)
+        console.log('邀请新用户API响应:', result)
+        return result
+    },
+
+    /**
+     * 获取游戏列表
+     * @param params 游戏列表参数
+     * @returns Promise<GameListResponse>
+     */
+    async getGameList(params: GameListParams): Promise<GameListResponse> {
+        console.log('调用游戏列表API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.get<GameListResponse['data']>('/game/List', params)
+        console.log('游戏列表API响应:', result)
         return result
     },
 }

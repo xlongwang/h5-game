@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-11 19:36:13
+ * @LastEditTime: 2025-07-15 09:54:28
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -56,10 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useGlobal } from '@/composables'
+import { userApi } from '@/api/user-api'
 
+import { useGlobal } from '@/composables'
 import { StorageUtil } from '@/utils/storage'
 
 defineOptions({
@@ -138,6 +139,71 @@ function setNotFirstLogin(): void {
 }
 
 /**
+ * 检查URL是否包含邀请人ID
+ */
+function hasInviterRef(): boolean {
+    return !!route.query.ref
+}
+
+/**
+ * 邀请新用户注册流程
+ */
+async function inviteUserRegister() {
+    try {
+        const ref = route.query.ref as string
+        const deviceId = StorageUtil.getDeviceId() || StorageUtil.generateDeviceId()
+
+        console.log('开始邀请新用户注册流程，邀请人ID:', ref, '设备ID:', deviceId)
+
+        loadingText.value = i18n.t('common.loading')
+
+        const result = await userApi.inviteUser({
+            device_id: deviceId,
+            ref,
+        })
+
+        console.log('邀请新用户注册成功:', result)
+
+        // 保存认证信息到 localStorage 和 store
+        if (result.data) {
+            const authInfo = {
+                access_token: result.data.access_token,
+                refresh_token: '', // 邀请注册可能没有refresh_token
+                expire_at: result.data.expire_at,
+                user: {
+                    id: result.data.user.id,
+                    user_name: result.data.user.name,
+                },
+            }
+
+            // 保存到 localStorage
+            StorageUtil.setAuthInfo(authInfo)
+
+            // 更新 store 中的认证信息
+            userStore.authInfo = authInfo
+
+            // 等待一下确保 store 更新完成
+            await nextTick()
+
+            // 重新初始化认证信息，确保 store 状态正确
+            userStore.initAuthInfo()
+
+            // 获取用户详细信息
+            await userStore.fetchUserInfo()
+
+            // 设置非第一次登录状态
+            setNotFirstLogin()
+        }
+
+        return true
+    }
+    catch (error) {
+        console.error('邀请新用户注册失败:', error)
+        return false
+    }
+}
+
+/**
  * 智能登录流程
  */
 async function smartLogin() {
@@ -183,17 +249,24 @@ async function smartLogin() {
 
 async function init() {
     try {
-    // 先检查是否是第一次登录
-        const isFirst = checkIsFirstLogin()
-        console.log('🚀 ~ init ~ isFirst:', isFirst)
-
-        if (isFirst) {
-            // 如果是第一次登录，显示 FirstLogin 组件
-            firstLoginRef.value.open()
+        // 检查URL是否包含邀请人ID
+        if (hasInviterRef()) {
+            console.log('检测到邀请人ID，执行邀请新用户注册流程')
+            await inviteUserRegister()
         }
+        else {
+            // 先检查是否是第一次登录
+            const isFirst = checkIsFirstLogin()
+            console.log('🚀 ~ init ~ isFirst:', isFirst)
 
-        // 如果不是第一次登录，执行自动登录
-        await smartLogin()
+            if (isFirst) {
+                // 如果是第一次登录，显示 FirstLogin 组件
+                firstLoginRef.value.open()
+            }
+
+            // 如果不是第一次登录，执行自动登录
+            await smartLogin()
+        }
     }
     catch (error) {
         console.error(i18n.t('auth.initializationFailed'), error)

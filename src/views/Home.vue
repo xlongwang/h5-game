@@ -19,9 +19,7 @@
                     <img src="/images/casino/18.png" alt="18">
                 </div>
                 <div class="balance relative text-gold text-[50px] font-bold">
-                    ${{
-                        amount.toFixed(2) || "0.00"
-                    }}
+                    ${{ amount.toFixed(2) || "0.00" }}
                     <span class="recharge_entry" @click="handleRecharge"></span>
                 </div>
             </div>
@@ -96,24 +94,30 @@
                     class="game-grid pt-[10px]"
                     :border="false"
                 >
-                    <van-grid-item v-for="game in getGamesByProvider(tab.key)" :key="game.id">
+                    <van-grid-item v-for="game in gameList" :key="game.name">
+                        <div class="game-card">
+                            <van-image :src="game.logo" :alt="game.name" />
+                        </div>
+                    </van-grid-item>
+                    <!-- <van-grid-item v-for="game in getGamesByProvider(tab.key)" :key="game.id">
                         <div class="game-card">
                             <van-image :src="game.image" />
                         </div>
-                    </van-grid-item>
+                    </van-grid-item> -->
                 </van-grid>
             </van-swipe-item>
         </van-swipe>
 
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
 
-        <!-- 订单详情弹窗 -->
-        <!-- <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" /> -->
+    <!-- 订单详情弹窗 -->
+    <!-- <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" /> -->
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import { getMarqueeData } from '@/config/marqueenConfig'
 import useUserStore from '@/stores/use-user-store'
@@ -121,6 +125,11 @@ import useUserStore from '@/stores/use-user-store'
 // import { formatNumber } from '@/utils/tools'
 
 import '@/assets/scss/pages/home.scss'
+
+interface GameInfo {
+    logo: string
+    name: string
+}
 
 defineOptions({
     name: 'Home',
@@ -134,7 +143,16 @@ const { t } = i18n
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
-const orderDetailRef = ref()
+
+const gameList = ref<GameInfo[]>([])
+
+async function getGameList() {
+    const res = await userApi.getGameList({
+        type: 'fortune',
+    })
+    console.log('res', res)
+    gameList.value = res.data
+}
 
 const router = useRouter()
 
@@ -162,6 +180,7 @@ onMounted(() => {
     console.log('userInfo', userInfo.value)
     // 每次进入页面重新生成随机数据
     marqueeTexts.value = getMarqueeData()
+    getGameList()
 })
 
 const bannerImgs = [
@@ -192,24 +211,28 @@ const gameTabs = ref([
 ])
 
 const games = ref([
-    { id: 1, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
-    { id: 2, image: '/images/casino/active2.png', provider: 'pg' },
-    { id: 3, image: '/images/casino/active3.png', hot: true, provider: 'pg' },
-    { id: 4, image: '/images/casino/active1.png', provider: 'pg' },
-    { id: 5, image: '/images/casino/active2.png', hot: true, provider: 'pg' },
-    { id: 6, image: '/images/casino/active3.png', provider: 'pg' },
-    { id: 7, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
-    { id: 8, image: '/images/casino/active2.png', provider: 'pg' },
-    { id: 9, image: '/images/casino/active3.png', provider: 'pg' },
+    // { id: 1, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
+    // { id: 2, image: '/images/casino/active2.png', provider: 'pg' },
+    // { id: 3, image: '/images/casino/active3.png', hot: true, provider: 'pg' },
+    // { id: 4, image: '/images/casino/active1.png', provider: 'pg' },
+    // { id: 5, image: '/images/casino/active2.png', hot: true, provider: 'pg' },
+    // { id: 6, image: '/images/casino/active3.png', provider: 'pg' },
+    // { id: 7, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
+    // { id: 8, image: '/images/casino/active2.png', provider: 'pg' },
+    // { id: 9, image: '/images/casino/active3.png', provider: 'pg' },
+
     { id: 3, image: '/images/casino/active3.png', provider: 'jili' },
     { id: 4, image: '/images/casino/active1.png', provider: 'jili' },
     { id: 2, image: '/images/casino/active2.png', provider: 'jili' },
+
     { id: 5, image: '/images/casino/active1.png', provider: 'pp' },
     { id: 6, image: '/images/casino/active2.png', provider: 'pp' },
     { id: 21, image: '/images/casino/active3.png', provider: 'pp' },
+
     { id: 7, image: '/images/casino/active3.png', provider: 'job' },
     { id: 8, image: '/images/casino/active1.png', provider: 'job' },
     { id: 22, image: '/images/casino/active2.png', provider: 'job' },
+
     { id: 9, image: '/images/casino/active1.png', provider: 'mg' },
     { id: 10, image: '/images/casino/active2.png', provider: 'mg' },
     { id: 14, image: '/images/casino/active3.png', provider: 'mg' },

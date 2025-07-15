@@ -388,3 +388,78 @@ export enum OrderStatus {
     FAIL = 'FAIL', // 失败
     RETURN = 'RETURN', // 退回
 }
+
+// 邀请新用户请求参数类型
+export interface InviteUserParams {
+    /**
+     * 新用户设备id
+     */
+    device_id: string
+    /**
+     * 邀请人id
+     */
+    ref: string
+    [property: string]: any
+}
+
+// 邀请新用户响应数据类型
+export interface InviteUserData {
+    /**
+     * token
+     */
+    access_token: string
+    /**
+     * 过期时间
+     */
+    expire_at: number
+    user: {
+        /**
+         * 用户id
+         */
+        id: number
+        /**
+         * 用户名
+         */
+        name: string
+        [property: string]: any
+    }
+    [property: string]: any
+}
+
+// 邀请新用户API响应类型
+export interface InviteUserResponse {
+    code: number
+    data: InviteUserData
+    message: string
+    [property: string]: any
+}
+
+// 游戏列表请求参数类型
+export interface GameListParams {
+    /**
+     * 目前只有这一种,留出后续增加的位置
+     */
+    type: string
+    [property: string]: any
+}
+
+// 游戏信息类型
+export interface GameInfo {
+    /**
+     * 游戏Logo
+     */
+    logo: string
+    /**
+     * 游戏名
+     */
+    name: string
+    [property: string]: any
+}
+
+// 游戏列表API响应类型
+export interface GameListResponse {
+    code: number
+    data: GameInfo[]
+    message: string
+    [property: string]: any
+}
