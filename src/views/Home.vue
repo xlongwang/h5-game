@@ -89,14 +89,20 @@
         >
             <!-- pg -->
             <van-swipe-item>
+                <div v-if="gameListLoading" class="loading-container">
+                    <van-loading type="spinner" color="#ffd700" size="24px">
+                        {{ t('common.loading') }}
+                    </van-loading>
+                </div>
                 <van-grid
+                    v-else
                     :column-num="3"
                     :gutter="16"
                     class="game-grid pt-[10px]"
                     :border="false"
                 >
                     <van-grid-item v-for="game in gameList" :key="game.name">
-                        <div class="game-card">
+                        <div class="game-card" @click="handleGameClick(game)">
                             <van-image :src="game.logo" :alt="game.name" />
                         </div>
                     </van-grid-item>
@@ -137,6 +143,31 @@
 
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
 
+        <!-- 游戏 iframe 覆盖层 -->
+        <div v-if="gameIframeVisible" class="game-iframe-overlay">
+            <div class="game-iframe-header">
+                <button class="close-btn" @click="closeGameIframe">
+                    <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" />
+                </button>
+            </div>
+            <iframe
+                v-if="gameIframeUrl"
+                :src="gameIframeUrl"
+                class="game-iframe"
+                frameborder="0"
+                allowfullscreen
+            ></iframe>
+        </div>
+
+        <!-- 游戏加载状态 -->
+        <van-overlay v-if="gameLoading" :show="true" class="game-loading-overlay">
+            <div class="game-loading-content">
+                <van-loading type="spinner" color="#ffd700" size="32px">
+                    {{ t('common.loading') }}
+                </van-loading>
+            </div>
+        </van-overlay>
+
     <!-- 订单详情弹窗 -->
     <!-- <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" /> -->
     </div>
@@ -172,13 +203,26 @@ const activeTabIndex = ref(0)
 const swipeRef = ref()
 
 const gameList = ref<GameInfo[]>([])
+const gameListLoading = ref(false)
+const gameIframeVisible = ref(false)
+const gameIframeUrl = ref('')
+const gameLoading = ref(false)
 
 async function getGameList() {
-    const res = await userApi.getGameList({
-        type: 'fortune',
-    })
-    console.log('res', res)
-    gameList.value = res.data
+    try {
+        gameListLoading.value = true
+        const res = await userApi.getGameList({
+            type: 'fortune',
+        })
+        console.log('res', res)
+        gameList.value = res.data
+    }
+    catch (error) {
+        console.error('获取游戏列表失败:', error)
+    }
+    finally {
+        gameListLoading.value = false
+    }
 }
 
 const router = useRouter()
@@ -287,6 +331,40 @@ function handleTabChange(index: number) {
 
 function handleRecharge() {
     rechargPopRef.value.open()
+}
+
+async function handleGameClick(game: GameInfo) {
+    console.log('game', game)
+    try {
+        gameLoading.value = true
+
+        // 调用游戏登录接口
+        const result = await userApi.gameLogin({
+            game_name: game.name,
+            player_id: userInfo.value?.id || 0,
+        })
+
+        console.log('游戏登录结果:', result)
+
+        if (result.code === 200 && result.data) {
+            gameIframeUrl.value = result.data
+            gameIframeVisible.value = true
+        }
+        else {
+            console.error('获取游戏地址失败:', result.message)
+        }
+    }
+    catch (error) {
+        console.error('游戏登录失败:', error)
+    }
+    finally {
+        gameLoading.value = false
+    }
+}
+
+function closeGameIframe() {
+    gameIframeVisible.value = false
+    gameIframeUrl.value = ''
 }
 
 // 处理滑动切换
@@ -416,5 +494,74 @@ function handleOrderSuccess() {
   font-size: 1.2rem;
   padding: 12px 24px;
   border-radius: 8px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 650px;
+  color: #ffd700;
+  font-size: 16px;
+}
+
+/* 游戏 iframe 覆盖层样式 */
+.game-iframe-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-iframe-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 10000;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.game-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* 游戏加载状态样式 */
+.game-loading-overlay {
+  z-index: 10001;
+}
+
+.game-loading-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ffd700;
+  font-size: 18px;
 }
 </style>

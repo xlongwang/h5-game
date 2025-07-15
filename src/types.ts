@@ -487,3 +487,89 @@ export interface GameLoginResponse {
     message: string
     [property: string]: any
 }
+
+// 周签到信息请求参数类型
+export interface WeekSignInfoParams {
+    /**
+     * 用户id
+     */
+    player_id: string
+    [property: string]: any
+}
+
+// 奖励信息类型
+export interface Reward {
+    /**
+     * 星期几（1～7）
+     */
+    day: number
+    /**
+     * 奖励内容（如 "5 reais"）
+     */
+    reward: string
+    /**
+     * 状态：• received：已领取• available：可领取• locked：未解锁
+     */
+    status: string
+    [property: string]: any
+}
+
+// 额外奖励信息类型
+export interface ExtraReward {
+    /**
+     * 触发条件说明，例如 "Sign all 7 days"
+     */
+    condition: string
+    /**
+     * 额外奖励内容，例如 "Mystery Box"
+     */
+    reward: string
+    /**
+     * 状态：• available：可领取• locked：未达成
+     */
+    status: string
+    [property: string]: any
+}
+
+// 周签到信息数据类型
+export interface WeekSignInfoData {
+    /**
+     * 今天是否可以签到（未签过为 true）
+     */
+    can_sign_today: boolean
+    extra_reward: ExtraReward
+    rewards: Reward[]
+    /**
+     * 已签到的星期几数组，例如 [1, 3, 5]
+     */
+    signed_days: number[]
+    /**
+     * 今天是否已经签到过了
+     */
+    signed_today: boolean
+    /**
+     * 当前连续签到天数（从今天往前推）
+     */
+    streak: number
+    /**
+     * 今天是周几（1 = 周一，7 = 周日）
+     */
+    today: number
+    /**
+     * 本周累计签到天数
+     */
+    total_signed: number
+    /**
+     * 当前是今年的第几周（ISO 周数）
+     */
+    week: number
+    [property: string]: any
+}
+
+// 周签到信息API响应类型
+export interface WeekSignInfoResponse {
+    code: number
+    data: WeekSignInfoData
+    message: string
+    [property: string]: any
+}

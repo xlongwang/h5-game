@@ -7,18 +7,19 @@
             </div>
             <div class="act_day_list">
                 <div
-                    v-for="item in dayList"
+                    v-for="item in rewardList"
                     :key="item.day"
                     class="act_day_item"
                     :class="{ active: currentDay === item.day }"
                 >
-                    <div class="act_day_item_title_top">{{ item.title }}</div>
+                    <div class="act_day_item_title_top">DAY{{ item.day }}</div>
                     <div class="act_day_item_content pt-[36px]">
                         <div class="day_icon w-[174px] h-[168px] mx-[auto]">
                             <img :src="dayIconImg" class="w-[100%] h-[100%]">
                         </div>
                         <div class="act_day_item_num pt-[20px] pb-[20px]">
-                            ${{ formatNumber(item.num) }}
+                            <!-- ${{ formatNumber(item.num) }} -->
+                            ${{ formatNumber(Number(item.reward)) }}
                         </div>
                         <div class="day_checkin">{{ t('activity.checkIn') }}</div>
                     </div>
@@ -29,12 +30,26 @@
 </template>
 
 <script setup lang="ts">
+import type { Reward, WeekSignInfoData } from '@/types'
+import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 import { formatNumber } from '@/utils/tools'
 
 defineOptions({
     name: 'Activity01',
 })
+
+const userStore = useUserStore()
+
+const userInfo = computed(() => {
+    return userStore.userInfo
+})
+
+const rewardList = ref<Reward[]>([])
+
+const signInfo = ref<WeekSignInfoData>()
+
 const { i18n } = useGlobal()
 const { t } = i18n
 
@@ -73,6 +88,21 @@ const dayList = ref([
         num: 1,
     },
 ])
+
+async function getWeekSignInfo() {
+    const res = await userApi.getWeekSignInfo({
+        player_id: String(userInfo.value?.id || 0),
+    })
+    rewardList.value = res?.data?.rewards || []
+    // currentDay.value = res?.data?.current_day || 1
+    signInfo.value = res?.data
+
+    currentDay.value = signInfo.value?.today || 1
+}
+
+onMounted(() => {
+    getWeekSignInfo()
+})
 </script>
 
 <style lang="scss" scoped>
