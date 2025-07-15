@@ -2,11 +2,11 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-30 22:01:40
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-15 09:59:44
+ * @LastEditTime: 2025-07-15 11:31:16
  * @FilePath: /vue3_app/src/api/user-api.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import type { GameListParams, GameListResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
+import type { GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -137,6 +137,19 @@ export const userApi = {
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.get<GameListResponse['data']>('/game/List', params)
         console.log('游戏列表API响应:', result)
+        return result
+    },
+
+    /**
+     * 生成游戏地址
+     * @param params 游戏登录参数
+     * @returns Promise<GameLoginResponse>
+     */
+    async gameLogin(params: GameLoginParams): Promise<GameLoginResponse> {
+        console.log('调用游戏登录API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<string>('/game/Login', params)
+        console.log('游戏登录API响应:', result)
         return result
     },
 }

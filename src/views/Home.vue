@@ -87,7 +87,8 @@
             :show-indicators="false"
             @change="handleSwipeChange"
         >
-            <van-swipe-item v-for="tab in gameTabs" :key="tab.key">
+            <!-- pg -->
+            <van-swipe-item>
                 <van-grid
                     :column-num="3"
                     :gutter="16"
@@ -99,12 +100,38 @@
                             <van-image :src="game.logo" :alt="game.name" />
                         </div>
                     </van-grid-item>
-                    <!-- <van-grid-item v-for="game in getGamesByProvider(tab.key)" :key="game.id">
-                        <div class="game-card">
-                            <van-image :src="game.image" />
-                        </div>
-                    </van-grid-item> -->
                 </van-grid>
+            </van-swipe-item>
+            <!-- jili -->
+            <van-swipe-item>
+                <!-- <van-grid
+                    :column-num="3"
+                    :gutter="16"
+                    class="game-grid pt-[10px]"
+                    :border="false"
+                >
+                    <van-grid-item v-for="game in gameList" :key="game.name">
+                        <div class="game-card">
+                            <van-image :src="game.logo" :alt="game.name" />
+                        </div>
+                    </van-grid-item>
+                </van-grid> -->
+                <EmptyComponents :title="t('common.empty')" />
+            </van-swipe-item>
+
+            <!-- pp -->
+            <van-swipe-item>
+                <EmptyComponents :title="t('common.empty')" />
+            </van-swipe-item>
+
+            <!-- job -->
+            <van-swipe-item>
+                <EmptyComponents :title="t('common.empty')" />
+            </van-swipe-item>
+
+            <!-- mg -->
+            <van-swipe-item>
+                <EmptyComponents :title="t('common.empty')" />
             </van-swipe-item>
         </van-swipe>
 

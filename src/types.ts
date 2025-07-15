@@ -463,3 +463,27 @@ export interface GameListResponse {
     message: string
     [property: string]: any
 }
+
+// 游戏登录请求参数类型
+export interface GameLoginParams {
+    /**
+     * 游戏名称,具体值参考游戏列表接口
+     */
+    game_name: string
+    /**
+     * 用户id
+     */
+    player_id: number
+    [property: string]: any
+}
+
+// 游戏登录API响应类型
+export interface GameLoginResponse {
+    code: number
+    /**
+     * 游戏跳转地址不要跳转到外部 嵌套在内部运行
+     */
+    data: string
+    message: string
+    [property: string]: any
+}

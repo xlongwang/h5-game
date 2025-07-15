@@ -25,6 +25,7 @@ export default {
         clickToOpen: 'Clique para Abrir',
         sfc: 'Componente SFC',
         records: 'registros',
+        empty: 'Vazio',
     },
 
     // 导航
