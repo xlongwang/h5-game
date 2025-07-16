@@ -6,7 +6,7 @@
  * @FilePath: /vue3_app/src/api/user-api.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import type { GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse, WeekSignInfoParams, WeekSignInfoResponse } from '@/types'
+import type { GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InvitationInfoParams, InvitationInfoResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, SignRewardParams, SignRewardResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse, WeekSignInfoParams, WeekSignInfoResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -163,6 +163,32 @@ export const userApi = {
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.post<WeekSignInfoResponse['data']>('/game/weekSignInfo', params)
         console.log('周签到信息API响应:', result)
+        return result
+    },
+
+    /**
+     * 签到奖励
+     * @param params 签到奖励参数
+     * @returns Promise<SignRewardResponse>
+     */
+    async signReward(params: SignRewardParams): Promise<SignRewardResponse> {
+        console.log('调用签到奖励API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<SignRewardResponse['data']>('/game/signReward', params)
+        console.log('签到奖励API响应:', result)
+        return result
+    },
+
+    /**
+     * 获取邀请信息
+     * @param params 邀请信息参数
+     * @returns Promise<InvitationInfoResponse>
+     */
+    async getInvitationInfo(params: InvitationInfoParams): Promise<InvitationInfoResponse> {
+        console.log('调用邀请信息API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<InvitationInfoResponse['data']>('/web/invitationInfo', params)
+        console.log('邀请信息API响应:', result)
         return result
     },
 }

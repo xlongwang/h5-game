@@ -11,27 +11,27 @@
                     <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.today') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
                         <div class="text-[45px] pb-[8px]">Registro</div>
-                        <div class="text-[60px] font-bold">0</div>
+                        <div class="text-[60px] font-bold">{{ invitationInfo?.today_number_of_invitations || 0 }}</div>
                     </div>
                     <div class="invite-item flex flex-col w-[407px]">
                         <div class="text-[45px] pb-[8px]">Premio</div>
-                        <div class="text-[50px] font-bold">${{ formatNumber(0) }}</div>
+                        <div class="text-[50px] font-bold">${{ formatNumber(Number(invitationInfo?.total_number_of_invitations) || 0) }}</div>
                     </div>
                 </div>
                 <div class="'invite-mi-todo mt-[20px] flex h-[147px]">
                     <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.todo') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
                         <div class="text-[45px] pb-[8px]">Registro</div>
-                        <div class="text-[60px] font-bold">0</div>
+                        <div class="text-[60px] font-bold">{{ invitationInfo?.total_number_of_invitations || 0 }}</div>
                     </div>
                     <div class="invite-item flex flex-col w-[407px]">
                         <div class="text-[45px] pb-[8px]">Premio</div>
-                        <div class="text-[50px] font-bold">${{ formatNumber(0) }}</div>
+                        <div class="text-[50px] font-bold">${{ formatNumber(Number(invitationInfo?.total_revenue) || 0) }}</div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <!--
         <div class="recom-mi w-[1051px] h-[263px] mx-auto mt-[22px]">
             <div class="invite-mi-title font-bold text-[50px] pb-[30px]">{{ t('invite.myReward') }}</div>
             <div class="recom-con">
@@ -41,7 +41,7 @@
                 <span>${{ formatNumber(0) }}</span>
                 <div class="copy-btn">{{ t('activity.receive') }}</div>
             </div>
-        </div>
+        </div> -->
 
         <div class="mt-[22px] recom-section w-[1051px] mx-auto">
             <div class="invite-mi-title font-bold text-[50px] pb-[30px]">
@@ -75,8 +75,11 @@
 </template>
 
 <script setup lang="ts">
+import type { InvitationInfoData } from '@/types'
 import { showFailToast, showSuccessToast } from 'vant'
+import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
 import { formatNumber } from '@/utils/tools'
 
 defineOptions({
@@ -89,6 +92,7 @@ const inviteImg = '/images/invite/banner.png'
 
 const value = ref('')
 
+const invitationInfo = ref<InvitationInfoData>()
 const shareList = [
     {
         img: '/images/invite/a1.png',
@@ -207,6 +211,24 @@ function shareToInstagram(url: string) {
     showSuccessToast('Enlace copiado para Instagram')
 }
 
+const userStore = useUserStore()
+
+const userInfo = computed(() => {
+    return userStore.userInfo
+})
+
+async function getInvitationInfo() {
+    const res = await userApi.getInvitationInfo({
+        player_id: String(userInfo.value?.id || 0),
+    })
+    console.log('res :>> ', res)
+    invitationInfo.value = res?.data
+}
+
+onMounted(() => {
+    getInvitationInfo()
+})
+
 function openShareWindow(url: string, platform: string) {
     const width = 600
     const height = 400
@@ -264,7 +286,7 @@ async function copyToClipboard(text: string) {
 }
 
 onMounted(() => {
-    value.value = window.location.origin
+    value.value = `${window.location.origin}/?ref=${userInfo.value?.id}`
 })
 </script>
 

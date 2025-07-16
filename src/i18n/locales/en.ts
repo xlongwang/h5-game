@@ -135,6 +135,7 @@ export default {
         completeTasks: 'Complete tasks to earn rewards',
         receive: 'Receive',
         checkIn: 'CHECK IN',
+        alreadyCheckedIn: 'Already Checked In',
         day: 'DAY',
     },
 

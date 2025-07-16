@@ -573,3 +573,68 @@ export interface WeekSignInfoResponse {
     message: string
     [property: string]: any
 }
+
+// 签到奖励请求参数类型
+export interface SignRewardParams {
+    /**
+     * 用户id
+     */
+    player_id: string
+    [property: string]: any
+}
+
+// 签到奖励响应数据类型
+export interface SignRewardData {
+    /**
+     * 领取金额
+     */
+    amount: string
+    message: string
+    [property: string]: any
+}
+
+// 签到奖励API响应类型
+export interface SignRewardResponse {
+    code: number
+    data: SignRewardData
+    message: string
+    [property: string]: any
+}
+
+// 邀请信息请求参数类型
+export interface InvitationInfoParams {
+    /**
+     * 用户id
+     */
+    player_id: string
+    [property: string]: any
+}
+
+// 邀请信息响应数据类型
+export interface InvitationInfoData {
+    /**
+     * 今日邀请人数
+     */
+    todayNumberOfInvitations: number
+    /**
+     * 今日收益
+     */
+    todayRevenue: string
+    /**
+     * 总邀请人数
+     */
+    totalNumberOfInvitations: number
+    /**
+     * 总收益
+     */
+    totalRevenue: string
+    [property: string]: any
+}
+
+// 邀请信息API响应类型
+export interface InvitationInfoResponse {
+    code: number
+    data: InvitationInfoData
+    message: string
+    [property: string]: any
+}

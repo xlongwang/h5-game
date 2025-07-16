@@ -135,6 +135,7 @@ export default {
         completeTasks: 'Complete tarefas para ganhar recompensas',
         receive: 'Receber',
         checkIn: 'CHECK IN',
+        alreadyCheckedIn: 'Já Fez Check In',
         day: 'DAY',
     },
 

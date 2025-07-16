@@ -136,6 +136,7 @@ export default {
         receive: 'Recibir',
         checkIn: 'CHECK IN',
         day: 'DAY',
+        alreadyCheckedIn: 'Ya Check In',
     },
 
     // 客服支持
