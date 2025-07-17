@@ -142,11 +142,10 @@ async function handleCheckIn(item: Reward) {
     }
 
     if (item.status === 'locked') {
-        // showFailToast(t('activity.canNotCheckInTips'))
         return
     }
-
-    if (!item.can_claim_reward_today) {
+    // can_claim_reward_today
+    if (!signInfo.value?.can_claim_reward_today) {
         showFailToast(t('activity.canNotCheckInTips'))
         return
     }
