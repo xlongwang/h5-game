@@ -9,7 +9,7 @@
             <!-- Loading 状态 -->
             <div v-if="loading" class="loading_container">
                 <div class="loading_spinner"></div>
-                <div class="loading_text">{{ t('common.loading') }}</div>
+                <div class="loading_text">{{ t("common.loading") }}</div>
             </div>
 
             <!-- 签到列表 -->
@@ -34,7 +34,10 @@
                             :class="[item.status, { checking: checkInLoading === item.day }]"
                             @click="handleCheckIn(item)"
                         >
-                            <div v-if="checkInLoading === item.day" class="checkin_loading_spinner"></div>
+                            <div
+                                v-if="checkInLoading === item.day"
+                                class="checkin_loading_spinner"
+                            ></div>
                             <span v-else>
                                 {{
                                     item.status === "received"
@@ -52,6 +55,7 @@
 
 <script setup lang="ts">
 import type { Reward, WeekSignInfoData } from '@/types'
+import { showFailToast, showSuccessToast } from 'vant'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
@@ -137,12 +141,24 @@ async function handleCheckIn(item: Reward) {
         return
     }
 
+    if (item.status === 'locked') {
+        // showFailToast(t('activity.canNotCheckInTips'))
+        return
+    }
+
+    if (!item.can_claim_reward_today) {
+        showFailToast(t('activity.canNotCheckInTips'))
+        return
+    }
+
     checkInLoading.value = item.day
     try {
-        // 调用签到奖励 API
+    // 调用签到奖励 API
         const res = await userApi.signReward({
             player_id: String(userInfo.value?.id || 0),
         })
+
+        showSuccessToast(t('activity.checkInSuccess'))
 
         console.log('签到成功:', res.data)
 
@@ -192,15 +208,21 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .act_day_list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start; // 这里改成flex-start
   gap: 56px 32px;
   padding-top: 30px;
+  max-width: 1030px; // 宽度和头图一致
+  margin: 0 auto;    // 整体居中
 }
 .act_day_item_title_top {
   height: 89px;
@@ -254,6 +276,13 @@ onMounted(() => {
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
     }
+  }
+  &.locked {
+    background: rgb(90 90 90);
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    box-shadow: none;
+    border: 3px solid rgb(90 90 90);
   }
 
   &.checking {

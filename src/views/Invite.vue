@@ -15,7 +15,7 @@
                     </div>
                     <div class="invite-item flex flex-col w-[407px]">
                         <div class="text-[45px] pb-[8px]">Premio</div>
-                        <div class="text-[50px] font-bold">${{ formatNumber(Number(invitationInfo?.total_number_of_invitations) || 0) }}</div>
+                        <div class="text-[50px] font-bold">${{ formatNumber(Number(invitationInfo?.today_revenue) || 0) }}</div>
                     </div>
                 </div>
                 <div class="'invite-mi-todo mt-[20px] flex h-[147px]">

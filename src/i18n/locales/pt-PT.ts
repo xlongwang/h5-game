@@ -137,6 +137,8 @@ export default {
         checkIn: 'CHECK IN',
         alreadyCheckedIn: 'Já Fez Check In',
         day: 'DAY',
+        canNotCheckInTips: 'Complete o jogo uma vez para obter a recompensa diária.',
+        checkInSuccess: 'Check In bem-sucedido',
     },
 
     // 客服支持
