@@ -1,4 +1,5 @@
-export const formatNumber = (num: number) => {
-  if(!num) return '0.00'
-  return num.toFixed(2);
-};
+export function formatNumber(num: number) {
+    if (!num)
+        return '0.00'
+    return num.toFixed(2)
+}

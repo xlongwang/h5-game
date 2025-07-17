@@ -309,10 +309,10 @@ const games = ref([
     { id: 14, image: '/images/casino/active3.png', provider: 'mg' },
 ])
 
-// 根据游戏提供商筛选游戏
-const getGamesByProvider = computed(() => (provider: string) => {
-    return games.value.filter(game => game.provider === provider)
-})
+// // 根据游戏提供商筛选游戏
+// const getGamesByProvider = computed(() => (provider: string) => {
+//     return games.value.filter(game => game.provider === provider)
+// })
 
 // 监听 activeTabIndex 变化
 watch(activeTabIndex, (newIndex) => {
@@ -365,6 +365,7 @@ async function handleGameClick(game: GameInfo) {
 function closeGameIframe() {
     gameIframeVisible.value = false
     gameIframeUrl.value = ''
+    userStore.fetchUserInfo()
 }
 
 // 处理滑动切换
