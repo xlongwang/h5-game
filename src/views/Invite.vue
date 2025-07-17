@@ -324,8 +324,8 @@ onMounted(() => {
 .invite-mi {
   background: url("/images/invite/mi_bg.png") no-repeat center center;
   background-size: 100% 100%;
-  box-sizing: border-box;
   padding: 34px 40px 0;
+  box-sizing: border-box;
 }
 
 .invite-mi-hoy-title {
@@ -361,7 +361,7 @@ onMounted(() => {
   width: 972px;
   background-color: #1b0a00;
   border: 3px solid #351b00;
-  border-radius: 15px;
+  border-radius: 14px;
   height: 108px;
   box-sizing: border-box;
   padding-left: 22px;
