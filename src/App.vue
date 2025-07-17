@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-15 09:54:28
+ * @LastEditTime: 2025-07-17 10:37:42
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -213,10 +213,13 @@ async function smartLogin() {
         loadingText.value = i18n.t('common.loading')
         const hasAuthInfo = userStore.initAuthInfo()
         const hasUserInfo = userStore.initUserInfo()
+        // console.log('🚀 ~ smartLogin ~ hasUserInfo:', hasUserInfo)
+        // console.log('🚀 ~ smartLogin ~ userStore.isLoggedIn:', userStore.isLoggedIn)
 
         // 2. 如果已有完整的登录信息，直接跳过登录
-        if (hasAuthInfo && hasUserInfo && userStore.isLoggedIn) {
+        if (hasAuthInfo && hasUserInfo) {
             console.log('用户已登录，跳过登录流程')
+            userStore.fetchUserInfo()
             return true
         }
 
