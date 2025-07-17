@@ -163,6 +163,7 @@ async function handleCheckIn(item: Reward) {
 
         // 重新获取签到信息
         await getWeekSignInfo()
+        await userStore.fetchUserInfo()
     }
     catch (error) {
         console.error('签到失败:', error)
