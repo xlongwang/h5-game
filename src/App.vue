@@ -2,7 +2,7 @@
  * @Author: along longwang6@163.com
  * @Date: 2025-06-22 10:53:10
  * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-17 10:37:42
+ * @LastEditTime: 2025-07-26 22:38:10
  * @FilePath: /vue3_app/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -213,13 +213,17 @@ async function smartLogin() {
         loadingText.value = i18n.t('common.loading')
         const hasAuthInfo = userStore.initAuthInfo()
         const hasUserInfo = userStore.initUserInfo()
-        // console.log('🚀 ~ smartLogin ~ hasUserInfo:', hasUserInfo)
-        // console.log('🚀 ~ smartLogin ~ userStore.isLoggedIn:', userStore.isLoggedIn)
 
         // 2. 如果已有完整的登录信息，直接跳过登录
         if (hasAuthInfo && hasUserInfo) {
             console.log('用户已登录，跳过登录流程')
             userStore.fetchUserInfo()
+            // 先检查是否是第一次登录
+            const isFirst = checkIsFirstLogin()
+            if (isFirst) {
+                // 如果是第一次登录，显示 FirstLogin 组件
+                firstLoginRef.value.open()
+            }
             return true
         }
 
@@ -228,6 +232,11 @@ async function smartLogin() {
             // loadingText.value = '获取用户信息...'
             loadingText.value = i18n.t('common.loading')
             await userStore.fetchUserInfo()
+            const isFirst = checkIsFirstLogin()
+            if (isFirst) {
+                // 如果是第一次登录，显示 FirstLogin 组件
+                firstLoginRef.value.open()
+            }
             return true
         }
 
@@ -239,6 +248,11 @@ async function smartLogin() {
             // 登录成功后获取用户信息
             loadingText.value = i18n.t('common.loading')
             await userStore.fetchUserInfo()
+            const isFirst = checkIsFirstLogin()
+            if (isFirst) {
+                // 如果是第一次登录，显示 FirstLogin 组件
+                firstLoginRef.value.open()
+            }
         }
 
         return true
@@ -252,21 +266,12 @@ async function smartLogin() {
 
 async function init() {
     try {
-        // 检查URL是否包含邀请人ID
+    // 检查URL是否包含邀请人ID
         if (hasInviterRef()) {
             console.log('检测到邀请人ID，执行邀请新用户注册流程')
             await inviteUserRegister()
         }
         else {
-            // 先检查是否是第一次登录
-            const isFirst = checkIsFirstLogin()
-            console.log('🚀 ~ init ~ isFirst:', isFirst)
-
-            if (isFirst) {
-                // 如果是第一次登录，显示 FirstLogin 组件
-                firstLoginRef.value.open()
-            }
-
             // 如果不是第一次登录，执行自动登录
             await smartLogin()
         }

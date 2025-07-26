@@ -91,7 +91,7 @@
             <van-swipe-item>
                 <div v-if="gameListLoading" class="loading-container">
                     <van-loading type="spinner" color="#ffd700" size="24px">
-                        {{ t('common.loading') }}
+                        {{ t("common.loading") }}
                     </van-loading>
                 </div>
                 <van-grid
@@ -104,6 +104,12 @@
                     <van-grid-item v-for="game in gameList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
                             <van-image :src="game.logo" :alt="game.name" />
+                            <div v-if="game.show_name" class="game-name-container">
+                                <div class="game-name">{{ formatGameName(game.show_name)[0] }}</div>
+                                <div v-if="formatGameName(game.show_name)[1]" class="game-name">
+                                    {{ formatGameName(game.show_name)[1] }}
+                                </div>
+                            </div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -144,26 +150,29 @@
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
 
         <!-- 游戏 iframe 覆盖层 -->
-        <div v-if="gameIframeVisible" class="game-iframe-overlay">
-            <div class="game-iframe-header">
-                <button class="close-btn" @click="closeGameIframe">
-                    <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" />
-                </button>
+        <Teleport to="body">
+            <div v-if="gameIframeVisible" class="game-iframe-overlay">
+                <div class="game-iframe-header">
+                    <button class="close-btn" @click="closeGameIframe">
+                        <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" />
+                    </button>
+                </div>
+                <iframe
+                    v-if="gameIframeUrl"
+                    ref="gameIframeRef"
+                    :src="gameIframeUrl"
+                    class="game-iframe"
+                    frameborder="0"
+                    allowfullscreen
+                ></iframe>
             </div>
-            <iframe
-                v-if="gameIframeUrl"
-                :src="gameIframeUrl"
-                class="game-iframe"
-                frameborder="0"
-                allowfullscreen
-            ></iframe>
-        </div>
+        </Teleport>
 
         <!-- 游戏加载状态 -->
         <van-overlay v-if="gameLoading" :show="true" class="game-loading-overlay">
             <div class="game-loading-content">
                 <van-loading type="spinner" color="#ffd700" size="32px">
-                    {{ t('common.loading') }}
+                    {{ t("common.loading") }}
                 </van-loading>
             </div>
         </van-overlay>
@@ -187,6 +196,7 @@ import '@/assets/scss/pages/home.scss'
 interface GameInfo {
     logo: string
     name: string
+    show_name: string
 }
 
 defineOptions({
@@ -201,6 +211,7 @@ const { t } = i18n
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
+const gameIframeRef = ref<HTMLIFrameElement>()
 
 const gameList = ref<GameInfo[]>([])
 const gameListLoading = ref(false)
@@ -252,6 +263,14 @@ onMounted(() => {
     // 每次进入页面重新生成随机数据
     marqueeTexts.value = getMarqueeData()
     getGameList()
+
+    // 监听来自 iframe 的消息
+    window.addEventListener('message', handleIframeMessage)
+})
+
+onUnmounted(() => {
+    // 清理事件监听器
+    window.removeEventListener('message', handleIframeMessage)
 })
 
 const bannerImgs = [
@@ -281,39 +300,6 @@ const gameTabs = ref([
     { key: 'mg', title: 'MG', icon: '/images/casino/mg.png' },
 ])
 
-const games = ref([
-    // { id: 1, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
-    // { id: 2, image: '/images/casino/active2.png', provider: 'pg' },
-    // { id: 3, image: '/images/casino/active3.png', hot: true, provider: 'pg' },
-    // { id: 4, image: '/images/casino/active1.png', provider: 'pg' },
-    // { id: 5, image: '/images/casino/active2.png', hot: true, provider: 'pg' },
-    // { id: 6, image: '/images/casino/active3.png', provider: 'pg' },
-    // { id: 7, image: '/images/casino/active1.png', hot: true, provider: 'pg' },
-    // { id: 8, image: '/images/casino/active2.png', provider: 'pg' },
-    // { id: 9, image: '/images/casino/active3.png', provider: 'pg' },
-
-    { id: 3, image: '/images/casino/active3.png', provider: 'jili' },
-    { id: 4, image: '/images/casino/active1.png', provider: 'jili' },
-    { id: 2, image: '/images/casino/active2.png', provider: 'jili' },
-
-    { id: 5, image: '/images/casino/active1.png', provider: 'pp' },
-    { id: 6, image: '/images/casino/active2.png', provider: 'pp' },
-    { id: 21, image: '/images/casino/active3.png', provider: 'pp' },
-
-    { id: 7, image: '/images/casino/active3.png', provider: 'job' },
-    { id: 8, image: '/images/casino/active1.png', provider: 'job' },
-    { id: 22, image: '/images/casino/active2.png', provider: 'job' },
-
-    { id: 9, image: '/images/casino/active1.png', provider: 'mg' },
-    { id: 10, image: '/images/casino/active2.png', provider: 'mg' },
-    { id: 14, image: '/images/casino/active3.png', provider: 'mg' },
-])
-
-// // 根据游戏提供商筛选游戏
-// const getGamesByProvider = computed(() => (provider: string) => {
-//     return games.value.filter(game => game.provider === provider)
-// })
-
 // 监听 activeTabIndex 变化
 watch(activeTabIndex, (newIndex) => {
     console.log('activeTabIndex changed to:', newIndex)
@@ -326,6 +312,70 @@ function handleTabChange(index: number) {
     if (swipeRef.value) {
         console.log('swipeRef.value', swipeRef.value, index)
         swipeRef.value.swipeTo(index)
+    }
+}
+
+// 格式化游戏名称：驼峰转两个单词并换行
+function formatGameName(name: string): string[] | string {
+    if (!name)
+        return ''
+    // 驼峰命名转空格分隔
+    const words = name.replace(/([A-Z])/g, ' $1').trim()
+    // 如果只有一个单词，直接返回
+    if (!words.includes(' '))
+        return name
+    // 取前两个单词，用换行符分隔
+    const wordArray = words.split(' ')
+    return wordArray
+}
+
+// 处理来自 iframe 的消息
+function handleIframeMessage(event: MessageEvent) {
+    console.log('🚀 ~ handleIframeMessage ~ event:', event)
+    // 验证消息来源（可选，增加安全性）
+    // if (event.origin !== 'https://expected-origin.com') return
+
+    try {
+        const { type, data } = event.data
+
+        switch (type) {
+            case 'gameClose':
+                // iframe 请求关闭游戏
+                closeGameIframe()
+                break
+
+            case 'gameError':
+                // 游戏加载错误
+                console.error('Game error:', data)
+                closeGameIframe()
+                break
+
+            case 'gameLoaded':
+                // 游戏加载完成
+                console.log('Game loaded successfully')
+                gameLoading.value = false
+                break
+
+            case 'gameAction':
+                // 游戏中的操作（如投注、赢取等）
+                console.log('Game action:', data)
+                // 可以在这里处理游戏相关的业务逻辑
+                break
+
+            case 'userBalance':
+                // 更新用户余额
+                if (data && typeof data.balance === 'number') {
+                    // 可以在这里更新用户余额显示
+                    console.log('Balance updated:', data.balance)
+                }
+                break
+
+            default:
+                console.log('Unknown message type:', type, data)
+        }
+    }
+    catch (error) {
+        console.error('Error handling iframe message:', error)
     }
 }
 
@@ -415,6 +465,18 @@ function handleOrderSuccess() {
   font-size: 10px;
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+}
+
+.game-name-container {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  color: #fff;
+  line-height: 1.2;
+  font-size: 45px;
+  width: 100%;
+  text-align: center;
 }
 
 /* 优化标签样式 */

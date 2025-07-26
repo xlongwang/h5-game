@@ -21,7 +21,7 @@
                 <span class="pr-[10px]">{{ t("components.expectedTime") }}: </span>
                 <span class="text-[#f3d559] whitespace-nowrap">{{
                     hours
-                }}</span>
+                }} H</span>
             </div>
         </div>
     </CommonPop>

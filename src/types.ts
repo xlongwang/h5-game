@@ -85,6 +85,8 @@ export interface UserInfo {
     wallet_logs: WalletLog[]
     referral: any | null
     referred_by: any | null
+    invitation_reward?: number
+    registration_reward?: number
 }
 
 // 用户信息API响应类型
@@ -453,6 +455,8 @@ export interface GameInfo {
      * 游戏名
      */
     name: string
+
+    show_name: string
     [property: string]: any
 }
 

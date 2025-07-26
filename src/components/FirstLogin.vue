@@ -24,7 +24,7 @@
             <div class="firt-pop1-conent firt-pop2-conent">
                 {{ $t('firstLogin.pop2.congratulations') }}
             </div>
-            <div class="first-pop1-money">{{ $t('firstLogin.pop2.rewardAmount') }}</div>
+            <div class="first-pop1-money">R$ {{ (userInfo?.registration_reward || 0).toFixed(2) }}</div>
             <div class="first-pop1-bt">{{ $t('firstLogin.pop2.goClaim') }}</div>
             <div class="first-pop1-btn" @click="goLast">
                 {{ $t("firstLogin.pop2.btn") }}
@@ -34,16 +34,23 @@
 </template>
 
 <script setup lang="ts">
+import useUserStore from '@/stores/use-user-store'
 import { StorageUtil } from '@/utils/storage'
 
 defineOptions({
     name: 'FirstLogin',
 })
 
+const userStore = useUserStore()
+
 const showCenter = ref(false)
 
 const showPop1 = ref(true)
 const showPop2 = ref(false)
+
+const userInfo = computed(() => {
+    return userStore.userInfo
+})
 
 function close() {
     showCenter.value = false
