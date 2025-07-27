@@ -12,9 +12,12 @@
         <div class="activity01_content">
             <div class="act_header w-[1043px] h-[529px] mx-auto">
                 <img class="w-[100%] h-[100%]" :src="headerImg" alt="">
+                <div class="absolute top-[100px] left-[42px] w-[478px] h-full flex items-center justify-center">
+                    <div class="text-[34px] text-[#f3d558]">{{ txt }}</div>
+                </div>
             </div>
             <div class="act_btn w-[1046px] h-[143px] mx-auto mt-[53px]">
-                {{ t('activity.receive') }} ${{ formatNumber(90) }}
+                {{ t('activity.receive') }} ${{ formatNumber(USER_REWARD) }}
             </div>
             <div class="text-center w-[1046px] h-[143px] mx-auto mt-[33px] text-[40px]">
                 {{ t('activity.completeTasks') }}
@@ -25,6 +28,7 @@
 
 <script setup lang="ts">
 import { useGlobal } from '@/composables'
+import { USER_REWARD } from '@/config/NumberConfig'
 import { formatNumber } from '@/utils/tools'
 
 defineOptions({
@@ -34,11 +38,16 @@ const { i18n } = useGlobal()
 const { t } = i18n
 
 const headerImg = '/images/activity/a1.png'
+
+const txt = computed(() => `${t('activity02.completeTaskText')} $${(USER_REWARD).toFixed(2)}`)
 </script>
 
 <style lang="scss" scoped>
 .activity01_page {
   padding-bottom: 300px;
+}
+.act_header{
+    position: relative;
 }
 .act_btn{
   background: url("/images/activity/btn_bg.png") no-repeat center center;

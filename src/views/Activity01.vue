@@ -4,6 +4,9 @@
         <div class="activity01_content">
             <div class="act_header w-[1043px] h-[529px] mx-auto">
                 <img class="w-[100%] h-[100%]" :src="headerImg" alt="">
+                <div class="absolute top-[100px] left-[42px] w-[478px] h-full flex items-center justify-center">
+                    <div class="text-[34px] text-[#f3d558]">{{ txt }}</div>
+                </div>
             </div>
 
             <!-- Loading 状态 -->
@@ -82,39 +85,8 @@ const { t } = i18n
 
 const headerImg = '/images/activity/a3.png'
 const dayIconImg = '/images/activity/coin.png'
+const txt = computed(() => t('activity01.dailyLoginText'))
 const currentDay = ref(1)
-const dayList = ref([
-    {
-        day: 1,
-        title: `${t('activity.day')}1`,
-        num: 1,
-    },
-    {
-        day: 2,
-        title: `${t('activity.day')}2`,
-        num: 1,
-    },
-    {
-        day: 3,
-        title: `${t('activity.day')}3`,
-        num: 1,
-    },
-    {
-        day: 4,
-        title: `${t('activity.day')}4`,
-        num: 1,
-    },
-    {
-        day: 5,
-        title: `${t('activity.day')}5`,
-        num: 1,
-    },
-    {
-        day: 6,
-        title: `${t('activity.day')}6`,
-        num: 1,
-    },
-])
 
 async function getWeekSignInfo() {
     loading.value = true
@@ -181,6 +153,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 .activity01_page {
   padding-bottom: 300px;
+}
+
+.act_header{
+    position: relative;
 }
 
 .loading_container {

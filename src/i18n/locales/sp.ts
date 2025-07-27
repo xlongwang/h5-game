@@ -26,6 +26,7 @@ export default {
         sfc: 'Componente SFC',
         records: 'registros',
         empty: 'Vacío',
+        comingSoon: 'Próximamente',
     },
 
     // 导航
@@ -201,6 +202,23 @@ export default {
         shareError: 'Error al abrir ventana de compartir',
         linkCopied: 'Enlace copiado al portapapeles',
         linkCopiedForInstagram: 'Enlace copiado para Instagram',
+    },
+
+    // Banner 横幅
+    banner: {
+        inviteFriends: 'INVITA A TUS AMIGOS A REGISTRARSE Y GANA',
+        completeTask: 'COMPLETA LA TAREA Y RECIBE',
+        dailyLogin: 'INICIE SESIÓN TODOS LOS DÍAS Y OBTENGA BONIFICACIONES',
+    },
+
+    // Activity01 活动页面
+    activity01: {
+        dailyLoginText: '¡Inicie sesión todos los días para recibir un paquete de regalo en efectivo!',
+    },
+
+    // Activity02 活动页面
+    activity02: {
+        completeTaskText: 'Completa la tarea para obtener una recompensa en efectivo de',
     },
 
     // 个人资料

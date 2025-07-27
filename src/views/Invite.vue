@@ -3,6 +3,7 @@
         <HeaderBack :has-back-icon="true" :title="t('invite.title')" />
         <div class="invite-header w-[1049px] mx-auto mb-[17px]">
             <img :src="inviteImg" class="w-[100%]">
+            <div class="invite-txt text-[36px] text-[#f3d558]">{{ inviteTxt }}</div>
         </div>
         <div class="invite-mi w-[1049px] h-[477px] mx-auto">
             <div class="invite-mi-title font-bold text-[50px] pb-[30px]">{{ t('invite.myInvitation') }}</div>
@@ -217,6 +218,8 @@ const userInfo = computed(() => {
     return userStore.userInfo
 })
 
+const inviteTxt = computed(() => `i Invita a los usuarios a registrarse y obtén una recompensa en efectivo de $${(userInfo.value?.invitation_reward || 0).toFixed(2)}`)
+
 async function getInvitationInfo() {
     const res = await userApi.getInvitationInfo({
         player_id: String(userInfo.value?.id || 0),
@@ -293,6 +296,17 @@ onMounted(() => {
 <style lang="scss" scoped>
 .invite-page {
   padding: 0 10px 300px;
+}
+
+.invite-header{
+    position: relative;
+    .invite-txt{
+        position: absolute;
+        top: 300px;
+        left: 0;
+        width: 413px;
+        left: 42px;
+    }
 }
 
 .local_input {

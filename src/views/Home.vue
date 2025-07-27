@@ -40,6 +40,9 @@
                     @click="handleClick(item.path)"
                 >
                     <img :src="item.img" alt="" class="w-full h-full object-cover">
+                    <div class="absolute top-[80px] left-[62px] w-[478px] h-full flex items-center justify-center">
+                        <div class="text-[32px] text-[#f3d558]">{{ item.txt }}</div>
+                    </div>
                 </van-swipe-item>
             </van-swipe>
         </div>
@@ -128,22 +131,22 @@
                         </div>
                     </van-grid-item>
                 </van-grid> -->
-                <EmptyComponents :title="t('common.empty')" />
+                <EmptyComponents :title="t('common.comingSoon')" />
             </van-swipe-item>
 
             <!-- pp -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.empty')" />
+                <EmptyComponents :title="t('common.comingSoon')" />
             </van-swipe-item>
 
             <!-- job -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.empty')" />
+                <EmptyComponents :title="t('common.comingSoon')" />
             </van-swipe-item>
 
             <!-- mg -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.empty')" />
+                <EmptyComponents :title="t('common.comingSoon')" />
             </van-swipe-item>
         </van-swipe>
 
@@ -187,6 +190,7 @@ import { computed, ref, watch } from 'vue'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import { getMarqueeData } from '@/config/marqueenConfig'
+import { USER_REWARD } from '@/config/NumberConfig'
 import useUserStore from '@/stores/use-user-store'
 
 // import { formatNumber } from '@/utils/tools'
@@ -273,20 +277,23 @@ onUnmounted(() => {
     window.removeEventListener('message', handleIframeMessage)
 })
 
-const bannerImgs = [
+const bannerImgs = computed(() => [
     {
         path: '/invite',
         img: '/images/promotion/a1.png',
+        txt: `${t('banner.inviteFriends')} $${(userInfo.value?.invitation_reward || 0).toFixed(2)}`,
     },
     {
         path: '/activity02',
         img: '/images/promotion/a2.png',
+        txt: `${t('banner.completeTask')} $${(USER_REWARD).toFixed(2)}`,
     },
     {
         path: '/activity01',
         img: '/images/promotion/a3.png',
+        txt: t('banner.dailyLogin'),
     },
-]
+])
 
 function handleClick(path: string) {
     router.push(path)

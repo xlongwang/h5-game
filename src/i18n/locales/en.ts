@@ -26,6 +26,7 @@ export default {
         sfc: 'SFC Component',
         records: 'records',
         empty: 'Empty',
+        comingSoon: 'Coming Soon',
     },
 
     // 导航
@@ -201,6 +202,23 @@ export default {
         shareError: 'Error opening share window',
         linkCopied: 'Link copied to clipboard',
         linkCopiedForInstagram: 'Link copied for Instagram',
+    },
+
+    // Banner
+    banner: {
+        inviteFriends: 'INVITE YOUR FRIENDS TO REGISTER AND EARN',
+        completeTask: 'COMPLETE THE TASK AND RECEIVE',
+        dailyLogin: 'LOGIN EVERY DAY AND GET BONUSES',
+    },
+
+    // Activity01
+    activity01: {
+        dailyLoginText: 'Login every day to receive a cash gift package!',
+    },
+
+    // Activity02
+    activity02: {
+        completeTaskText: 'Complete the task to get a cash reward of',
     },
 
     // 第一次登录

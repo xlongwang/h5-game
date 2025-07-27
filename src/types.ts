@@ -642,3 +642,45 @@ export interface InvitationInfoResponse {
     message: string
     [property: string]: any
 }
+
+// 提现申请参数
+export interface WithdrawalApplicationParams {
+    /**
+     * 提现金额
+     */
+    amount?: string
+    /**
+     * 用户id
+     */
+    player_id?: string
+    [property: string]: any
+}
+
+// 提现申请响应数据
+export interface WithdrawalApplicationData {
+    /**
+     * 金额
+     */
+    amount: string
+    /**
+     * 过期时间
+     */
+    expire_time: number
+    /**
+     * 开始时间
+     */
+    start_time: number
+    /**
+     * 当前状态，pending未到,confirmed可提交
+     */
+    status: string
+    [property: string]: any
+}
+
+// 提现申请响应
+export interface WithdrawalApplicationResponse {
+    code: number
+    data: WithdrawalApplicationData
+    message: string
+    [property: string]: any
+}

@@ -24,7 +24,6 @@
 
                 <div class="text-[#fe0000]">${{ coastNum }}</div>
             </div>
-
         </div>
     </CommonPop>
 </template>
@@ -133,7 +132,6 @@ defineExpose({
   background: rgba(185, 133, 31, 0.1);
 }
 
-
 .detait_handling_input{
   height: 93px;
   border-radius: 15px;
@@ -145,7 +143,6 @@ defineExpose({
   justify-content: space-between;
   margin-top: 60px;
 }
-
 
 .dot_icon {
   width: 33px;
@@ -159,5 +156,4 @@ defineExpose({
 .detait_re_txt {
   word-break: break-all;
 }
-
 </style>
