@@ -146,7 +146,7 @@
 
             <!-- mg -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.comingSoon')" />
+                <EmptyComponents :title="t('common.empty')" />
             </van-swipe-item>
         </van-swipe>
 

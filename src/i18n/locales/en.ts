@@ -269,6 +269,9 @@ export default {
         progressStep5: 'The user\'s withdrawal amount exceeds $3,000.00, exceeding the free limit of the VIP channel. A 5% fee will be charged for the withdrawal. Once payment is received in the VIP channel, the remittance request will be sent to the central bank for processing.',
         progressStep6: 'Abnormal bank processing: this withdrawal amount is additional personal income. According to federal regulations, 10% personal income tax is required on the withdrawal amount.',
         progressStep7: 'The withdrawal request has been sent to the Central Bank and the bank is processing it.',
+        progressStep8: 'The withdrawal has been completed. The money has been transferred to your account.',
+        progressStep9: 'The financial transfer has been made for you, please wait 10 minutes.',
+        timeRemaining: 'Time Remaining',
     },
 
     // 记录
@@ -423,6 +426,10 @@ export default {
         retairPop06Title: 'Dear user:',
         retairPop06Desc: 'Dear user: This withdrawal belongs to your personal additional income. According to federal regulations, the bank must collect 10% personal income tax. Your current withdrawal progress is 99.9% and only the last step remains before the withdrawal arrives. Once the tax is paid, the bank will process the transfer immediately.',
         retairPop06TaxTitle: 'Taxes to pay',
+        taxesToPay: 'Taxes to pay',
+        payHighFinancialExpenses: 'Pay high financial expenses',
+        personalTaxApplicationSubmitted: 'Your personal income tax application has been submitted. We will arrange for the finance department to go to the bank to pay your personal income tax (due to the large number of orders being processed now, the finance department needs to submit the application in a unified manner, which is expected to take 7 working days). If you need to hire a dedicated finance department, you will need to pay an accounting fee of 1,000, and a senior finance department will process your order immediately.',
+        withdrawalFees: 'Withdrawal fees',
 
         recordDetailAmount: 'Amount',
         recordDetailTime: 'Time',

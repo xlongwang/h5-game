@@ -24,8 +24,12 @@ import useUserStore from '@/stores/use-user-store'
 const props = defineProps<{
     activeVal: number
     onSuccess: () => void
-    rechargeRef: any
 }>()
+
+const emit = defineEmits<{
+    openRecharge: [amount: number]
+}>()
+
 const store = useUserStore()
 const showCenter = ref(false)
 const { i18n } = useGlobal()
@@ -48,7 +52,8 @@ function handleSubmit() {
     // }
     // else {
     console.log('not enough')
-    props.rechargeRef.open()
+    // 通过 emit 事件通知父组件打开充值弹窗并设置金额
+    emit('openRecharge', 200)
     // }
     props.onSuccess()
     hide()

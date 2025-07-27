@@ -11,8 +11,11 @@
         <div class="recharge_detail_content">
             <div class="text-[50px] detait_handling_input detait_re_txt flex justify-between text-center">
                 <div>{{ t("components.handlingFeeText") }}</div>
+                <!-- 管理费 -->
                 <div class="text-[#fe0000]">${{ confirmInfo.coast.toFixed(2) }}</div>
             </div>
+
+            <!-- 请根据订单金额进行支付。若订单金额与实际支付金额不符，押金将不予退还！ -->
 
             <div class="text-[40px] detait_re_txt pt-[80px]">
                 <span class="dot_icon mr-[10px]"></span>{{ t("components.payAccordingToOrder") }}

@@ -8,6 +8,10 @@
         @cancel="handleCancel"
         @confirm="handleSubmit"
     >
+        <!-- 尊敬的用户：我们致力于为用户提供更优质的提现体验。
+若通过VIP支付渠道一次性提现的金额超过3,000.00美元，VIP支付渠道将收取提现金额的5%作为管理费。
+这种取款手续费是用于维护支付系统的。 -->
+
         <div class="recharge_detail_content">
             <div class="text-[50px] detait_re_txt word-break-all pt-[40px]">
                 {{ t("components.vipFeeDescription") }}

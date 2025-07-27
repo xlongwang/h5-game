@@ -1,71 +1,56 @@
 <template>
-    <!-- 个人所得税支付确认 弹窗 -->
-    <!--
-    尊敬的用户：此次取款属于您的个人额外收入。根据联邦法规，银行需代扣10%的个人所得税。
-您当前提款申请的进度已达 99.9%，距离提款成功仅剩最后一步了。
-纳税后，银行会立即处理转账事宜。 -->
+    <!-- 财务费用 -->
 
+    <!-- 您的个人所得税申请已提交。我们将安排财务部门前往银行为您缴纳个人所得税（由于当前订单处理量较大，财务部门需统一提交申请，预计需7个工作日完成。）若您需委托专属财务团队处理订单，需支付1000元会计服务费，专属财务团队将立即为您处理订单。 -->
     <CommonPop
         v-model="showCenter"
         :title="t('components.details')"
         :is-single-btn="true"
-        :cancel-text="t('components.cancel')"
-        :confirm-text="t('components.payPersonalTax')"
+        :confirm-text="t('components.payHighFinancialExpenses')"
         @cancel="handleCancel"
         @confirm="handleSubmit"
     >
         <div class="recharge_detail_content">
             <div class="text-[40px] detait_re_txt pt-[40px]">
-                <div>{{ t("components.retairPop06Title") }}</div>
-                <div>
-                    {{ t("components.retairPop06Desc") }}
-                </div>
+                {{ t('components.personalTaxApplicationSubmitted') }}
             </div>
+            <div class="text-[35px] detait_re_txt detait_handling_input pt-[40px] flex justify-between">
+                <div>{{ t('components.withdrawalFees') }}</div>
 
-            <div class="text-[40px] detait_handling_input flex justify-between">
-                <div>{{ t("components.withdrawalAmount") }}</div>
-                <div class="text-[#fe0000]">
-                    ${{ amount ? (Number(amount)).toFixed(2) : "0.00" }}
-                </div>
-            </div>
-
-            <div class="text-[40px] detait_handling_input flex justify-between">
-                <div>{{ t('components.taxesToPay') }}</div>
-                <!-- 需缴纳的税款 -->
-                <div class="text-[#fe0000]">
-                    ${{ amount ? (Number(amount) * 0.1).toFixed(2) : "0.00" }}
-                </div>
+                <div class="text-[#fe0000]">${{ tax.toFixed(2) }}</div>
             </div>
         </div>
     </CommonPop>
 </template>
 
 <script setup lang="ts">
+// import { userApi } from "@/api/user-api";
 import { useGlobal } from '@/composables'
-
 // import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-    pop6Submit: () => void
-    tax: number
-    retairPop07Ref: any
+    pop8Submit: () => void
     amount: number
 }>()
-
 // const userStore = useUserStore()
-
 const showCenter = ref(false)
 const { i18n } = useGlobal()
 const { t } = i18n
+
+const tax = ref(1000)
+
+// const userInfo = computed(() => {
+//     return userStore.userInfo
+// })
 
 function handleCancel() {
     console.log('handleCancel')
     hide()
 }
 
-async function handleSubmit() {
-    // props.retairPop07Ref.open()
-    props.pop6Submit()
+function handleSubmit() {
+    // console.log("handleSubmit");
+    props.pop8Submit()
     hide()
 }
 
@@ -84,12 +69,17 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+.recharge_detail_popup {
+  width: 1000px;
+  padding-bottom: 50px;
+  border-radius: 20px;
+  background-color: #0c0401;
+  border: 3px solid #b9851f;
+  line-height: 1.4;
+}
 .recharge_detail_content {
   width: 100%;
   height: 100%;
-
-  position: relative;
-  z-index: 1;
 }
 .peposito_de_title {
   width: 820px;
@@ -121,7 +111,7 @@ defineExpose({
   background: rgba(185, 133, 31, 0.1);
 }
 
-.detait_handling_input {
+.detait_handling_input{
   height: 93px;
   border-radius: 15px;
   border: 3px solid #b9851f;

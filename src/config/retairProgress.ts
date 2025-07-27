@@ -27,6 +27,14 @@ const retarirProgress = {
         title: '7',
         description: 'withdraw.progressStep7',
     },
+    8: {
+        title: '8',
+        description: 'withdraw.progressStep8',
+    },
+    9: {
+      title: '8',
+      description: 'withdraw.progressStep9',
+  },
 }
 
 export default retarirProgress

@@ -551,6 +551,10 @@ export default {
         retairPop06Title: 'Caro usuário:',
         retairPop06Desc: 'Caro usuário: Este saque pertence à sua renda pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto de renda pessoal. O progresso do seu saque atual é de 99,9% e só falta o último passo antes da chegada do saque. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
         retairPop06TaxTitle: 'Impostos a pagar',
+        taxesToPay: 'Impostos a pagar',
+        payHighFinancialExpenses: 'Pagar despesas financeiras elevadas',
+        personalTaxApplicationSubmitted: 'Sua solicitação de imposto de renda pessoal foi enviada. Organizaremos para que o departamento financeiro vá ao banco para pagar seu imposto de renda pessoal (devido ao grande número de pedidos sendo processados agora, o departamento financeiro precisa enviar a solicitação de forma unificada, o que deve levar 7 dias úteis). Se você precisar contratar um departamento financeiro dedicado, precisará pagar uma taxa contábil de 1.000, e um departamento financeiro sênior processará seu pedido imediatamente.',
+        withdrawalFees: 'Taxas de saque',
 
         recordDetailAmount: 'Valor',
         recordDetailTime: 'Hora',
@@ -570,5 +574,8 @@ export default {
         progressStep5: 'O valor do saque do usuário excede $3.000,00, excedendo o limite gratuito do canal VIP. Uma taxa de 5% será cobrada pelo saque. Uma vez recebido o pagamento no canal VIP, a solicitação de remessa será enviada ao banco central para processamento.',
         progressStep6: 'Processamento bancário anormal: este valor de saque é renda pessoal adicional. De acordo com as regulamentações federais, é necessário imposto de renda pessoal de 10% sobre o valor do saque.',
         progressStep7: 'A solicitação de saque foi enviada ao Banco Central e o banco está processando.',
+        progressStep8: 'O saque foi concluído. O dinheiro foi transferido para sua conta.',
+        progressStep9: 'A transferência financeira foi realizada para você, aguarde 10 minutos.',
+        timeRemaining: 'Tempo Restante',
     },
 }

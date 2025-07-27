@@ -551,6 +551,10 @@ export default {
         retairPop06Title: 'Caro utilizador:',
         retairPop06Desc: 'Caro utilizador: Este levantamento pertence ao seu rendimento pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto sobre o rendimento pessoal. O progresso do seu levantamento atual é de 99,9% e só falta o último passo antes da chegada do levantamento. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
         retairPop06TaxTitle: 'Impostos a pagar',
+        taxesToPay: 'Impostos a pagar',
+        payHighFinancialExpenses: 'Pagar despesas financeiras elevadas',
+        personalTaxApplicationSubmitted: 'A sua solicitação de imposto sobre o rendimento pessoal foi submetida. Organizaremos para que o departamento financeiro vá ao banco para pagar o seu imposto sobre o rendimento pessoal (devido ao grande número de pedidos que estão a ser processados agora, o departamento financeiro precisa submeter a solicitação de forma unificada, o que deve demorar 7 dias úteis). Se precisar de contratar um departamento financeiro dedicado, terá de pagar uma taxa contabilística de 1.000, e um departamento financeiro sénior processará o seu pedido imediatamente.',
+        withdrawalFees: 'Taxas de levantamento',
 
         recordDetailAmount: 'Valor',
         recordDetailTime: 'Hora',
@@ -570,5 +574,8 @@ export default {
         progressStep5: 'O valor do levantamento do utilizador excede $3.000,00, excedendo o limite gratuito do canal VIP. Uma taxa de 5% será cobrada pelo levantamento. Uma vez recebido o pagamento no canal VIP, o pedido de remessa será enviado ao banco central para processamento.',
         progressStep6: 'Processamento bancário anormal: este valor de levantamento é rendimento pessoal adicional. De acordo com as regulamentações federais, é necessário imposto sobre o rendimento pessoal de 10% sobre o valor do levantamento.',
         progressStep7: 'O pedido de levantamento foi enviado ao Banco Central e o banco está a processá-lo.',
+        progressStep8: 'O levantamento foi concluído. O dinheiro foi transferido para a sua conta.',
+        progressStep9: 'A transferência financeira foi realizada para si, aguarde 10 minutos.',
+        timeRemaining: 'Tempo Restante',
     },
 }

@@ -26,35 +26,14 @@
     </CommonPop>
 
     <!-- 二维码弹窗 -->
-    <van-popup v-model:show="showQRCode" round class="qrcode_popup">
-        <div class="qrcode_content text-[45px]">
-            <!-- <div class="qrcode_title">{{ t("components.scanToPay") }}</div> -->
-            <div class="qrcode_val pb-[20px]">
-                {{ t("components.qrCodeVal") }} ${{ formatVal(amount) }}
-            </div>
-            <div class="qrcode_order pb-[30px]">
-                {{ t("components.qrOrderNum") }}: {{ orderNo }}
-            </div>
-            <div class="qrcode_container">
-                <img
-                    v-if="qrCodeDataUrl"
-                    :src="qrCodeDataUrl"
-                    alt="支付二维码"
-                    class="qrcode_image"
-                >
-                <div v-else class="qrcode_loading">{{ t("components.generatingQRCode") }}</div>
-            </div>
-            <div class="qrcode_tips pt-[30px] text-[45px]">{{ t("components.scanQRCodeToPay") }}</div>
-            <div class="qrcode_actions">
-                <div class="qrcode_copy" @click="copyPayUrl">
-                    {{ t("components.copyLink") }}
-                </div>
-                <div class="qrcode_close" @click="closeQRCode">
-                    {{ t("components.close") }}
-                </div>
-            </div>
-        </div>
-    </van-popup>
+    <QRCodePopup
+        v-model:show="showQRCode"
+        :amount="amount"
+        :order-no="orderNo"
+        :qr-code-data-url="qrCodeDataUrl"
+        :pay-url="payUrl"
+        @close="closeQRCode"
+    />
 </template>
 
 <script setup lang="ts">
@@ -64,26 +43,38 @@ import { showSuccessToast } from 'vant'
 import { onUnmounted, ref } from 'vue'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+import { rechargAmountList } from '@/config/RechargeConfig'
 import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-    activeVal: number
+    // activeVal: number
     onSuccess: () => void
-    extra: number
+    // extra: number
 }>()
 
 const { i18n } = useGlobal()
 const { t } = i18n
 
 const userStore = useUserStore()
+const activeVal = ref(0)
+
+const extra = computed(() => {
+    const item = rechargAmountList.find(item => item.val === activeVal.value)
+    return item?.extra || 0
+})
 
 const userInfo = computed(() => {
     return userStore.userInfo
 })
 
 const receiveVal = computed(() => {
-    return Number(props.activeVal) + Number(props.extra ? props.extra : 0)
+    return Number(activeVal) + Number(extra.value || 0)
 })
+
+// function getExtra(val: number) {
+//     const item = rechargAmountList.find(item => item.val === val)
+//     return item?.extra || 0
+// }
 
 function formatVal(val: number) {
     if (!val)
@@ -222,20 +213,6 @@ async function generateQRCode(url: string) {
     }
 }
 
-// 复制支付链接
-async function copyPayUrl() {
-    try {
-        await navigator.clipboard.writeText(payUrl.value)
-        showSuccessToast(t('components.copySuccess'))
-        // closeQRCode()
-        // 这里可以添加复制成功的提示
-        console.log('支付链接已复制到剪贴板')
-    }
-    catch (error) {
-        console.error('复制失败:', error)
-    }
-}
-
 // 关闭二维码弹窗
 function closeQRCode() {
     showQRCode.value = false
@@ -264,7 +241,7 @@ async function submitOrder() {
 
     try {
         const result = await userApi.createPayin({
-            amount: props.activeVal.toString(),
+            amount: activeVal.value.toString(),
             player_id: userInfo.value?.id?.toString() || '',
         })
         const payInfo = result.data?.pay_info
@@ -300,6 +277,10 @@ async function submitOrder() {
     }
 }
 
+function setActiveVal(val: number) {
+    activeVal.value = val
+}
+
 // 防抖处理的提交函数
 const handleSubmit = debounce(submitOrder, 500)
 
@@ -328,6 +309,7 @@ onUnmounted(() => {
 
 defineExpose({
     open,
+    setActiveVal,
 })
 </script>
 
@@ -392,90 +374,5 @@ defineExpose({
   //   z-index: 2;
   //   pointer-events: none;
   // }
-}
-
-.qrcode_content {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 30px 20px;
-  text-align: center;
-}
-
-.qrcode_title {
-  font-size: 48px;
-  color: #f3d559;
-  font-weight: bold;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.qrcode_container {
-  width: 350px;
-  height: 350px;
-  background: #fff;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  box-sizing: border-box;
-  margin: 0 auto;
-}
-
-.qrcode_image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.qrcode_loading {
-  font-size: 32px;
-  color: #666;
-  text-align: center;
-}
-
-.qrcode_tips {
-  font-size: 50px;
-  color: #f3d559;
-  text-align: center;
-  margin-bottom: 40px;
-  line-height: 1.4;
-}
-
-.qrcode_actions {
-  display: flex;
-  gap: 30px;
-  width: 100%;
-  justify-content: center;
-}
-
-.qrcode_copy {
-  width: 375px;
-  height: 103px;
-  background: url("/images/main/ok.png") no-repeat;
-  background-size: cover;
-  line-height: 103px;
-  text-align: center;
-  color: #f2d659;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.qrcode_close {
-  width: 404px;
-  height: 103px;
-  background: url("/images/main/cancel.png") no-repeat;
-  background-size: cover;
-  line-height: 103px;
-  text-align: center;
-  color: #0c0900;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
 }
 </style>

@@ -253,6 +253,9 @@ export default {
         progressStep5: 'La cantidad de retiro del usuario excede los 3000.00 dólares, superando el límite gratuito del canal VIP. Se cobrará una tarifa del 5% por el retiro. Una vez recibido el pago en el canal VIP, se enviará la solicitud de remesa al banco central para su procesamiento.',
         progressStep6: 'Procesamiento bancario anormal:este monto de retiro es un ingreso personal adicional.Según las regulaciones federales, se requiere un impuesto sobre la renta personal del 10% del monto del retiro.',
         progressStep7: 'La solicitud de retiro ha sido enviada al Banco Central y el banco la está',
+        progressStep8: 'El retiro ha sido completado. El dinero ha sido transferido a su cuenta.',
+        progressStep9: 'Se ha realizado la transferencia financiera para ti, por favor espera 10 minutos.',
+        timeRemaining: 'Tiempo Restante',
     },
 
     // 记录
@@ -422,6 +425,10 @@ export default {
         retairPop06Title: 'Estimado usuario:',
         retairPop06Desc: 'Estimado usuario: Este retiro pertenece a sus ingresos personales adicionales. Según las regulaciones federales, el banco debe recaudar el 10% del impuesto sobre la renta personal. El progreso de su retiro actual es del 99.9% y solo queda el último paso antes de que llegue el retiro. Una vez pagado el impuesto, el banco procesará la transferencia de inmediato.',
         retairPop06TaxTitle: 'Impuestos a pagar',
+        taxesToPay: 'Impuestos a pagar',
+        payHighFinancialExpenses: 'Pagar gastos financieros elevados',
+        personalTaxApplicationSubmitted: 'Su solicitud de impuesto sobre la renta personal ha sido presentada. Organizaremos que el departamento financiero vaya al banco para pagar su impuesto sobre la renta personal (debido a la gran cantidad de pedidos que se están procesando ahora, el departamento financiero necesita presentar la solicitud de manera unificada, lo que se espera tome 7 días hábiles). Si necesita contratar un departamento financiero dedicado, deberá pagar una tarifa contable de 1,000, y un departamento financiero senior procesará su pedido de inmediato.',
+        withdrawalFees: 'Comisiones de retiro',
 
         recordDetailAmount: 'Monto',
         recordDetailTime: 'Hora',

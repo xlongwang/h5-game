@@ -1,4 +1,5 @@
 <template>
+    <!-- 缴纳个人所得税 -->
     <CommonPop
         v-model="showCenter"
         :title="t('components.details')"
