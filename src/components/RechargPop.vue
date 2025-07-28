@@ -39,8 +39,6 @@
 
         <OderDetailRecharge
             ref="OderDetailRecargelRef"
-            :active-val="activeVal"
-            :extra="extraVal"
             :on-success="handleSuccess"
         />
     </Teleport>
@@ -86,6 +84,7 @@ function handleSuccess() {
 }
 
 function handleSubmit() {
+    OderDetailRecargelRef.value.setActiveVal(activeVal.value)
     OderDetailRecargelRef.value.open()
 }
 

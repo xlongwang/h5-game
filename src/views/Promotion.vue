@@ -12,6 +12,9 @@
         <ul class="promotion-list">
             <li v-for="item in list" :key="item.id">
                 <img :src="item.url" :alt="item.name" @click="handleClick(item)">
+                <div class="promotion-list-item-txt absolute top-[80px] left-[62px] w-[478px] h-full flex items-center justify-center">
+                    <div class="text-[32px] text-[#f3d558]"> {{ item.txt }}</div>
+                </div>
             </li>
         </ul>
     </div>
@@ -20,14 +23,23 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useGlobal } from '@/composables'
+import useUserStore from '@/stores/use-user-store'
+import { USER_REWARD } from '@/config/NumberConfig'
+
 
 import '@/assets/scss/pages/promotion.scss'
 
 const { i18n } = useGlobal()
 const { t } = i18n
 
+const userStore = useUserStore()
 const currentTime = ref('')
 const router = useRouter()
+
+
+const userInfo = computed(() => {
+    return userStore.userInfo
+})
 
 function handleClick(item: any) {
     router.push(item.path)
@@ -38,18 +50,21 @@ const list = ref([
         name: 'a1',
         url: '/images/promotion/a1.png',
         path: '/invite',
+        txt: `${t('banner.inviteFriends')} $${(userInfo.value?.invitation_reward || 0).toFixed(2)}`,
     },
     {
         id: '2',
         name: 'a2',
         url: '/images/promotion/a2.png',
         path: '/activity02',
+        txt: `${t('banner.completeTask')} $${(USER_REWARD).toFixed(2)}`,
     },
     {
         id: '3',
         name: 'a3',
         url: '/images/promotion/a3.png',
         path: '/activity01',
+        txt: t('banner.dailyLogin'),
     },
 ])
 

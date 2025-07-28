@@ -175,6 +175,9 @@ https://unocss.dev/
 根目录下的`.eslintrc.json`、`.stylelintrc.json`、`.prettier`内置了 lint 规则，帮助你规范地开发代码，有助于提高团队的代码质量和协作性，可以根据团队的规则进行修改
 注意: `prettier`只在编辑器层面, 在`eslint`中并没有添加`prettier`插件
 
-## License
+## 提现流程
+
+首次  ：不用排队  支付个税后就创建代付
+其它  ：走排队等待提现的流程
 
 [MIT]

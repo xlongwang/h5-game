@@ -92,7 +92,7 @@
         >
             <!-- pg -->
             <van-swipe-item>
-                <div v-if="gameListLoading" class="loading-container">
+                <div v-if="gamePGtLoading" class="loading-container">
                     <van-loading type="spinner" color="#ffd700" size="24px">
                         {{ t("common.loading") }}
                     </van-loading>
@@ -107,7 +107,7 @@
                     <van-grid-item v-for="game in gameList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
                             <van-image :src="game.logo" :alt="game.name" />
-                            <div v-if="game.show_name" class="game-name-container">
+                            <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
                                 <div class="game-name">{{ formatGameName(game.show_name)[0] }}</div>
                                 <div v-if="formatGameName(game.show_name)[1]" class="game-name">
                                     {{ formatGameName(game.show_name)[1] }}
@@ -119,34 +119,114 @@
             </van-swipe-item>
             <!-- jili -->
             <van-swipe-item>
-                <!-- <van-grid
+                <div v-if="gameJLLoading" class="loading-container">
+                    <van-loading type="spinner" color="#ffd700" size="24px">
+                        {{ t("common.loading") }}
+                    </van-loading>
+                </div>
+                <van-grid
+                    v-else
                     :column-num="3"
                     :gutter="16"
                     class="game-grid pt-[10px]"
                     :border="false"
                 >
-                    <van-grid-item v-for="game in gameList" :key="game.name">
-                        <div class="game-card">
+                    <van-grid-item v-for="game in gameJLList" :key="game.name">
+                        <div class="game-card" @click="handleGameClick(game)">
                             <van-image :src="game.logo" :alt="game.name" />
+                            <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
+                                <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
+                                <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
+                                    {{ formatJLGameName(game.show_name)[1] }}
+                                </div>
+                            </div>
                         </div>
                     </van-grid-item>
-                </van-grid> -->
-                <EmptyComponents :title="t('common.comingSoon')" />
+                </van-grid>
             </van-swipe-item>
 
             <!-- pp -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.comingSoon')" />
+                <div v-if="gamePPLoading" class="loading-container">
+                    <van-loading type="spinner" color="#ffd700" size="24px">
+                        {{ t("common.loading") }}
+                    </van-loading>
+                </div>
+                <van-grid
+                    v-else
+                    :column-num="3"
+                    :gutter="16"
+                    class="game-grid pt-[10px]"
+                    :border="false"
+                >
+                    <van-grid-item v-for="game in gamePPList" :key="game.name">
+                        <div class="game-card" @click="handleGameClick(game)">
+                            <van-image :src="game.logo" :alt="game.name" />
+                            <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
+                                <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
+                                <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
+                                    {{ formatJLGameName(game.show_name)[1] }}
+                                </div>
+                            </div>
+                        </div>
+                    </van-grid-item>
+                </van-grid>
             </van-swipe-item>
 
             <!-- job -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.comingSoon')" />
+                <div v-if="gameJobLoading" class="loading-container">
+                    <van-loading type="spinner" color="#ffd700" size="24px">
+                        {{ t("common.loading") }}
+                    </van-loading>
+                </div>
+                <van-grid
+                    v-else
+                    :column-num="3"
+                    :gutter="16"
+                    class="game-grid pt-[10px]"
+                    :border="false"
+                >
+                    <van-grid-item v-for="game in gameJobList" :key="game.name">
+                        <div class="game-card" @click="handleGameClick(game)">
+                            <van-image :src="game.logo" :alt="game.name" />
+                            <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
+                                <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
+                                <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
+                                    {{ formatJLGameName(game.show_name)[1] }}
+                                </div>
+                            </div>
+                        </div>
+                    </van-grid-item>
+                </van-grid>
             </van-swipe-item>
 
             <!-- mg -->
             <van-swipe-item>
-                <EmptyComponents :title="t('common.empty')" />
+                <div v-if="gameMGLoading" class="loading-container">
+                    <van-loading type="spinner" color="#ffd700" size="24px">
+                        {{ t("common.loading") }}
+                    </van-loading>
+                </div>
+                <van-grid
+                    v-else
+                    :column-num="3"
+                    :gutter="16"
+                    class="game-grid pt-[10px]"
+                    :border="false"
+                >
+                    <van-grid-item v-for="game in gameMGList" :key="game.name">
+                        <div class="game-card" @click="handleGameClick(game)">
+                            <van-image :src="game.logo" :alt="game.name" />
+                            <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
+                                <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
+                                <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
+                                    {{ formatJLGameName(game.show_name)[1] }}
+                                </div>
+                            </div>
+                        </div>
+                    </van-grid-item>
+                </van-grid>
             </van-swipe-item>
         </van-swipe>
 
@@ -218,25 +298,97 @@ const swipeRef = ref()
 const gameIframeRef = ref<HTMLIFrameElement>()
 
 const gameList = ref<GameInfo[]>([])
-const gameListLoading = ref(false)
+const gameJLList = ref<GameInfo[]>([])
+const gamePPList = ref<GameInfo[]>([])
+const gameJobList = ref<GameInfo[]>([])
+const gameMGList = ref<GameInfo[]>([])
+
+const gamePGtLoading = ref(false)
+const gameJLLoading = ref(false)
+const gamePPLoading = ref(false)
+const gameJobLoading = ref(false)
+const gameMGLoading = ref(false)
 const gameIframeVisible = ref(false)
 const gameIframeUrl = ref('')
 const gameLoading = ref(false)
 
 async function getGameList() {
     try {
-        gameListLoading.value = true
+        gamePGtLoading.value = true
         const res = await userApi.getGameList({
             type: 'fortune',
         })
-        console.log('res', res)
         gameList.value = res.data
     }
     catch (error) {
         console.error('获取游戏列表失败:', error)
     }
     finally {
-        gameListLoading.value = false
+        gamePGtLoading.value = false
+    }
+}
+
+async function getGameJLList() {
+    try {
+        gameJLLoading.value = true
+        const res = await userApi.getGameList({
+            type: 'JILI',
+        })
+        gameJLList.value = res.data
+    }
+    catch (error) {
+        console.error('获取游戏列表失败:', error)
+    }
+    finally {
+        gameJLLoading.value = false
+    }
+}
+
+async function getGamePPList() {
+    try {
+        gamePPLoading.value = true
+        const res = await userApi.getGameList({
+            type: 'PP',
+        })
+        gamePPList.value = res.data
+    }
+    catch (error) {
+        console.error('获取游戏列表失败:', error)
+    }
+    finally {
+        gamePPLoading.value = false
+    }
+}
+
+async function getGameJobList() {
+    try {
+        gameJobLoading.value = true
+        const res = await userApi.getGameList({
+            type: 'JOB',
+        })
+        gameJobList.value = res.data
+    }
+    catch (error) {
+        console.error('获取游戏列表失败:', error)
+    }
+    finally {
+        gameJobLoading.value = false
+    }
+}
+
+async function getGameMGList() {
+    try {
+        gameMGLoading.value = true
+        const res = await userApi.getGameList({
+            type: 'MG',
+        })
+        gameMGList.value = res.data
+    }
+    catch (error) {
+        console.error('获取游戏列表失败:', error)
+    }
+    finally {
+        gameMGLoading.value = false
     }
 }
 
@@ -262,11 +414,15 @@ function handleRechargeSuccess() {
 // 生成随机跑马灯数据
 const marqueeTexts = ref(getMarqueeData())
 
-onMounted(() => {
+onMounted(async () => {
     console.log('userInfo', userInfo.value)
     // 每次进入页面重新生成随机数据
     marqueeTexts.value = getMarqueeData()
-    getGameList()
+    await getGameList()
+    await getGameJLList()
+    await getGamePPList()
+    await getGameJobList()
+    await getGameMGList()
 
     // 监听来自 iframe 的消息
     window.addEventListener('message', handleIframeMessage)
@@ -335,6 +491,18 @@ function formatGameName(name: string): string[] | string {
     const wordArray = words.split(' ')
     return wordArray
 }
+// 格式化游戏名称：空格分隔两个单词并换行
+function formatJLGameName(name: string): string[] | string {
+    if (!name)
+        return ''
+    // 驼峰命名转空格分隔
+    // 如果只有一个单词，直接返回
+    if (!name.includes(' '))
+        return name
+    // 取前两个单词，用换行符分隔
+    const wordArray = name.split(' ')
+    return wordArray
+}
 
 // 处理来自 iframe 的消息
 function handleIframeMessage(event: MessageEvent) {
@@ -394,15 +562,11 @@ async function handleGameClick(game: GameInfo) {
     console.log('game', game)
     try {
         gameLoading.value = true
-
         // 调用游戏登录接口
         const result = await userApi.gameLogin({
             game_name: game.name,
             player_id: userInfo.value?.id || 0,
         })
-
-        console.log('游戏登录结果:', result)
-
         if (result.code === 200 && result.data) {
             gameIframeUrl.value = result.data
             gameIframeVisible.value = true
@@ -430,16 +594,7 @@ function handleSwipeChange(index: number) {
     activeTabIndex.value = index
 }
 
-// 显示订单详情弹窗
-// function showOrderDetail() {
-//     orderDetailRef.value?.open()
-// }
 
-// 订单成功回调
-function handleOrderSuccess() {
-    console.log('订单支付成功！')
-    // 这里可以添加成功后的逻辑，比如刷新用户余额等
-}
 </script>
 
 <style scoped>
@@ -476,14 +631,19 @@ function handleOrderSuccess() {
 
 .game-name-container {
   position: absolute;
-  bottom: 15px;
+  bottom: 19px;
   left: 0;
   right: 0;
-  color: #fff;
-  line-height: 1.2;
+  line-height: 1.1;
   font-size: 45px;
   width: 100%;
   text-align: center;
+}
+
+.game-name{
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-style: italic;
 }
 
 /* 优化标签样式 */

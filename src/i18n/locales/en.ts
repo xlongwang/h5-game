@@ -207,7 +207,7 @@ export default {
     // Banner
     banner: {
         inviteFriends: 'INVITE YOUR FRIENDS TO REGISTER AND EARN',
-        completeTask: 'COMPLETE THE TASK AND RECEIVE',
+        completeTask: 'ICOMPLETE THE TASK AND RECEIVE',
         dailyLogin: 'LOGIN EVERY DAY AND GET BONUSES',
     },
 
