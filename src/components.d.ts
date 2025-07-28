@@ -10,7 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
     CommonPop: typeof import('./components/CommonPop.vue')['default']
-    copy: typeof import('./components/RetairPop09 copy.vue')['default']
+    copy: typeof import('./components/RetairPop10_bak.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     EmptyWithdrawPop: typeof import('./components/EmptyWithdrawPop.vue')['default']
     FirstLogin: typeof import('./components/FirstLogin.vue')['default']
@@ -35,7 +35,7 @@ declare module 'vue' {
     RetairPop08: typeof import('./components/RetairPop08.vue')['default']
     RetairPop09: typeof import('./components/RetairPop09.vue')['default']
     RetairPop10: typeof import('./components/RetairPop10.vue')['default']
-    'RetairPop10 copy': typeof import('./components/RetairPop10_bak.vue')['default']
+    RetairPop10_bak: typeof import('./components/RetairPop10_bak.vue')['default']
     RetarirStep2: typeof import('./components/RetarirStep2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

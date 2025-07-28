@@ -52,30 +52,6 @@
                             </div>
                             <div class="time">{{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}</div>
                         </div>
-                        <!-- <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                {{ t("withdraw.welcomeMessage") }}
-              </div>
-              <div class="time">2025-06-30 10:00:00</div>
-            </div>
-            <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                {{ t("withdraw.welcomeMessage") }}
-              </div>
-              <div class="time">2025-06-30 10:00:00</div>
-            </div>
-            <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                {{ t("withdraw.welcomeMessage") }}
-              </div>
-              <div class="time">2025-06-30 10:00:00</div>
-            </div>
-            <div class="retirar-detail-log-item">
-              <div class="retirar-detail-log-item-title line-clamp-3 line-height-[1.4]">
-                {{ t("withdraw.welcomeMessage") }}
-              </div>
-              <div class="time">2025-06-30 10:00:00</div> -->
-                        <!-- </div> -->
                     </div>
                 </div>
 
@@ -333,10 +309,6 @@ function stopTimer() {
 }
 
 async function handlePop9Success() {
-    // console.log('handlePop9Success')
-    // percent.value = 0.99
-    // step.value = 9
-    // btnTxt.value = 'Pagar impuestos personal'
     retairPop09Ref.value.hide()
     progressTxtList.value.push({
             ...retarirProgress[9],
@@ -344,7 +316,6 @@ async function handlePop9Success() {
         })
 
     fetchapplyWithdrawal()
-   
 }
 
 const pop7Timer = ref<NodeJS.Timeout | null>(null)
@@ -458,7 +429,6 @@ async function submit() {
             }finally {
                 retairPop10Ref.value.open()
             }
-           
         }
     }
 }
@@ -466,7 +436,6 @@ async function submit() {
 watch(step, (newVal, oldVal) => {
     console.log('step', newVal, oldVal)
     if (newVal === 2 && progressTxtList.value.length === 2) {
-    // retairPop03Ref.value.open();
         progressTxtList.value.push({
             ...retarirProgress[3],
             time: new Date().getTime(),

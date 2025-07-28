@@ -43,8 +43,6 @@
 <script setup lang="ts">
 import { useGlobal } from '@/composables'
 
-// import useUserStore from '@/stores/use-user-store'
-
 const props = defineProps<{
     pop6Submit: () => void
     tax: number
@@ -64,7 +62,6 @@ function handleCancel() {
 }
 
 async function handleSubmit() {
-    // props.retairPop07Ref.open()
     props.pop6Submit()
     hide()
 }
