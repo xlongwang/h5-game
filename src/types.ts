@@ -684,3 +684,20 @@ export interface WithdrawalApplicationResponse {
     message: string
     [property: string]: any
 }
+
+// 发起提现请求参数类型
+export interface PaymentConfirmationParams {
+    /**
+     * 用户id
+     */
+    player_id?: string
+    [property: string]: any
+}
+
+// 发起提现API响应类型
+export interface PaymentConfirmationResponse {
+    code: number
+    data: string
+    message: string
+    [property: string]: any
+}

@@ -38,8 +38,6 @@
                     </div>
                 </div>
 
-             
-
                 <div class="retirar-detail-log-container">
                     <div class="log_scroll_container text-[40px]">
                         <div
@@ -137,7 +135,7 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { useRoute, useRouter } from 'vue-router'
-
+import { showFailToast, showSuccessToast } from 'vant'
 // import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 // import { rechargAmountList } from '@/config/RechargeConfig'
@@ -187,6 +185,22 @@ const confirmInfo = ref({
 const amount = computed(() => {
     const amountParam = route.query.amount
     return amountParam ? Number(amountParam) : 5000
+})
+const setWithdrawPenddingStatus = () => {
+    percent.value = 0.99
+    step.value = 10
+    handlePop9Success()
+    progressTxtList.value = JSON.parse(localStorage.getItem('progressTxtList') || '[]')
+}
+
+const isWithdrawAmountPending = computed(() => {
+    return Number(localStorage.getItem('withdrawAmount')) > 0
+})
+
+watch(isWithdrawAmountPending, (newVal, oldVal) => {
+    if(newVal) {
+        setWithdrawPenddingStatus()
+    }
 })
 
 async function handleSuccess() {
@@ -238,9 +252,17 @@ function handlePersonalTaxPaySuccess() {
     // percent.value = 1
     // console.log('handlePersonalTaxPaySuccess')
     // router.push('/')
-    percent.value = 0.99
-    step.value = 7
-    btnTxt.value = 'Pagar gastos financieros elevados'
+    if(isFirstWithdraw.value) {
+        // step.value = 8
+        // 第一次提现
+        retairPop07Ref.value.open()
+        
+    }else {
+        percent.value = 0.99
+        step.value = 7
+        btnTxt.value = 'Pagar gastos financieros elevados'
+    }
+    
 }
 
 const start_time = ref(0)
@@ -257,18 +279,29 @@ const formattedTimer = computed(() => {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
 
-
 const fetchapplyWithdrawal =  async () => {
     const res = await userApi.applyWithdrawal({
             amount: amount.value.toString(),
             player_id: userInfo.value?.id.toString() || '',
         })
+    if(res.code === 200) {
     start_time.value = res.data.start_time
     expire_time.value = res.data.expire_time
     status.value = res.data.status
      btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
-    //  btnTxt.value = formattedTimer.value
-    startTimer()
+     const wAmount = localStorage.getItem('withdrawAmount')
+     if(!wAmount){
+        nextTick(() => {
+            localStorage.setItem('withdrawAmount', amount.value.toString())
+            localStorage.setItem('progressTxtList', JSON.stringify(progressTxtList.value))
+        })
+     }
+    
+        //  btnTxt.value = formattedTimer.value
+        startTimer()
+    }else {
+        showFailToast(t('components.failed'))
+    }
 }
 
 const remainingSeconds = ref(0)
@@ -276,6 +309,10 @@ const timerInterval = ref<NodeJS.Timeout | null>(null)
 
 const timerCount = computed(() => {
     return remainingSeconds.value * 1000 // 转换为毫秒以保持兼容性
+})
+
+const isFirstWithdraw = computed(() => {
+    return Number(userInfo.value?.wallet?.total_withdraw) === 0
 })
 
 // 开始倒计时
@@ -310,11 +347,12 @@ function stopTimer() {
 
 async function handlePop9Success() {
     retairPop09Ref.value.hide()
+    if(progressTxtList.value.length === 8 ){
     progressTxtList.value.push({
             ...retarirProgress[9],
             time: new Date().getTime(),
         })
-
+    }
     fetchapplyWithdrawal()
 }
 
@@ -344,6 +382,7 @@ function pop4Submit() {
 
 function pop6Submit() {
     console.log('pop6Submit')
+
     percent.value = 0.99
     step.value = 6
     btnTxt.value = 'Pagar impuestos personal'
@@ -365,13 +404,12 @@ function pop9Submit() {
     
     OderDetailRecargelRef.value.open()
     OderDetailRecargelRef.value.setActiveVal(1000)
-
-    // btnTxt.value = 'Pagar impuestos personal'
 }
 
 async function pop10Submit() {
     console.log('pop10Submit')
     step.value = 1
+    percent.value = 0.99
     await userStore.fetchUserInfo()
     pop7Timer.value = setTimeout(() => {
         router.push('/retirar')
@@ -416,14 +454,17 @@ async function submit() {
     if(step.value === 10) {
         if(status.value === 'confirmed'){
             try {
-                await userApi.createPayout({
-                    amount: amount.value.toString(),
-                    phone: userInfo.value?.receiving_account?.phone.toString() || '',
-                    pix_type: userInfo.value?.receiving_account?.pix_type || '', // PHONE、EMAIL、CPF。
+                const res = await userApi.paymentConfirmation({
                     player_id: userInfo.value?.id.toString() || '',
-                    receiving_account: userInfo.value?.receiving_account?.receiving_account || '',
-                    receiving_name: userInfo.value?.receiving_account?.receiving_name || '',
                })
+               if(res.code === 200) {
+                // showSuccessToast(t('components.success'))
+                localStorage.removeItem('withdrawAmount')
+                localStorage.removeItem('progressTxtList')
+                console.log('paymentConfirmation success', res.data)
+               }else {
+                console.log('paymentConfirmation failed', res.data)
+               }
             } catch (error) {
                 console.log('error', error)
             }finally {
@@ -434,7 +475,7 @@ async function submit() {
 }
 
 watch(step, (newVal, oldVal) => {
-    console.log('step', newVal, oldVal)
+    console.log('step', newVal)
     if (newVal === 2 && progressTxtList.value.length === 2) {
         progressTxtList.value.push({
             ...retarirProgress[3],
@@ -473,20 +514,25 @@ watch(step, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    const ct = new Date().getTime()
-    progressTxtList.value = [
-        {
-            ...retarirProgress[1],
-            time: ct,
-        },
-        {
-            ...retarirProgress[2],
-            time: ct + 3000,
-        },
-    ]
-    
-    // 启动倒计时
-    startTimer()
+    if(isWithdrawAmountPending.value) {
+        setWithdrawPenddingStatus()
+    }else {
+        const ct = new Date().getTime()
+        progressTxtList.value = [
+            {
+                ...retarirProgress[1],
+                time: ct,
+            },
+            {
+                ...retarirProgress[2],
+                time: ct + 3000,
+            },
+        ]
+        // 启动倒计时
+        startTimer()
+    }
+  
+   
 })
 
 onUnmounted(() => {
@@ -498,7 +544,6 @@ onUnmounted(() => {
 })
 
 const coin = '/images/retirar/coin.png'
-
 // const extra = ref(0)
 </script>
 

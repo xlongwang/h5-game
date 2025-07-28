@@ -159,7 +159,7 @@ const balance = computed(() => {
 
 const coinImg = '/images/retirar/coin.png'
 const router = useRouter()
-const curValue = ref(2)
+const curValue = ref(1)
 const retarirStep2Ref = ref()
 const isRotating = ref(false)
 async function refreshCoin() {
@@ -210,7 +210,7 @@ async function handleRetarir() {
 const countList = ref([
     {
         id: 1,
-        value: 2,
+        value: 1,
     },
     {
         id: 2,

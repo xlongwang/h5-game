@@ -6,7 +6,7 @@
  * @FilePath: /vue3_app/src/api/user-api.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import type { GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InvitationInfoParams, InvitationInfoResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, SignRewardParams, SignRewardResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse, WeekSignInfoParams, WeekSignInfoResponse, WithdrawalApplicationParams, WithdrawalApplicationResponse } from '@/types'
+import type { GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InvitationInfoParams, InvitationInfoResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, PaymentConfirmationParams, PaymentConfirmationResponse, SignRewardParams, SignRewardResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse, WeekSignInfoParams, WeekSignInfoResponse, WithdrawalApplicationParams, WithdrawalApplicationResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -202,6 +202,19 @@ export const userApi = {
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.post<WithdrawalApplicationResponse['data']>('/web/withdrawalApplication', params)
         console.log('申请提现API响应:', result)
+        return result
+    },
+
+    /**
+     * 发起提现
+     * @param params 发起提现参数
+     * @returns Promise<PaymentConfirmationResponse>
+     */
+    async paymentConfirmation(params: PaymentConfirmationParams): Promise<PaymentConfirmationResponse> {
+        console.log('调用发起提现API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<string>('/order/paymentConfirmation', params)
+        console.log('发起提现API响应:', result)
         return result
     },
 }
