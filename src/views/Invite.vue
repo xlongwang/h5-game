@@ -89,7 +89,7 @@ defineOptions({
 
 const { i18n } = useGlobal()
 const { t } = i18n
-const inviteImg = '/images/invite/banner.png'
+const inviteImg = computed(() => t('invite.images.banner'))
 
 const value = ref('')
 

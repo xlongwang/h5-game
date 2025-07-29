@@ -1,6 +1,6 @@
 <template>
     <Teleport to="body">
-        <van-popup v-model:show="showBottom" position="bottom" class="recharge_popup">
+        <van-popup v-model:show="showBottom" position="bottom" class="recharge_popup" :style="popupStyle">
             <div class="relative">
                 <div class="pop_close" @click="handleClose"></div>
                 <div class="re_pop_content w-[656px] p-[29px]">
@@ -58,6 +58,11 @@ const { i18n } = useGlobal()
 const { t } = i18n
 
 const showBottom = ref(false)
+
+// 动态设置CSS变量用于多语言图片
+const popupStyle = computed(() => ({
+    '--re-submit-bg': `url('${t('components.images.reSubmit')}')`,
+}))
 const activeVal = ref(100)
 const OderDetailRecargelRef = ref()
 const reItems = ref(rechargAmountList)

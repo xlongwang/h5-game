@@ -92,7 +92,7 @@
     width: 276px;
     height: 69px;
     margin: 28px auto 0;
-    background: url('/images/main/re_submit.png') no-repeat;
+    background: var(--re-submit-bg, url('/images/main/re_submit.png')) no-repeat;
     background-size: contain;
 }
 

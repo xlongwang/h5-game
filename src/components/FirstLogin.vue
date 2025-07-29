@@ -2,7 +2,7 @@
     <van-popup
         v-model:show="showCenter"
         :close-on-click-overlay="false"
-        :style="{ background: 'transparent' }"
+        :style="{ background: 'transparent', ...popupStyle }"
         class="first-login-popup"
     >
         <div v-show="showPop1" class="first-login-container pop1">
@@ -36,10 +36,14 @@
 <script setup lang="ts">
 import useUserStore from '@/stores/use-user-store'
 import { StorageUtil } from '@/utils/storage'
+import { useGlobal } from '@/composables'
 
 defineOptions({
     name: 'FirstLogin',
 })
+
+const { i18n } = useGlobal()
+const { t } = i18n
 
 const userStore = useUserStore()
 
@@ -51,6 +55,12 @@ const showPop2 = ref(false)
 const userInfo = computed(() => {
     return userStore.userInfo
 })
+
+// 动态设置CSS变量用于多语言图片
+const popupStyle = computed(() => ({
+    '--pop1-slogan-bg': `url('${t('firstLogin.pop1.images.slogan')}')`,
+    '--pop2-slogan-bg': `url('${t('firstLogin.pop2.images.slogan')}')`,
+}))
 
 function close() {
     showCenter.value = false
@@ -85,7 +95,7 @@ defineExpose({
 .first-pop1-txt {
   width: 806px;
   height: 214px;
-  background: url(/images/guide/pop1/slogan.png) no-repeat;
+  background: var(--pop1-slogan-bg, url(/images/guide/pop1/slogan.png)) no-repeat;
   background-size: contain;
   margin: 0 auto;
   // 样式内容
@@ -142,7 +152,7 @@ defineExpose({
 .first-pop2-txt {
   width: 806px;
   height: 214px;
-  background: url(/images/guide/pop2/slogan.png) no-repeat;
+  background: var(--pop2-slogan-bg, url(/images/guide/pop2/slogan.png)) no-repeat;
   background-size: contain;
   margin: 0 auto;
 }

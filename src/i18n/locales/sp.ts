@@ -164,6 +164,9 @@ export default {
         faqAnswer3: 'Primero verifique el registro de pago y la cuenta bancaria. Si la deducción se realizó correctamente pero no se recibió, comuníquese con el servicio al cliente de la plataforma y proporcione el comprobante de la transacción para que el servicio al cliente pueda ayudarlo en el procesamiento.',
         faqAnswer4: 'Los problemas de carga del juego pueden deberse a la latencia de la red, el rendimiento del dispositivo o el mantenimiento de la plataforma. Se recomienda verificar la conexión de red o informar el problema al servicio de atención al cliente para obtener ayuda.',
         faqAnswer5: 'Si el retiro falla, verifique si su cuenta de retiro es correcta o cambie la cuenta de retiro y retire dinero nuevamente.',
+        images: {
+            header: '/images/apoyo/header.png',
+        },
     },
 
     // 设置
@@ -202,6 +205,9 @@ export default {
         shareError: 'Error al abrir ventana de compartir',
         linkCopied: 'Enlace copiado al portapapeles',
         linkCopiedForInstagram: 'Enlace copiado para Instagram',
+        images: {
+            banner: '/images/invite/banner.png',
+        },
     },
 
     // Banner 横幅
@@ -209,6 +215,11 @@ export default {
         inviteFriends: 'INVITA A TUS AMIGOS A REGISTRARSE Y GANA',
         completeTask: 'COMPLETA LA TAREA Y RECIBE',
         dailyLogin: 'INICIE SESIÓN TODOS LOS DÍAS Y OBTENGA BONIFICACIONES',
+        images: {
+            invite: '/images/promotion/a1.png',
+            task: '/images/promotion/a2.png',
+            daily: '/images/promotion/a3.png',
+        },
     },
 
     // Activity01 活动页面
@@ -317,6 +328,10 @@ export default {
 
     // Componentes
     components: {
+        // Images
+        images: {
+            reSubmit: '/images/main/re_submit.png',
+        },
         // Componente HeaderBack
         back: 'Atrás',
         record: 'Registro',
@@ -447,12 +462,18 @@ export default {
             rewardRange: 'R$ 5,00-R$ 200,00',
             goClaim: 'vá e reivindique, boa sorte!',
             btn: 'Receber',
+            images: {
+                slogan: '/images/guide/pop1/slogan.png',
+            },
         },
         pop2: {
             congratulations: 'Parabéns por receber uma recompensa em dinheiro de',
             rewardAmount: 'R$ 10,00',
             goClaim: 'vá e reivindique, boa sorte!',
             btn: 'Receber',
+            images: {
+                slogan: '/images/guide/pop2/slogan.png',
+            },
         },
     },
 }

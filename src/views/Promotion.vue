@@ -44,25 +44,26 @@ const userInfo = computed(() => {
 function handleClick(item: any) {
     router.push(item.path)
 }
-const list = ref([
+
+const list = computed(() => [
     {
         id: '1',
         name: 'a1',
-        url: '/images/promotion/a1.png',
+        url: t('banner.images.invite'),
         path: '/invite',
         txt: `${t('banner.inviteFriends')} $${(userInfo.value?.invitation_reward || 0).toFixed(2)}`,
     },
     {
         id: '2',
         name: 'a2',
-        url: '/images/promotion/a2.png',
+        url: t('banner.images.task'),
         path: '/activity02',
         txt: `${t('banner.completeTask')} $${(USER_REWARD).toFixed(2)}`,
     },
     {
         id: '3',
         name: 'a3',
-        url: '/images/promotion/a3.png',
+        url: t('banner.images.daily'),
         path: '/activity01',
         txt: t('banner.dailyLogin'),
     },

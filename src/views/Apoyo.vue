@@ -59,7 +59,8 @@ defineOptions({
 const { i18n } = useGlobal()
 const { t } = i18n
 
-const bannerImg = '/images/apoyo/header.png'
+// 使用多语言配置的图片路径
+const bannerImg = computed(() => t('support.images.header'))
 // const router = useRouter()
 const activeNames = ref<string | number>('') // 单开模式
 

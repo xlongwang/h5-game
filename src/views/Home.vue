@@ -440,17 +440,17 @@ onUnmounted(() => {
 const bannerImgs = computed(() => [
     {
         path: '/invite',
-        img: '/images/promotion/a1.png',
+        img: t('banner.images.invite'),
         txt: `${t('banner.inviteFriends')} $${(userInfo.value?.invitation_reward || 0).toFixed(2)}`,
     },
     {
         path: '/activity02',
-        img: '/images/promotion/a2.png',
+        img: t('banner.images.task'),
         txt: `${t('banner.completeTask')} $${(USER_REWARD).toFixed(2)}`,
     },
     {
         path: '/activity01',
-        img: '/images/promotion/a3.png',
+        img: t('banner.images.daily'),
         txt: t('banner.dailyLogin'),
     },
 ])

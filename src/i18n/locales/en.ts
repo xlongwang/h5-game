@@ -164,6 +164,9 @@ export default {
         faqAnswer3: 'First check the payment record and bank account. If the deduction was made correctly but not received, contact the platform customer service and provide the transaction receipt so that customer service can help you with processing.',
         faqAnswer4: 'Game loading issues may be due to network latency, device performance, or platform maintenance. It is recommended to check the network connection or report the issue to customer service for assistance.',
         faqAnswer5: 'If the withdrawal fails, verify if your withdrawal account is correct or change the withdrawal account and withdraw money again.',
+        images: {
+            header: '/images/apoyo/header.png',
+        },
     },
 
     // 设置
@@ -202,6 +205,9 @@ export default {
         shareError: 'Error opening share window',
         linkCopied: 'Link copied to clipboard',
         linkCopiedForInstagram: 'Link copied for Instagram',
+        images: {
+            banner: '/images/invite/banner.png',
+        },
     },
 
     // Banner
@@ -209,6 +215,11 @@ export default {
         inviteFriends: 'INVITE YOUR FRIENDS TO REGISTER AND EARN',
         completeTask: 'ICOMPLETE THE TASK AND RECEIVE',
         dailyLogin: 'LOGIN EVERY DAY AND GET BONUSES',
+        images: {
+            invite: '/images/promotion/a1.png',
+            task: '/images/promotion/a2.png',
+            daily: '/images/promotion/a3.png',
+        },
     },
 
     // Activity01
@@ -228,12 +239,18 @@ export default {
             rewardRange: 'R$5.00-R$ 200.00',
             goClaim: 'go and claim, good luck!',
             btn: 'GO AND CLAIM',
+            images: {
+                slogan: '/images/guide/pop1/slogan.png',
+            },
         },
         pop2: {
             congratulations: 'Congratulations on receiving a cash reward of',
             rewardAmount: 'R$10.00',
             goClaim: 'go and claim, good luck!',
             btn: 'GO AND CLAIM',
+            images: {
+                slogan: '/images/guide/pop2/slogan.png',
+            },
         },
     },
 
@@ -318,6 +335,10 @@ export default {
 
     // Components
     components: {
+        // Images
+        images: {
+            reSubmit: '/images/main/re_submit.png',
+        },
         // HeaderBack component
         back: 'Back',
         record: 'Record',

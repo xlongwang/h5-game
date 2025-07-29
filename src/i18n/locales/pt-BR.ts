@@ -164,6 +164,9 @@ export default {
         faqAnswer3: 'Primeiro verifique o registro de pagamento e a conta bancária. Se a dedução foi feita corretamente mas não foi recebida, entre em contato com o serviço ao cliente da plataforma e forneça o comprovante da transação para que o serviço ao cliente possa ajudá-lo no processamento.',
         faqAnswer4: 'Os problemas de carregamento do jogo podem ser devido à latência da rede, desempenho do dispositivo ou manutenção da plataforma. É recomendado verificar a conexão de rede ou reportar o problema ao serviço ao cliente para obter ajuda.',
         faqAnswer5: 'Se o saque falhar, verifique se sua conta de saque está correta ou mude a conta de saque e saque dinheiro novamente.',
+        images: {
+            header: '/images/apoyo/header.png',
+        },
     },
 
     // 设置
@@ -202,6 +205,9 @@ export default {
         shareError: 'Erro ao abrir janela de compartilhamento',
         linkCopied: 'Link copiado para a área de transferência',
         linkCopiedForInstagram: 'Link copiado para Instagram',
+        images: {
+            banner: '/images/invite/banner.png',
+        },
     },
 
     // Banner
@@ -209,6 +215,11 @@ export default {
         inviteFriends: 'CONVIDE SEUS AMIGOS PARA SE REGISTRAR E GANHE',
         completeTask: 'COMPLETE A TAREFA E RECEBA',
         dailyLogin: 'FAÇA LOGIN TODOS OS DIAS E GANHE BÔNUS',
+        images: {
+            invite: '/images/promotion/a1.png',
+            task: '/images/promotion/a2.png',
+            daily: '/images/promotion/a3.png',
+        },
     },
 
     // Activity01
@@ -228,12 +239,18 @@ export default {
             rewardRange: 'R$5,00-R$ 200,00',
             goClaim: 'vá e reivindique, boa sorte!',
             btn: 'VÁ E RECLAME',
+            images: {
+                slogan: '/images/guide/pop1/slogan.png',
+            },
         },
         pop2: {
             congratulations: 'Parabéns por receber uma recompensa em dinheiro de',
             rewardAmount: 'R$10,00',
             goClaim: 'vá e reivindique, boa sorte!',
             btn: 'VÁ E RECLAME',
+            images: {
+                slogan: '/images/guide/pop2/slogan.png',
+            },
         },
     },
 
@@ -443,6 +460,10 @@ export default {
 
     // Componentes
     components: {
+        // Images
+        images: {
+            reSubmit: '/images/main/re_submit.png',
+        },
         // Componente HeaderBack
         back: 'Voltar',
         record: 'Registro',
