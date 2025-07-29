@@ -32,7 +32,7 @@
     height: 91px;
     overflow: hidden;
     text-indent: -9999em;
-    background: url('/images/main/peposito_title.png') no-repeat;
+    background: var(--peposito-title-bg, url('/images/main/peposito_title.png')) no-repeat;
     background-size: contain;
 }
 

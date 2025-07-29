@@ -11,22 +11,22 @@
                 <div class="'invite-mi-hoy items-center flex h-[147px]">
                     <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.today') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
-                        <div class="text-[45px] pb-[8px]">Registro</div>
+                        <div class="text-[45px] pb-[8px]">{{ t('invite.registro') }}</div>
                         <div class="text-[60px] font-bold">{{ invitationInfo?.today_number_of_invitations || 0 }}</div>
                     </div>
                     <div class="invite-item flex flex-col w-[407px]">
-                        <div class="text-[45px] pb-[8px]">Premio</div>
+                        <div class="text-[45px] pb-[8px]">{{ t('invite.premio') }}</div>
                         <div class="text-[50px] font-bold">${{ formatNumber(Number(invitationInfo?.today_revenue) || 0) }}</div>
                     </div>
                 </div>
                 <div class="'invite-mi-todo mt-[20px] flex h-[147px]">
                     <div class="invite-mi-hoy-title text-[60px] font-bold w-[175px]">{{ t('invite.todo') }}</div>
                     <div class="invite-item flex flex-col w-[321px] mr-[51px]">
-                        <div class="text-[45px] pb-[8px]">Registro</div>
+                        <div class="text-[45px] pb-[8px]">{{ t('invite.registro') }}</div>
                         <div class="text-[60px] font-bold">{{ invitationInfo?.total_number_of_invitations || 0 }}</div>
                     </div>
                     <div class="invite-item flex flex-col w-[407px]">
-                        <div class="text-[45px] pb-[8px]">Premio</div>
+                        <div class="text-[45px] pb-[8px]">{{ t('invite.premio') }}</div>
                         <div class="text-[50px] font-bold">${{ formatNumber(Number(invitationInfo?.total_revenue) || 0) }}</div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="line-box"></div>
-            <div class="text-[35px] text-[#bb7400] pt-[20px]">Comparte enlace con tus amigos.</div>
+            <div class="text-[35px] text-[#bb7400] pt-[20px]">{{ t('invite.shareLinkText') }}</div>
             <div class="invite_bt flex items-center justify-between">
                 <div class="recom-con">
                     <van-field v-model="value" class="local_input" readonly placeholder="" />
@@ -154,7 +154,7 @@ async function copy() {
     }
     catch (err) {
         console.log('err :>> ', err)
-        showFailToast('Error al copiar')
+        showFailToast(t('invite.copyError'))
     }
 }
 
@@ -209,7 +209,7 @@ function shareToTwitter(text: string) {
 function shareToInstagram(url: string) {
     // Instagram不支持直接分享链接，提示用户手动复制
     copyToClipboard(url)
-    showSuccessToast('Enlace copiado para Instagram')
+    showSuccessToast(t('invite.linkCopiedForInstagram'))
 }
 
 const userStore = useUserStore()
@@ -218,7 +218,7 @@ const userInfo = computed(() => {
     return userStore.userInfo
 })
 
-const inviteTxt = computed(() => `i Invita a los usuarios a registrarse y obtén una recompensa en efectivo de $${(userInfo.value?.invitation_reward || 0).toFixed(2)}`)
+const inviteTxt = computed(() => `${t('invite.inviteText')}${(userInfo.value?.invitation_reward || 0).toFixed(2)}`)
 
 async function getInvitationInfo() {
     const res = await userApi.getInvitationInfo({
@@ -245,10 +245,10 @@ function openShareWindow(url: string, platform: string) {
     )
 
     if (shareWindow) {
-        showSuccessToast(`Compartiendo en ${platform}`)
+        showSuccessToast(`${t('invite.shareSuccess')} ${platform}`)
     }
     else {
-        showFailToast('Error al abrir ventana de compartir')
+        showFailToast(t('invite.shareError'))
     }
 }
 
@@ -256,7 +256,7 @@ async function copyToClipboard(text: string) {
     try {
         if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(text)
-            showSuccessToast('Enlace copiado al portapapeles')
+            showSuccessToast(t('invite.linkCopied'))
         }
         else {
             // 降级方案
@@ -271,11 +271,11 @@ async function copyToClipboard(text: string) {
 
             try {
                 document.execCommand('copy')
-                showSuccessToast('Enlace copiado al portapapeles')
+                showSuccessToast(t('invite.linkCopied'))
             }
             catch (err) {
                 console.log('err :>> ', err)
-                showFailToast('Error al copiar')
+                showFailToast(t('invite.copyError'))
             }
             finally {
                 document.body.removeChild(textArea)
@@ -284,7 +284,7 @@ async function copyToClipboard(text: string) {
     }
     catch (err) {
         console.log('err :>> ', err)
-        showFailToast('Error al copiar')
+        showFailToast(t('invite.copyError'))
     }
 }
 

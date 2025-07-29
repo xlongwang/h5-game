@@ -62,6 +62,7 @@ const showBottom = ref(false)
 // 动态设置CSS变量用于多语言图片
 const popupStyle = computed(() => ({
     '--re-submit-bg': `url('${t('components.images.reSubmit')}')`,
+    '--peposito-title-bg': `url('${t('components.images.pepositoTitle')}')`,
 }))
 const activeVal = ref(100)
 const OderDetailRecargelRef = ref()

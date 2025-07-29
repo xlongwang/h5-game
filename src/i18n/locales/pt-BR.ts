@@ -195,6 +195,8 @@ export default {
         todo: 'Todo',
         registration: 'Registro',
         reward: 'Prêmio',
+        registro: 'Registro',
+        premio: 'Prêmio',
         youWillReceive: 'Você receberá',
         available: 'Disponível',
         copy: 'Copiar',
@@ -208,6 +210,8 @@ export default {
         images: {
             banner: '/images/invite/banner.png',
         },
+        inviteText: 'Convide usuários a se registrarem e obtenha uma recompensa em dinheiro de $',
+        shareLinkText: 'Compartilhe o link com seus amigos.',
     },
 
     // Banner
@@ -463,6 +467,7 @@ export default {
         // Images
         images: {
             reSubmit: '/images/main/re_submit.png',
+            pepositoTitle: '/images/main/peposito_title.png',
         },
         // Componente HeaderBack
         back: 'Voltar',

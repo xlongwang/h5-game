@@ -68,7 +68,7 @@ const userInfo = computed(() => {
 })
 
 const receiveVal = computed(() => {
-    return Number(activeVal) + Number(extra.value || 0)
+    return Number(activeVal.value) + Number(extra.value || 0)
 })
 
 // function getExtra(val: number) {
