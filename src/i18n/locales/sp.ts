@@ -218,7 +218,7 @@ export default {
 
     // Activity02 活动页面
     activity02: {
-        completeTaskText: 'Completa la tarea para obtener una recompensa en efectivo de',
+        completeTaskText: 'iCompleta la tarea para obtener una recompensa en efectivo de',
     },
 
     // 个人资料
@@ -416,6 +416,7 @@ export default {
         personalTaxDescription: 'Estimado usuario: Este retiro pertenece a sus ingresos personales adicionales. Según las regulaciones federales, el banco debe recaudar el 10% del impuesto sobre la renta personal. El progreso de su retiro actual es del 99.9% y solo queda el último paso antes de que llegue el retiro. Una vez pagado el impuesto, el banco procesará la transferencia de inmediato.',
         personalIncomeTax: 'Impuesto sobre la Renta Personal',
         payPersonalTax: 'Pagar impuesto personal',
+        payPersonalTaxes: 'Pagar impuestos personales',
         success: 'Éxito',
 
         // Componente EmptyWithdrawPop

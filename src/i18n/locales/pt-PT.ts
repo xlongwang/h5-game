@@ -541,6 +541,7 @@ export default {
         personalTaxDescription: 'Caro utilizador: Este levantamento pertence à sua renda pessoal adicional. De acordo com as regulamentações federais, o banco deve cobrar 10% de imposto de renda pessoal. O progresso do seu levantamento atual é de 99.9% e apenas o último passo permanece antes da chegada do levantamento. Uma vez pago o imposto, o banco processará a transferência imediatamente.',
         personalIncomeTax: 'Imposto de Renda Pessoal',
         payPersonalTax: 'Pagar imposto pessoal',
+        payPersonalTaxes: 'Pagar impostos pessoais',
         success: 'Sucesso',
 
         // Componente EmptyWithdrawPop

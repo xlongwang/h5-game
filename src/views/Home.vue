@@ -235,10 +235,13 @@
         <!-- 游戏 iframe 覆盖层 -->
         <Teleport to="body">
             <div v-if="gameIframeVisible" class="game-iframe-overlay">
-                <div class="game-iframe-header">
-                    <button class="close-btn" @click="closeGameIframe">
+                <div class="game-iframe-header" v-if="isShowGameCloseBtn">
+                    <!-- <button class="close-btn" @click="closeGameIframe">
                         <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" />
-                    </button>
+                    </button> -->
+                    <div class="close-btn-back" @click="closeGameIframe">
+                        <!-- <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" /> -->
+                    </div>
                 </div>
                 <iframe
                     v-if="gameIframeUrl"
@@ -272,6 +275,7 @@ import { useGlobal } from '@/composables'
 import { getMarqueeData } from '@/config/marqueenConfig'
 import { USER_REWARD } from '@/config/NumberConfig'
 import useUserStore from '@/stores/use-user-store'
+import { isShowGameCloseBtn } from '@/config/gameCloseBtn'
 
 // import { formatNumber } from '@/utils/tools'
 
@@ -750,26 +754,35 @@ function handleSwipeChange(index: number) {
 
 .game-iframe-header {
   position: absolute;
-  top: 0;
+  top: 20px;
   left: 0;
   right: 0;
-  height: 60px;
-  background: rgba(0, 0, 0, 0.4);
+  height: 100px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  padding: 0 20px;
+  padding-left: 20px;
   z-index: 10000;
 }
 
-.close-btn {
+.close-btn-back{
+    background: url('/images/common/backIcon.png') no-repeat center center;
+    background-size: 100% 100%;
+    background-color: rgba(255,255,255,0.5);
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* .close-btn {
   background: none;
   border: none;
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
   transition: background-color 0.3s ease;
-}
+} */
 
 .close-btn:hover {
   background: rgba(255, 255, 255, 0.1);

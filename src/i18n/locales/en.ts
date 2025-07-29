@@ -416,6 +416,7 @@ export default {
         personalTaxDescription: 'Dear user: This withdrawal belongs to your personal additional income. According to federal regulations, the bank must collect 10% personal income tax. Your current withdrawal progress is 99.9% and only the last step remains before the withdrawal arrives. Once the tax is paid, the bank will process the transfer immediately.',
         personalIncomeTax: 'Personal Income Tax',
         payPersonalTax: 'Pay personal tax',
+        payPersonalTaxes: 'Pay personal taxes',
         success: 'Success',
 
         // Componente EmptyWithdrawPop

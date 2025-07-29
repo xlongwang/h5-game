@@ -377,7 +377,7 @@ function pop4Submit() {
     console.log('pop4Submit')
     percent.value = 0.99
     step.value = 5
-    btnTxt.value = 'Pagar impuestos personal'
+    btnTxt.value = t('components.payPersonalTaxes')
 }
 
 function pop6Submit() {
@@ -385,7 +385,7 @@ function pop6Submit() {
 
     percent.value = 0.99
     step.value = 6
-    btnTxt.value = 'Pagar impuestos personal'
+    btnTxt.value = t('components.payPersonalTaxes')
 }
 
 
