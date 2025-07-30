@@ -266,7 +266,7 @@ function handlePersonalTaxPaySuccess() {
 }
 
 const start_time = ref(0)
-const expire_time = ref(0)
+const now_time = ref(0)
 const status = ref('')
 
 
@@ -286,7 +286,7 @@ const fetchapplyWithdrawal =  async () => {
         })
     if(res.code === 200) {
     start_time.value = res.data.start_time
-    expire_time.value = res.data.expire_time
+    now_time.value = res.data.now_time
     status.value = res.data.status
      btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
      const wAmount = localStorage.getItem('withdrawAmount')
@@ -322,8 +322,8 @@ function startTimer() {
     }
     
     // 计算初始剩余秒数
-    if (expire_time.value && start_time.value) {
-        remainingSeconds.value = Math.max(0, expire_time.value - start_time.value)
+    if (now_time.value && start_time.value) {
+        remainingSeconds.value = Math.max(0, now_time.value - start_time.value)
     }
     
     timerInterval.value = setInterval(() => {

@@ -666,6 +666,11 @@ export interface WithdrawalApplicationData {
      * 过期时间
      */
     expire_time: number
+
+    /**
+     * 当前时间
+     */
+    now_time: number
     /**
      * 开始时间
      */
