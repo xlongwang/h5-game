@@ -1,1 +1,1 @@
-export const isShowGameCloseBtn = false
+export const isShowGameCloseBtn = true
