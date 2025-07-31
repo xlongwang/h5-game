@@ -83,7 +83,7 @@ const signInfo = ref<WeekSignInfoData>()
 const { i18n } = useGlobal()
 const { t } = i18n
 
-const headerImg = '/images/activity/a3.png'
+const headerImg = computed(() => t('activity01.images.header'))
 const dayIconImg = '/images/activity/coin.png'
 const txt = computed(() => t('activity01.dailyLoginText'))
 const currentDay = ref(1)

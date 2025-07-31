@@ -165,7 +165,7 @@ export default {
         faqAnswer4: 'Os problemas de carregamento do jogo podem ser devido à latência da rede, desempenho do dispositivo ou manutenção da plataforma. É recomendado verificar a ligação de rede ou reportar o problema ao serviço ao cliente para obter ajuda.',
         faqAnswer5: 'Se o levantamento falhar, verifique se a sua conta de levantamento está correta ou mude a conta de levantamento e levante dinheiro novamente.',
         images: {
-            header: '/images/apoyo/header.png',
+            header: '/images/apoyo/header_pt.png',
         },
     },
 
@@ -208,7 +208,7 @@ export default {
         linkCopied: 'Link copiado para a área de transferência',
         linkCopiedForInstagram: 'Link copiado para Instagram',
         images: {
-            banner: '/images/invite/banner.png',
+            banner: '/images/invite/banner_pt.png',
         },
         inviteText: 'Convide utilizadores a registarem-se e obtenha uma recompensa em dinheiro de $',
         shareLinkText: 'Partilhe o link com os seus amigos.',
@@ -220,20 +220,26 @@ export default {
         completeTask: 'COMPLETE A TAREFA E RECEBA',
         dailyLogin: 'FAÇA LOGIN TODOS OS DIAS E GANHE BÓNUS',
         images: {
-            invite: '/images/promotion/a1.png',
-            task: '/images/promotion/a2.png',
-            daily: '/images/promotion/a3.png',
+            invite: '/images/promotion/a1_pt.png',
+            task: '/images/promotion/a2_pt.png',
+            daily: '/images/promotion/a3_pt.png',
         },
     },
 
     // Activity01
     activity01: {
         dailyLoginText: 'Faça login todos os dias para receber um pacote de presente em dinheiro!',
+        images: {
+            header: '/images/activity/a3_pt.png',
+        },
     },
 
     // Activity02
     activity02: {
         completeTaskText: 'Complete a tarefa para obter uma recompensa em dinheiro de',
+        images: {
+            header: '/images/activity/a1_pt.png',
+        },
     },
 
     // 第一次登录
@@ -244,7 +250,7 @@ export default {
             goClaim: 'vá e reivindique, boa sorte!',
             btn: 'VÁ E RECLAME',
             images: {
-                slogan: '/images/guide/pop1/slogan.png',
+                slogan: '/images/guide/pop1/slogan_pt.png',
             },
         },
         pop2: {
@@ -253,7 +259,7 @@ export default {
             goClaim: 'vá e reivindique, boa sorte!',
             btn: 'VÁ E RECLAME',
             images: {
-                slogan: '/images/guide/pop2/slogan.png',
+                slogan: '/images/guide/pop2/slogan_pt.png',
             },
         },
     },
@@ -466,8 +472,8 @@ export default {
     components: {
         // Images
         images: {
-            reSubmit: '/images/main/re_submit.png',
-            pepositoTitle: '/images/main/peposito_title.png',
+            reSubmit: '/images/main/re_submit_pt.png',
+            pepositoTitle: '/images/main/peposito_title_pt.png',
         },
         // Componente HeaderBack
         back: 'Voltar',

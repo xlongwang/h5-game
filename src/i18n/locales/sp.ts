@@ -229,11 +229,17 @@ export default {
     // Activity01 活动页面
     activity01: {
         dailyLoginText: '¡Inicie sesión todos los días para recibir un paquete de regalo en efectivo!',
+        images: {
+            header: '/images/activity/a3.png',
+        },
     },
 
     // Activity02 活动页面
     activity02: {
         completeTaskText: 'iCompleta la tarea para obtener una recompensa en efectivo de',
+        images: {
+            header: '/images/activity/a1.png',
+        },
     },
 
     // 个人资料

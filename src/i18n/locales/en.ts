@@ -165,7 +165,7 @@ export default {
         faqAnswer4: 'Game loading issues may be due to network latency, device performance, or platform maintenance. It is recommended to check the network connection or report the issue to customer service for assistance.',
         faqAnswer5: 'If the withdrawal fails, verify if your withdrawal account is correct or change the withdrawal account and withdraw money again.',
         images: {
-            header: '/images/apoyo/header.png',
+            header: '/images/apoyo/header_en.png',
         },
     },
 
@@ -208,7 +208,7 @@ export default {
         linkCopied: 'Link copied to clipboard',
         linkCopiedForInstagram: 'Link copied for Instagram',
         images: {
-            banner: '/images/invite/banner.png',
+            banner: '/images/invite/banner_en.png',
         },
         inviteText: 'Invite users to register and get a cash reward of $',
         shareLinkText: 'Share link with your friends.',
@@ -220,20 +220,26 @@ export default {
         completeTask: 'ICOMPLETE THE TASK AND RECEIVE',
         dailyLogin: 'LOGIN EVERY DAY AND GET BONUSES',
         images: {
-            invite: '/images/promotion/a1.png',
-            task: '/images/promotion/a2.png',
-            daily: '/images/promotion/a3.png',
+            invite: '/images/promotion/a1_en.png',
+            task: '/images/promotion/a2_en.png',
+            daily: '/images/promotion/a3_en.png',
         },
     },
 
     // Activity01
     activity01: {
         dailyLoginText: 'Login every day to receive a cash gift package!',
+        images: {
+            header: '/images/activity/a3_en.png',
+        },
     },
 
     // Activity02
     activity02: {
         completeTaskText: 'Complete the task to get a cash reward of',
+        images: {
+            header: '/images/activity/a1_en.png',
+        },
     },
 
     // 第一次登录
@@ -244,7 +250,7 @@ export default {
             goClaim: 'go and claim, good luck!',
             btn: 'GO AND CLAIM',
             images: {
-                slogan: '/images/guide/pop1/slogan.png',
+                slogan: '/images/guide/pop1/slogan_en.png',
             },
         },
         pop2: {
@@ -253,7 +259,7 @@ export default {
             goClaim: 'go and claim, good luck!',
             btn: 'GO AND CLAIM',
             images: {
-                slogan: '/images/guide/pop2/slogan.png',
+                slogan: '/images/guide/pop2/slogan_en.png',
             },
         },
     },
@@ -341,8 +347,8 @@ export default {
     components: {
         // Images
         images: {
-            reSubmit: '/images/main/re_submit.png',
-            pepositoTitle: '/images/main/peposito_title.png',
+            reSubmit: '/images/main/re_submit_en.png',
+            pepositoTitle: '/images/main/peposito_title_en.png',
         },
         // HeaderBack component
         back: 'Back',

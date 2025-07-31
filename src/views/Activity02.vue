@@ -37,7 +37,7 @@ defineOptions({
 const { i18n } = useGlobal()
 const { t } = i18n
 
-const headerImg = '/images/activity/a1.png'
+const headerImg = computed(() => t('activity02.images.header'))
 
 const txt = computed(() => `${t('activity02.completeTaskText')} $${(USER_REWARD).toFixed(2)}`)
 </script>
