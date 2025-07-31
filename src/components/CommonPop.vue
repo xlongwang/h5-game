@@ -1,11 +1,3 @@
-<!--
- * @Author: along longwang6@163.com
- * @Date: 2025-07-06 14:03:09
- * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-07-06 15:51:48
- * @FilePath: /vue3_app/src/components/CommonPop.vue
- * @Description: 通用弹窗组件
--->
 <template>
     <van-popup
         v-model:show="showCenter"
