@@ -279,7 +279,7 @@ const formattedTimer = computed(() => {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
 
-const fetchapplyWithdrawal =  async () => {
+const fetchapplyWithdrawal =  async (isTimer = true) => {
     const res = await userApi.applyWithdrawal({
             amount: amount.value.toString(),
             player_id: userInfo.value?.id.toString() || '',
@@ -289,16 +289,12 @@ const fetchapplyWithdrawal =  async () => {
     end_time.value = res.data.expire_time
     status.value = res.data.status
      btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
-     const wAmount = localStorage.getItem('withdrawAmount')
-     if(!wAmount){
-        nextTick(() => {
-            localStorage.setItem('withdrawAmount', amount.value.toString())
-            localStorage.setItem('progressTxtList', JSON.stringify(progressTxtList.value))
-        })
-     }
+     
     
         //  btnTxt.value = formattedTimer.value
-        startTimer()
+        if(isTimer) {
+            startTimer()
+        }
     }else {
         showFailToast(t('components.failed'))
     }
@@ -344,7 +340,7 @@ function stopTimer() {
         clearInterval(timerInterval.value)
         timerInterval.value = null
         const timeoutId = setTimeout(() => {
-            fetchapplyWithdrawal()
+            fetchapplyWithdrawal(false)
         }, 1000)
         // 将timeoutId存储到ref中，以便在组件卸载时清理
         if (timeoutId) {
@@ -361,7 +357,14 @@ async function handlePop9Success() {
             time: new Date().getTime(),
         })
     }
-    fetchapplyWithdrawal()
+    await fetchapplyWithdrawal()
+    const wAmount = localStorage.getItem('withdrawAmount')
+     if(!wAmount){
+        nextTick(() => {
+            localStorage.setItem('withdrawAmount', amount.value.toString())
+            localStorage.setItem('progressTxtList', JSON.stringify(progressTxtList.value))
+        })
+     }
 }
 
 const pop7Timer = ref<NodeJS.Timeout | null>(null)
@@ -518,9 +521,28 @@ watch(step, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    if(isWithdrawAmountPending.value) {
-        setWithdrawPenddingStatus()
-    }else {
+    // if(!isFirstWithdraw.value) {
+    //     if(isWithdrawAmountPending.value) {
+    //         setWithdrawPenddingStatus()
+    //     }else {
+    //         const ct = new Date().getTime()
+    //         progressTxtList.value = [
+    //             {
+    //                 ...retarirProgress[1],
+    //                 time: ct,
+    //             },
+    //             {
+    //                 ...retarirProgress[2],
+    //                 time: ct + 3000,
+    //             },
+    //         ]
+    //         // 启动倒计时
+    //         startTimer()
+    //     }
+    // }
+   if(isWithdrawAmountPending.value) {
+     setWithdrawPenddingStatus()
+   }else {
         const ct = new Date().getTime()
         progressTxtList.value = [
             {
@@ -532,12 +554,9 @@ onMounted(() => {
                 time: ct + 3000,
             },
         ]
-        // 启动倒计时
-        startTimer()
-    }
-  
-   
+   }
 })
+
 
 onUnmounted(() => {
     if (pop7Timer.value) {
