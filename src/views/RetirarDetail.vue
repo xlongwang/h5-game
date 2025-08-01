@@ -135,7 +135,7 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { useRoute, useRouter } from 'vue-router'
-import { showFailToast, showSuccessToast } from 'vant'
+import { showFailToast } from 'vant'
 // import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 // import { rechargAmountList } from '@/config/RechargeConfig'
@@ -266,7 +266,7 @@ function handlePersonalTaxPaySuccess() {
 }
 
 const start_time = ref(0)
-const now_time = ref(0)
+const end_time = ref(0)
 const status = ref('')
 
 
@@ -285,8 +285,8 @@ const fetchapplyWithdrawal =  async () => {
             player_id: userInfo.value?.id.toString() || '',
         })
     if(res.code === 200) {
-    start_time.value = res.data.start_time
-    now_time.value = res.data.now_time
+    start_time.value = res.data.now_time
+    end_time.value = res.data.expire_time
     status.value = res.data.status
      btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
      const wAmount = localStorage.getItem('withdrawAmount')
@@ -322,8 +322,8 @@ function startTimer() {
     }
     
     // 计算初始剩余秒数
-    if (now_time.value && start_time.value) {
-        remainingSeconds.value = Math.max(0, now_time.value - start_time.value)
+    if (start_time.value && end_time.value) {
+        remainingSeconds.value = Math.max(0, end_time.value - start_time.value)
     }
     
     timerInterval.value = setInterval(() => {
