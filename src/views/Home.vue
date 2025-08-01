@@ -754,7 +754,7 @@ function handleSwipeChange(index: number) {
 
 .game-iframe-header {
   position: absolute;
-  max-width: 468Px;
+  max-width: 448Px;
   top: 20px;
   left: 50%;
   width: 100%;
