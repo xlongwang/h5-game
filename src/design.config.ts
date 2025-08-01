@@ -1,11 +1,3 @@
-/*
- * @Author: along longwang6@163.com
- * @Date: 2025-06-22 10:53:10
- * @LastEditors: along longwang6@163.com
- * @LastEditTime: 2025-06-24 00:06:04
- * @FilePath: /vue3_app/src/design.config.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 const vmDesignWidth = 1080 // 设计稿宽度
 const vmDesignHeight = 1920 // 设计稿宽度
 const vmMinWidth = 360 // 兼容最小宽度
