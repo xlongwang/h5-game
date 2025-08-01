@@ -1,5 +1,5 @@
 <template>
-    <!-- 请根据订单金额进行支付。若订单金额与实际支付金额不符，押金将不予退还！ -->\
+    <!-- 请根据订单金额进行支付。若订单金额与实际支付金额不符，押金将不予退还！ -->
     <CommonPop
         v-model="showCenter"
         :title="t('components.details')"

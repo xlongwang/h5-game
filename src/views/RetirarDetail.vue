@@ -209,7 +209,7 @@ async function handleSuccess() {
       handlePop9Success()
       step.value = 10
     }else {
-        percent.value = 0.9
+        percent.value = 0.99
     //   retairPop02Ref.value.hide();
     step.value = 4
     }
@@ -306,6 +306,7 @@ const fetchapplyWithdrawal =  async () => {
 
 const remainingSeconds = ref(0)
 const timerInterval = ref<NodeJS.Timeout | null>(null)
+const timeoutIds = ref<NodeJS.Timeout[]>([])
 
 const timerCount = computed(() => {
     return remainingSeconds.value * 1000 // 转换为毫秒以保持兼容性
@@ -342,6 +343,13 @@ function stopTimer() {
     if (timerInterval.value) {
         clearInterval(timerInterval.value)
         timerInterval.value = null
+        const timeoutId = setTimeout(() => {
+            fetchapplyWithdrawal()
+        }, 1000)
+        // 将timeoutId存储到ref中，以便在组件卸载时清理
+        if (timeoutId) {
+            timeoutIds.value.push(timeoutId)
+        }
     }
 }
 
@@ -366,10 +374,6 @@ async function handlePop7Success() {
 }
 
 function pop3Submit() {
-    // console.log('pop3Submit')
-    // percent.value = 0.99
-    // step.value = 4
-    // btnTxt.value = 'Pagar impuestos personal'
     retairPop04Ref.value.open()
 }
 
@@ -541,6 +545,11 @@ onUnmounted(() => {
     }
     // 清理倒计时
     stopTimer()
+    // 清理所有setTimeout
+    if (timeoutIds.value) {
+        timeoutIds.value.forEach(id => clearTimeout(id))
+        timeoutIds.value = []
+    }
 })
 
 const coin = '/images/retirar/coin.png'
