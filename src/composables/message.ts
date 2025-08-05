@@ -22,7 +22,7 @@ export function showMsg(config: ConfigType) {
     if (typeof window === 'undefined') {
         return
     }
-    
+
     let content, type: MessageType
     if (!config) {
         content = '接口返回数据错误'

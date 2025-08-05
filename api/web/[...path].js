@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 import https from 'node:https'
 import fetch from 'node-fetch'
 import qs from 'qs'
@@ -19,13 +20,39 @@ export default async function handler(req, res) {
         const { path } = req.query
         const apiPath = Array.isArray(path) ? path.join('/') : path || ''
 
+        // 根据环境变量获取API基础URL
+        function getApiUrl() {
+            // 在 Vercel 环境中强制使用 production 域名
+            const isVercel = !!process.env.VERCEL
+            const env = isVercel ? 'production' : (process.env.VITE_APP_ENV || process.env.NODE_ENV || 'development')
+
+            console.log('🚀 ~ Vercel API ~ 环境变量:', {
+                VITE_APP_ENV: process.env.VITE_APP_ENV,
+                NODE_ENV: process.env.NODE_ENV,
+                VERCEL: process.env.VERCEL,
+                isVercel,
+                env,
+            })
+
+            const urlMap = {
+                development: 'https://mineadmin.thebbxxzm.top',
+                test: 'https://www.slot777game.to',
+                production: 'https://www.slot777game.top',
+            }
+
+            return urlMap[env] || urlMap.development
+        }
+
+        const apiDomain = getApiUrl()
+        console.log('🚀 ~ Vercel API ~ 使用的域名:', apiDomain)
+
         // 调试信息
         console.log('🌐 原始请求 URL:', req.url)
         console.log('🌐 请求路径参数:', req.query.path)
         console.log('🌐 解析后的 API 路径:', apiPath)
 
-        // 使用 HTTPS
-        const targetUrl = `https://mineadmin.thebbxxzm.top/api/${apiPath}`
+        // 使用动态域名
+        const targetUrl = `${apiDomain}/api/${apiPath}`
 
         console.log('🌐 代理请求到:', targetUrl)
         console.log('🌐 请求方法:', req.method)
