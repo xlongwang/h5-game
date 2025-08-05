@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
-import { showSuccessToast, showFailToast } from 'vant'
+import { showFailToast, showSuccessToast } from 'vant'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
@@ -78,7 +78,7 @@ async function submitOrder() {
     isSubmitting.value = true
 
     try {
-        const res  = await userApi.createPayout({
+        const res = await userApi.createPayout({
             amount: props.amount.toString(),
             phone: userInfo.value?.receiving_account?.phone.toString() || '',
             pix_type: userInfo.value?.receiving_account?.pix_type || '', // PHONE、EMAIL、CPF。
@@ -86,10 +86,11 @@ async function submitOrder() {
             receiving_account: userInfo.value?.receiving_account?.receiving_account || '',
             receiving_name: userInfo.value?.receiving_account?.receiving_name || '',
         })
-        if(res.code === 200) {
+        if (res.code === 200) {
             showSuccessToast(t('components.success'))
             props.onSuccess()
-        }else {
+        }
+        else {
             showFailToast(t('components.failed'))
         }
     }
