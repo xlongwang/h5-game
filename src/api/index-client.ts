@@ -88,13 +88,19 @@ function checkStatus(response: AxiosResponse) {
 
 function checkCode(data: ResponseData<any>) {
     if (data.code === -500) {
-        window.location.href = '/backend'
+        if (typeof window !== 'undefined') {
+            window.location.href = '/backend'
+        }
     }
     else if (data.code === -400) {
-        window.location.href = '/'
+        if (typeof window !== 'undefined') {
+            window.location.href = '/'
+        }
     }
     else if (data.code !== 200) {
-        showMsg(data.message)
+        if (typeof window !== 'undefined') {
+            showMsg(data.message)
+        }
     }
 
     return data
