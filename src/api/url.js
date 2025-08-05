@@ -1,13 +1,13 @@
 // 根据环境变量获取API基础URL
 function getApiUrl() {
-    const env = import.meta.env.VITE_APP_ENV || 'development'
-    console.log('🚀 ~ getApiUrl ~ env:', env)
+    // 在 Vercel 环境中强制使用 production 域名
+    const isVercel = !!import.meta.env.VITE_VERCEL || import.meta.env.VITE_APP_ENV === 'production'
+    const env = isVercel ? 'production' : (import.meta.env.VITE_APP_ENV || 'development')
+    console.log('🚀 ~ getApiUrl ~ env:', env, 'isVercel:', isVercel)
 
     const urlMap = {
         development: 'https://mineadmin.thebbxxzm.top',
-        // test: 'https://mineadmin.thebbxxzm.top',
         test: 'https://www.slot777game.to',
-        // production: 'https://mineadmin.thebbxxzm.top',
         production: 'https://www.slot777game.top',
     }
 
