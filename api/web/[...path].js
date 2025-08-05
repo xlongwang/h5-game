@@ -56,7 +56,6 @@ export default async function handler(req, res) {
 
         console.log('🌐 代理请求到:', targetUrl)
         console.log('🌐 请求方法:', req.method)
-        console.log('🌐 请求数据:', req.body)
 
         // 准备请求体
         let body
