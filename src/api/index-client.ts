@@ -22,6 +22,7 @@ axios.interceptors.request.use(
             url: config.url,
             data: config.data,
             baseURL: config.baseURL,
+            fullUrl: config.baseURL ? `${config.baseURL}${config.url}` : config.url,
         })
 
         return config

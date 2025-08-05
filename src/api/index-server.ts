@@ -38,6 +38,11 @@ export function api(cookies: Record<string, any>): ApiServer {
                 const res = config.cached.get(key)
                 return Promise.resolve(res && res.data)
             }
+
+            // 添加服务器端请求日志
+            console.log('🚀 ~ 服务器端POST请求 ~ 完整URL:', `${config.api}${url}`)
+            console.log('🚀 ~ 服务器端POST请求 ~ 数据:', data)
+
             const res_1 = await this.api({
                 method: 'post',
                 url,
@@ -60,6 +65,11 @@ export function api(cookies: Record<string, any>): ApiServer {
                 const res = config.cached.get(key)
                 return Promise.resolve(res && res.data)
             }
+
+            // 添加服务器端请求日志
+            console.log('🚀 ~ 服务器端GET请求 ~ 完整URL:', `${config.api}${url}`)
+            console.log('🚀 ~ 服务器端GET请求 ~ 参数:', params)
+
             return this.api({
                 method: 'get',
                 url,

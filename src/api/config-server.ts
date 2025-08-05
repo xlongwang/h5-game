@@ -4,6 +4,10 @@ import apiDomain from './url.js'
 
 const cached = false
 
+// 添加服务器端调试信息
+console.log('🚀 ~ 服务器端API配置 ~ apiDomain:', apiDomain)
+console.log('🚀 ~ 服务器端API配置 ~ 完整API地址:', `${apiDomain}/api/`)
+
 const config = {
     api: `${apiDomain}/api/`,
     port: 8080,
