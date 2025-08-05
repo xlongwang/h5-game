@@ -10,7 +10,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     Bar: typeof import('./components/Bar.tsx')['default']
     CommonPop: typeof import('./components/CommonPop.vue')['default']
-    copy: typeof import('./components/RetairPop10_bak.vue')['default']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
     EmptyWithdrawPop: typeof import('./components/EmptyWithdrawPop.vue')['default']
     FirstLogin: typeof import('./components/FirstLogin.vue')['default']
@@ -48,7 +47,6 @@ declare module 'vue' {
     VanForm: typeof import('vant/es')['Form']
     VanGrid: typeof import('vant/es')['Grid']
     VanGridItem: typeof import('vant/es')['GridItem']
-    VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanLoading: typeof import('vant/es')['Loading']
     VanOverlay: typeof import('vant/es')['Overlay']

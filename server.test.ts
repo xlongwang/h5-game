@@ -1,4 +1,3 @@
-/* eslint-disable node/prefer-global/process */
 import type { RenderType } from '@/types'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -12,6 +11,19 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import logger from 'morgan'
 import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
+
+// 根据环境变量获取API基础URL
+function getApiUrl() {
+    const env = process.env.VITE_APP_ENV || process.env.NODE_ENV || 'development'
+
+    const urlMap: Record<string, string> = {
+        development: 'https://mineadmin.thebbxxzm.top',
+        test: 'https://www.slot777game.to',
+        production: 'https://www.slot777game.top',
+    }
+
+    return urlMap[env] || urlMap.development
+}
 
 export async function createServer() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -142,10 +154,11 @@ export async function createServer() {
 
     // 在 Vercel 环境下跳过代理，因为 Vercel 不支持代理到外部服务
     if (!process.env.VERCEL) {
+        const apiUrl = getApiUrl()
         // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
         app.use(
             createProxyMiddleware({
-                target: 'https://mineadmin.thebbxxzm.top',
+                target: apiUrl,
                 changeOrigin: true,
                 pathFilter: ['/api/**'],
                 pathRewrite: {
@@ -157,13 +170,13 @@ export async function createServer() {
                         console.log('生产环境代理请求:', {
                             method: proxyReq.method,
                             url: proxyReq.path,
-                            target: 'https://mineadmin.thebbxxzm.top'
+                            target: apiUrl,
                         })
                     },
                     proxyRes(proxyRes, req) {
                         console.log('生产环境代理响应:', {
                             status: proxyRes.statusCode,
-                            url: req.url
+                            url: req.url,
                         })
                     },
                 },
