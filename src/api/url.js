@@ -15,7 +15,6 @@ function getApiUrl() {
 }
 
 const url = getApiUrl()
-console.log('🚀 ~ url0000000000000099:', url)
 export default url
 
 // https://mineadmin.thebbxxzm.top/api/web/loginApi
