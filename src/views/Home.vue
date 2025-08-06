@@ -74,7 +74,11 @@
                 <template #title>
                     <div class="flex flex-col items-center">
                         <div v-if="tab.icon" class="text-2xl text-gold tab-icon" :class="[tab.key]">
-                            <img :class="tab.key" :src="tab.icon" :alt="tab.title">
+                            <van-image :class="tab.key" :src="tab.icon" :alt="tab.title">
+                                <template #loading>
+                                    <van-loading type="spinner" size="20" />
+                                </template>
+                            </van-image>
                         </div>
                         <span class="text-gold text-[40px]">{{ tab.title }}</span>
                     </div>
@@ -106,7 +110,14 @@
                 >
                     <van-grid-item v-for="game in gameList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
-                            <van-image :src="game.logo" :alt="game.name" />
+                            <van-image :src="game.logo" :alt="game.name" style="background-color: #000;">
+                                <template #loading>
+                                    <van-loading type="spinner" size="20" />
+                                </template>
+                                <template #error>
+                                    <div class="game-card-error"></div>
+                                </template>
+                            </van-image>
                             <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
                                 <div class="game-name">{{ formatGameName(game.show_name)[0] }}</div>
                                 <div v-if="formatGameName(game.show_name)[1]" class="game-name">
@@ -133,7 +144,14 @@
                 >
                     <van-grid-item v-for="game in gameJLList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
-                            <van-image :src="game.logo" :alt="game.name" />
+                            <van-image :src="game.logo" :alt="game.name">
+                                <template #loading>
+                                    <van-loading type="spinner" size="20" />
+                                </template>
+                                <template #error>
+                                    <div class="game-card-error"></div>
+                                </template>
+                            </van-image>
                             <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
                                 <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
                                 <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
@@ -161,7 +179,14 @@
                 >
                     <van-grid-item v-for="game in gamePPList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
-                            <van-image :src="game.logo" :alt="game.name" />
+                            <van-image :src="game.logo" :alt="game.name">
+                                <template #loading>
+                                    <van-loading type="spinner" size="20" />
+                                </template>
+                                <template #error>
+                                    <div class="game-card-error"></div>
+                                </template>
+                            </van-image>
                             <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
                                 <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
                                 <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
@@ -189,7 +214,14 @@
                 >
                     <van-grid-item v-for="game in gameJobList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
-                            <van-image :src="game.logo" :alt="game.name" />
+                            <van-image :src="game.logo" :alt="game.name">
+                                <template #loading>
+                                    <van-loading type="spinner" size="20" />
+                                </template>
+                                <template #error>
+                                    <div class="game-card-error"></div>
+                                </template>
+                            </van-image>
                             <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
                                 <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
                                 <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
@@ -204,7 +236,7 @@
             <!-- mg -->
             <van-swipe-item>
                 <div v-if="gameMGLoading" class="loading-container">
-                    <van-loading type="spinner" color="#ffd700" size="24px">
+                    <van-loading style="background-color: #000;" type="spinner" color="#ffd700" size="24px">
                         {{ t("common.loading") }}
                     </van-loading>
                 </div>
@@ -217,7 +249,14 @@
                 >
                     <van-grid-item v-for="game in gameMGList" :key="game.name">
                         <div class="game-card" @click="handleGameClick(game)">
-                            <van-image :src="game.logo" :alt="game.name" />
+                            <van-image :src="game.logo" :alt="game.name">
+                                <template #loading>
+                                    <van-loading type="spinner" size="20" />
+                                </template>
+                                <template #error>
+                                    <div class="game-card-error"></div>
+                                </template>
+                            </van-image>
                             <div v-if="game.show_name" class="game-name-container text-[#e4b857]">
                                 <div class="game-name">{{ formatJLGameName(game.show_name)[0] }}</div>
                                 <div v-if="formatJLGameName(game.show_name)[1]" class="game-name">
@@ -235,7 +274,7 @@
         <!-- 游戏 iframe 覆盖层 -->
         <Teleport to="body">
             <div v-if="gameIframeVisible" class="game-iframe-overlay">
-                <div class="game-iframe-header" v-if="isShowGameCloseBtn">
+                <div v-if="isShowGameCloseBtn" class="game-iframe-header">
                     <!-- <button class="close-btn" @click="closeGameIframe">
                         <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" />
                     </button> -->
@@ -272,10 +311,10 @@
 import { computed, ref, watch } from 'vue'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+import { isShowGameCloseBtn } from '@/config/gameCloseBtn'
 import { getMarqueeData } from '@/config/marqueenConfig'
 import { USER_REWARD } from '@/config/NumberConfig'
 import useUserStore from '@/stores/use-user-store'
-import { isShowGameCloseBtn } from '@/config/gameCloseBtn'
 
 // import { formatNumber } from '@/utils/tools'
 
@@ -597,8 +636,6 @@ function closeGameIframe() {
 function handleSwipeChange(index: number) {
     activeTabIndex.value = index
 }
-
-
 </script>
 
 <style scoped>
@@ -608,12 +645,34 @@ function handleSwipeChange(index: number) {
   margin-top: 15px;
 }
 
+::v-deep(.van-image) {
+    width: 100%;
+    height: 100%;
+}
+
+::v-deep(.van-image__error, .van-image__loading) {
+    width: 100%;
+    height: 100%;
+    color: #000;
+    background-color: transparent;
+}
+
 .game-card {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.game-card-error {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background: url('/images/common/default.png') no-repeat center center;
+    background-size: 100% 100%;
 }
 
 .game-card:hover {
