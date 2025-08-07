@@ -1,6 +1,9 @@
 # vite-vue3-ssr
 vue3 H5端的ssr脚手架, 含asyncData里的xhr请求 (Vue3 + Vant + Pinia + Vite + TS + Unocss + SSR)
 
+## node 版本
+- 大于等于 v18.17.0
+
 ## 使用
 
 ```bash
