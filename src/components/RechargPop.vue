@@ -64,14 +64,14 @@ const popupStyle = computed(() => ({
     '--re-submit-bg': `url('${t('components.images.reSubmit')}')`,
     '--peposito-title-bg': `url('${t('components.images.pepositoTitle')}')`,
 }))
-const activeVal = ref(100)
+const activeVal = ref(20)
 const OderDetailRecargelRef = ref()
 const reItems = ref(rechargAmountList)
 const extraVal = ref(0)
 
 watch(showBottom, (newVal) => {
     if (newVal) {
-        activeVal.value = 100
+        activeVal.value = 20
     }
 })
 
@@ -95,7 +95,7 @@ function handleSubmit() {
 }
 
 function formatVal(val: number) {
-    if (val > 20) {
+    if (val > 50) {
         return val
     }
     return val.toFixed(2)
