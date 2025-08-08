@@ -21,6 +21,13 @@
         background: url('/images/retirar/btn_bg_active.png') no-repeat;
         background-size: 100% 100%;
     }
+
+    &.disable {
+        color: #666;
+        cursor: not-allowed;
+        background: url('/images/retirar/btn_bg_disable.png') no-repeat;
+        background-size: 100% 100%;
+    }
 }
 
 /* stylelint-disable-next-line no-duplicate-selectors */

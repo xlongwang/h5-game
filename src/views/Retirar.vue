@@ -47,7 +47,7 @@
                 v-for="item in countList"
                 :key="item.id"
                 class="countItem flex items-center justify-center"
-                :class="{ active: activeCount === item.id }"
+                :class="{ active: activeCount === item.id, disable: item?.disable }"
                 @click="checkCount(item)"
             >
                 ${{ getCoinNum(item.value) }}
@@ -76,9 +76,7 @@
                             <span class="pr-[15px]">{{ t("withdraw.congratulations") }}</span>
                             <span class="color-[#fff] pr-[15px]">{{ item.id }}</span>
                             <span class="pr-[15px]">{{ t("finance.withdraw") }}</span>
-                            <span class="pr-[15px] color-[#fe0000]">{{
-                                item.amount
-                            }}</span>
+                            <span class="pr-[15px] color-[#fe0000]">{{ item.amount }}</span>
                         </div>
                         <div>{{ item.time }} {{ t("withdraw.minutes") }}</div>
                     </div>
@@ -134,10 +132,14 @@ function generateScrollData() {
 const { userStore } = useGlobal()
 
 const recordList = ref(generateScrollData())
-const activeCount = ref(1)
+const activeCount = ref(1) // id
 // 直接使用 computed 来响应式获取用户信息
 const userInfo = computed(() => {
     return store.userInfo
+})
+
+const isFirstWithdraw = computed(() => {
+    return Number(userInfo.value?.wallet?.total_withdraw) === 0
 })
 
 const recieviAccount = computed(() => {
@@ -151,12 +153,12 @@ const balance = computed(() => {
 
 const coinImg = '/images/retirar/coin.png'
 const router = useRouter()
-const curValue = ref(1)
+const curValue = ref(5)
 const retarirStep2Ref = ref()
 const isRotating = ref(false)
 async function refreshCoin() {
     try {
-        // 触发旋转动画
+    // 触发旋转动画
         isRotating.value = true
 
         showSuccessToast(t('finance.refresh'))
@@ -199,34 +201,57 @@ async function handleRetarir() {
     router.push(`/retirarDetail?amount=${curValue.value}`)
 }
 
-const countList = ref([
-    {
-        id: 1,
-        value: 1,
-    },
-    {
-        id: 2,
-        value: 200,
-    },
-    {
-        id: 3,
-        value: 3000,
-    },
-    {
-        id: 4,
-        value: 5000,
-    },
-    {
-        id: 5,
-        value: 20000,
-    },
-    {
-        id: 6,
-        value: 50000,
-    },
-])
+const countList = computed<{ id: number, value: number, disable: boolean }[]>(() => {
+    const list = [
+        {
+            id: 1,
+            value: 5,
+        },
+        {
+            id: 2,
+            value: 3000,
+        },
+        {
+            id: 3,
+            value: 5000,
+        },
+        {
+            id: 4,
+            value: 10000,
+        },
+        {
+            id: 5,
+            value: 20000,
+        },
+        {
+            id: 6,
+            value: 50000,
+        },
+    ]
+    return isFirstWithdraw.value ? list.map((item) => {
+        if (item.id === 1) {
+            return {
+                ...item,
+                disable: false,
+            }
+        }
+        return {
+            ...item,
+            value: item.value * 2,
+            disable: true,
+        }
+    }) : list.map((item) => {
+        return {
+            ...item,
+            disable: false,
+        }
+    })
+})
 
 function checkCount(item: any) {
+    if (item.disable) {
+        return
+    }
     activeCount.value = item.id
     curValue.value = item.value
 }
