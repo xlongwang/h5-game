@@ -91,7 +91,16 @@
             :title="t('components.linkWithdrawalAccount')"
         />
 
+        <RetarirStep20
+            ref="retarirStep20Ref"
+            :on-success="handleSuccess"
+            :cur-value="curValue"
+            :title="t('components.linkWithdrawalAccount')"
+        />
+
         <EmptyWithdrawPop ref="emptyWithdrawPopRef" />
+
+        <RetarirNotEnough ref="retarirNotEnoughRef" />
     </div>
 </template>
 
@@ -114,6 +123,7 @@ defineOptions({
 })
 
 const emptyWithdrawPopRef = ref()
+const retarirNotEnoughRef = ref()
 
 const store = useUserStore()
 
@@ -151,10 +161,15 @@ const balance = computed(() => {
     return userInfo.value?.wallet?.balance || 0
 })
 
+const rechargeAmount = computed(() => {
+    return Number(userInfo.value?.wallet?.total_charge) || 0
+})
+
 const coinImg = '/images/retirar/coin.png'
 const router = useRouter()
 const curValue = ref(5)
 const retarirStep2Ref = ref()
+const retarirStep20Ref = ref()
 const isRotating = ref(false)
 async function refreshCoin() {
     try {
@@ -195,6 +210,11 @@ async function handleRetarir() {
     if (!recieviAccount.value) {
         console.log('⚠️ 没有收款账户，打开设置弹窗')
         retarirStep2Ref.value.open()
+        return
+    }
+
+    if (rechargeAmount.value < 20) {
+        retarirNotEnoughRef.value.open()
         return
     }
 

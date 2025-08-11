@@ -567,6 +567,9 @@ export default {
         depositButton: 'Depósito',
         withdrawalFee: 'Taxa de Levantamento',
         payWithdrawalFee: 'Pagar taxa de levantamento',
+
+        // Componente RetarirNotEnough
+        notVipMember: 'Caro utilizador: Não é um membro VIP, precisa de se tornar um membro VIP para levantar. Para se tornar um membro VIP, precisa de depositar $20.',
         vipFeeDescription: 'Caros utilizadores: Estamos comprometidos em fornecer aos utilizadores uma melhor experiência de levantamento. Se o valor único do levantamento usando o canal de pagamento VIP exceder $3,000.00, o canal VIP cobrará 5% do valor do levantamento como taxa de gestão. Esta taxa de levantamento é usada para manter o sistema de pagamento.',
         orderDetails: 'Detalhes do Pedido',
         handlingFeeText: 'Taxa de Processamento',

@@ -436,6 +436,9 @@ export default {
         depositButton: 'Depósito',
         withdrawalFee: 'Comisiones de retiro',
         payWithdrawalFee: 'Pagar tafifas de retiro',
+
+        // Componente RetarirNotEnough
+        notVipMember: 'Estimado usuario: No eres miembro VIP, necesitas convertirte en miembro VIP para poder retirar. Para convertirte en miembro VIP, necesitas recargar $20.',
         vipFeeDescription: 'Estimados usuarios: Estamos comprometidos a brindarles a los usuarios una mejor experiencia de retiro. Si el monto del retiro único utilizando el canal de pago VIP excede $3,000.00, el canal VIP cobrará el 5% del monto del retiro como tarifa de gestión. Esta tarifa de retiro se utiliza para mantener el sistema de pago.',
         orderDetails: 'Detalles del Pedido',
         handlingFeeText: 'Tarifa de Manejo',

@@ -49,6 +49,7 @@ import useUserStore from '@/stores/use-user-store'
 const props = defineProps<{
     // activeVal: number
     onSuccess: () => void
+    defaultVal?: number
     // extra: number
 }>()
 
@@ -56,7 +57,7 @@ const { i18n } = useGlobal()
 const { t } = i18n
 
 const userStore = useUserStore()
-const activeVal = ref(0)
+const activeVal = ref(props.defaultVal || 0)
 
 const extra = computed(() => {
     const item = rechargAmountList.find(item => item.val === activeVal.value)

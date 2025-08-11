@@ -567,6 +567,9 @@ export default {
         depositButton: 'Depósito',
         withdrawalFee: 'Taxa de Saque',
         payWithdrawalFee: 'Pagar taxa de saque',
+
+        // Componente RetarirNotEnough
+        notVipMember: 'Caro usuário: Você não é um membro VIP, você precisa se tornar um membro VIP para sacar. Para se tornar um membro VIP, você precisa depositar $20.',
         vipFeeDescription: 'Caros usuários: Estamos comprometidos em fornecer aos usuários uma melhor experiência de saque. Se o valor único do saque usando o canal de pagamento VIP exceder $3,000.00, o canal VIP cobrará 5% do valor do saque como taxa de gestão. Esta taxa de saque é usada para manter o sistema de pagamento.',
         orderDetails: 'Detalhes do Pedido',
         handlingFeeText: 'Taxa de Processamento',

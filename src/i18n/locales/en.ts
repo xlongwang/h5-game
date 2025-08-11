@@ -442,6 +442,9 @@ export default {
         depositButton: 'Deposit',
         withdrawalFee: 'Withdrawal Fee',
         payWithdrawalFee: 'Pay withdrawal fee',
+
+        // RetarirNotEnough component
+        notVipMember: 'Dear user: You are not a VIP member, you need to become a VIP member to withdraw. To become a VIP member, you need to deposit $20.',
         vipFeeDescription: 'Dear users: We are committed to providing users with a better withdrawal experience. If the single withdrawal amount using the VIP payment channel exceeds $3,000.00, the VIP channel will charge 5% of the withdrawal amount as a management fee. This withdrawal fee is used to maintain the payment system.',
         orderDetails: 'Order Details',
         handlingFeeText: 'Handling Fee',

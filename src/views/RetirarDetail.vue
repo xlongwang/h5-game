@@ -53,8 +53,6 @@
                     </div>
                 </div>
 
-               
-
                 <!-- 倒计时显示 -->
                 <div v-if="status === 'pending'" class="retirar-btn text-[50px] font-bold">
                     {{ formattedTimer }}
@@ -122,9 +120,9 @@
             :amount="amount"
             :pop8-submit="pop8Submit"
         />
-        <RetairPop09 ref="retairPop09Ref"  key="pop9" :pop9-submit="pop9Submit" :amount="1000" />
+        <RetairPop09 ref="retairPop09Ref" key="pop9" :pop9-submit="pop9Submit" :amount="1000" />
 
-        <RetairPop10 ref="retairPop10Ref" :pop10-submit="pop10Submit"/>
+        <RetairPop10 ref="retairPop10Ref" :pop10-submit="pop10Submit" />
         <OderDetailRecharge
             ref="OderDetailRecargelRef"
             :on-success="handleSuccess"
@@ -134,15 +132,17 @@
 
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { useRoute, useRouter } from 'vue-router'
 import { showFailToast } from 'vant'
+import { useRoute, useRouter } from 'vue-router'
+import { userApi } from '@/api/user-api'
+
 // import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+
 // import { rechargAmountList } from '@/config/RechargeConfig'
 import retarirProgress from '@/config/retairProgress'
 import { getCoinNum } from '@/utils'
 import { StorageUtil } from '@/utils/storage'
-import { userApi } from '@/api/user-api'
 
 defineOptions({
     name: 'RetirarDetailPage',
@@ -154,6 +154,14 @@ const route = useRoute()
 const router = useRouter()
 const btnTxt = ref(t('withdraw.useVIPChannel'))
 const taxInfo = ref(0)
+
+const remainingSeconds = ref(0)
+const timerInterval = ref<NodeJS.Timeout | null>(null)
+const timeoutIds = ref<NodeJS.Timeout[]>([])
+
+const timerCount = computed(() => {
+    return remainingSeconds.value * 1000 // 转换为毫秒以保持兼容性
+})
 
 const retairPop01Ref = ref()
 const retairPop02Ref = ref()
@@ -181,12 +189,16 @@ const confirmInfo = ref({
     coast: 0,
 })
 
+const userInfo = computed(() => {
+    return StorageUtil.getUserInfo()
+})
+
 // 获取URL参数中的amount
 const amount = computed(() => {
     const amountParam = route.query.amount
     return amountParam ? Number(amountParam) : 5000
 })
-const setWithdrawPenddingStatus = () => {
+function setWithdrawPenddingStatus() {
     percent.value = 0.99
     step.value = 10
     handlePop9Success()
@@ -198,20 +210,21 @@ const isWithdrawAmountPending = computed(() => {
 })
 
 watch(isWithdrawAmountPending, (newVal, oldVal) => {
-    if(newVal) {
+    if (newVal) {
         setWithdrawPenddingStatus()
     }
 })
 
 async function handleSuccess() {
     await userStore.fetchUserInfo()
-    if (step.value === 9) {  // 支付 1000 元会计服务费 回调
-      handlePop9Success()
-      step.value = 10
-    }else {
+    if (step.value === 9) { // 支付 1000 元会计服务费 回调
+        handlePop9Success()
+        step.value = 10
+    }
+    else {
         percent.value = 0.99
-    //   retairPop02Ref.value.hide();
-    step.value = 4
+        //   retairPop02Ref.value.hide();
+        step.value = 4
     }
 }
 
@@ -248,27 +261,9 @@ function handleOpenRecharge(amount: number) {
     OderDetailRecargelRef.value.setActiveVal(amount)
 }
 
-function handlePersonalTaxPaySuccess() {
-    // percent.value = 1
-    // console.log('handlePersonalTaxPaySuccess')
-    // router.push('/')
-    if(isFirstWithdraw.value) {
-        // step.value = 8
-        // 第一次提现
-        retairPop07Ref.value.open()
-        
-    }else {
-        percent.value = 0.99
-        step.value = 7
-        btnTxt.value = 'Pagar gastos financieros elevados'
-    }
-    
-}
-
 const start_time = ref(0)
 const end_time = ref(0)
 const status = ref('')
-
 
 // 格式化倒计时显示
 const formattedTimer = computed(() => {
@@ -279,54 +274,63 @@ const formattedTimer = computed(() => {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
 
-const fetchapplyWithdrawal =  async (isTimer = true) => {
+async function fetchapplyWithdrawal(isTimer = true) {
     const res = await userApi.applyWithdrawal({
-            amount: amount.value.toString(),
-            player_id: userInfo.value?.id.toString() || '',
-        })
-    if(res.code === 200) {
-    start_time.value = res.data.now_time
-    end_time.value = res.data.expire_time
-    status.value = res.data.status
-     btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
-     
-    
+        amount: amount.value.toString(),
+        player_id: userInfo.value?.id.toString() || '',
+    })
+    if (res.code === 200) {
+        start_time.value = res.data.now_time
+        end_time.value = res.data.expire_time
+        status.value = res.data.status
+        btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
+
         //  btnTxt.value = formattedTimer.value
-        if(isTimer) {
+        if (isTimer) {
             startTimer()
         }
-    }else {
+    }
+    else {
         showFailToast(t('components.failed'))
     }
 }
 
-const remainingSeconds = ref(0)
-const timerInterval = ref<NodeJS.Timeout | null>(null)
-const timeoutIds = ref<NodeJS.Timeout[]>([])
-
-const timerCount = computed(() => {
-    return remainingSeconds.value * 1000 // 转换为毫秒以保持兼容性
-})
-
 const isFirstWithdraw = computed(() => {
     return Number(userInfo.value?.wallet?.total_withdraw) === 0
 })
+
+function handlePersonalTaxPaySuccess() {
+    // percent.value = 1
+    // console.log('handlePersonalTaxPaySuccess')
+    // router.push('/')
+    if (isFirstWithdraw.value) {
+        // step.value = 8
+        // 第一次提现
+        retairPop07Ref.value.open()
+    }
+    else {
+        percent.value = 0.99
+        step.value = 7
+        btnTxt.value = 'Pagar gastos financieros elevados'
+    }
+}
 
 // 开始倒计时
 function startTimer() {
     if (timerInterval.value) {
         clearInterval(timerInterval.value)
     }
-    
+
     // 计算初始剩余秒数
     if (start_time.value && end_time.value) {
         remainingSeconds.value = Math.max(0, end_time.value - start_time.value)
     }
-    
+
     timerInterval.value = setInterval(() => {
         if (remainingSeconds.value > 0) {
             remainingSeconds.value--
-        } else {
+        }
+        else {
             stopTimer()
             // 可以在这里添加倒计时结束的处理逻辑
             console.log('倒计时结束')
@@ -351,20 +355,20 @@ function stopTimer() {
 
 async function handlePop9Success() {
     retairPop09Ref.value.hide()
-    if(progressTxtList.value.length === 8 ){
-    progressTxtList.value.push({
+    if (progressTxtList.value.length === 8) {
+        progressTxtList.value.push({
             ...retarirProgress[9],
             time: new Date().getTime(),
         })
     }
     await fetchapplyWithdrawal()
     const wAmount = localStorage.getItem('withdrawAmount')
-     if(!wAmount){
+    if (!wAmount) {
         nextTick(() => {
             localStorage.setItem('withdrawAmount', amount.value.toString())
             localStorage.setItem('progressTxtList', JSON.stringify(progressTxtList.value))
         })
-     }
+    }
 }
 
 const pop7Timer = ref<NodeJS.Timeout | null>(null)
@@ -395,7 +399,6 @@ function pop6Submit() {
     btnTxt.value = t('components.payPersonalTaxes')
 }
 
-
 function pop8Submit() {
     console.log('pop8Submit')
     // percent.value = 1
@@ -404,11 +407,10 @@ function pop8Submit() {
     // btnTxt.value = 'Pagar gastos financieros elevados'
 }
 
-
 function pop9Submit() {
     console.log('pop9Submit')
     step.value = 9
-    
+
     OderDetailRecargelRef.value.open()
     OderDetailRecargelRef.value.setActiveVal(1000)
 }
@@ -421,12 +423,7 @@ async function pop10Submit() {
     pop7Timer.value = setTimeout(() => {
         router.push('/retirar')
     }, 30)
-    
 }
-
-const userInfo = computed(() => {
-    return StorageUtil.getUserInfo()
-})
 
 const reversedProgressList = computed(() => {
     return [...progressTxtList.value].reverse()
@@ -454,27 +451,30 @@ async function submit() {
         retairPop08Ref.value.open()
     }
 
-    if(step.value === 8) {
+    if (step.value === 8) {
         retairPop09Ref.value.open()
     }
 
-    if(step.value === 10) {
-        if(status.value === 'confirmed'){
+    if (step.value === 10) {
+        if (status.value === 'confirmed') {
             try {
                 const res = await userApi.paymentConfirmation({
                     player_id: userInfo.value?.id.toString() || '',
-               })
-               if(res.code === 200) {
+                })
+                if (res.code === 200) {
                 // showSuccessToast(t('components.success'))
-                localStorage.removeItem('withdrawAmount')
-                localStorage.removeItem('progressTxtList')
-                console.log('paymentConfirmation success', res.data)
-               }else {
-                console.log('paymentConfirmation failed', res.data)
-               }
-            } catch (error) {
+                    localStorage.removeItem('withdrawAmount')
+                    localStorage.removeItem('progressTxtList')
+                    console.log('paymentConfirmation success', res.data)
+                }
+                else {
+                    console.log('paymentConfirmation failed', res.data)
+                }
+            }
+            catch (error) {
                 console.log('error', error)
-            }finally {
+            }
+            finally {
                 retairPop10Ref.value.open()
             }
         }
@@ -540,9 +540,10 @@ onMounted(() => {
     //         startTimer()
     //     }
     // }
-   if(isWithdrawAmountPending.value) {
-     setWithdrawPenddingStatus()
-   }else {
+    if (isWithdrawAmountPending.value) {
+        setWithdrawPenddingStatus()
+    }
+    else {
         const ct = new Date().getTime()
         progressTxtList.value = [
             {
@@ -554,9 +555,8 @@ onMounted(() => {
                 time: ct + 3000,
             },
         ]
-   }
+    }
 })
-
 
 onUnmounted(() => {
     if (pop7Timer.value) {
