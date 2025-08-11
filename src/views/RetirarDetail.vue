@@ -441,7 +441,19 @@ async function submit() {
     }
 
     if (step.value === 4) {
-        retairPop03Ref.value.open()
+        // if (isFirstWithdraw.value) {
+        //     retairPop02Ref.value.open()
+        //     return
+        // }
+
+        if (!isFirstWithdraw.value) {
+            retairPop03Ref.value.open()
+            return
+        }
+
+        retairPop04Ref.value.open()
+
+        // retairPop03Ref.value.open()
         return
     }
     if (step.value === 5) {

@@ -1,3 +1,4 @@
+import { vipNeedRechargeTotal } from '@/config/vipNeedRechargeTotal'
 export default {
     // 通用
     common: {
@@ -563,7 +564,7 @@ export default {
         peopleInLine: 'Número de pessoas na fila',
         expectedTime: 'Tempo esperado',
         useVIPWithdrawalChannel: 'Usar canal de saque VIP',
-        vipChannelDescription: 'Caro usuário, você tem a oportunidade de desfrutar do canal de saque rápido VIP gratuitamente uma vez. Deposite $200.00 agora, o sistema fornecerá canais VIP de saque rápido gratuitamente. Use o canal de saque rápido VIP, os saques chegam em 5 minutos',
+        vipChannelDescription: `Caro usuário, você tem a oportunidade de desfrutar do canal de saque rápido VIP gratuitamente uma vez. Deposite $${vipNeedRechargeTotal}.00 agora, o sistema fornecerá canais VIP de saque rápido gratuitamente. Use o canal de saque rápido VIP, os saques chegam em 5 minutos`,
         depositButton: 'Depósito',
         withdrawalFee: 'Taxa de Saque',
         payWithdrawalFee: 'Pagar taxa de saque',

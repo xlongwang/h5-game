@@ -31,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
-// import { userApi } from "@/api/user-api";
 import { useGlobal } from '@/composables'
+import { retairRate } from '@/config/retarirRate'
 import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
@@ -51,20 +51,27 @@ const userInfo = computed(() => {
     return userStore.userInfo
 })
 
+const isFirstWithdraw = computed(() => {
+    return Number(userInfo.value?.wallet?.total_withdraw) === 0
+})
+
 function handleCancel() {
     hide()
 }
 
 const coastNum = computed(() => {
-    const totalWithdraw = Number(userInfo.value?.wallet?.total_withdraw)
+    // const totalWithdraw = Number(userInfo.value?.wallet?.total_withdraw)
     const cur = Number(props.activeVal)
-    const total = Number(userInfo.value?.wallet?.total_withdraw) + Number(props.activeVal)
+    // const total = Number(userInfo.value?.wallet?.total_withdraw) + Number(props.activeVal)
 
-    if (totalWithdraw > 3000) {
-        return cur * 0.05
-    }
-    if (total > 3000) {
-        return (total - 3000) * 0.05
+    // if (totalWithdraw > 3000) {
+    //     return cur * retairRate
+    // }
+    // if (total > 3000) {
+    //     return (total - 3000) * retairRate
+    // }
+    if (!isFirstWithdraw.value) {
+        return cur * retairRate
     }
     return 0
 })

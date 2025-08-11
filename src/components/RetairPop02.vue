@@ -19,6 +19,7 @@
 <script setup lang="ts">
 // import { userApi } from "@/api/user-api";
 import { useGlobal } from '@/composables'
+import { vipNeedRechargeTotal } from '@/config/vipNeedRechargeTotal'
 import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
@@ -53,7 +54,7 @@ function handleSubmit() {
     // else {
     console.log('not enough')
     // 通过 emit 事件通知父组件打开充值弹窗并设置金额
-    emit('openRecharge', 200)
+    emit('openRecharge', vipNeedRechargeTotal)
     // }
     props.onSuccess()
     hide()

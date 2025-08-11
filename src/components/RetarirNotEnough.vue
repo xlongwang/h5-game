@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { useGlobal } from '@/composables'
 
-const show = ref(true)
+const show = ref(false)
 const OderDetailRecargelRef = ref()
 
 const { i18n } = useGlobal()
@@ -45,6 +45,7 @@ function handleCancel() {
 function handleConfirm() {
     show.value = false
     OderDetailRecargelRef.value.open()
+    OderDetailRecargelRef.value.setActiveVal(20)
 }
 
 function open() {

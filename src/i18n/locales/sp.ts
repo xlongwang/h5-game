@@ -1,3 +1,4 @@
+import { vipNeedRechargeTotal } from '@/config/vipNeedRechargeTotal'
 export default {
     // 通用
     common: {
@@ -432,7 +433,7 @@ export default {
         expectedTime: 'Hora prevista',
         tipsBottom: 'Al utilizar el canal de retiro VIP, puedes evitar hacer cola para este retiro y el retiro se procesará de inmediato.',
         useVIPWithdrawalChannel: 'Usar canal de retiro VIP',
-        vipChannelDescription: 'Estimado usuario, tiene la oportunidad de disfrutar del canal de retiro rápido VIP de forma gratuita una vez. Deposite $200.00 ahora, el sistema le proporcionará canales VIP de retiro rápido de forma gratuita. Use el canal de retiro rápido VIP, los retiros llegan dentro de 5 minutos',
+        vipChannelDescription: `Estimado usuario, tiene la oportunidad de disfrutar del canal de retiro rápido VIP de forma gratuita una vez. Deposite $${vipNeedRechargeTotal}.00 ahora, el sistema le proporcionará canales VIP de retiro rápido de forma gratuita. Use el canal de retiro rápido VIP, los retiros llegan dentro de 5 minutos`,
         depositButton: 'Depósito',
         withdrawalFee: 'Comisiones de retiro',
         payWithdrawalFee: 'Pagar tafifas de retiro',

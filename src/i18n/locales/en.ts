@@ -1,3 +1,5 @@
+import { vipNeedRechargeTotal } from '@/config/vipNeedRechargeTotal'
+
 export default {
     // 通用
     common: {
@@ -438,7 +440,7 @@ export default {
         peopleInLine: 'Number of people in line',
         expectedTime: 'Expected time',
         useVIPWithdrawalChannel: 'Use VIP withdrawal channel',
-        vipChannelDescription: 'Dear user, you have the opportunity to enjoy the VIP fast withdrawal channel for free once. Deposit $200.00 now, the system will provide you with VIP fast withdrawal channels for free. Use the VIP fast withdrawal channel, withdrawals arrive within 5 minutes',
+        vipChannelDescription: `Dear user, you have the opportunity to enjoy the VIP fast withdrawal channel for free once. Deposit $${vipNeedRechargeTotal}.00 now, the system will provide you with VIP fast withdrawal channels for free. Use the VIP fast withdrawal channel, withdrawals arrive within 5 minutes`,
         depositButton: 'Deposit',
         withdrawalFee: 'Withdrawal Fee',
         payWithdrawalFee: 'Pay withdrawal fee',
