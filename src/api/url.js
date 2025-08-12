@@ -3,9 +3,10 @@ function getApiUrl() {
     // 在 Vercel 环境中强制使用 production 域名
     const isVercel = !!import.meta.env.VITE_VERCEL || import.meta.env.VITE_APP_ENV === 'production'
     const env = isVercel ? 'production' : (import.meta.env.VITE_APP_ENV || 'development')
+    console.log('🚀 ~ getApiUrl ~ env:', env)
 
     const urlMap = {
-        development: 'https://mineadmin.thebbxxzm.top',
+        development: 'https://www.slot777game.top',
         test: 'https://www.slot777game.to',
         production: 'https://www.slot777game.top',
     }

@@ -115,18 +115,16 @@
             :tax="taxInfo"
             :pop6-submit="pop6Submit"
         />
-        <RetairPop08
-            ref="retairPop08Ref"
-            :amount="amount"
-            :pop8-submit="pop8Submit"
+        <RetairPop08 ref="retairPop08Ref" :amount="amount" :pop8-submit="pop8Submit" />
+        <RetairPop09
+            ref="retairPop09Ref"
+            key="pop9"
+            :pop9-submit="pop9Submit"
+            :amount="1000"
         />
-        <RetairPop09 ref="retairPop09Ref" key="pop9" :pop9-submit="pop9Submit" :amount="1000" />
 
         <RetairPop10 ref="retairPop10Ref" :pop10-submit="pop10Submit" />
-        <OderDetailRecharge
-            ref="OderDetailRecargelRef"
-            :on-success="handleSuccess"
-        />
+        <OderDetailRecharge ref="OderDetailRecargelRef" :on-success="handleSuccess" />
     </div>
 </template>
 
@@ -217,7 +215,8 @@ watch(isWithdrawAmountPending, (newVal, oldVal) => {
 
 async function handleSuccess() {
     await userStore.fetchUserInfo()
-    if (step.value === 9) { // 支付 1000 元会计服务费 回调
+    if (step.value === 9) {
+    // 支付 1000 元会计服务费 回调
         handlePop9Success()
         step.value = 10
     }
@@ -271,7 +270,9 @@ const formattedTimer = computed(() => {
     const hours = Math.floor(totalSeconds / 3600)
     const minutes = Math.floor((totalSeconds % 3600) / 60)
     const seconds = totalSeconds % 60
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+    return `${hours.toString().padStart(2, '0')}:${minutes
+        .toString()
+        .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
 
 async function fetchapplyWithdrawal(isTimer = true) {
@@ -283,7 +284,8 @@ async function fetchapplyWithdrawal(isTimer = true) {
         start_time.value = res.data.now_time
         end_time.value = res.data.expire_time
         status.value = res.data.status
-        btnTxt.value = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
+        btnTxt.value
+      = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
 
         //  btnTxt.value = formattedTimer.value
         if (isTimer) {
@@ -300,18 +302,14 @@ const isFirstWithdraw = computed(() => {
 })
 
 function handlePersonalTaxPaySuccess() {
-    // percent.value = 1
-    // console.log('handlePersonalTaxPaySuccess')
-    // router.push('/')
     if (isFirstWithdraw.value) {
-        // step.value = 8
-        // 第一次提现
+    // 第一次提现
         retairPop07Ref.value.open()
     }
     else {
         percent.value = 0.99
         step.value = 7
-        btnTxt.value = 'Pagar gastos financieros elevados'
+        btnTxt.value = t('components.payHighFinancialExpenses')
     }
 }
 
@@ -355,12 +353,21 @@ function stopTimer() {
 
 async function handlePop9Success() {
     retairPop09Ref.value.hide()
-    if (progressTxtList.value.length === 8) {
-        progressTxtList.value.push({
-            ...retarirProgress[9],
-            time: new Date().getTime(),
-        })
+    if (isFirstWithdraw.value) {
+        if (progressTxtList.value.length === 6) { // 首次
+            progressTxtList.value.push({
+                ...retarirProgress[9],
+                time: new Date().getTime(),
+            })
+        }
     }
+    else
+        if (progressTxtList.value.length === 8) {
+            progressTxtList.value.push({
+                ...retarirProgress[9],
+                time: new Date().getTime(),
+            })
+        }
     await fetchapplyWithdrawal()
     const wAmount = localStorage.getItem('withdrawAmount')
     if (!wAmount) {
@@ -429,9 +436,13 @@ const reversedProgressList = computed(() => {
     return [...progressTxtList.value].reverse()
 })
 
-watch(reversedProgressList, (newVal, oldVal) => {
-    console.log('reversedProgressList', newVal, oldVal)
-}, { deep: true })
+watch(
+    reversedProgressList,
+    (newVal, oldVal) => {
+        console.log('reversedProgressList', newVal, oldVal)
+    },
+    { deep: true },
+)
 
 async function submit() {
     console.log('submit=====', step.value)
@@ -441,11 +452,6 @@ async function submit() {
     }
 
     if (step.value === 4) {
-        // if (isFirstWithdraw.value) {
-        //     retairPop02Ref.value.open()
-        //     return
-        // }
-
         if (!isFirstWithdraw.value) {
             retairPop03Ref.value.open()
             return
@@ -453,7 +459,6 @@ async function submit() {
 
         retairPop04Ref.value.open()
 
-        // retairPop03Ref.value.open()
         return
     }
     if (step.value === 5) {
@@ -474,7 +479,7 @@ async function submit() {
                     player_id: userInfo.value?.id.toString() || '',
                 })
                 if (res.code === 200) {
-                // showSuccessToast(t('components.success'))
+                    // showSuccessToast(t('components.success'))
                     localStorage.removeItem('withdrawAmount')
                     localStorage.removeItem('progressTxtList')
                     console.log('paymentConfirmation success', res.data)
@@ -493,7 +498,7 @@ async function submit() {
     }
 }
 
-watch(step, (newVal, oldVal) => {
+watch(step, (newVal) => {
     console.log('step', newVal)
     if (newVal === 2 && progressTxtList.value.length === 2) {
         progressTxtList.value.push({
@@ -514,44 +519,36 @@ watch(step, (newVal, oldVal) => {
     if (newVal === 4) {
         btnTxt.value = t('components.payWithdrawalFee') // 支付取款手续费
     }
-    if (newVal === 5 && progressTxtList.value.length === 5) {
-        progressTxtList.value.push({
-            ...retarirProgress[6],
-            time: new Date().getTime(),
-        })
-        progressTxtList.value.push({
-            ...retarirProgress[7],
-            time: new Date().getTime() + 3000,
-        })
+
+    if (!isFirstWithdraw.value) {
+        if (newVal === 5 && progressTxtList.value.length === 5) {
+            progressTxtList.value.push({
+                ...retarirProgress[6],
+                time: new Date().getTime(),
+            })
+            progressTxtList.value.push({
+                ...retarirProgress[7],
+                time: new Date().getTime() + 3000,
+            })
+        }
+        if (newVal === 7 && progressTxtList.value.length === 7) {
+            progressTxtList.value.push({
+                ...retarirProgress[8],
+                time: new Date().getTime(),
+            })
+        }
     }
-    if (newVal === 7 && progressTxtList.value.length === 7) {
-        progressTxtList.value.push({
-            ...retarirProgress[8],
-            time: new Date().getTime(),
-        })
+    else {
+        if (newVal === 5 && progressTxtList.value.length === 5) {
+            progressTxtList.value.push({
+                ...retarirProgress[8],
+                time: new Date().getTime(),
+            })
+        }
     }
 })
 
 onMounted(() => {
-    // if(!isFirstWithdraw.value) {
-    //     if(isWithdrawAmountPending.value) {
-    //         setWithdrawPenddingStatus()
-    //     }else {
-    //         const ct = new Date().getTime()
-    //         progressTxtList.value = [
-    //             {
-    //                 ...retarirProgress[1],
-    //                 time: ct,
-    //             },
-    //             {
-    //                 ...retarirProgress[2],
-    //                 time: ct + 3000,
-    //             },
-    //         ]
-    //         // 启动倒计时
-    //         startTimer()
-    //     }
-    // }
     if (isWithdrawAmountPending.value) {
         setWithdrawPenddingStatus()
     }
