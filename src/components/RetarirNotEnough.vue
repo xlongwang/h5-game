@@ -27,6 +27,8 @@
 <script setup lang="ts">
 import { useGlobal } from '@/composables'
 
+const { userStore } = useGlobal()
+
 const show = ref(false)
 const OderDetailRecargelRef = ref()
 
@@ -35,6 +37,7 @@ const { t } = i18n
 
 function handleSuccess() {
     show.value = false
+    userStore.fetchUserInfo()
     // props.onSuccess()
 }
 

@@ -354,7 +354,7 @@ function stopTimer() {
 async function handlePop9Success() {
     retairPop09Ref.value.hide()
     if (isFirstWithdraw.value) {
-        if (progressTxtList.value.length === 6) { // 首次
+        if (progressTxtList.value.length === 5) { // 首次
             progressTxtList.value.push({
                 ...retarirProgress[9],
                 time: new Date().getTime(),
@@ -511,10 +511,12 @@ watch(step, (newVal) => {
         })
     }
     if (newVal === 3 && progressTxtList.value.length === 4) {
-        progressTxtList.value.push({
-            ...retarirProgress[5],
-            time: new Date().getTime(),
-        })
+        if (!isFirstWithdraw.value) {
+            progressTxtList.value.push({
+                ...retarirProgress[5],
+                time: new Date().getTime(),
+            })
+        }
     }
     if (newVal === 4) {
         btnTxt.value = t('components.payWithdrawalFee') // 支付取款手续费
@@ -539,7 +541,7 @@ watch(step, (newVal) => {
         }
     }
     else {
-        if (newVal === 5 && progressTxtList.value.length === 5) {
+        if (newVal === 5 && progressTxtList.value.length === 4) {
             progressTxtList.value.push({
                 ...retarirProgress[8],
                 time: new Date().getTime(),
