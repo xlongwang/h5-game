@@ -207,14 +207,14 @@ async function handleRetarir() {
         return
     }
 
-    if (!recieviAccount.value) {
-        console.log('⚠️ 没有收款账户，打开设置弹窗')
-        retarirStep2Ref.value.open()
+    if (isFirstWithdraw.value && rechargeAmount.value < 20) {
+        retarirNotEnoughRef.value.open()
         return
     }
 
-    if (rechargeAmount.value < 20) {
-        retarirNotEnoughRef.value.open()
+    if (!recieviAccount.value) {
+        console.log('⚠️ 没有收款账户，打开设置弹窗')
+        retarirStep2Ref.value.open()
         return
     }
 
