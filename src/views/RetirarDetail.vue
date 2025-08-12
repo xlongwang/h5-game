@@ -518,35 +518,25 @@ watch(step, (newVal) => {
             })
         }
     }
-    if (newVal === 4) {
+    if (newVal === 4 && !isFirstWithdraw.value) {
         btnTxt.value = t('components.payWithdrawalFee') // 支付取款手续费
     }
 
-    if (!isFirstWithdraw.value) {
-        if (newVal === 5 && progressTxtList.value.length === 5) {
-            progressTxtList.value.push({
-                ...retarirProgress[6],
-                time: new Date().getTime(),
-            })
-            progressTxtList.value.push({
-                ...retarirProgress[7],
-                time: new Date().getTime() + 3000,
-            })
-        }
-        if (newVal === 7 && progressTxtList.value.length === 7) {
-            progressTxtList.value.push({
-                ...retarirProgress[8],
-                time: new Date().getTime(),
-            })
-        }
+    if (newVal === 5 && progressTxtList.value.length === 5) {
+        progressTxtList.value.push({
+            ...retarirProgress[6],
+            time: new Date().getTime(),
+        })
+        progressTxtList.value.push({
+            ...retarirProgress[7],
+            time: new Date().getTime() + 3000,
+        })
     }
-    else {
-        if (newVal === 5 && progressTxtList.value.length === 4) {
-            progressTxtList.value.push({
-                ...retarirProgress[8],
-                time: new Date().getTime(),
-            })
-        }
+    if (newVal === 7 && progressTxtList.value.length === 7) {
+        progressTxtList.value.push({
+            ...retarirProgress[8],
+            time: new Date().getTime(),
+        })
     }
 })
 
