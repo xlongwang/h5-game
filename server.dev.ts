@@ -12,6 +12,10 @@ import logger from 'morgan'
 import requestIp from 'request-ip'
 import { createServer as viteCreateServer } from 'vite'
 
+// import url from '@/api/url'
+
+const url = 'https://www.slot777game.top'
+
 export async function createServer(root = process.cwd(), hmrPort?: number) {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const resolve = (p: string) => path.resolve(__dirname, p)
@@ -40,7 +44,7 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     // 添加API代理中间件
     app.use(
         createProxyMiddleware({
-            target: 'https://mineadmin.thebbxxzm.top',
+            target: url,
             changeOrigin: true,
             pathFilter: ['/api/**'],
             pathRewrite: {
@@ -130,5 +134,5 @@ const port = 17775
 
 createServer().then(({ app }) => app.listen(port, () => {
     console.log(`监听: http://localhost:${port}`)
-    console.log('API代理已配置: /api -> https://mineadmin.thebbxxzm.top')
+    console.log(`API代理已配置: /api -> ${url}`)
 }))
