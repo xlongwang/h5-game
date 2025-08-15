@@ -98,7 +98,7 @@
             :set-prsonal-tax="setPrsonalTax"
             :amount="amount"
             :retair-pop-06-ref="retairPop06Ref"
-            :pop4-submit="pop4Submit"
+            :pop4-submit="pop5Submit"
         />
         <RetairPop06
             ref="retairPop06Ref"
@@ -403,6 +403,15 @@ function pop4Submit() {
     percent.value = 0.99
     step.value = 5
     btnTxt.value = t('components.payPersonalTaxes')
+}
+
+function pop5Submit() {
+    // console.log('pop5Submit')
+    // percent.value = 0.99
+    // step.value = 6
+    // btnTxt.value = t('components.payPersonalTaxes')
+    step.value = 8
+    retairPop08Ref.value.open()
 }
 
 function pop6Submit() {

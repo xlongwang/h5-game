@@ -44,9 +44,9 @@ const showCenter = ref(false)
 const { i18n } = useGlobal()
 const { t } = i18n
 
-const userInfo = computed(() => {
-    return userStore.userInfo
-})
+// const userInfo = computed(() => {
+//     return userStore.userInfo
+// })
 
 const coastNum = computed(() => {
     if (!props.amount)
@@ -67,14 +67,14 @@ function handleSubmit() {
     hide()
 }
 
-function formatVal(val: number) {
-    if (!val)
-        return '0.00'
-    if (val > 20) {
-        return val
-    }
-    return val.toFixed(2)
-}
+// function formatVal(val: number) {
+//     if (!val)
+//         return '0.00'
+//     if (val > 20) {
+//         return val
+//     }
+//     return val.toFixed(2)
+// }
 
 function open() {
     showCenter.value = true
