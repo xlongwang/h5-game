@@ -207,7 +207,7 @@ const isWithdrawAmountPending = computed(() => {
     return Number(localStorage.getItem('withdrawAmount')) > 0
 })
 
-watch(isWithdrawAmountPending, (newVal, oldVal) => {
+watch(isWithdrawAmountPending, (newVal) => {
     if (newVal) {
         setWithdrawPenddingStatus()
     }
@@ -276,7 +276,8 @@ const formattedTimer = computed(() => {
 })
 
 async function fetchapplyWithdrawal(isTimer = true) {
-    const res = await userApi.applyWithdrawal({
+    try {
+        const res = await userApi.applyWithdrawal({
         amount: amount.value.toString(),
         player_id: userInfo.value?.id.toString() || '',
     })
@@ -294,6 +295,12 @@ async function fetchapplyWithdrawal(isTimer = true) {
     }
     else {
         showFailToast(t('components.failed'))
+    }
+    }
+    catch (error) {
+        console.log('error', error)
+        showFailToast(t('components.failed'))
+        router.push('/retirar')
     }
 }
 
@@ -354,7 +361,7 @@ function stopTimer() {
 async function handlePop9Success() {
     retairPop09Ref.value.hide()
     if (isFirstWithdraw.value) {
-        if (progressTxtList.value.length === 5) { // 首次
+        if (progressTxtList.value.length === 7) { // 首次
             progressTxtList.value.push({
                 ...retarirProgress[9],
                 time: new Date().getTime(),
@@ -452,12 +459,13 @@ async function submit() {
     }
 
     if (step.value === 4) {
+        console.log('🚀 ~ submit ~ isFirstWithdraw:', isFirstWithdraw.value)
         if (!isFirstWithdraw.value) {
             retairPop03Ref.value.open()
             return
         }
 
-        retairPop04Ref.value.open()
+        retairPop05Ref.value.open()
 
         return
     }
@@ -518,25 +526,46 @@ watch(step, (newVal) => {
             })
         }
     }
-    if (newVal === 4 && !isFirstWithdraw.value) {
-        btnTxt.value = t('components.payWithdrawalFee') // 支付取款手续费
+    if (newVal === 4) {
+        if (isFirstWithdraw.value) {
+            btnTxt.value = t('components.payPersonalTaxes')
+            progressTxtList.value.push({
+                ...retarirProgress[7],
+                time: new Date().getTime() + 3000,
+            })
+        }
+        else {
+            btnTxt.value = t('components.payWithdrawalFee') // 支付取款手续费
+        }
     }
 
     if (newVal === 5 && progressTxtList.value.length === 5) {
-        progressTxtList.value.push({
-            ...retarirProgress[6],
-            time: new Date().getTime(),
-        })
-        progressTxtList.value.push({
-            ...retarirProgress[7],
-            time: new Date().getTime() + 3000,
-        })
+        if (!isFirstWithdraw.value) {
+            progressTxtList.value.push({
+                ...retarirProgress[6],
+                time: new Date().getTime(),
+            })
+            progressTxtList.value.push({
+                ...retarirProgress[7],
+                time: new Date().getTime() + 3000,
+            })
+        }
     }
-    if (newVal === 7 && progressTxtList.value.length === 7) {
-        progressTxtList.value.push({
-            ...retarirProgress[8],
-            time: new Date().getTime(),
-        })
+    if (newVal === 7) {
+        if (!isFirstWithdraw.value) {
+            if (progressTxtList.value.length === 6) {
+                progressTxtList.value.push({
+                    ...retarirProgress[8],
+                    time: new Date().getTime(),
+                })
+            }
+        }
+        else if (progressTxtList.value.length === 7) {
+            progressTxtList.value.push({
+                ...retarirProgress[8],
+                time: new Date().getTime(),
+            })
+        }
     }
 })
 
