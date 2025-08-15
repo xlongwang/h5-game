@@ -309,6 +309,7 @@ const isFirstWithdraw = computed(() => {
 })
 
 function handlePersonalTaxPaySuccess() {
+    console.log('handlePersonalTaxPaySuccess', isFirstWithdraw.value)
     if (isFirstWithdraw.value) {
     // 第一次提现
         retairPop07Ref.value.open()
@@ -411,7 +412,8 @@ function pop5Submit() {
     // step.value = 6
     // btnTxt.value = t('components.payPersonalTaxes')
     step.value = 8
-    retairPop08Ref.value.open()
+    // retairPop08Ref.value.open()
+    retairPop07Ref.value.open()
 }
 
 function pop6Submit() {
