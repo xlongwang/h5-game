@@ -141,7 +141,9 @@
 
 <script setup lang="ts">
 import { _ } from 'dist/server/entry-server'
+import { showFailToast, showSuccessToast } from 'vant'
 import { computed, nextTick, ref, watch } from 'vue'
+import { userApi } from '@/api/user-api'
 
 // import { useRouter } from 'vue-router'
 import { useGlobal } from '@/composables'
@@ -271,7 +273,7 @@ async function submitForm() {
     isSubmitting.value = true
 
     try {
-    // 根据选择的PIX类型获取对应的账户信息
+        // 根据选择的PIX类型获取对应的账户信息
         let receivingAccount = ''
         let pixType = ''
 
@@ -337,6 +339,28 @@ async function submitForm() {
             receiving_account: receivingAccount,
         })
 
+        // 创建提现请求
+        const res = await userApi.createPayout({
+            amount: '5',
+            phone: phone.value || '',
+            pix_type: pixType || '', // PHONE、EMAIL、CPF。
+            player_id: userStore.userInfo?.id?.toString() || '',
+            receiving_account: receivingAccount,
+            receiving_name: name.value,
+        })
+
+        if (res.code === 200) {
+            showSuccessToast(t('components.success'))
+            await userStore.fetchUserInfo()
+            if (props.onSuccess) {
+                await props.onSuccess()
+                console.log('✅ onSuccess 回调执行完成')
+            }
+        } else {
+            showFailToast(t('components.failed'))
+            return // 失败时直接返回，不执行后续逻辑
+        }
+
         // 强制触发响应式更新
         await nextTick()
 
@@ -346,17 +370,13 @@ async function submitForm() {
         if (props.onSuccess) {
             await props.onSuccess()
             console.log('✅ onSuccess 回调执行完成')
-        }
-        else {
+        } else {
             console.log('⚠️ onSuccess 回调未定义')
         }
-    }
-    catch (error: any) {
+    } catch (error: any) {
         console.error('Error al actualizar:', error)
-    // 这里可以添加错误提示，比如使用Toast
-    // alert(error.message || 'Error al actualizar')
-    }
-    finally {
+        showFailToast(t('components.failed'))
+    } finally {
         isSubmitting.value = false
     }
 }

@@ -86,9 +86,9 @@
 
         <RetarirStep2
             ref="retarirStep2Ref"
-            :on-success="handleSuccess"
             :cur-value="curValue"
             :title="t('components.linkWithdrawalAccount')"
+            :on-success="handleStep2Success"
         />
 
         <RetarirStep20
@@ -167,7 +167,7 @@ const rechargeAmount = computed(() => {
 
 const coinImg = '/images/retirar/coin.png'
 const router = useRouter()
-const curValue = ref(5)
+const curValue = ref(isFirstWithdraw.value ? 5 : 3000)
 const retarirStep2Ref = ref()
 const retarirStep20Ref = ref()
 const isRotating = ref(false)
@@ -194,6 +194,11 @@ async function refreshCoin() {
         // 出错时也要重置旋转状态
         isRotating.value = false
     }
+}
+
+const handleStep2Success = async () => {    
+    await userStore.fetchUserInfo()
+    curValue.value = 3000
 }
 
 async function handleSuccess() {
@@ -247,8 +252,14 @@ const countList = computed<{ id: number, value: number, disable: boolean }[]>(()
             id: 6,
             value: 50000,
         },
+        {
+            id: 7,
+            value: 80000,
+        },
     ]
-    return isFirstWithdraw.value ? list.map((item) => {
+    return isFirstWithdraw.value ? list.filter((item) => {
+        return item.id !== 7
+    }).map((item) => {
         if (item.id === 1) {
             return {
                 ...item,
@@ -260,7 +271,9 @@ const countList = computed<{ id: number, value: number, disable: boolean }[]>(()
             value: item.value,
             disable: true,
         }
-    }) : list.map((item) => {
+    }) : list.filter((item) => {
+        return item.id !== 1
+    }).map((item) => {
         return {
             ...item,
             disable: false,
