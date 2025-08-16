@@ -257,7 +257,7 @@ const countList = computed<{ id: number, value: number, disable: boolean }[]>(()
         }
         return {
             ...item,
-            value: item.value * 2,
+            value: item.value,
             disable: true,
         }
     }) : list.map((item) => {

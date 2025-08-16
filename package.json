@@ -6,7 +6,9 @@
   "author": "along <275959691@qq.com>",
   "scripts": {
     "prepare": "npx simple-git-hooks",
-    "serve": "nodemon --watch ./server.dev.ts --exec tsx ./server.dev.ts",
+    "serve": "node --loader tsx ./server.dev.ts",
+    "serve:alt": "node start-dev.js",
+    "serve:watch": "nodemon",
     "build": "npm run build:client && npm run build:server && npm run build:server:entry",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "cross-env VITE_APP_SSR=true vite build --ssr src/entry-server.ts --outDir dist/server",

@@ -1,7 +1,8 @@
 {
   "restartable": "rs",
-  "ignore": [""],
+  "ignore": ["node_modules", "dist"],
   "verbose": true,
-  "ext": "js",
-  "watch": ["./server.js"]
+  "ext": "ts,js,json",
+  "watch": ["server.dev.ts", "src/**/*"],
+  "exec": "tsx ./server.dev.ts"
 }
