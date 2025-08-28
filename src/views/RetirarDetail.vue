@@ -220,10 +220,11 @@ async function handleSuccess() {
         handlePop9Success()
         step.value = 10
     }
-    else {
+    else if (step.value === 3) {
         percent.value = 0.99
         //   retairPop02Ref.value.hide();
         step.value = 4
+        btnTxt.value = t('components.payPersonalTaxes')
     }
 }
 
@@ -278,24 +279,24 @@ const formattedTimer = computed(() => {
 async function fetchapplyWithdrawal(isTimer = true) {
     try {
         const res = await userApi.applyWithdrawal({
-        amount: amount.value.toString(),
-        player_id: userInfo.value?.id.toString() || '',
-    })
-    if (res.code === 200) {
-        start_time.value = res.data.now_time
-        end_time.value = res.data.expire_time
-        status.value = res.data.status
-        btnTxt.value
+            amount: amount.value.toString(),
+            player_id: userInfo.value?.id.toString() || '',
+        })
+        if (res.code === 200) {
+            start_time.value = res.data.now_time
+            end_time.value = res.data.expire_time
+            status.value = res.data.status
+            btnTxt.value
       = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
 
-        //  btnTxt.value = formattedTimer.value
-        if (isTimer) {
-            startTimer()
+            //  btnTxt.value = formattedTimer.value
+            if (isTimer) {
+                startTimer()
+            }
         }
-    }
-    else {
-        showFailToast(t('components.failed'))
-    }
+        else {
+            showFailToast(t('components.failed'))
+        }
     }
     catch (error) {
         console.log('error', error)
@@ -399,11 +400,13 @@ function pop3Submit() {
     retairPop04Ref.value.open()
 }
 
-function pop4Submit() {
+function pop4Submit(coast: number) {
     console.log('pop4Submit')
     percent.value = 0.99
-    step.value = 5
-    btnTxt.value = t('components.payPersonalTaxes')
+    // step.value = 3
+    handleOpenRecharge(coast)
+    // step.value = 5
+    // btnTxt.value = t('components.payPersonalTaxes')
 }
 
 function pop5Submit() {

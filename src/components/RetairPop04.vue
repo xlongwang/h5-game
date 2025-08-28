@@ -30,7 +30,7 @@ import { useGlobal } from '@/composables'
 import useUserStore from '@/stores/use-user-store'
 
 const props = defineProps<{
-    pop4Submit: () => void
+    pop4Submit: (coast: number) => void
     confirmInfo: { total: number, coast: number }
 }>()
 const showCenter = ref(false)
@@ -48,7 +48,7 @@ function handleCancel() {
 
 function handleSubmit() {
     // console.log("handleSubmit");
-    props.pop4Submit()
+    props.pop4Submit(props.confirmInfo.coast)
     hide()
 }
 
