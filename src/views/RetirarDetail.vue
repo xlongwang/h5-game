@@ -215,6 +215,7 @@ watch(isWithdrawAmountPending, (newVal) => {
 
 async function handleSuccess() {
     await userStore.fetchUserInfo()
+    console.log('handleSuccess', step.value)
     if (step.value === 9) {
     // 支付 1000 元会计服务费 回调
         handlePop9Success()
@@ -224,6 +225,12 @@ async function handleSuccess() {
         percent.value = 0.99
         //   retairPop02Ref.value.hide();
         step.value = 4
+        // btnTxt.value = t('components.payPersonalTaxes')
+    }
+    else if (step.value === 4) {
+        percent.value = 0.99
+        //   retairPop02Ref.value.hide();
+        step.value = 5
         btnTxt.value = t('components.payPersonalTaxes')
     }
 }
@@ -401,7 +408,7 @@ function pop3Submit() {
 }
 
 function pop4Submit(coast: number) {
-    console.log('pop4Submit')
+    console.log('pop4Submit', coast, step.value)
     percent.value = 0.99
     // step.value = 3
     handleOpenRecharge(coast)
