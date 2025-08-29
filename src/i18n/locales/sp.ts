@@ -272,10 +272,16 @@ export default {
         progressStep2: 'El sistema ha procesado la solicitud de retiro y está esperando la asignación del canal de retiro...',
         progressStep3: 'Se utilizó el canal de retiro VIP gratuito, se asignó el canal de retiro general y losretiros están en cola.',
         progressStep4: 'El canal de retiro normal está en cola para procesar el retiro, lo que deberíatomar {hours} horas.',
+        //         用户提款金额超过3000美元，超过免费VIP通道限额。将收取5%的提款费。
+        // 一旦在VIP通道上收到付款，汇款请求将被发送到中央银行进行处理。
+
         progressStep5: 'La cantidad de retiro del usuario excede los 3000.00 dólares, superando el límite gratuito del canal VIP. Se cobrará una tarifa del 5% por el retiro. Una vez recibido el pago en el canal VIP, se enviará la solicitud de remesa al banco central para su procesamiento.',
+        // 提款请求已发送到中央银行，银行正在处理中
         progressStep6: 'La solicitud de retiro ha sido enviada al Banco Central y el banco la está',
+        // 异常银行处理：此取款金额为额外的个人收入，根据联邦法规，需要缴纳取款金额10%的个人所得税。
         progressStep7: 'Procesamiento bancario anormal:este monto de retiro es un ingreso personal adicional.Según las regulaciones federales, se requiere un impuesto sobre la renta personal del 10% del monto del retiro.',
         progressStep8: 'El retiro ha sido completado. El dinero ha sido transferido a su cuenta.',
+        // 已为您转账，请等待10分钟
         progressStep9: 'Se ha realizado la transferencia financiera para ti, por favor espera 10 minutos.',
         timeRemaining: 'Tiempo Restante',
     },

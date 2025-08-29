@@ -225,13 +225,21 @@ async function handleSuccess() {
         percent.value = 0.99
         //   retairPop02Ref.value.hide();
         step.value = 4
-        // btnTxt.value = t('components.payPersonalTaxes')
+    // btnTxt.value = t('components.payPersonalTaxes')
     }
     else if (step.value === 4) {
         percent.value = 0.99
         //   retairPop02Ref.value.hide();
         step.value = 5
         btnTxt.value = t('components.payPersonalTaxes')
+    }
+    else if (step.value === 5) {
+    // 个人税 超过3000 需要支付5%手续费
+        step.value = 7
+        btnTxt.value = t('components.payHighFinancialExpenses')
+    // percent.value = 0.99
+    // step.value = 6
+    // btnTxt.value = t('components.payPersonalTaxes')
     }
 }
 
@@ -294,7 +302,7 @@ async function fetchapplyWithdrawal(isTimer = true) {
             end_time.value = res.data.expire_time
             status.value = res.data.status
             btnTxt.value
-      = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
+        = status.value === 'confirmed' ? `${t('common.confirm')}` : formattedTimer.value
 
             //  btnTxt.value = formattedTimer.value
             if (isTimer) {
@@ -316,16 +324,19 @@ const isFirstWithdraw = computed(() => {
     return Number(userInfo.value?.wallet?.total_withdraw) === 0
 })
 
-function handlePersonalTaxPaySuccess() {
-    console.log('handlePersonalTaxPaySuccess', isFirstWithdraw.value)
+function handlePersonalTaxPaySuccess(amount: number) {
+    console.log('pop6 success handlePersonalTaxPaySuccess', isFirstWithdraw.value)
     if (isFirstWithdraw.value) {
     // 第一次提现
         retairPop07Ref.value.open()
     }
     else {
+    // percent.value = 0.99
+    // step.value = 7
+    // btnTxt.value = t('components.payHighFinancialExpenses')
+        handleOpenRecharge(amount)
         percent.value = 0.99
-        step.value = 7
-        btnTxt.value = t('components.payHighFinancialExpenses')
+    // console.log('pop6 success handlePersonalTaxPaySuccess', percent.value)
     }
 }
 
@@ -368,22 +379,23 @@ function stopTimer() {
 }
 
 async function handlePop9Success() {
+    console.log('handlePop9Success', progressTxtList.value)
     retairPop09Ref.value.hide()
     if (isFirstWithdraw.value) {
-        if (progressTxtList.value.length === 7) { // 首次
+        if (progressTxtList.value.length === 7) {
+            // 首次
             progressTxtList.value.push({
                 ...retarirProgress[9],
                 time: new Date().getTime(),
             })
         }
     }
-    else
-        if (progressTxtList.value.length === 8) {
-            progressTxtList.value.push({
-                ...retarirProgress[9],
-                time: new Date().getTime(),
-            })
-        }
+    else if (progressTxtList.value.length === 8 || progressTxtList.value.length === 7) {
+        progressTxtList.value.push({
+            ...retarirProgress[9],
+            time: new Date().getTime(),
+        })
+    }
     await fetchapplyWithdrawal()
     const wAmount = localStorage.getItem('withdrawAmount')
     if (!wAmount) {
@@ -480,7 +492,7 @@ async function submit() {
     }
 
     if (step.value === 4) {
-        console.log('🚀 ~ submit ~ isFirstWithdraw:', isFirstWithdraw.value)
+    // console.log('🚀 ~ submit ~ isFirstWithdraw:', isFirstWithdraw.value)
         if (!isFirstWithdraw.value) {
             retairPop03Ref.value.open()
             return

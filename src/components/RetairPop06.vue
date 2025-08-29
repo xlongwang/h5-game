@@ -25,12 +25,12 @@
             <div class="text-[40px] detait_handling_input flex justify-between">
                 <div>{{ t("components.withdrawalAmount") }}</div>
                 <div class="text-[#fe0000]">
-                    ${{ amount ? (Number(amount)).toFixed(2) : "0.00" }}
+                    ${{ amount ? Number(amount).toFixed(2) : "0.00" }}
                 </div>
             </div>
 
             <div class="text-[40px] detait_handling_input flex justify-between">
-                <div>{{ t('components.taxesToPay') }}</div>
+                <div>{{ t("components.taxesToPay") }}</div>
                 <!-- 需缴纳的税款 -->
                 <div class="text-[#fe0000]">
                     ${{ amount ? (Number(amount) * 0.1).toFixed(2) : "0.00" }}
@@ -44,7 +44,7 @@
 import { useGlobal } from '@/composables'
 
 const props = defineProps<{
-    pop6Submit: () => void
+    pop6Submit: (...args: any) => void
     tax: number
     retairPop07Ref: any
     amount: number
@@ -62,7 +62,7 @@ function handleCancel() {
 }
 
 async function handleSubmit() {
-    props.pop6Submit()
+    props.pop6Submit(Number(props.amount) * 0.1)
     hide()
 }
 
