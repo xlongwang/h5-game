@@ -40,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useGlobal } from '@/composables'
 
 import '@/assets/scss/pages/apoyo.scss'
@@ -51,13 +52,16 @@ defineOptions({
 const { i18n } = useGlobal()
 const { t } = i18n
 
+const router = useRouter()
+
 // 使用多语言配置的图片路径
 const bannerImg = computed(() => t('support.images.header'))
 // const router = useRouter()
 const activeNames = ref<string | number>('') // 单开模式
 
 function handleBannerClick() {
-    window.open('https://www.baidu.com', '_blank')
+    // window.open('https://www.baidu.com', '_blank')
+    router.push('/complaint')
 }
 </script>
 

@@ -28,6 +28,9 @@ export default {
         records: 'registos',
         empty: 'Vazio',
         comingSoon: 'Em Breve',
+        loadError: 'Erro ao Carregar',
+        claimError: 'Erro ao Reclamar',
+        retry: 'Tentar Novamente',
     },
 
     // 导航
@@ -141,6 +144,11 @@ export default {
         day: 'DAY',
         canNotCheckInTips: 'Complete o jogo uma vez para obter a recompensa diária.',
         checkInSuccess: 'Check In bem-sucedido',
+        gameEarnings: 'Ganhos do Jogo',
+        times: 'vezes',
+        claimed: 'Reclamado',
+        claim: 'Reclamar',
+        notAchieved: 'Não Conquistado',
     },
 
     // 客服支持
@@ -167,6 +175,30 @@ export default {
         faqAnswer5: 'Se o levantamento falhar, verifique se a sua conta de levantamento está correta ou mude a conta de levantamento e levante dinheiro novamente.',
         images: {
             header: '/images/apoyo/header_pt.png',
+        },
+    },
+
+    // 投诉
+    complaint: {
+        title: 'Enviar Reclamação',
+        form: {
+            subject: 'Título',
+            subjectPlaceholder: 'Digite o título da reclamação',
+            subjectRequired: 'O título é obrigatório',
+            content: 'Conteúdo',
+            contentPlaceholder: 'Digite o conteúdo da reclamação',
+            contentRequired: 'O conteúdo é obrigatório',
+            senderEmail: 'Endereço de e-mail do remetente',
+            senderEmailPlaceholder: 'Digite o seu endereço de e-mail',
+            senderEmailRequired: 'O endereço de e-mail é obrigatório',
+            emailFormat: 'Formato de e-mail inválido',
+            senderName: 'Nome do remetente',
+            senderNamePlaceholder: 'Digite o seu nome',
+            senderNameRequired: 'O nome do remetente é obrigatório',
+            send: 'Enviar',
+            sending: 'Enviando...',
+            sendSuccess: 'Reclamação enviada com sucesso',
+            sendFailed: 'Erro ao enviar reclamação',
         },
     },
 

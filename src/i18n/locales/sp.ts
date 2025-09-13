@@ -28,6 +28,9 @@ export default {
         records: 'registros',
         empty: 'Vacío',
         comingSoon: 'Próximamente',
+        loadError: 'Error al cargar',
+        claimError: 'Error al reclamar',
+        retry: 'Reintentar',
     },
 
     // 导航
@@ -141,6 +144,11 @@ export default {
         alreadyCheckedIn: 'Ya Check In',
         canNotCheckInTips: 'Completa el juego una vez para obtener la recompensa del día.',
         checkInSuccess: 'Check In exitoso',
+        gameEarnings: 'Ganancias del Juego',
+        times: 'veces',
+        claimed: 'Reclamado',
+        claim: 'Reclamar',
+        notAchieved: 'No Logrado',
     },
 
     // 客服支持
@@ -167,6 +175,30 @@ export default {
         faqAnswer5: 'Si el retiro falla, verifique si su cuenta de retiro es correcta o cambie la cuenta de retiro y retire dinero nuevamente.',
         images: {
             header: '/images/apoyo/header.png',
+        },
+    },
+
+    // 投诉
+    complaint: {
+        title: 'Enviar Queja',
+        form: {
+            subject: 'Título',
+            subjectPlaceholder: 'Ingrese el título de la queja',
+            subjectRequired: 'El título es obligatorio',
+            content: 'Contenido',
+            contentPlaceholder: 'Ingrese el contenido de la queja',
+            contentRequired: 'El contenido es obligatorio',
+            senderEmail: 'Dirección de correo electrónico del remitente',
+            senderEmailPlaceholder: 'Ingrese su dirección de correo electrónico',
+            senderEmailRequired: 'La dirección de correo electrónico es obligatoria',
+            emailFormat: 'Formato de correo electrónico inválido',
+            senderName: 'Nombre del remitente',
+            senderNamePlaceholder: 'Ingrese su nombre',
+            senderNameRequired: 'El nombre del remitente es obligatorio',
+            send: 'Enviar',
+            sending: 'Enviando...',
+            sendSuccess: 'Queja enviada con éxito',
+            sendFailed: 'Error al enviar la queja',
         },
     },
 

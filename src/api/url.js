@@ -4,9 +4,10 @@ function getApiUrl() {
     const isVercel = !!import.meta.env.VITE_VERCEL || import.meta.env.VITE_APP_ENV === 'production'
     const env = isVercel ? 'production' : (import.meta.env.VITE_APP_ENV || 'development')
     console.log('🚀 ~ getApiUrl ~ env:', env)
-
+    // https://mineadmin.thebbxxzm.top/api/game/earnings
     const urlMap = {
         development: 'https://www.slot777game.top',
+        // development: 'https://mineadmin.thebbxxzm.top',
         test: 'https://www.slot777game.to',
         production: 'https://www.slot777game.top',
     }

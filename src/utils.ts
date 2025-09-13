@@ -11,21 +11,22 @@ export function camelToSnake(obj: any): any {
     if (obj === null || obj === undefined) {
         return obj
     }
-    
+
     if (Array.isArray(obj)) {
         return obj.map(item => camelToSnake(item))
     }
-    
+
     if (typeof obj === 'object') {
         const result: any = {}
         for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                // 只转换真正的驼峰命名，保留包含空格的键名
+                const snakeKey = key.includes(' ') ? key : key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
                 result[snakeKey] = camelToSnake(obj[key])
             }
         }
         return result
     }
-    
+
     return obj
 }

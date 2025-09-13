@@ -706,3 +706,135 @@ export interface PaymentConfirmationResponse {
     message: string
     [property: string]: any
 }
+
+// 邮件发送请求参数类型
+export interface EmailSendParams {
+    /**
+     * 投诉内容
+     */
+    body?: string
+    /**
+     * 发件人姓名
+     */
+    sender?: string
+    /**
+     * 发件人邮箱
+     */
+    shippingAddress?: string
+    /**
+     * 标题
+     */
+    subject?: string
+    [property: string]: any
+}
+
+// 邮件发送API响应类型
+export interface EmailSendResponse {
+    code: number
+    data: string
+    message: string
+    [property: string]: any
+}
+
+// 游戏收益请求参数类型
+export interface GameEarningsParams {
+    player_id: string
+    [property: string]: any
+}
+
+// 游戏收益数据类型
+export interface FortuneMouse {
+    achieved: boolean
+    count: number
+    game: string
+    is_claimed: boolean
+    need: number
+    [property: string]: any
+}
+
+export interface FortuneOX {
+    achieved: boolean
+    count: number
+    game: string
+    is_claimed: boolean
+    need: number
+    [property: string]: any
+}
+
+export interface FortunePanda {
+    achieved: boolean
+    count: number
+    game: string
+    is_claimed: boolean
+    need: number
+    [property: string]: any
+}
+
+export interface FortuneRabbit {
+    achieved: boolean
+    count: number
+    game: string
+    is_claimed: boolean
+    need: number
+    [property: string]: any
+}
+
+export interface FortuneTiger {
+    /**
+     * 是否达成
+     */
+    achieved: boolean
+    /**
+     * 完成次数
+     */
+    count: number
+    /**
+     * 游戏名
+     */
+    game: string
+    /**
+     * 是否领取
+     */
+    is_claimed: boolean
+    /**
+     * 需要次数
+     */
+    need: number
+    [property: string]: any
+}
+
+// 游戏收益数据
+export interface GameEarningsData {
+    'Fortune Mouse': FortuneMouse
+    'Fortune OX': FortuneOX
+    'Fortune Panda': FortunePanda
+    'Fortune Rabbit': FortuneRabbit
+    'Fortune Tiger': FortuneTiger
+    [property: string]: any
+}
+
+// 游戏收益API响应类型
+export interface GameEarningsResponse {
+    code: number
+    data: GameEarningsData
+    message: string
+    [property: string]: any
+}
+
+// 领取奖励请求参数类型
+export interface ClaimEarningsParams {
+    /**
+     * 可选值 Fortune Tiger, Fortune Mouse, Fortune OX, Fortune Panda, Fortune Rabbit
+     */
+    game: string
+    player_id: string
+    [property: string]: any
+}
+
+// 领取奖励API响应类型
+export interface ClaimEarningsResponse {
+    code: number
+    data: string
+    message: string
+    [property: string]: any
+}

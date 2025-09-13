@@ -6,7 +6,7 @@
  * @FilePath: /vue3_app/src/api/user-api.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import type { GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InvitationInfoParams, InvitationInfoResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderItem, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PayoutParams, PayoutResponse, PaymentConfirmationParams, PaymentConfirmationResponse, SignRewardParams, SignRewardResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse, WeekSignInfoParams, WeekSignInfoResponse, WithdrawalApplicationParams, WithdrawalApplicationResponse } from '@/types'
+import type { ClaimEarningsParams, ClaimEarningsResponse, EmailSendParams, EmailSendResponse, GameEarningsParams, GameEarningsResponse, GameListParams, GameListResponse, GameLoginParams, GameLoginResponse, InvitationInfoParams, InvitationInfoResponse, InviteUserParams, InviteUserResponse, LoginParams, LoginResponse, OrderListData, OrderListParams, OrderListResponse, OrderQueryParams, OrderQueryResponse, PayinParams, PayinResponse, PaymentConfirmationParams, PaymentConfirmationResponse, PayoutParams, PayoutResponse, SignRewardParams, SignRewardResponse, UpdateUserInfoParams, UpdateUserInfoResponse, UserInfo, UserInfoResponse, WeekSignInfoParams, WeekSignInfoResponse, WithdrawalApplicationParams, WithdrawalApplicationResponse } from '@/types'
 import api from './index-client'
 
 /**
@@ -36,7 +36,8 @@ export const userApi = {
 
     /**
      * 获取用户信息
-     * @param params 包含memberId的参数对象
+     * @param params 参数对象
+     * @param params.memberId 用户ID
      * @returns Promise<UserInfoResponse>
      */
     async getMemberInfo({ memberId }: { memberId: number }): Promise<UserInfoResponse> {
@@ -215,6 +216,45 @@ export const userApi = {
         console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
         const result = await api.post<string>('/order/paymentConfirmation', params)
         console.log('发起提现API响应:', result)
+        return result
+    },
+
+    /**
+     * 发送邮件
+     * @param params 邮件发送参数
+     * @returns Promise<EmailSendResponse>
+     */
+    async sendEmail(params: EmailSendParams): Promise<EmailSendResponse> {
+        console.log('调用发送邮件API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<string>('/email/send', params)
+        console.log('发送邮件API响应:', result)
+        return result
+    },
+
+    /**
+     * 获取游戏收益
+     * @param params 游戏收益参数
+     * @returns Promise<GameEarningsResponse>
+     */
+    async getGameEarnings(params: GameEarningsParams): Promise<GameEarningsResponse> {
+        console.log('调用游戏收益API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.get<GameEarningsResponse['data']>('/game/earnings', params)
+        console.log('游戏收益API响应:', result)
+        return result
+    },
+
+    /**
+     * 领取奖励
+     * @param params 领取奖励参数
+     * @returns Promise<ClaimEarningsResponse>
+     */
+    async claimEarnings(params: ClaimEarningsParams): Promise<ClaimEarningsResponse> {
+        console.log('调用领取奖励API，参数:', params)
+        console.log('API基础URL:', import.meta.env.DEV ? '/mock-api/' : '/api/')
+        const result = await api.post<string>('/game/claimEarnings', params)
+        console.log('领取奖励API响应:', result)
         return result
     },
 }

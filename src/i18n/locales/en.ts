@@ -29,6 +29,9 @@ export default {
         records: 'records',
         empty: 'Empty',
         comingSoon: 'Coming Soon',
+        loadError: 'Load Error',
+        claimError: 'Claim Error',
+        retry: 'Retry',
     },
 
     // 导航
@@ -142,6 +145,11 @@ export default {
         day: 'DAY',
         canNotCheckInTips: 'Complete the game once to get the daily reward.',
         checkInSuccess: 'Check In successful',
+        gameEarnings: 'Game Earnings',
+        times: 'times',
+        claimed: 'Claimed',
+        claim: 'Claim',
+        notAchieved: 'Not Achieved',
     },
 
     // 客服支持
@@ -168,6 +176,30 @@ export default {
         faqAnswer5: 'If the withdrawal fails, verify if your withdrawal account is correct or change the withdrawal account and withdraw money again.',
         images: {
             header: '/images/apoyo/header_en.png',
+        },
+    },
+
+    // 投诉
+    complaint: {
+        title: 'Send Complaint',
+        form: {
+            subject: 'Subject',
+            subjectPlaceholder: 'Enter complaint subject',
+            subjectRequired: 'Subject is required',
+            content: 'Content',
+            contentPlaceholder: 'Enter complaint content',
+            contentRequired: 'Content is required',
+            senderEmail: 'Sender Email Address',
+            senderEmailPlaceholder: 'Enter your email address',
+            senderEmailRequired: 'Email address is required',
+            emailFormat: 'Invalid email format',
+            senderName: 'Sender Name',
+            senderNamePlaceholder: 'Enter your name',
+            senderNameRequired: 'Sender name is required',
+            send: 'Send',
+            sending: 'Sending...',
+            sendSuccess: 'Complaint sent successfully',
+            sendFailed: 'Failed to send complaint',
         },
     },
 
