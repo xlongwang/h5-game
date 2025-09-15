@@ -448,6 +448,10 @@ export interface GameListParams {
 // 游戏信息类型
 export interface GameInfo {
     /**
+     * 游戏ID
+     */
+    id: number
+    /**
      * 游戏Logo
      */
     logo: string
@@ -455,8 +459,14 @@ export interface GameInfo {
      * 游戏名
      */
     name: string
-
+    /**
+     * 显示名称
+     */
     show_name: string
+    /**
+     * 游戏图标
+     */
+    icon?: string
     [property: string]: any
 }
 

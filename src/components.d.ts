@@ -15,6 +15,8 @@ declare module 'vue' {
     EmptyWithdrawPop: typeof import('./components/EmptyWithdrawPop.vue')['default']
     FirstLogin: typeof import('./components/FirstLogin.vue')['default']
     Foo: typeof import('./components/Foo.tsx')['default']
+    GameIframe: typeof import('./components/GameIframe.vue')['default']
+    GameIframeExample: typeof import('./components/GameIframeExample.vue')['default']
     HeaderBack: typeof import('./components/HeaderBack.vue')['default']
     HeaderInfo: typeof import('./components/HeaderInfo.vue')['default']
     LanguageSwitcher: typeof import('./components/LanguageSwitcher.vue')['default']

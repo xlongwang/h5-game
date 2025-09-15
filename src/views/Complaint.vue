@@ -37,7 +37,10 @@
                             :placeholder="t('complaint.form.senderEmailPlaceholder')"
                             :rules="[
                                 { required: true, message: t('complaint.form.senderEmailRequired') },
-                                { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t('complaint.form.emailFormat') },
+                                {
+                                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: t('complaint.form.emailFormat'),
+                                },
                             ]"
                             class="complaint_field"
                         />
@@ -48,24 +51,26 @@
                             name="sender"
                             :label="t('complaint.form.senderName')"
                             :placeholder="t('complaint.form.senderNamePlaceholder')"
-                            :rules="[{ required: true, message: t('complaint.form.senderNameRequired') }]"
+                            :rules="[
+                                { required: true, message: t('complaint.form.senderNameRequired') },
+                            ]"
                             class="complaint_field"
                         />
 
                         <!-- 发送按钮 -->
-                        <div class="complaint_submit">
-                            <van-button
-                                round
-                                block
-                                type="primary"
-                                native-type="submit"
-                                :loading="loading"
-                                :disabled="loading"
-                                class="complaint_btn"
-                            >
-                                {{ loading ? t('complaint.form.sending') : t('complaint.form.send') }}
-                            </van-button>
-                        </div>
+                        <!-- <div class="retiara_btn_big"> -->
+                        <van-button
+                            round
+                            block
+                            type="primary"
+                            native-type="submit"
+                            :loading="loading"
+                            :disabled="loading"
+                            class="complaint_btn retiara_btn_big"
+                        >
+                            {{ loading ? t("complaint.form.sending") : t("complaint.form.send") }}
+                        </van-button>
+                        <!-- </div> -->
                     </van-form>
                 </div>
             </div>
@@ -152,141 +157,141 @@ function showToast(options: { message: string, type: 'success' | 'fail' }) {
 
 <style scoped lang="scss">
 .complaint_page {
-    height: 100vh;
-    overflow-y: auto;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .complaint_page_scroll {
-    height: calc(100vh - 300px);
-    overflow-y: auto;
-    font-size: 45px;
+  height: calc(100vh - 300px);
+  overflow-y: auto;
+  font-size: 45px;
 }
 
 .complaint_form {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 // 表单项样式
 :deep(.complaint_field) {
+  display: block;
+  width: 100%;
+
+  .van-field__label {
+    color: rgb(242, 212, 88);
+    font-size: 40px;
+    font-weight: 500;
+    margin-bottom: 20px;
     display: block;
     width: 100%;
+    text-align: left;
+  }
 
-    .van-field__label {
-        color: #ffffff;
-        font-size: 40px;
-        font-weight: 500;
-        margin-bottom: 20px;
-        display: block;
-        width: 100%;
-        text-align: left;
+  .van-field__control {
+    background-color: rgb(35, 22, 0);
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 36px;
+    color: rgb(255, 216, 76);
+    border: rgb(230, 145, 16) 3px solid;
+    box-sizing: border-box;
+    width: 99%;
+
+    &::placeholder {
+      color: #999999;
     }
+  }
 
+  .van-field__body {
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+  }
+
+  // 多行文本框特殊样式
+  &.van-field--textarea {
     .van-field__control {
-        background-color: #ffffff;
-        border-radius: 8px;
-        padding: 20px;
-        font-size: 36px;
-        color: #333333;
-        border: none;
-        box-sizing: border-box;
-        width: 100%;
-
-        &::placeholder {
-            color: #999999;
-        }
+      min-height: 200px;
+      resize: none;
     }
-
-    .van-field__body {
-        margin-top: 15px;
-        display: block;
-        width: 100%;
-    }
-
-    // 多行文本框特殊样式
-    &.van-field--textarea {
-        .van-field__control {
-            min-height: 200px;
-            resize: none;
-        }
-    }
-
+  }
 }
 
 // 提交按钮容器
 .complaint_submit {
-    margin-top: 60px;
+  margin-top: 60px;
 }
 
 // 提交按钮样式
-:deep(.complaint_btn) {
-    height: 120px;
-    font-size: 40px;
-    font-weight: 600;
-    background-color: #ffffff;
-    color: #1d0f02;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+:deep(.retiara_btn_big) {
+  font-size: 80px;
+  line-height: 152px;
+  height: 152px;
+  color: #2f1a00;
+  background: url('/images/retirar/retirar_btn.png') no-repeat;
+  background-size: 99% 100%;
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 0;
+
+  &:hover {
+    // background-color: #f5f5f5;
+    transform: translateY(-2px);
+    // box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &.van-button--disabled {
+    // background-color: #cccccc;
+    color: #999999;
+    cursor: not-allowed;
 
     &:hover {
-        background-color: #f5f5f5;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      transform: none;
+      // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
+  }
 
-    &:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    &.van-button--disabled {
-        background-color: #cccccc;
-        color: #999999;
-        cursor: not-allowed;
-
-        &:hover {
-            transform: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-    }
-
-    &.van-button--loading {
-        background-color: #e69110;
-        color: #ffffff;
-    }
+  &.van-button--loading {
+    background-color: #e69110;
+    color: #ffffff;
+  }
 }
 
 // 表单项间距
 :deep(.van-cell) {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin-bottom: 40px;
-    display: block;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 40px;
+  display: block;
 
-    &::after {
-        display: none;
-    }
+  &::after {
+    display: none;
+  }
 }
 
 // 错误消息样式
 :deep(.van-field__error-message) {
-    color: #ff6b6b;
-    font-size: 32px;
-    margin-top: 10px;
+  color: #ff6b6b;
+  font-size: 32px;
+  margin-top: 10px;
 }
 
 // 表单验证状态样式
 :deep(.van-field--error) {
-    .van-field__control {
-        border: 2px solid #ff6b6b;
-    }
+  .van-field__control {
+    border: 2px solid #ff6b6b;
+  }
 }
 
 :deep(.van-field--success) {
-    .van-field__control {
-        border: 2px solid #52c41a;
-    }
+  .van-field__control {
+    border: 2px solid #52c41a;
+  }
 }
 </style>

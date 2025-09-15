@@ -63,7 +63,7 @@
                                     {{ claiming ? t("common.loading") : t("activity.claim") }}
                                 </button>
                             </div>
-                            <div v-else class="status-locked">
+                            <div v-else class="status-locked" @click="handleGameClick(gameData)">
                                 {{ t("activity.notAchieved") }}
                             </div>
                         </div>
@@ -79,6 +79,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- 游戏 iframe 组件 -->
+        <GameIframe
+            v-model:visible="gameIframeVisible"
+            :game-url="gameIframeUrl"
+            :loading="gameLoading"
+            :show-close-btn="isShowGameCloseBtn"
+            @close="closeGameIframe"
+        />
     </div>
 </template>
 
@@ -86,7 +95,10 @@
 import type { GameEarningsData } from '@/types'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+import { useGameIframe } from '@/composables/useGameIframe'
+import { isShowGameCloseBtn } from '@/config/gameCloseBtn'
 import { USER_REWARD } from '@/config/NumberConfig'
+import useUserStore from '@/stores/use-user-store'
 
 defineOptions({
     name: 'Activity02',
@@ -105,12 +117,39 @@ const claiming = ref(false)
 const error = ref('')
 const earningsData = ref<GameEarningsData>({} as GameEarningsData)
 
-// 获取用户ID（这里需要根据实际情况获取）
-function getPlayerId() {
-    // 这里需要根据你的用户状态管理来获取player_id
-    // 暂时返回一个示例值，你需要根据实际情况修改
-    return '123'
+const userStore = useUserStore()
+
+// 使用游戏iframe composable
+const {
+    gameIframeVisible,
+    gameIframeUrl,
+    gameLoading,
+    openGame,
+    closeGame,
+} = useGameIframe()
+
+const userInfo = computed(() => {
+    return userStore.userInfo
+})
+
+function handleGameClick(game: GameEarningsData) {
+    openGame({
+        id: game.id,
+        logo: game.logo || '/images/casino/default-game.png',
+        name: game.name || game.game,
+        show_name: game.game,
+    })
 }
+
+function closeGameIframe() {
+    closeGame()
+}
+// 获取用户ID（这里需要根据实际情况获取）
+// function getPlayerId() {
+//     // 这里需要根据你的用户状态管理来获取player_id
+//     // 暂时返回一个示例值，你需要根据实际情况修改
+//     return userInfo.value?.id || 0
+// }
 
 // 加载游戏收益数据
 async function loadGameEarnings() {
@@ -118,7 +157,7 @@ async function loadGameEarnings() {
         loading.value = true
         error.value = ''
 
-        const playerId = getPlayerId()
+        const playerId = `${userInfo.value?.id}` || '0'
         const response = await userApi.getGameEarnings({ player_id: playerId })
 
         if (response.code === 200) {
@@ -143,7 +182,7 @@ async function claimReward(gameName: string) {
     try {
         claiming.value = true
 
-        const playerId = getPlayerId()
+        const playerId = `${userInfo.value?.id}` || '0'
         const response = await userApi.claimEarnings({
             game: gameName,
             player_id: playerId,
@@ -292,7 +331,7 @@ onMounted(() => {
 
     .progress-bar {
       width: 500px;
-      height:20px;
+      height: 20px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 6px;
       overflow: hidden;

@@ -271,36 +271,14 @@
 
         <RechargPop ref="rechargPopRef" :on-success="handleRechargeSuccess" />
 
-        <!-- 游戏 iframe 覆盖层 -->
-        <Teleport to="body">
-            <div v-if="gameIframeVisible" class="game-iframe-overlay">
-                <div v-if="isShowGameCloseBtn" class="game-iframe-header">
-                    <!-- <button class="close-btn" @click="closeGameIframe">
-                        <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" />
-                    </button> -->
-                    <div class="close-btn-back" @click="closeGameIframe">
-                        <!-- <van-icon name="cross" size="18" color="rgba(255, 255, 255, 0.7)" /> -->
-                    </div>
-                </div>
-                <iframe
-                    v-if="gameIframeUrl"
-                    ref="gameIframeRef"
-                    :src="gameIframeUrl"
-                    class="game-iframe"
-                    frameborder="0"
-                    allowfullscreen
-                ></iframe>
-            </div>
-        </Teleport>
-
-        <!-- 游戏加载状态 -->
-        <van-overlay v-if="gameLoading" :show="true" class="game-loading-overlay">
-            <div class="game-loading-content">
-                <van-loading type="spinner" color="#ffd700" size="32px">
-                    {{ t("common.loading") }}
-                </van-loading>
-            </div>
-        </van-overlay>
+        <!-- 游戏 iframe 组件 -->
+        <GameIframe
+            v-model:visible="gameIframeVisible"
+            :game-url="gameIframeUrl"
+            :loading="gameLoading"
+            :show-close-btn="isShowGameCloseBtn"
+            @close="closeGameIframe"
+        />
 
     <!-- 订单详情弹窗 -->
     <!-- <OderDetail ref="orderDetailRef" :active-val="100" :on-success="handleOrderSuccess" /> -->
@@ -308,9 +286,11 @@
 </template>
 
 <script setup lang="ts">
+import type { GameInfo } from '@/types'
 import { computed, ref, watch } from 'vue'
 import { userApi } from '@/api/user-api'
 import { useGlobal } from '@/composables'
+import { useGameIframe } from '@/composables/useGameIframe'
 import { isShowGameCloseBtn } from '@/config/gameCloseBtn'
 import { getMarqueeData } from '@/config/marqueenConfig'
 import { USER_REWARD } from '@/config/NumberConfig'
@@ -319,12 +299,6 @@ import useUserStore from '@/stores/use-user-store'
 // import { formatNumber } from '@/utils/tools'
 
 import '@/assets/scss/pages/home.scss'
-
-interface GameInfo {
-    logo: string
-    name: string
-    show_name: string
-}
 
 defineOptions({
     name: 'Home',
@@ -338,7 +312,6 @@ const { t } = i18n
 const rechargPopRef = ref()
 const activeTabIndex = ref(0)
 const swipeRef = ref()
-const gameIframeRef = ref<HTMLIFrameElement>()
 
 const gameList = ref<GameInfo[]>([])
 const gameJLList = ref<GameInfo[]>([])
@@ -351,9 +324,8 @@ const gameJLLoading = ref(false)
 const gamePPLoading = ref(false)
 const gameJobLoading = ref(false)
 const gameMGLoading = ref(false)
-const gameIframeVisible = ref(false)
-const gameIframeUrl = ref('')
-const gameLoading = ref(false)
+// 使用游戏iframe composable
+const { gameIframeVisible, gameIframeUrl, gameLoading, openGame, closeGame } = useGameIframe()
 
 async function getGameList() {
     try {
@@ -466,14 +438,6 @@ onMounted(async () => {
     await getGamePPList()
     await getGameJobList()
     await getGameMGList()
-
-    // 监听来自 iframe 的消息
-    window.addEventListener('message', handleIframeMessage)
-})
-
-onUnmounted(() => {
-    // 清理事件监听器
-    window.removeEventListener('message', handleIframeMessage)
 })
 
 const bannerImgs = computed(() => [
@@ -547,89 +511,21 @@ function formatJLGameName(name: string): string[] | string {
     return wordArray
 }
 
-// 处理来自 iframe 的消息
-function handleIframeMessage(event: MessageEvent) {
-    console.log('🚀 ~ handleIframeMessage ~ event:', event)
-    // 验证消息来源（可选，增加安全性）
-    // if (event.origin !== 'https://expected-origin.com') return
-
-    try {
-        const { type, data } = event.data
-
-        switch (type) {
-            case 'gameClose':
-                // iframe 请求关闭游戏
-                closeGameIframe()
-                break
-
-            case 'gameError':
-                // 游戏加载错误
-                console.error('Game error:', data)
-                closeGameIframe()
-                break
-
-            case 'gameLoaded':
-                // 游戏加载完成
-                console.log('Game loaded successfully')
-                gameLoading.value = false
-                break
-
-            case 'gameAction':
-                // 游戏中的操作（如投注、赢取等）
-                console.log('Game action:', data)
-                // 可以在这里处理游戏相关的业务逻辑
-                break
-
-            case 'userBalance':
-                // 更新用户余额
-                if (data && typeof data.balance === 'number') {
-                    // 可以在这里更新用户余额显示
-                    console.log('Balance updated:', data.balance)
-                }
-                break
-
-            default:
-                console.log('Unknown message type:', type, data)
-        }
-    }
-    catch (error) {
-        console.error('Error handling iframe message:', error)
-    }
-}
-
 function handleRecharge() {
     rechargPopRef.value.open()
 }
 
 async function handleGameClick(game: GameInfo) {
-    console.log('game', game)
-    try {
-        gameLoading.value = true
-        // 调用游戏登录接口
-        const result = await userApi.gameLogin({
-            game_name: game.name,
-            player_id: userInfo.value?.id || 0,
-        })
-        if (result.code === 200 && result.data) {
-            gameIframeUrl.value = result.data
-            gameIframeVisible.value = true
-        }
-        else {
-            console.error('获取游戏地址失败:', result.message)
-        }
+    // 确保游戏对象有必要的字段
+    const gameWithIcon = {
+        ...game,
+        icon: game.icon || game.logo || '/images/casino/default-game.png',
     }
-    catch (error) {
-        console.error('游戏登录失败:', error)
-    }
-    finally {
-        gameLoading.value = false
-    }
+    await openGame(gameWithIcon)
 }
 
 function closeGameIframe() {
-    gameIframeVisible.value = false
-    gameIframeUrl.value = ''
-    userStore.fetchUserInfo()
+    closeGame()
 }
 
 // 处理滑动切换
@@ -796,76 +692,5 @@ function handleSwipeChange(index: number) {
   min-height: 650px;
   color: #ffd700;
   font-size: 16px;
-}
-
-/* 游戏 iframe 覆盖层样式 */
-.game-iframe-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-}
-
-.game-iframe-header {
-  position: absolute;
-  max-width: 448Px;
-  top: 20px;
-  left: 50%;
-  width: 100%;
-  transform: translateX(-50%);
-  height: 100px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 20px;
-  z-index: 10000;
-}
-
-.close-btn-back{
-    background: url('/images/common/backIcon.png') no-repeat center center;
-    background-size: 100% 100%;
-    background-color: rgba(255,255,255,0.5);
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-/* .close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-} */
-
-.close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.game-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* 游戏加载状态样式 */
-.game-loading-overlay {
-  z-index: 10001;
-}
-
-.game-loading-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #ffd700;
-  font-size: 18px;
 }
 </style>
