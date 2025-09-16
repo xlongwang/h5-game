@@ -136,7 +136,7 @@ function handleGameClick(game: GameEarningsData) {
     openGame({
         id: game.id,
         logo: game.logo || '/images/casino/default-game.png',
-        name: game.name || game.game,
+        name: game.showname || game.game,
         show_name: game.game,
     })
 }
@@ -376,6 +376,7 @@ onMounted(() => {
     background: rgba(255, 107, 107, 0.2);
     border-radius: 8px;
     border: 1px solid rgba(255, 107, 107, 0.4);
+    cursor: pointer;
   }
 
   .claim-btn {
